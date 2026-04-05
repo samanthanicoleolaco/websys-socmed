@@ -1,0 +1,203 @@
+// Colors & Variables
+$primary-orange: #ffc26d;
+$dark-bg: #1e1e2d;
+$dark-surface: #2b2b40;
+$text-light: #ffffff;
+$text-muted: #a1a5b7;
+$font-sans: 'Inter', sans-serif;
+
+body {
+    margin: 0;
+}
+
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+    font-family: $font-sans;
+    background: #f5f8fa;
+    color: #3f4254;
+
+    .admin-sidebar {
+        width: 260px;
+        background: $dark-bg;
+        color: $text-muted;
+        display: flex;
+        flex-direction: column;
+
+        .admin-brand {
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: $text-light;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+
+            .brand-logo {
+                height: 36px;
+                object-fit: contain;
+                /* Lighten the logo slightly for dark mode, or add shadow */
+                filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba($primary-orange, 0.4));
+            }
+
+            span {
+                background: linear-gradient(135deg, $text-light, $primary-orange);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
+        .admin-nav {
+            list-style: none;
+            padding: 2rem 0;
+            margin: 0;
+
+            li {
+                padding: 1rem 2rem;
+                font-size: 1.05rem;
+                font-weight: 500;
+                cursor: pointer;
+                border-left: 4px solid transparent;
+                transition: all 0.3s ease;
+
+                &:hover, &.active {
+                    background: $dark-surface;
+                    color: $primary-orange;
+                    border-left-color: $primary-orange;
+                }
+            }
+        }
+    }
+
+    .admin-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .admin-header {
+            background: #ffffff;
+            padding: 1.5rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+
+            h2 {
+                margin: 0;
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: #181c32;
+            }
+
+            .user-profile {
+                font-weight: 600;
+                color: #e0962a;
+                padding: 0.6rem 1.2rem;
+                background: rgba($primary-orange, 0.15);
+                border-radius: 8px;
+            }
+        }
+
+        .admin-content {
+            padding: 2.5rem;
+
+            .metric-cards {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.8rem;
+                margin-bottom: 2.5rem;
+
+                .card {
+                    background: #ffffff;
+                    padding: 1.8rem;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+                    border: 1px solid #eff2f5;
+
+                    h3 {
+                        margin: 0 0 1rem 0;
+                        font-size: 0.95rem;
+                        color: $text-muted;
+                        text-transform: uppercase;
+                        letter-spacing: 1.2px;
+                    }
+
+                    p {
+                        margin: 0;
+                        font-size: 2.8rem;
+                        font-weight: 700;
+                        color: #181c32;
+
+                        &.text-danger {
+                            color: #f1416c;
+                        }
+                    }
+                }
+            }
+
+            .recent-activity {
+                background: #ffffff;
+                padding: 2rem;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+                border: 1px solid #eff2f5;
+
+                h3 {
+                    margin-top: 0;
+                    margin-bottom: 1.8rem;
+                    font-size: 1.2rem;
+                    color: #181c32;
+                }
+
+                .admin-table {
+                    width: 100%;
+                    border-collapse: collapse;
+
+                    th, td {
+                        padding: 1.2rem;
+                        text-align: left;
+                        border-bottom: 1px dashed #eff2f5;
+                    }
+
+                    th {
+                        color: $text-muted;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        font-size: 0.85rem;
+                        letter-spacing: 0.5px;
+                    }
+
+                    td {
+                        font-weight: 500;
+                        color: #5e6278;
+                        
+                        &:first-child {
+                            color: #181c32;
+                            font-weight: 600;
+                        }
+                    }
+
+                    .badge {
+                        padding: 0.5rem 0.8rem;
+                        border-radius: 6px;
+                        font-size: 0.75rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+
+                        &.success {
+                            background: rgba(#50cd89, 0.1);
+                            color: #50cd89;
+                        }
+                        
+                        &.warning {
+                            background: rgba(#ffc700, 0.1);
+                            color: #ffc700;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
