@@ -2168,6 +2168,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sass_feed_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sass/feed.scss */ "./resources/sass/feed.scss");
 /* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/Sidebar.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -2400,6 +2406,10 @@ var AdminDashboard = function AdminDashboard() {
     _useState12 = _slicedToArray(_useState11, 2),
     logins = _useState12[0],
     setLogins = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    editingUser = _useState14[0],
+    setEditingUser = _useState14[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (activeTab === 'dashboard') {
       fetchStats();
@@ -2585,6 +2595,35 @@ var AdminDashboard = function AdminDashboard() {
       return _ref6.apply(this, arguments);
     };
   }();
+  var handleUpdateUser = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(e) {
+      var _t7;
+      return _regenerator().w(function (_context7) {
+        while (1) switch (_context7.p = _context7.n) {
+          case 0:
+            e.preventDefault();
+            _context7.p = 1;
+            _context7.n = 2;
+            return window.axios.put("/api/admin/users/".concat(editingUser.id), editingUser);
+          case 2:
+            setEditingUser(null);
+            fetchUsers();
+            window.alert('User account synchronized successfully!');
+            _context7.n = 4;
+            break;
+          case 3:
+            _context7.p = 3;
+            _t7 = _context7.v;
+            console.error(_t7);
+          case 4:
+            return _context7.a(2);
+        }
+      }, _callee7, null, [[1, 3]]);
+    }));
+    return function handleUpdateUser(_x5) {
+      return _ref7.apply(this, arguments);
+    };
+  }();
   var navItems = [{
     id: 'dashboard',
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Icons.Dashboard, {}),
@@ -2623,6 +2662,146 @@ var AdminDashboard = function AdminDashboard() {
       onNavClick: function onNavClick(item) {
         return setActiveTab(item.id);
       }
+    }), editingUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      style: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(30, 41, 59, 0.4)',
+        backdropFilter: 'blur(8px)',
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "settings-content",
+        style: {
+          width: '100%',
+          maxWidth: '800px',
+          minHeight: 'auto',
+          maxHeight: '90vh',
+          overflowY: 'auto'
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+          className: "settings-form",
+          onSubmit: handleUpdateUser,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "settings-header",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              style: {
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+                  children: "Manage Account"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
+                  children: ["Adjust privileges and profile details for ", editingUser.name, "."]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                onClick: function onClick() {
+                  return setEditingUser(null);
+                },
+                style: {
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                  color: '#64748B'
+                },
+                children: "\xD7"
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "form-row",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                children: "Full Name"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                type: "text",
+                value: editingUser.name,
+                onChange: function onChange(e) {
+                  return setEditingUser(_objectSpread(_objectSpread({}, editingUser), {}, {
+                    name: e.target.value
+                  }));
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                children: "Email Address"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                type: "email",
+                value: editingUser.email,
+                onChange: function onChange(e) {
+                  return setEditingUser(_objectSpread(_objectSpread({}, editingUser), {}, {
+                    email: e.target.value
+                  }));
+                }
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "form-row",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                children: "Account Role"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
+                value: editingUser.is_admin ? 'admin' : 'user',
+                onChange: function onChange(e) {
+                  return setEditingUser(_objectSpread(_objectSpread({}, editingUser), {}, {
+                    is_admin: e.target.value === 'admin'
+                  }));
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                  value: "user",
+                  children: "Regular User"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                  value: "admin",
+                  children: "Administrator"
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                children: "Account Status"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
+                defaultValue: "active",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                  value: "active",
+                  children: "Active"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                  value: "suspended",
+                  children: "Suspended"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                  value: "pending",
+                  children: "Pending Verification"
+                })]
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "form-actions",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+              type: "button",
+              className: "btn-cancel",
+              onClick: function onClick() {
+                return setEditingUser(null);
+              },
+              children: "Cancel"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+              type: "submit",
+              className: "btn-save",
+              children: "Save Changes"
+            })]
+          })]
+        })
+      })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("main", {
       className: "main-content",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("header", {
@@ -2845,12 +3024,29 @@ var AdminDashboard = function AdminDashboard() {
                           color: '#666'
                         },
                         children: new Date(user.created_at).toLocaleDateString()
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
                         style: {
                           padding: '15px 10px',
-                          borderBottom: '1px solid #f5f5f5'
+                          borderBottom: '1px solid #f5f5f5',
+                          display: 'flex',
+                          gap: '8px'
                         },
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                          onClick: function onClick() {
+                            return setEditingUser(user);
+                          },
+                          style: {
+                            background: '#334155',
+                            color: 'white',
+                            border: 'none',
+                            padding: '6px 12px',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontSize: '12px',
+                            fontWeight: 'bold'
+                          },
+                          children: "Edit"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                           onClick: function onClick(e) {
                             return handleDeleteUser(e, user.id);
                           },
@@ -2864,8 +3060,8 @@ var AdminDashboard = function AdminDashboard() {
                             fontSize: '12px',
                             fontWeight: 'bold'
                           },
-                          children: "Remove User"
-                        })
+                          children: "Remove"
+                        })]
                       })]
                     }, user.id);
                   }), users.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tr", {
@@ -3099,102 +3295,244 @@ var AdminDashboard = function AdminDashboard() {
               })]
             })]
           }), activeTab === 'settings' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "post-card",
+            className: "settings-form",
             style: {
-              padding: '30px',
-              marginTop: '20px'
+              animation: 'slideUp 0.4s ease-out'
             },
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "settings-header",
               style: {
-                borderBottom: '1px solid #eee',
-                paddingBottom: '15px',
-                marginBottom: '25px',
-                color: '#333'
+                marginBottom: '32px',
+                paddingBottom: '20px',
+                borderBottom: '1px solid #eee'
               },
-              children: "System Settings"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              style: {
-                marginBottom: '25px'
-              },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
                 style: {
-                  margin: '0 0 10px 0',
-                  fontSize: '15px'
+                  fontSize: '1.75rem',
+                  fontWeight: '800',
+                  color: '#1E293B',
+                  margin: 0
                 },
-                children: "Maintenance Mode"
+                children: "System Configuration"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
                 style: {
-                  color: '#666',
-                  fontSize: '13px',
-                  margin: '0 0 10px 0'
+                  color: '#64748B',
+                  fontSize: '1rem',
+                  marginTop: '4px'
                 },
-                children: "Temporarily disable public access to the Pawtastic platform."
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                style: {
-                  background: '#e4e6ef',
-                  color: '#3f4254',
-                  border: 'none',
-                  padding: '8px 16px',
-                  borderRadius: '6px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer'
-                },
-                children: "Enable Maintenance"
+                children: "Global settings for the Pawtastic platform."
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               style: {
-                marginBottom: '25px'
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '24px'
               },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "post-card",
                 style: {
-                  margin: '0 0 10px 0',
-                  fontSize: '15px'
+                  padding: '24px',
+                  margin: 0,
+                  border: '1px solid #E2E8F0',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
                 },
-                children: "Cache Management"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '16px'
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    style: {
+                      padding: '10px',
+                      background: '#FEE2E2',
+                      borderRadius: '10px',
+                      color: '#EF4444'
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Icons.Lock, {})
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
+                    style: {
+                      margin: 0,
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      color: '#334155'
+                    },
+                    children: "Maintenance Mode"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                  style: {
+                    color: '#64748B',
+                    fontSize: '0.9rem',
+                    marginBottom: '20px',
+                    lineHeight: '1.5'
+                  },
+                  children: "Temporarily disable public access. Useful for deployments or critical fixes."
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                  style: {
+                    background: '#F8FAFC',
+                    color: '#334155',
+                    border: '1.5px solid #E2E8F0',
+                    padding: '10px 20px',
+                    borderRadius: '10px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  },
+                  children: "Activate Maintenance"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "post-card",
                 style: {
-                  color: '#666',
-                  fontSize: '13px',
-                  margin: '0 0 10px 0'
+                  padding: '24px',
+                  margin: 0,
+                  border: '1px solid #E2E8F0',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
                 },
-                children: "Clear application cache to force latest content updates."
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                style: {
-                  background: '#ffc26d',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '8px 16px',
-                  borderRadius: '6px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer'
-                },
-                children: "Clear Cache"
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '16px'
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    style: {
+                      padding: '10px',
+                      background: '#FFF7ED',
+                      borderRadius: '10px',
+                      color: '#F59E0B'
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Icons.Chart, {})
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
+                    style: {
+                      margin: 0,
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      color: '#334155'
+                    },
+                    children: "Cache Optimization"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                  style: {
+                    color: '#64748B',
+                    fontSize: '0.9rem',
+                    marginBottom: '20px',
+                    lineHeight: '1.5'
+                  },
+                  children: "Refresh application cache to ensure all users see the latest content updates."
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                  style: {
+                    background: '#ffc26d',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '10px 20px',
+                    borderRadius: '10px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    boxShadow: '0 4px 12px rgba(255, 194, 109, 0.2)'
+                  },
+                  children: "Purge All Cache"
+                })]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+              className: "post-card",
+              style: {
+                padding: '24px',
+                marginTop: '24px',
+                border: '1px solid #E2E8F0'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
                 style: {
-                  margin: '0 0 10px 0',
-                  fontSize: '15px'
+                  margin: '0 0 20px 0',
+                  fontSize: '1.25rem',
+                  fontWeight: '700',
+                  color: '#1E293B'
                 },
-                children: "Registration"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                children: "Access & Registration"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                 style: {
-                  color: '#666',
-                  fontSize: '13px',
-                  margin: '0 0 10px 0'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '16px 0',
+                  borderBottom: '1px solid #F1F5F9'
                 },
-                children: "Allow new users to create accounts."
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "checkbox",
-                defaultChecked: true,
-                id: "regToggle"
-              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "regToggle",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+                    style: {
+                      margin: '0 0 4px 0',
+                      fontSize: '1rem',
+                      fontWeight: '600'
+                    },
+                    children: "User Registration"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                    style: {
+                      margin: 0,
+                      fontSize: '0.85rem',
+                      color: '#64748B'
+                    },
+                    children: "Control whether new pet owners can join the platform."
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                  className: "switch",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "checkbox",
+                    defaultChecked: true
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "slider"
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                 style: {
-                  fontSize: '14px',
-                  fontWeight: 'bold'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '16px 0',
+                  borderBottom: '1px solid #F1F5F9'
                 },
-                children: "Enabled"
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+                    style: {
+                      margin: '0 0 4px 0',
+                      fontSize: '1rem',
+                      fontWeight: '600'
+                    },
+                    children: "Email Verification"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                    style: {
+                      margin: 0,
+                      fontSize: '0.85rem',
+                      color: '#64748B'
+                    },
+                    children: "Require all new signups to verify their email address."
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                  className: "switch",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "checkbox"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "slider"
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                style: {
+                  padding: '20px 0 0 0',
+                  textAlign: 'right'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                  style: {
+                    background: '#1E293B',
+                    color: 'white',
+                    border: 'none',
+                    padding: '12px 24px',
+                    borderRadius: '10px',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  },
+                  children: "Apply Global Changes"
+                })
               })]
             })]
           })]
@@ -7917,35 +8255,40 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var Icons = {
+// ── Icons ──────────────────────────────────────────────────────────────────
+
+var Icon = {
   User: function User() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
       fill: "none",
       stroke: "currentColor",
       strokeWidth: "2",
-      viewBox: "0 0 24 24",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
-        d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
         cx: "12",
-        cy: "7",
+        cy: "8",
         r: "4"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M4 20c0-4 3.6-7 8-7s8 3 8 7"
       })]
     });
   },
   Lock: function Lock() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
       fill: "none",
       stroke: "currentColor",
       strokeWidth: "2",
-      viewBox: "0 0 24 24",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("rect", {
-        width: "18",
-        height: "11",
         x: "3",
         y: "11",
-        rx: "2",
-        ry: "2"
+        width: "18",
+        height: "11",
+        rx: "2"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
         d: "M7 11V7a5 5 0 0 1 10 0v4"
       })]
@@ -7953,10 +8296,12 @@ var Icons = {
   },
   Bell: function Bell() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
       fill: "none",
       stroke: "currentColor",
       strokeWidth: "2",
-      viewBox: "0 0 24 24",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
         d: "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
@@ -7966,375 +8311,918 @@ var Icons = {
   },
   Shield: function Shield() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("svg", {
+      viewBox: "0 0 24 24",
       fill: "none",
       stroke: "currentColor",
       strokeWidth: "2",
-      viewBox: "0 0 24 24",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
         d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
       })
     });
   },
-  Mail: function Mail() {
+  Help: function Help() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
       fill: "none",
       stroke: "currentColor",
       strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
+        cx: "12",
+        cy: "12",
+        r: "10"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("line", {
+        x1: "12",
+        y1: "17",
+        x2: "12.01",
+        y2: "17"
+      })]
+    });
+  },
+  Camera: function Camera() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
       viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
-        d: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+        d: "M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
+        cx: "12",
+        cy: "13",
+        r: "4"
+      })]
+    });
+  },
+  Eye: function Eye() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
+        cx: "12",
+        cy: "12",
+        r: "3"
+      })]
+    });
+  },
+  EyeOff: function EyeOff() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("line", {
+        x1: "1",
+        y1: "1",
+        x2: "23",
+        y2: "23"
+      })]
+    });
+  },
+  Check: function Check() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("svg", {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2.5",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("polyline", {
+        points: "20 6 9 17 4 12"
+      })
+    });
+  },
+  Chevron: function Chevron() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("svg", {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("polyline", {
+        points: "9 18 15 12 9 6"
+      })
+    });
+  },
+  Logout: function Logout() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("polyline", {
-        points: "22,6 12,13 2,6"
+        points: "16 17 21 12 16 7"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("line", {
+        x1: "21",
+        y1: "12",
+        x2: "9",
+        y2: "12"
+      })]
+    });
+  },
+  Link: function Link() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+      })]
+    });
+  },
+  Trash: function Trash() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("polyline", {
+        points: "3 6 5 6 21 6"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M10 11v6"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M14 11v6"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+        d: "M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"
       })]
     });
   }
 };
-var Settings = function Settings() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('profile'),
-    _useState2 = _slicedToArray(_useState, 2),
-    activeTab = _useState2[0],
-    setActiveTab = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    isSaving = _useState4[0],
-    setIsSaving = _useState4[1];
 
-  // Mock user data
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      firstName: 'Sam',
-      lastName: 'Virtudazo',
-      email: 'sam.virtudazo@example.com',
+// ── Toggle Switch ──────────────────────────────────────────────────────────
+var Toggle = function Toggle(_ref) {
+  var checked = _ref.checked,
+    onChange = _ref.onChange;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+    type: "button",
+    role: "switch",
+    "aria-checked": checked,
+    onClick: onChange,
+    className: "st-toggle ".concat(checked ? 'st-toggle--on' : ''),
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+      className: "st-toggle__thumb"
+    })
+  });
+};
+
+// ── Password Input ─────────────────────────────────────────────────────────
+var PasswordInput = function PasswordInput(_ref2) {
+  var placeholder = _ref2.placeholder,
+    value = _ref2.value,
+    onChange = _ref2.onChange;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    show = _useState2[0],
+    setShow = _useState2[1];
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    className: "st-input-wrap",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+      type: show ? 'text' : 'password',
+      placeholder: placeholder,
+      value: value,
+      onChange: onChange,
+      className: "st-input"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      type: "button",
+      className: "st-input-icon",
+      onClick: function onClick() {
+        return setShow(function (s) {
+          return !s;
+        });
+      },
+      children: show ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.EyeOff, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Eye, {})
+    })]
+  });
+};
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+var Toast = function Toast(_ref3) {
+  var message = _ref3.message,
+    _ref3$type = _ref3.type,
+    type = _ref3$type === void 0 ? 'success' : _ref3$type;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    className: "st-toast st-toast--".concat(type),
+    children: [type === 'success' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+      className: "st-toast__icon",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Check, {})
+    }), message]
+  });
+};
+
+// ── Main Component ─────────────────────────────────────────────────────────
+var Settings = function Settings() {
+  var _panels$activeTab;
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('profile'),
+    _useState4 = _slicedToArray(_useState3, 2),
+    activeTab = _useState4[0],
+    setActiveTab = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    saving = _useState6[0],
+    setSaving = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    toast = _useState8[0],
+    setToast = _useState8[1];
+  var fileRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      name: 'Sam Virtudazo',
       username: 'sam_virtudazo',
-      bio: 'Pet lover. Digital artist. Future golden retriever owner.',
+      email: 'sam@example.com',
+      bio: 'Pet lover 🐾 Digital artist. Future golden retriever owner.',
+      website: '',
+      phone: '',
+      gender: '',
       avatar: '/images/avatar_dog.png'
     }),
-    _useState6 = _slicedToArray(_useState5, 2),
-    profile = _useState6[0],
-    setProfile = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      newFollowers: true,
-      postLikes: true,
-      mentions: true,
-      emailDigest: false,
-      pushNotifications: true
+    _useState0 = _slicedToArray(_useState9, 2),
+    profile = _useState0[0],
+    setProfile = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      current: '',
+      next: '',
+      confirm: ''
     }),
-    _useState8 = _slicedToArray(_useState7, 2),
-    notifs = _useState8[0],
-    setNotifs = _useState8[1];
-  var handleSaveProfile = function handleSaveProfile(e) {
-    e.preventDefault();
-    setIsSaving(true);
-    // Simulate API call
-    setTimeout(function () {
-      setIsSaving(false);
-      window.alert('Profile updated successfully!');
-    }, 1200);
-  };
-  var toggleNotif = function toggleNotif(key) {
-    setNotifs(function (prev) {
-      return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, key, !prev[key]));
+    _useState10 = _slicedToArray(_useState1, 2),
+    passwords = _useState10[0],
+    setPasswords = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      likes: true,
+      comments: true,
+      followers: true,
+      mentions: true,
+      messages: true,
+      email: false,
+      push: true
+    }),
+    _useState12 = _slicedToArray(_useState11, 2),
+    notifs = _useState12[0],
+    setNotifs = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      privateAccount: false,
+      activityStatus: true,
+      allowTags: true,
+      allowMentions: true
+    }),
+    _useState14 = _slicedToArray(_useState13, 2),
+    privacy = _useState14[0],
+    setPrivacy = _useState14[1];
+  var showToast = function showToast(msg) {
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+    setToast({
+      msg: msg,
+      type: type
     });
+    setTimeout(function () {
+      return setToast(null);
+    }, 3000);
   };
+  var save = function save(e) {
+    e.preventDefault();
+    setSaving(true);
+    setTimeout(function () {
+      setSaving(false);
+      showToast('Changes saved successfully.');
+    }, 1000);
+  };
+  var handleAvatarChange = function handleAvatarChange(e) {
+    var file = e.target.files[0];
+    if (file) {
+      var url = URL.createObjectURL(file);
+      setProfile(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          avatar: url
+        });
+      });
+    }
+  };
+
+  // ── Tabs config ──────────────────────────────────────────────────────
+  var tabs = [{
+    id: 'profile',
+    label: 'Edit Profile',
+    Icon: Icon.User
+  }, {
+    id: 'security',
+    label: 'Password',
+    Icon: Icon.Lock
+  }, {
+    id: 'notifications',
+    label: 'Notifications',
+    Icon: Icon.Bell
+  }, {
+    id: 'privacy',
+    label: 'Privacy',
+    Icon: Icon.Shield
+  }, {
+    id: 'help',
+    label: 'Help & Support',
+    Icon: Icon.Help
+  }];
+
+  // ── Render: Profile ──────────────────────────────────────────────────
   var renderProfile = function renderProfile() {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
-      className: "settings-form",
-      onSubmit: handleSaveProfile,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "settings-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-          children: "My Profile"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-          children: "Update your photo and personal details."
-        })]
+      onSubmit: save,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-section-title",
+        children: "Edit Profile"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "profile-avatar-upload",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-          src: profile.avatar,
-          alt: "Profile",
-          className: "avatar-preview"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "upload-actions",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-            type: "button",
-            className: "btn-upload",
-            children: "Change Photo"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-            children: "JPG or PNG, max 2MB"
-          })]
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-row",
+        className: "st-avatar-row",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "form-group",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-            children: "First Name"
+          className: "st-avatar-wrap",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            src: profile.avatar,
+            alt: "avatar",
+            className: "st-avatar-img"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+            type: "button",
+            className: "st-avatar-btn",
+            onClick: function onClick() {
+              return fileRef.current.click();
+            },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Camera, {})
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-            type: "text",
-            value: profile.firstName,
-            onChange: function onChange(e) {
-              return setProfile(_objectSpread(_objectSpread({}, profile), {}, {
-                firstName: e.target.value
-              }));
-            }
+            ref: fileRef,
+            type: "file",
+            accept: "image/*",
+            hidden: true,
+            onChange: handleAvatarChange
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "form-group",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-            children: "Last Name"
+          className: "st-avatar-meta",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+            className: "st-avatar-name",
+            children: profile.name
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+            type: "button",
+            className: "st-link-btn",
+            onClick: function onClick() {
+              return fileRef.current.click();
+            },
+            children: "Change profile photo"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-field",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+          className: "st-label",
+          children: "Name"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+          className: "st-input",
+          value: profile.name,
+          onChange: function onChange(e) {
+            return setProfile(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                name: e.target.value
+              });
+            });
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "st-hint",
+          children: "Help people discover your account by using the name you're known by."
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-field",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+          className: "st-label",
+          children: "Username"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-input-wrap",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+            className: "st-input-prefix",
+            children: "@"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-            type: "text",
-            value: profile.lastName,
+            className: "st-input st-input--prefix",
+            value: profile.username,
             onChange: function onChange(e) {
-              return setProfile(_objectSpread(_objectSpread({}, profile), {}, {
-                lastName: e.target.value
-              }));
+              return setProfile(function (p) {
+                return _objectSpread(_objectSpread({}, p), {}, {
+                  username: e.target.value
+                });
+              });
             }
           })]
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-group",
+        className: "st-field",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-          children: "Email Address"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          style: {
-            position: 'relative'
-          },
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+          className: "st-label",
+          children: "Website"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-input-wrap",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+            className: "st-input-icon-left",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Link, {})
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+            className: "st-input st-input--icon-left",
+            placeholder: "https://",
+            value: profile.website,
+            onChange: function onChange(e) {
+              return setProfile(function (p) {
+                return _objectSpread(_objectSpread({}, p), {}, {
+                  website: e.target.value
+                });
+              });
+            }
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-field",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+          className: "st-label",
+          children: "Bio"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
+          className: "st-textarea",
+          rows: 4,
+          maxLength: 150,
+          value: profile.bio,
+          onChange: function onChange(e) {
+            return setProfile(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                bio: e.target.value
+              });
+            });
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+          className: "st-hint st-hint--right",
+          children: [profile.bio.length, " / 150"]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-divider-label",
+        children: "Personal information"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+        className: "st-hint",
+        style: {
+          marginBottom: 16,
+          display: 'block'
+        },
+        children: "This won't be part of your public profile."
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-field",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+          className: "st-label",
+          children: "Email address"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-input-wrap",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+            className: "st-input",
             type: "email",
             value: profile.email,
             onChange: function onChange(e) {
-              return setProfile(_objectSpread(_objectSpread({}, profile), {}, {
-                email: e.target.value
-              }));
+              return setProfile(function (p) {
+                return _objectSpread(_objectSpread({}, p), {}, {
+                  email: e.target.value
+                });
+              });
             }
-          })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+            className: "st-badge st-badge--verified",
+            children: "Verified"
+          })]
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-group",
+        className: "st-field",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-          children: "Username"
+          className: "st-label",
+          children: "Phone number"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-          type: "text",
-          value: profile.username,
+          className: "st-input",
+          type: "tel",
+          placeholder: "Add phone number",
+          value: profile.phone,
           onChange: function onChange(e) {
-            return setProfile(_objectSpread(_objectSpread({}, profile), {}, {
-              username: e.target.value
-            }));
+            return setProfile(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                phone: e.target.value
+              });
+            });
           }
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-group",
+        className: "st-field",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-          children: "Bio"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
-          value: profile.bio,
+          className: "st-label",
+          children: "Gender"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("select", {
+          className: "st-select",
+          value: profile.gender,
           onChange: function onChange(e) {
-            return setProfile(_objectSpread(_objectSpread({}, profile), {}, {
-              bio: e.target.value
-            }));
+            return setProfile(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                gender: e.target.value
+              });
+            });
           },
-          placeholder: "Tell the community about yourself..."
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+            value: "",
+            children: "Prefer not to say"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+            value: "male",
+            children: "Male"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+            value: "female",
+            children: "Female"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+            value: "custom",
+            children: "Custom"
+          })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-actions",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-          type: "button",
-          className: "btn-cancel",
-          children: "Cancel"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-form-actions",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           type: "submit",
-          className: "btn-save",
-          disabled: isSaving,
-          children: isSaving ? 'Saving...' : 'Save Changes'
-        })]
+          className: "st-btn-primary",
+          disabled: saving,
+          children: saving ? 'Saving…' : 'Submit'
+        })
       })]
     });
   };
-  var renderNotifications = function renderNotifications() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "settings-form",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "settings-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-          children: "Notifications"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-          children: "Manage how and when you want to receive alerts."
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "notification-list",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "notification-setting",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "notif-info",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-              children: "New Followers"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              children: "Get notified when someone follows your pet profile."
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
-            className: "switch",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "checkbox",
-              checked: notifs.newFollowers,
-              onChange: function onChange() {
-                return toggleNotif('newFollowers');
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "slider"
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "notification-setting",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "notif-info",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-              children: "Post Likes"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              children: "Alert me when someone likes my pet's photos."
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
-            className: "switch",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "checkbox",
-              checked: notifs.postLikes,
-              onChange: function onChange() {
-                return toggleNotif('postLikes');
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "slider"
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "notification-setting",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "notif-info",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-              children: "Mentions"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              children: "Get notified when you or your pet are mentioned in a comment."
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
-            className: "switch",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "checkbox",
-              checked: notifs.mentions,
-              onChange: function onChange() {
-                return toggleNotif('mentions');
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "slider"
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "notification-setting",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "notif-info",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-              children: "Push Notifications"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              children: "Receive notifications on your browser/mobile device."
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
-            className: "switch",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "checkbox",
-              checked: notifs.pushNotifications,
-              onChange: function onChange() {
-                return toggleNotif('pushNotifications');
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "slider"
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "notification-setting",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "notif-info",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-              children: "Email Digest"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              children: "A weekly summary of activity you might have missed."
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
-            className: "switch",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "checkbox",
-              checked: notifs.emailDigest,
-              onChange: function onChange() {
-                return toggleNotif('emailDigest');
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "slider"
-            })]
-          })]
-        })]
-      })]
-    });
-  };
+
+  // ── Render: Security ─────────────────────────────────────────────────
   var renderSecurity = function renderSecurity() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "settings-form",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "settings-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-          children: "Account Security"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-          children: "Change your password and secure your account."
-        })]
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+      onSubmit: save,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-section-title",
+        children: "Change Password"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+        className: "st-hint",
+        style: {
+          marginBottom: 24,
+          display: 'block'
+        },
+        children: "Use a strong password that you don't use elsewhere."
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-group",
+        className: "st-field",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-          children: "Current Password"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-          type: "password",
-          placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+          className: "st-label",
+          children: "Current password"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(PasswordInput, {
+          placeholder: "Current password",
+          value: passwords.current,
+          onChange: function onChange(e) {
+            return setPasswords(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                current: e.target.value
+              });
+            });
+          }
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-group",
+        className: "st-field",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-          children: "New Password"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-          type: "password",
-          placeholder: "Min. 8 characters"
+          className: "st-label",
+          children: "New password"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(PasswordInput, {
+          placeholder: "New password (min. 8 characters)",
+          value: passwords.next,
+          onChange: function onChange(e) {
+            return setPasswords(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                next: e.target.value
+              });
+            });
+          }
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-group",
+        className: "st-field",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-          children: "Confirm New Password"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-          type: "password",
-          placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+          className: "st-label",
+          children: "Confirm new password"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(PasswordInput, {
+          placeholder: "Confirm new password",
+          value: passwords.confirm,
+          onChange: function onChange(e) {
+            return setPasswords(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                confirm: e.target.value
+              });
+            });
+          }
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "form-actions",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-          type: "button",
-          className: "btn-cancel",
-          children: "Cancel"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-form-actions",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           type: "submit",
-          className: "btn-save",
-          children: "Update Password"
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "settings-header",
+          className: "st-btn-primary",
+          disabled: saving,
+          children: saving ? 'Saving…' : 'Change password'
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-divider"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-section-title",
         style: {
-          marginTop: '40px'
+          marginTop: 0
         },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-          children: "Two-Factor Authentication"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-          children: "Add an extra layer of security to your account."
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-        type: "button",
-        className: "btn-upload",
-        style: {
-          width: 'fit-content'
-        },
-        children: "Enable 2FA"
+        children: "Login activity"
+      }), [{
+        device: 'Chrome · Windows',
+        loc: 'Manila, Philippines',
+        time: 'Active now',
+        current: true
+      }, {
+        device: 'Safari · iPhone 15 Pro',
+        loc: 'Manila, Philippines',
+        time: '2 hours ago',
+        current: false
+      }].map(function (s, i) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-session-row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "st-session-dot",
+            "data-active": s.current
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "st-session-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+              className: "st-session-device",
+              children: [s.device, " ", s.current && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                className: "st-badge st-badge--current",
+                children: "This device"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+              className: "st-session-meta",
+              children: [s.loc, " \xB7 ", s.time]
+            })]
+          }), !s.current && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
+            type: "button",
+            className: "st-btn-ghost-danger",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Logout, {}), " Log out"]
+          })]
+        }, i);
       })]
     });
+  };
+
+  // ── Render: Notifications ────────────────────────────────────────────
+  var renderNotifications = function renderNotifications() {
+    var groups = [{
+      title: 'Push notifications',
+      items: [{
+        id: 'likes',
+        label: 'Likes',
+        desc: 'When someone likes your post or photo.'
+      }, {
+        id: 'comments',
+        label: 'Comments',
+        desc: 'When someone comments on your post.'
+      }, {
+        id: 'followers',
+        label: 'New followers',
+        desc: 'When someone starts following you.'
+      }, {
+        id: 'mentions',
+        label: 'Mentions',
+        desc: 'When someone mentions you in a comment.'
+      }, {
+        id: 'messages',
+        label: 'Direct messages',
+        desc: 'When you receive a new message.'
+      }]
+    }, {
+      title: 'Email notifications',
+      items: [{
+        id: 'email',
+        label: 'Weekly digest',
+        desc: 'A summary of activity on your account.'
+      }, {
+        id: 'push',
+        label: 'Browser push',
+        desc: 'Real-time alerts in your browser.'
+      }]
+    }];
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-section-title",
+        children: "Notifications"
+      }), groups.map(function (g) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-notif-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "st-notif-group-title",
+            children: g.title
+          }), g.items.map(function (item) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "st-notif-row",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                className: "st-notif-text",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  className: "st-notif-label",
+                  children: item.label
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  className: "st-notif-desc",
+                  children: item.desc
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Toggle, {
+                checked: notifs[item.id],
+                onChange: function onChange() {
+                  return setNotifs(function (n) {
+                    return _objectSpread(_objectSpread({}, n), {}, _defineProperty({}, item.id, !n[item.id]));
+                  });
+                }
+              })]
+            }, item.id);
+          })]
+        }, g.title);
+      })]
+    });
+  };
+
+  // ── Render: Privacy ──────────────────────────────────────────────────
+  var renderPrivacy = function renderPrivacy() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-section-title",
+        children: "Privacy"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-privacy-group",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "st-privacy-group-title",
+          children: "Account privacy"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-notif-row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "st-notif-text",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-label",
+              children: "Private account"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-desc",
+              children: "When your account is private, only people you approve can see your photos and videos."
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Toggle, {
+            checked: privacy.privateAccount,
+            onChange: function onChange() {
+              return setPrivacy(function (p) {
+                return _objectSpread(_objectSpread({}, p), {}, {
+                  privateAccount: !p.privateAccount
+                });
+              });
+            }
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-privacy-group",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "st-privacy-group-title",
+          children: "Interactions"
+        }), [{
+          id: 'activityStatus',
+          label: 'Show activity status',
+          desc: 'Allow accounts you follow and anyone you message to see when you were last active.'
+        }, {
+          id: 'allowTags',
+          label: 'Allow tags',
+          desc: 'Allow people to tag you in their photos and videos.'
+        }, {
+          id: 'allowMentions',
+          label: 'Allow mentions',
+          desc: 'Control who can @mention you in comments and captions.'
+        }].map(function (item) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "st-notif-row",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "st-notif-text",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                className: "st-notif-label",
+                children: item.label
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                className: "st-notif-desc",
+                children: item.desc
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Toggle, {
+              checked: privacy[item.id],
+              onChange: function onChange() {
+                return setPrivacy(function (p) {
+                  return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, item.id, !p[item.id]));
+                });
+              }
+            })]
+          }, item.id);
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-divider"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-danger-zone",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "st-danger-title",
+          children: "Danger zone"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-danger-row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-label",
+              children: "Deactivate account"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-desc",
+              children: "Temporarily disable your account."
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+            type: "button",
+            className: "st-btn-ghost-danger",
+            children: "Deactivate"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-danger-row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-label",
+              children: "Delete account"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-desc",
+              children: "Permanently delete your account and all data."
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
+            type: "button",
+            className: "st-btn-danger",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Trash, {}), " Delete"]
+          })]
+        })]
+      })]
+    });
+  };
+
+  // ── Render: Help ─────────────────────────────────────────────────────
+  var renderHelp = function renderHelp() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "st-section-title",
+        children: "Help & Support"
+      }), [{
+        label: 'Help Center',
+        desc: 'Browse articles and guides.'
+      }, {
+        label: 'Report a problem',
+        desc: 'Let us know if something isn\'t working.'
+      }, {
+        label: 'Privacy Policy',
+        desc: 'Read how we handle your data.'
+      }, {
+        label: 'Terms of Service',
+        desc: 'Review the rules of using Pawtastic.'
+      }, {
+        label: 'About Pawtastic',
+        desc: 'Version 1.0.0'
+      }].map(function (item) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
+          type: "button",
+          className: "st-help-row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "st-notif-text",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-label",
+              children: item.label
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "st-notif-desc",
+              children: item.desc
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+            className: "st-help-chevron",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Chevron, {})
+          })]
+        }, item.label);
+      })]
+    });
+  };
+  var panels = {
+    profile: renderProfile,
+    security: renderSecurity,
+    notifications: renderNotifications,
+    privacy: renderPrivacy,
+    help: renderHelp
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     className: "pawtastic-feed",
@@ -8342,74 +9230,42 @@ var Settings = function Settings() {
       brandText: "Pawtastic"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("main", {
       className: "main-content",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        className: "settings-page",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "settings-container",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "st-page",
+        children: [toast && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Toast, {
+          message: toast.msg,
+          type: toast.type
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "st-layout",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("aside", {
-            className: "settings-sidebar",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "st-nav",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "st-nav-title",
               children: "Settings"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
-              className: "settings-nav",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-                className: activeTab === 'profile' ? 'active' : '',
+            }), tabs.map(function (t) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
+                type: "button",
+                className: "st-nav-item ".concat(activeTab === t.id ? 'st-nav-item--active' : ''),
                 onClick: function onClick() {
-                  return setActiveTab('profile');
+                  return setActiveTab(t.id);
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icons.User, {}), "My Profile"]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-                className: activeTab === 'security' ? 'active' : '',
-                onClick: function onClick() {
-                  return setActiveTab('security');
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icons.Lock, {}), "Security"]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-                className: activeTab === 'notifications' ? 'active' : '',
-                onClick: function onClick() {
-                  return setActiveTab('notifications');
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icons.Bell, {}), "Notifications"]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-                className: activeTab === 'privacy' ? 'active' : '',
-                onClick: function onClick() {
-                  return setActiveTab('privacy');
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icons.Shield, {}), "Privacy"]
-              })]
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
-            className: "settings-content",
-            children: [activeTab === 'profile' && renderProfile(), activeTab === 'notifications' && renderNotifications(), activeTab === 'security' && renderSecurity(), activeTab === 'privacy' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-              className: "settings-form",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                className: "settings-header",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-                  children: "Privacy Settings"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-                  children: "Control who can see your profile and posts."
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  className: "st-nav-icon",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(t.Icon, {})
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  className: "st-nav-label",
+                  children: t.label
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  className: "st-nav-chevron",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Icon.Chevron, {})
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                className: "notification-setting",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                  className: "notif-info",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-                    children: "Private Profile"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-                    children: "Only people you approve can see your pets and photos."
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
-                  className: "switch",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                    type: "checkbox"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                    className: "slider"
-                  })]
-                })]
-              })]
+              }, t.id);
             })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
+            className: "st-panel",
+            children: (_panels$activeTab = panels[activeTab]) === null || _panels$activeTab === void 0 ? void 0 : _panels$activeTab.call(panels)
           })]
-        })
+        })]
       })
     })]
   });
