@@ -33,8 +33,7 @@ const Sidebar = ({
     return (
         <nav className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
             <div className="brand" onClick={() => setSidebarCollapsed(!sidebarCollapsed)} title="Toggle Sidebar">
-                <img src={brandIcon} alt="Logo" className="brand-icon" /> 
-                <span className="nav-text">{brandText}</span>
+                <img src="/pet-logo.png" alt="Petly" className="brand-logo-full" />
             </div>
             <ul className="nav-links">
                 {navItems.map(item => (
