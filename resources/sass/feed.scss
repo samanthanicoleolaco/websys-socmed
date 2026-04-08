@@ -37,33 +37,25 @@ $shadow:        0 4px 12px rgba(0, 0, 0, 0.04);
                 justify-content: center;
                 span.nav-text { display: none; }
             }
-            .brand .brand-icon { margin: 0; }
-            .brand .brand-logo-full { width: 40px; }
+            .brand .brand-logo-full {
+                width: 44px;
+                border-radius: 8px;
+            }
         }
         
         .brand {
-            font-family: 'Akaya Kanadaka', system-ui, cursive;
-            font-size: 24px;
-            font-weight: 700;
-            color: $primary-action;
-            padding: 0 20px 30px;
+            padding: 16px 20px 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
             cursor: pointer;
             user-select: none;
-            
-            .brand-icon {
-                width: 28px;
-                height: 28px;
-                object-fit: contain;
-            }
 
             .brand-logo-full {
-                width: 110px;
+                width: 120px;
                 height: auto;
                 object-fit: contain;
                 display: block;
+                border-radius: 10px;
             }
         }
 

@@ -9,10 +9,7 @@ const SidebarIcons = {
     Logout: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
 };
 
-const Sidebar = ({ 
-    brandText = "Pawtastic", 
-    brandIcon = "/pet-logo.png"
-}) => {
+const Sidebar = ({ brandText = "" }) => {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [hoveredNavItem, setHoveredNavItem] = useState(null);
     
@@ -47,7 +44,7 @@ const Sidebar = ({
                         }}
                     >
                         <span className="nav-icon">{item.icon}</span> 
-                        <span className="nav-text" style={brandText === 'Admin' ? {fontSize: '14px'} : {}}>{item.text}</span>
+                        <span className="nav-text">{item.text}</span>
                     </li>
                 ))}
             </ul>
@@ -72,7 +69,7 @@ const Sidebar = ({
                         }}
                     >
                         <span className="nav-icon">{item.icon}</span> 
-                        <span className="nav-text" style={brandText === 'Admin' ? {fontSize: '14px'} : {}}>{item.text}</span>
+                        <span className="nav-text">{item.text}</span>
                     </li>
                 ))}
             </ul>
