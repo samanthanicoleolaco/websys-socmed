@@ -95,24 +95,6 @@ const Feed = () => {
                 <div className="feed-layout">
                     {/* Center Column */}
                     <div className="feed-column">
-                        <div className="feed-tabs-new">
-                            <button className={`pill-tab ${activeFeedTab === 'all' ? 'active' : ''}`} onClick={() => setActiveFeedTab('all')}>
-                                <Icons.Gamepad /> All
-                            </button>
-                            <button className={`pill-tab ${activeFeedTab === 'following' ? 'active' : ''}`} onClick={() => setActiveFeedTab('following')}>
-                                <Icons.Heart /> Following
-                            </button>
-                            <button className={`pill-tab ${activeFeedTab === 'dogs' ? 'active' : ''}`} onClick={() => setActiveFeedTab('dogs')}>
-                                <Icons.Dog /> Dogs
-                            </button>
-                            <button className={`pill-tab ${activeFeedTab === 'cats' ? 'active' : ''}`} onClick={() => setActiveFeedTab('cats')}>
-                                <Icons.Cat /> Cats
-                            </button>
-                            <button className={`pill-tab ${activeFeedTab === 'trending' ? 'active' : ''}`} onClick={() => setActiveFeedTab('trending')}>
-                                Trending
-                            </button>
-                        </div>
-
                         <div className="post-card">
                             <div className="post-header">
                                 <img src="/images/avatar_dog.png" alt="Author" className="post-author-img" />
