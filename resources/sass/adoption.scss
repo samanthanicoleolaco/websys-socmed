@@ -1,6 +1,6 @@
 // Adoption Board — matches in-page template (filters + listings)
-$adopt-primary: #f5a623;
-$adopt-primary-soft: #fff5ec;
+$adopt-primary: #D9A5A0;
+$adopt-primary-soft: #FAE1DD;
 $adopt-blue: #2196f3;
 $adopt-blue-soft: #e3f2fd;
 $adopt-text: #333;
@@ -117,8 +117,8 @@ $adopt-urgent-bg: #faf6f0;
                     transition: border-color 0.2s, background 0.2s;
 
                     &:hover {
-                        background: #fff8ef;
-                        border-color: rgba(255, 152, 0, 0.45);
+                        background: #FFF7F5;
+                        border-color: rgba(217, 165, 160, 0.45);
                     }
                 }
 
@@ -250,7 +250,7 @@ $adopt-urgent-bg: #faf6f0;
                 right: 0;
                 height: 8px;
                 border-radius: 6px;
-                background: #fff4e6;
+                background: #FAE1DD;
                 pointer-events: none;
                 overflow: hidden;
 
@@ -262,7 +262,7 @@ $adopt-urgent-bg: #faf6f0;
                     bottom: 0;
                     width: var(--pct);
                     border-radius: 6px;
-                    background: #ff9800;
+                    background: #D9A5A0;
                 }
             }
 
@@ -283,11 +283,11 @@ $adopt-urgent-bg: #faf6f0;
                 }
 
                 &:focus-visible::-webkit-slider-thumb {
-                    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.35);
+                    box-shadow: 0 0 0 3px rgba(217, 165, 160, 0.35);
                 }
 
                 &:focus-visible::-moz-range-thumb {
-                    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.35);
+                    box-shadow: 0 0 0 3px rgba(217, 165, 160, 0.35);
                 }
 
                 &::-webkit-slider-thumb {
@@ -297,7 +297,7 @@ $adopt-urgent-bg: #faf6f0;
                     height: 22px;
                     border-radius: 50%;
                     background: #fff;
-                    border: 2px solid #ff9800;
+                    border: 2px solid #D9A5A0;
                     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
                     cursor: grab;
                 }
@@ -311,7 +311,7 @@ $adopt-urgent-bg: #faf6f0;
                     height: 22px;
                     border-radius: 50%;
                     background: #fff;
-                    border: 2px solid #ff9800;
+                    border: 2px solid #D9A5A0;
                     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
                     cursor: grab;
                 }
@@ -325,7 +325,7 @@ $adopt-urgent-bg: #faf6f0;
                 margin-top: 8px;
                 font-size: 13px;
                 font-weight: 600;
-                color: #ff9800;
+                color: #D9A5A0;
             }
         }
 
@@ -361,7 +361,7 @@ $adopt-urgent-bg: #faf6f0;
             margin-top: 20px;
             padding: 12px;
             background: $adopt-primary-soft;
-            color: #b8740a;
+            color: #9a6b67;
             border: 1px solid rgba($adopt-primary, 0.35);
             border-radius: 12px;
             font-size: 14px;
@@ -370,7 +370,7 @@ $adopt-urgent-bg: #faf6f0;
             transition: background 0.2s;
 
             &:hover {
-                background: #ffedd8;
+                background: #FAE1DD;
             }
         }
     }
@@ -492,7 +492,7 @@ $adopt-urgent-bg: #faf6f0;
             }
 
             .tag-urgent {
-                background: #ff9800;
+                background: #D9A5A0;
                 color: #fff;
                 font-size: 11px;
                 font-weight: 700;
@@ -586,7 +586,7 @@ $adopt-urgent-bg: #faf6f0;
                     transition: background 0.2s;
 
                     &:hover {
-                        background: #e8940a;
+                        background: #c49090;
                     }
                 }
 
@@ -882,7 +882,7 @@ $adopt-urgent-bg: #faf6f0;
 
     strong {
         font-size: 15px;
-        color: #b8740a;
+        color: #9a6b67;
     }
 
     p {
@@ -899,3 +899,4 @@ $adopt-urgent-bg: #faf6f0;
     line-height: 1.4;
     font-style: italic;
 }
+

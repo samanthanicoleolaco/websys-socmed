@@ -1,10 +1,14 @@
 // Specific styles for Messages layout
+// ── Color System ──────────────────────────────────────────────────────────
+// Primary: #FAE1DD | Action: #D9A5A0 | Secondary: #EED6C4
+// Accent: #CDB4A6 | BG: #FFF7F5 | Border: #F0E5E2
+// Text: #2F2F2F / #7A7A7A
 
 .pawtastic-messages {
     display: flex;
     height: 100vh;
     overflow: hidden;
-    background: #fff;
+    background: #FFF7F5;
     font-family: 'Inter', sans-serif;
 
     .messages-list-sidebar {
@@ -56,8 +60,8 @@
                 }
 
                 input {
-                    background: #f9f9f9;
-                    border: 1px solid #f0f0f0;
+                    background: #FFF7F5;
+                    border: 1px solid #F0E5E2;
                     width: 100%;
                     padding: 12px 14px 12px 38px;
                     border-radius: 8px;
@@ -70,7 +74,7 @@
                     }
 
                     &:focus {
-                        border-color: #fab364;
+                        border-color: #D9A5A0;
                     }
                 }
             }
@@ -106,7 +110,7 @@
                 }
 
                 .start-convo-btn-small {
-                    background: #FAB364;
+                    background: #D9A5A0;
                     color: white;
                     border: none;
                     padding: 8px 16px;
@@ -117,7 +121,7 @@
                     transition: all 0.2s;
 
                     &:hover {
-                        background: #f9a241;
+                        background: #c49090;
                         transform: translateY(-1px);
                     }
                 }
@@ -132,11 +136,11 @@
                 position: relative;
 
                 &:hover {
-                    background: #fafafa;
+                    background: #FFF7F5;
                 }
 
                 &.active {
-                    background: #FFF4ea;
+                    background: #FAE1DD;
                 }
 
                 .chat-avatar {
@@ -208,7 +212,7 @@
                 }
 
                 .unread-badge {
-                    background: #FAB364; // matching the active orange 
+                    background: #D9A5A0; // matching the active orange 
                     color: white;
                     font-size: 10px;
                     width: 20px;
@@ -235,7 +239,7 @@
 
         .chat-header {
             padding: 16px 30px;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #F0E5E2;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -329,7 +333,7 @@
                     .icon-circle {
                         width: 80px;
                         height: 80px;
-                        background: #FFF4EA;
+                        background: #FAE1DD;
                         border-radius: 50%;
                         display: flex;
                         justify-content: center;
@@ -339,7 +343,7 @@
                         svg {
                             width: 36px;
                             height: 36px;
-                            color: #FAB364;
+                            color: #D9A5A0;
                         }
                     }
 
@@ -372,7 +376,7 @@
                 margin: 20px 0;
                 
                 span {
-                    background: #f9f9f9;
+                    background: #FFF7F5;
                     color: #999;
                     font-size: 12px;
                     padding: 4px 12px;
@@ -391,7 +395,7 @@
 
                     .bubble {
                         background: #fff;
-                        border: 1px solid #f0f0f0;
+                        border: 1px solid #F0E5E2;
                         color: #333;
                         border-bottom-left-radius: 4px;
                     }
@@ -404,7 +408,7 @@
                     justify-content: flex-end;
 
                     .bubble {
-                        background: #FAB364;
+                        background: #D9A5A0;
                         color: #fff;
                         border-bottom-right-radius: 4px;
                     }
@@ -501,8 +505,8 @@
                                 border-radius: 8px;
 
                                 &.orange {
-                                    background: #FFF4EA;
-                                    color: #FAB364;
+                                    background: #FAE1DD;
+                                    color: #D9A5A0;
                                 }
                             }
 
@@ -547,12 +551,12 @@
                                 }
 
                                 &.accept-btn {
-                                    background: #FAB364;
-                                    border: 1px solid #FAB364;
+                                    background: #D9A5A0;
+                                    border: 1px solid #D9A5A0;
                                     color: #fff;
 
                                     &:hover {
-                                        background: #f9a241;
+                                        background: #c49090;
                                     }
                                 }
                             }
@@ -597,8 +601,8 @@
                     align-items: center;
 
                     .date-badge {
-                        background: #FFF4EA;
-                        color: #FAB364;
+                        background: #FAE1DD;
+                        color: #D9A5A0;
                         min-width: 44px;
                         height: 46px;
                         border-radius: 8px;
@@ -623,7 +627,7 @@
                     margin-top: 10px;
                     
                     a {
-                        color: #FAB364;
+                        color: #D9A5A0;
                         font-size: 12px;
                         font-weight: 600;
                         text-decoration: none;
@@ -636,7 +640,7 @@
         }
 
         .chat-input-area {
-            border-top: 1px solid #f0f0f0;
+            border-top: 1px solid #F0E5E2;
             padding: 16px 30px 24px;
             background: #fff;
 
@@ -662,7 +666,7 @@
                     &:hover { background: #f5f5f5; }
 
                     &.orange {
-                        background: #FFF4EA; border-color: #ffe4cc; color: #F5A623;
+                        background: #FAE1DD; border-color: #F0E5E2; color: #D9A5A0;
                     }
                     &.blue {
                         background: #ebf5ff; border-color: #dbeafe; color: #3b82f6;
@@ -679,7 +683,7 @@
 
                 .input-field-container {
                     flex: 1;
-                    background: #f7f7f7;
+                    background: #FFF7F5;
                     border-radius: 20px;
                     display: flex;
                     align-items: center;
@@ -709,7 +713,7 @@
                     width: 44px;
                     height: 44px;
                     border-radius: 50%;
-                    background: #FAB364;
+                    background: #D9A5A0;
                     color: white;
                     display: flex;
                     align-items: center;
@@ -719,7 +723,7 @@
                     transition: background 0.2s;
 
                     &:hover {
-                        background: #f9a241;
+                        background: #c49090;
                     }
 
                     svg { width: 18px; height: 18px; transform: translateX(-1px); }
@@ -732,7 +736,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #fbfbfb;
+            background: #FFF7F5;
 
             .empty-sign-main {
                 text-align: center;
@@ -752,7 +756,7 @@
                     svg {
                         width: 40px;
                         height: 40px;
-                        color: #FAB364;
+                        color: #D9A5A0;
                     }
                 }
 
@@ -771,7 +775,7 @@
                 }
 
                 .start-convo-btn {
-                    background: #FAB364;
+                    background: #D9A5A0;
                     color: #fff;
                     border: none;
                     padding: 12px 30px;
@@ -783,7 +787,7 @@
                     transition: transform 0.2s, background 0.2s;
 
                     &:hover {
-                        background: #f9a241;
+                        background: #c49090;
                         transform: translateY(-2px);
                     }
                 }
@@ -822,7 +826,7 @@
                 background: #fdfdfd;
                 transition: border-color 0.2s;
                 
-                &:focus { outline: none; border-color: #FAB364; }
+                &:focus { outline: none; border-color: #D9A5A0; }
                 
                 /* Keep the right side clear for Webkit native calendar picker icon */
                 &::-webkit-calendar-picker-indicator {
@@ -834,7 +838,7 @@
             }
 
             .global-action-btn {
-                background: #FAB364;
+                background: #D9A5A0;
                 color: #fff;
                 border: none;
                 padding: 14px 30px;
@@ -847,7 +851,7 @@
                 box-shadow: 0 4px 12px rgba(250, 179, 100, 0.3);
 
                 &:hover {
-                    background: #f3a042;
+                    background: #c49090;
                     transform: translateY(-2px);
                     box-shadow: 0 6px 16px rgba(250, 179, 100, 0.4);
                 }
@@ -863,7 +867,7 @@
                 align-items: center;
                 justify-content: space-between;
                 padding: 20px 24px;
-                border-bottom: 1px solid #f0f0f0;
+                border-bottom: 1px solid #F0E5E2;
 
                 h3 { margin: 0; font-size: 18px; color: #212121; }
                 .close-btn { 
@@ -892,7 +896,7 @@
 
                     input {
                         width: 100%;
-                        background: #f7f7f7;
+                        background: #FFF7F5;
                         border: 1px solid #eaeaea;
                         padding: 12px 14px 12px 38px;
                         border-radius: 8px;
@@ -900,7 +904,7 @@
                         transition: border-color 0.2s;
 
                         &:focus {
-                            border-color: #FAB364;
+                            border-color: #D9A5A0;
                             background: #fff;
                         }
                     }
@@ -920,7 +924,7 @@
                         border: 1px solid transparent;
 
                         &:hover {
-                            background: #fbfbfb;
+                            background: #FFF7F5;
                             border-color: #f0f0f0;
                         }
 
@@ -980,7 +984,8 @@
             color: #333;
             cursor: pointer;
             transition: background 0.2s;
-            &:hover { background: #f7f7f7; }
+            &:hover { background: #FFF7F5; }
         }
     }
 }
+

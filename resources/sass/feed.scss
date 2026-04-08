@@ -1,27 +1,30 @@
 // feed.scss
-// Variables
-$bg-color: #FAFAFA;
-$white: #fff;
-$text-dark: #333;
-$text-light: #BDBDBD;
-$primary: #F5A623;
-$border-color: #EBEBEB;
-$shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+// ── Color System ──────────────────────────────────────────────────────────
+$primary:       #FAE1DD;   // primary theme
+$primary-action:#D9A5A0;   // buttons / active states
+$secondary:     #EED6C4;   // secondary accents
+$accent:        #CDB4A6;   // subtle accents
+$bg:            #FFF7F5;   // page background
+$white:         #FFFFFF;   // cards
+$border:        #F0E5E2;   // borders
+$text:          #2F2F2F;   // main text
+$text-muted:    #7A7A7A;   // secondary text
+$shadow:        0 4px 12px rgba(0, 0, 0, 0.04);
 
 .pawtastic-feed {
     display: flex;
     width: 100vw;
     height: 100vh;
-    background-color: $bg-color;
+    background-color: $bg;
     font-family: 'Inter', sans-serif;
-    color: $text-dark;
+    color: $text;
     overflow: hidden;
 
     .sidebar {
         width: 250px;
         flex-shrink: 0;
         background: $white;
-        border-right: 1px solid $border-color;
+        border-right: 1px solid $border;
         display: flex;
         flex-direction: column;
         padding: 20px 0;
@@ -41,7 +44,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             font-family: 'Akaya Kanadaka', system-ui, cursive;
             font-size: 24px;
             font-weight: 700;
-            color: $primary;
+            color: $primary-action;
             padding: 0 20px 30px;
             display: flex;
             align-items: center;
@@ -65,7 +68,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             li {
                 padding: 15px 25px;
                 cursor: pointer;
-                color: #999;
+                color: $text-muted;
                 font-size: 14px;
                 font-weight: 500;
                 display: flex;
@@ -81,9 +84,9 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 }
                 
                 &.hovered, &.active {
-                    color: $primary;
-                    background: #FFF5EC;
-                    border-left: 4px solid $primary;
+                    color: $primary-action;
+                    background: $primary;
+                    border-left: 4px solid $primary-action;
                     font-weight: 600;
                 }
             }
@@ -91,7 +94,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
         .bottom-links {
             flex-grow: 0;
-            border-top: 1px solid $border-color;
+            border-top: 1px solid $border;
             padding-top: 20px;
         }
     }
@@ -105,7 +108,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         .top-nav {
             height: 70px;
             background: $white;
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid $border;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -115,7 +118,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 background: $white;
                 padding: 8px 20px;
                 border-radius: 12px;
-                border: 1px solid $border-color;
+                border: 1px solid $border;
                 display: flex;
                 align-items: center;
                 gap: 10px;
@@ -123,7 +126,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 transition: border-color 0.2s;
                 
                 .search-icon {
-                    color: #bbb;
+                    color: $accent;
                     display: flex;
                 }
                 
@@ -132,17 +135,17 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                     background: none;
                     outline: none;
                     width: 100%;
-                    color: $text-dark;
+                    color: $text;
                     font-size: 14px;
                     
                     &::placeholder {
-                        color: #bbb;
+                        color: $accent;
                         font-weight: 400;
                     }
                 }
                 
                 &.active {
-                    border-color: $primary;
+                    border-color: $primary-action;
                 }
             }
 
@@ -156,18 +159,18 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                     border: none;
                     padding: 4px;
                     cursor: pointer;
-                    color: $text-light;
+                    color: $text-muted;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     
                     svg {
-                        stroke: #888;
+                        stroke: $accent;
                         transition: stroke 0.2s;
                     }
                     
                     &:hover svg {
-                        stroke: $text-dark;
+                        stroke: $text;
                     }
                 }
                 
@@ -194,8 +197,8 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 .create-post-card {
                     background: $white;
                     border-radius: 12px;
-                    border: 1px solid $border-color;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+                    border: 1px solid $border;
+                    box-shadow: $shadow;
                     padding: 20px;
                     margin-bottom: 20px;
                     
@@ -208,8 +211,8 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             width: 44px;
                             height: 44px;
                             border-radius: 50%;
-                            background: #FFF0E0;
-                            color: #F96D4D;
+                            background: $primary;
+                            color: $primary-action;
                             display: flex;
                             align-items: center;
                             justify-content: center;
@@ -223,11 +226,11 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             border: none;
                             outline: none;
                             font-size: 15px;
-                            color: $text-dark;
+                            color: $text;
                             background: transparent;
                             
                             &::placeholder {
-                                color: #A0A0A0;
+                                color: $accent;
                                 font-weight: 400;
                             }
                         }
@@ -235,7 +238,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                     
                     .create-post-divider {
                         height: 1px;
-                        background: #F4F4F4;
+                        background: $border;
                         margin: 20px 0;
                     }
                     
@@ -256,23 +259,18 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                                 background: none;
                                 border: none;
                                 cursor: pointer;
-                                color: #7A8B9A;
+                                color: $text-muted;
                                 font-size: 13px;
                                 font-weight: 500;
                                 transition: color 0.2s;
                                 
-                                &:hover {
-                                    color: $text-dark;
-                                }
-                                
-                                svg {
-                                    stroke: #7A8B9A;
-                                }
+                                &:hover { color: $text; }
+                                svg { stroke: $text-muted; }
                             }
                         }
                         
                         .post-submit-btn {
-                            background: #FA9E7B;
+                            background: $primary-action;
                             color: $white;
                             border: none;
                             padding: 8px 20px;
@@ -285,9 +283,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             gap: 6px;
                             transition: background 0.2s;
                             
-                            &:hover {
-                                background: #f9875e;
-                            }
+                            &:hover { background: darken($primary-action, 8%); }
                         }
                     }
                 }
@@ -303,33 +299,25 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         align-items: center;
                         gap: 8px;
                         padding: 8px 18px;
-                        border: 1px solid #EBEBEB;
+                        border: 1px solid $border;
                         border-radius: 24px;
-                        background: #fff;
-                        color: #555;
+                        background: $white;
+                        color: $text-muted;
                         font-family: 'Inter', sans-serif;
                         font-size: 14px;
                         font-weight: 500;
                         cursor: pointer;
                         transition: all 0.2s;
                         
-                        svg {
-                            stroke: #888;
-                        }
-
-                        &:hover {
-                            background: #f9f9f9;
-                        }
+                        svg { stroke: $accent; }
+                        &:hover { background: $bg; }
 
                         &.active {
-                            background: $primary;
-                            border-color: $primary;
-                            color: #fff;
+                            background: $primary-action;
+                            border-color: $primary-action;
+                            color: $white;
                             font-weight: 600;
-
-                            svg {
-                                stroke: #fff;
-                            }
+                            svg { stroke: $white; }
                         }
                     }
                 }
@@ -337,7 +325,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 .post-card {
                     background: $white;
                     border-radius: 16px;
-                    border: 1px solid $border-color;
+                    border: 1px solid $border;
                     box-shadow: $shadow;
                     overflow: hidden;
                     margin-top: 10px;
@@ -363,12 +351,12 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             .author-name {
                                 font-weight: 600;
                                 font-size: 14px;
-                                color: $text-dark;
+                                color: $text;
                             }
                             
                             .post-time {
                                 font-size: 11px;
-                                color: #BDBDBD;
+                                color: $accent;
                                 margin-top: 2px;
                             }
                         }
@@ -376,7 +364,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         .more-btn {
                             background: none;
                             border: none;
-                            color: #BDBDBD;
+                            color: $accent;
                             font-size: 20px;
                             cursor: pointer;
                         }
@@ -397,7 +385,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         button {
                             background: none;
                             border: none;
-                            color: #A0A0A0;
+                            color: $text-muted;
                             font-size: 13px;
                             cursor: pointer;
                             display: flex;
@@ -407,17 +395,14 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             transition: color 0.2s;
                             
                             &.liked {
-                                color: $primary;
+                                color: $primary-action;
                                 font-weight: 700;
-                                svg {
-                                    fill: $primary;
-                                    stroke: $primary;
-                                }
+                                svg { fill: $primary-action; stroke: $primary-action; }
                             }
 
                             &:hover {
-                                color: $text-dark;
-                                svg { stroke: $text-dark; }
+                                color: $text;
+                                svg { stroke: $text; }
                             }
                         }
                     }
@@ -427,10 +412,11 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         .comment-input {
                             width: 100%;
                             padding: 12px;
-                            border: 1px solid $border-color;
+                            border: 1px solid $border;
                             border-radius: 12px;
                             font-size: 13px;
                             outline: none;
+                            &:focus { border-color: $primary-action; }
                         }
                     }
                 }
@@ -444,13 +430,13 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 .side-card {
                     background: $white;
                     border-radius: 16px;
-                    border: 1px solid $border-color;
+                    border: 1px solid $border;
                     box-shadow: $shadow;
                     padding: 20px; 
                     
                     h4 {
                         font-size: 13px;
-                        color: $text-dark;
+                        color: $text;
                         margin: 0 0 15px 0;
                         font-weight: 600;
                         text-transform: uppercase;
@@ -474,14 +460,14 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         strong {
                             font-size: 13px;
                             font-weight: 600;
-                            color: $text-dark;
+                            color: $text;
                             margin-bottom: 3px;
                         }
                         
                         span {
                             font-size: 12px;
                             font-weight: 400;
-                            color: #A0A0A0;
+                            color: $text-muted;
                         }
                     }
                 }
@@ -497,7 +483,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         margin-bottom: 8px;
 
                         &.hovered {
-                            background: $bg-color;
+                            background: $bg;
                             cursor: pointer;
                         }
                         
@@ -505,7 +491,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             width: 38px;
                             height: 38px;
                             border-radius: 50%;
-                            background: #EBEBEB;
+                            background: $border;
                             background-size: cover;
                         }
                         
@@ -516,13 +502,13 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             .name {
                                 font-size: 13px;
                                 font-weight: 600;
-                                color: $text-dark;
+                                color: $text;
                                 margin-bottom: 2px;
                             }
                             
                             .breed {
                                 font-size: 11px;
-                                color: #A0A0A0;
+                                color: $text-muted;
                             }
                         }
                     }
@@ -534,14 +520,14 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     .story-modal-overlay {
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.8);
+        background: rgba(0,0,0,0.6);
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 1000;
 
         .story-modal {
-            background: #fff;
+            background: $white;
             padding: 30px;
             border-radius: 16px;
             text-align: center;
@@ -550,18 +536,18 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             .modal-avatar {
                 width: 150px;
                 height: 150px;
-                background: #eee;
+                background: $primary;
                 border-radius: 50%;
                 margin: 20px auto;
                 background-size: cover;
-                border: 4px solid $primary;
+                border: 4px solid $primary-action;
             }
 
             button {
                 margin-top: 15px;
                 padding: 10px 30px;
-                background: $primary;
-                color: #fff;
+                background: $primary-action;
+                color: $white;
                 border: none;
                 border-radius: 20px;
                 font-weight: bold;
@@ -570,16 +556,15 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         
         .create-post-modal {
-            background: #fff;
+            background: $white;
             border-radius: 12px;
             width: 100%;
             max-width: 550px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             overflow: hidden;
             
-            /* Reused from generic create-post-card */
             .create-post-card {
-                background: #fff;
+                background: $white;
                 border-radius: 12px;
                 padding: 20px;
                 
@@ -592,8 +577,8 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         width: 44px;
                         height: 44px;
                         border-radius: 50%;
-                        background: #FFF0E0;
-                        color: #F96D4D;
+                        background: $primary;
+                        color: $primary-action;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -607,11 +592,11 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         border: none;
                         outline: none;
                         font-size: 15px;
-                        color: $text-dark;
+                        color: $text;
                         background: transparent;
                         
                         &::placeholder {
-                            color: #A0A0A0;
+                            color: $accent;
                             font-weight: 400;
                         }
                     }
@@ -619,7 +604,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 
                 .create-post-divider {
                     height: 1px;
-                    background: #F4F4F4;
+                    background: $border;
                     margin: 20px 0;
                 }
                 
@@ -640,23 +625,18 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                             background: none;
                             border: none;
                             cursor: pointer;
-                            color: #7A8B9A;
+                            color: $text-muted;
                             font-size: 13px;
                             font-weight: 500;
                             transition: color 0.2s;
                             
-                            &:hover {
-                                color: $text-dark;
-                            }
-                            
-                            svg {
-                                stroke: #7A8B9A;
-                            }
+                            &:hover { color: $text; }
+                            svg { stroke: $text-muted; }
                         }
                     }
                     
                     .post-submit-btn {
-                        background: #FA9E7B;
+                        background: $primary-action;
                         color: $white;
                         border: none;
                         padding: 8px 20px;
@@ -669,9 +649,7 @@ $shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         gap: 6px;
                         transition: background 0.2s;
                         
-                        &:hover {
-                            background: #f9875e;
-                        }
+                        &:hover { background: darken($primary-action, 8%); }
                     }
                 }
             }

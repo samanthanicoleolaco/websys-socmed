@@ -1,16 +1,19 @@
-// ── Settings Page — Instagram/Facebook-style ──────────────────────────────
+// ── Settings Page ─────────────────────────────────────────────────────────
 
-$primary:      #0095f6;
-$primary-dark: #0074cc;
-$danger:       #ed4956;
-$danger-light: #fff0f1;
-$text:         #262626;
-$text-muted:   #737373;
-$border:       #dbdbdb;
-$bg:           #fafafa;
-$white:        #ffffff;
-$radius:       8px;
-$radius-sm:    4px;
+$primary:        #FAE1DD;
+$primary-action: #D9A5A0;
+$primary-dark:   darken(#D9A5A0, 10%);
+$secondary:      #EED6C4;
+$accent:         #CDB4A6;
+$bg:             #FFF7F5;
+$white:          #FFFFFF;
+$border:         #F0E5E2;
+$text:           #2F2F2F;
+$text-muted:     #7A7A7A;
+$danger:         #c0392b;
+$danger-light:   #fdf0ef;
+$radius:         8px;
+$radius-sm:      6px;
 
 // ── Page wrapper ──────────────────────────────────────────────────────────
 .st-page {
@@ -38,6 +41,7 @@ $radius-sm:    4px;
 .st-nav {
     border-right: 1px solid $border;
     padding: 8px 0;
+    background: $white;
 
     .st-nav-title {
         font-size: 1rem;
@@ -65,12 +69,12 @@ $radius-sm:    4px;
     position: relative;
 
     &:hover {
-        background: #f2f2f2;
+        background: $bg;
         color: $text;
     }
 
     &--active {
-        background: #efefef;
+        background: $primary;
         color: $text;
         font-weight: 600;
 
@@ -81,7 +85,7 @@ $radius-sm:    4px;
             top: 0;
             bottom: 0;
             width: 3px;
-            background: $text;
+            background: $primary-action;
             border-radius: 0 2px 2px 0;
         }
     }
@@ -98,7 +102,7 @@ $radius-sm:    4px;
     .st-nav-chevron {
         width: 16px;
         height: 16px;
-        opacity: 0.4;
+        opacity: 0.35;
         svg { width: 100%; height: 100%; }
     }
 }
@@ -107,6 +111,7 @@ $radius-sm:    4px;
 .st-panel {
     padding: 32px 40px;
     overflow-y: auto;
+    background: $white;
 }
 
 .st-section-title {
@@ -135,7 +140,7 @@ $radius-sm:    4px;
         height: 56px;
         border-radius: 50%;
         object-fit: cover;
-        border: 1px solid $border;
+        border: 2px solid $primary;
     }
 
     .st-avatar-btn {
@@ -145,7 +150,7 @@ $radius-sm:    4px;
         width: 22px;
         height: 22px;
         border-radius: 50%;
-        background: $text;
+        background: $primary-action;
         border: 2px solid $white;
         color: $white;
         display: flex;
@@ -173,7 +178,7 @@ $radius-sm:    4px;
 .st-link-btn {
     background: none;
     border: none;
-    color: $primary;
+    color: $primary-action;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
@@ -214,7 +219,7 @@ $radius-sm:    4px;
 .st-input-prefix {
     position: absolute;
     left: 12px;
-    color: $text-muted;
+    color: $accent;
     font-size: 0.9rem;
     pointer-events: none;
     z-index: 1;
@@ -223,7 +228,7 @@ $radius-sm:    4px;
 .st-input-icon-left {
     position: absolute;
     left: 12px;
-    color: $text-muted;
+    color: $accent;
     display: flex;
     align-items: center;
     pointer-events: none;
@@ -236,7 +241,7 @@ $radius-sm:    4px;
     right: 12px;
     background: none;
     border: none;
-    color: $text-muted;
+    color: $accent;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -254,14 +259,14 @@ $radius-sm:    4px;
     border-radius: 20px;
 
     &--verified {
-        background: #e8f5e9;
+        background: #edf7ee;
         color: #2e7d32;
     }
 
     &--current {
         position: static;
-        background: #e3f2fd;
-        color: #1565c0;
+        background: $primary;
+        color: $primary-action;
         margin-left: 6px;
         font-size: 0.7rem;
     }
@@ -281,12 +286,12 @@ $radius-sm:    4px;
     font-family: inherit;
     appearance: none;
 
-    &::placeholder { color: #aaa; }
+    &::placeholder { color: $accent; }
 
     &:focus {
         outline: none;
-        border-color: #a8a8a8;
-        box-shadow: 0 0 0 1px #a8a8a8;
+        border-color: $primary-action;
+        box-shadow: 0 0 0 3px rgba(217, 165, 160, 0.15);
     }
 
     &--prefix { padding-left: 28px; }
@@ -294,7 +299,7 @@ $radius-sm:    4px;
 }
 
 .st-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7A7A' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     padding-right: 32px;
@@ -324,7 +329,7 @@ $radius-sm:    4px;
 }
 
 .st-btn-primary {
-    background: $primary;
+    background: $primary-action;
     color: $white;
     border: none;
     border-radius: $radius-sm;
@@ -382,14 +387,14 @@ $radius-sm:    4px;
     width: 44px;
     height: 24px;
     border-radius: 12px;
-    background: #dbdbdb;
+    background: $border;
     border: none;
     cursor: pointer;
     flex-shrink: 0;
     transition: background 0.2s;
     padding: 0;
 
-    &--on { background: $primary; }
+    &--on { background: $primary-action; }
 
     .st-toggle__thumb {
         position: absolute;
@@ -399,7 +404,7 @@ $radius-sm:    4px;
         height: 18px;
         border-radius: 50%;
         background: $white;
-        box-shadow: 0 1px 3px rgba(0,0,0,.2);
+        box-shadow: 0 1px 3px rgba(0,0,0,.15);
         transition: transform 0.2s;
     }
 
@@ -426,7 +431,7 @@ $radius-sm:    4px;
     justify-content: space-between;
     gap: 16px;
     padding: 14px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid $border;
 
     &:last-child { border-bottom: none; }
 }
@@ -487,7 +492,7 @@ $radius-sm:    4px;
     justify-content: space-between;
     gap: 16px;
     padding: 14px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid $border;
 
     &:last-child { border-bottom: none; }
 
@@ -504,7 +509,7 @@ $radius-sm:    4px;
     align-items: center;
     gap: 14px;
     padding: 14px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid $border;
 
     &:last-child { border-bottom: none; }
 }
@@ -548,18 +553,18 @@ $radius-sm:    4px;
     padding: 14px 0;
     background: none;
     border: none;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid $border;
     cursor: pointer;
     text-align: left;
 
     &:last-child { border-bottom: none; }
-    &:hover { background: #fafafa; }
+    &:hover { background: $bg; }
 
     .st-notif-text { flex: 1; }
 }
 
 .st-help-chevron {
-    color: $text-muted;
+    color: $accent;
     svg { width: 16px; height: 16px; }
 }
 
@@ -578,10 +583,10 @@ $radius-sm:    4px;
     font-weight: 500;
     z-index: 9999;
     animation: st-slide-up 0.25s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
 
     &--success {
-        background: #262626;
+        background: $text;
         color: $white;
     }
 

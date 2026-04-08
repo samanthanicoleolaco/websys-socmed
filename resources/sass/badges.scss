@@ -35,7 +35,7 @@
             margin-bottom: 24px;
 
             .unlocked-text {
-                color: #FAB364;
+                color: #D9A5A0;
                 font-size: 14px;
                 font-weight: 600;
             }
@@ -73,9 +73,9 @@
 
                 &.unlocked {
                     .icon-circle {
-                        background: #FFF4EA;
-                        color: #FAB364;
-                        box-shadow: 0 4px 12px rgba(250, 179, 100, 0.2);
+                        background: #FAE1DD;
+                        color: #D9A5A0;
+                        box-shadow: 0 4px 12px rgba(217, 165, 160, 0.2);
                     }
                 }
 
@@ -150,8 +150,8 @@
                         .champion-badge {
                             display: inline-block;
                             font-size: 10px;
-                            color: #FAB364;
-                            border: 1px solid #FAB364;
+                            color: #D9A5A0;
+                            border: 1px solid #D9A5A0;
                             padding: 2px 6px;
                             border-radius: 10px;
                             font-weight: 700;
@@ -175,7 +175,7 @@
                     font-weight: 600;
                     flex-shrink: 0;
 
-                    &:hover { color: #FAB364; }
+                    &:hover { color: #D9A5A0; }
                 }
             }
         }
@@ -235,7 +235,7 @@
                 .view-history {
                     background: none;
                     border: none;
-                    color: #FAB364;
+                    color: #D9A5A0;
                     font-size: 14px;
                     font-weight: 600;
                     display: flex;
@@ -243,7 +243,7 @@
                     gap: 4px;
                     cursor: pointer;
 
-                    &:hover { color: #f9a241; }
+                    &:hover { color: #c49090; }
                 }
             }
 
@@ -302,13 +302,13 @@
                             position: absolute;
                             bottom: 12px;
                             right: 12px;
-                            background: #FAB364;
+                            background: #D9A5A0;
                             color: #fff;
                             font-size: 11px;
                             font-weight: 700;
                             padding: 6px 12px;
                             border-radius: 20px;
-                            box-shadow: 0 4px 10px rgba(250, 179, 100, 0.3);
+                            box-shadow: 0 4px 10px rgba(217, 165, 160, 0.3);
                             max-width: calc(100% - 24px);
                             text-align: center;
                         }
@@ -332,7 +332,7 @@
 
                         .submit-entry-btn {
                             width: 100%;
-                            background: #FAB364;
+                            background: #D9A5A0;
                             color: #fff;
                             border: none;
                             padding: 12px;
@@ -346,7 +346,7 @@
                             cursor: pointer;
                             transition: background 0.2s;
 
-                            &:hover { background: #f9a241; }
+                            &:hover { background: #c49090; }
                         }
                     }
                 }
@@ -381,8 +381,8 @@
 
                 .global-weekly-pill {
                     font-size: 11px;
-                    color: #FAB364;
-                    background: #FFF4EA;
+                    color: #D9A5A0;
+                    background: #FAE1DD;
                     padding: 4px 10px;
                     border-radius: 12px;
                     font-weight: 600;
@@ -405,7 +405,7 @@
                     &:hover { background: #fbfbfb; }
 
                     &.self-highlight {
-                        background: #FFF4EA;
+                        background: #FAE1DD;
                     }
 
                     .rank {
@@ -465,3 +465,4 @@
         }
     }
 }
+
