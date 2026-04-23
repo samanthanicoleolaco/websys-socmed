@@ -1,0 +1,124 @@
+// resources/sass/_theme.scss
+
+// ── Light (default) ────────────────────────────────────────────────────────────
+:root {
+    --bg-page:        #F8F9FA;
+    --bg-card:        #FFFFFF;
+    --text-main:      #2F2F2F;
+    --text-muted:     #7A7A7A;
+    --border-color:   #E2E8F0;
+    --primary-color:  #E6E6FA;
+    --primary-action: #898AA6;
+    --shadow:         0 4px 12px rgba(0, 0, 0, 0.06);
+    --input-bg:       #FFFFFF;
+}
+
+// ── Smooth global transitions when toggling theme ──────────────────────────────
+html {
+    transition: background-color 0.25s ease;
+}
+
+body,
+.pawtastic-feed,
+.messages-page,
+.profile-page,
+.modern-badges,
+.adoption-page,
+.settings-page,
+.feed-card,
+.sidebar-aside,
+.msg-list-pane,
+.msg-main-pane,
+.msg-chat-header,
+.msg-input-bar,
+.msg-modal,
+.feed-create-modal,
+.post-menu__dropdown,
+.reaction-picker {
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.2s ease;
+}
+
+// ── Dark ───────────────────────────────────────────────────────────────────────
+[data-theme='dark'] {
+    --bg-page:        #111418;
+    --bg-card:        #1C2028;
+    --text-main:      #E8EAF0;
+    --text-muted:     #8A8FA8;
+    --border-color:   #2C3248;
+    --primary-color:  #242A3A;
+    --primary-action: #C9A9C0;
+    --shadow:         0 4px 20px rgba(0, 0, 0, 0.4);
+    --input-bg:       #1A1F2E;
+
+    // Body & page wrappers — all use var(--bg-page) already,
+    // but explicit body override ensures html bg matches
+    body { background-color: var(--bg-page) !important; }
+
+    // ── Profile cover gradient in dark ──────────────────────────────────
+    .profile-cover__bg {
+        background: linear-gradient(135deg, #2a2040 0%, #1a1828 100%) !important;
+    }
+
+    .profile-avatar { border-color: var(--bg-card) !important; }
+
+    // ── Input fields everywhere ──────────────────────────────────────────
+    input,
+    select,
+    textarea {
+        background-color: var(--input-bg) !important;
+        border-color: var(--border-color) !important;
+        color: var(--text-main) !important;
+        &::placeholder { color: var(--text-muted) !important; }
+    }
+
+    // ── Messages: self-bubble stays themed, other-bubble respects dark card
+    .msg-bubble-row--other .msg-bubble {
+        background-color: var(--bg-card) !important;
+        border-color: var(--border-color) !important;
+        color: var(--text-main) !important;
+    }
+
+    // ── Achievements — lighten the hardcoded pastels ─────────────────────
+    .profile-achievement--gold   { background: #2a2010 !important; border-color: #4a3500 !important; color: #fbbf24 !important; }
+    .profile-achievement--blue   { background: #0f1e36 !important; border-color: #1e3a5f !important; color: #93c5fd !important; }
+    .profile-achievement--purple { background: #1a1040 !important; border-color: #3b1f60 !important; color: #d8b4fe !important; }
+    .profile-achievement--green  { background: #0a2010 !important; border-color: #1a4020 !important; color: #86efac !important; }
+
+    // ── msg-tab in dark ──────────────────────────────────────────────────
+    .msg-tab {
+        border-color: var(--border-color) !important;
+        color: var(--text-muted) !important;
+        background: transparent !important;
+        &--active {
+            background: var(--primary-action) !important;
+            border-color: var(--primary-action) !important;
+            color: #fff !important;
+        }
+    }
+
+    // ── profile tabs ────────────────────────────────────────────────────
+    .profile-tabs {
+        border-bottom-color: var(--border-color) !important;
+        &__tab { color: var(--text-muted) !important; }
+        &__tab--active { color: var(--primary-action) !important; border-bottom-color: var(--primary-action) !important; }
+    }
+
+    // ── modal overlay slightly darker ───────────────────────────────────
+    .feed-modal-overlay { background: rgba(0, 0, 0, 0.7) !important; }
+
+    // ── badges page card bg ─────────────────────────────────────────────
+    .profile-stats-card,
+    .leaderboard-card-modern,
+    .badge-card-modern,
+    .contest-banner { background-color: var(--bg-card) !important; border-color: var(--border-color) !important; }
+
+    // ── feed create modal specific elements ────────────────────────────
+    .feed-create-modal__audience-btn,
+    .feed-create-modal__add-row {
+        background: var(--input-bg) !important;
+        border-color: var(--border-color) !important;
+    }
+}

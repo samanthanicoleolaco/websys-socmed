@@ -98,7 +98,7 @@ const Login = () => {
                 <div className="sidebar-image"></div>
                 <div className="sidebar-content">
                     <div className="brand">
-                        <img src="/pet-logo.png" alt="Pawtastic Logo" className="brand-icon" /> Pawtastic
+                        <img src="/petlogo.png" alt="Petverse Logo" className="brand-icon" /> Petverse
                     </div>
                     <h1 className="quote">"Every Paw Has a Story"</h1>
                     <p className="description">
@@ -135,7 +135,7 @@ const Login = () => {
                                 </button>
                             </form>
                             <p className="signup-text">
-                                New to Pawtastic? <a href="/register">Create an account</a>
+                                New to Petverse? <a href="/register">Create an account</a>
                             </p>
                         </>
                     )}

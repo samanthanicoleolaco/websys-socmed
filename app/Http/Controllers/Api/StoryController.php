@@ -13,26 +13,46 @@ class StoryController extends Controller
 {
     public function index(Request $request)
     {
-        // Fetch active stories (unexpired). 
-        // This query can be further customized to filter down to only `following` users.
-        $activeStories = Story::with(['user'])->withCount('views')
+        // Fetch active stories (unexpired) grouped by user
+        $stories = Story::with(['user.pet'])
             ->where('expires_at', '>', Carbon::now())
+            ->whereDoesntHave('user.pet', function ($query) {
+                $query->where('name', 'Max');
+            })
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get()
+            ->groupBy('user_id')
+            ->map(function ($userStories) {
+                $latest = $userStories->first();
+                return [
+                    'user' => $latest->user,
+                    'stories' => $userStories,
+                    'latest_story' => $latest,
+                    'count' => $userStories->count(),
+                ];
+            })
+            ->values();
             
-        return response()->json($activeStories);
+        return response()->json($stories);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'media' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:20480',
+            'media' => 'required|file|mimes:jpeg,png,jpg,webp,mp4,mov,avi,webm,quicktime|max:51200',
             'caption' => 'nullable|string|max:255',
         ]);
 
-        $path = $request->file('media')->store('stories', 'public');
-        $extension = $request->file('media')->getClientOriginalExtension();
-        $type = in_array(strtolower($extension), ['mp4', 'mov', 'avi']) ? 'video' : 'image';
+        if (!$request->hasFile('media')) {
+            return response()->json(['message' => 'No media file provided.'], 400);
+        }
+
+        $file = $request->file('media');
+        $mime = $file->getMimeType();
+        $is_video = str_starts_with($mime, 'video/');
+        $type = $is_video ? 'video' : 'image';
+
+        $path = $file->store('stories', 'public');
 
         $story = Story::create([
             'user_id' => $request->user()->id,
@@ -41,6 +61,8 @@ class StoryController extends Controller
             'caption' => $request->caption,
             'expires_at' => Carbon::now()->addHours(24),
         ]);
+
+        $story->load('user.pet');
 
         return response()->json($story, 201);
     }

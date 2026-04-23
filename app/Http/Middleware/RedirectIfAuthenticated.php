@@ -13,9 +13,9 @@ class RedirectIfAuthenticated
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse)  $next
      * @param  string|null  ...$guards
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
                 // SPA posts JSON to /login and /register; a 302 + redirect follow returns HTML and breaks axios (shows "Login failed").
                 if ($request->expectsJson() || $request->ajax() || $request->wantsJson()) {
                     $user = Auth::guard($guard)->user();
-                    $to = ($user && $user->is_admin) ? '/admin' : '/dashboard';
+                    $to = ($user && $user->is_admin) ? '/admin' : '/';
 
                     return response()->json(['success' => true, 'redirect' => $to]);
                 }

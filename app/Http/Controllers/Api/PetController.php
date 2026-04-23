@@ -59,9 +59,25 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-        return response()->json($pet->load(['user', 'posts' => function ($query) {
-            $query->latest()->limit(10);
-        }]));
+        $pet->load(['user', 'badges', 'posts' => function($q) {
+            $q->withCount(['likes', 'comments'])->latest();
+        }]);
+
+        $pet->loadCount(['followers', 'following', 'posts']);
+        
+        // Sum of likes across all posts
+        $pet->total_likes_count = $pet->posts->sum('likes_count');
+        
+        // Check if current user follows this pet (via any of their own pets)
+        $pet->is_following = false;
+        if (Auth::check()) {
+            $userPetIds = Auth::user()->pets->pluck('id');
+            $pet->is_following = \App\Models\Follower::whereIn('follower_pet_id', $userPetIds)
+                ->where('following_pet_id', $pet->id)
+                ->exists();
+        }
+
+        return response()->json($pet);
     }
 
     /**

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -49,8 +49,23 @@ class User extends Authenticatable
         return $this->hasMany(Pet::class);
     }
 
+    public function pet()
+    {
+        return $this->hasOne(Pet::class)->latest();
+    }
+
     public function notifications()
     {
         return $this->hasMany(Notification::class);
+    }
+
+    protected $appends = ['avatar_url'];
+
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->pet && $this->pet->photo) {
+            return url('storage/' . $this->pet->photo);
+        }
+        return null;
     }
 }

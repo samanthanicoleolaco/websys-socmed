@@ -16,6 +16,9 @@ class Pet extends Model
         'breed',
         'photo',
         'bio',
+        'location',
+        'cover_photo',
+        'is_verified',
     ];
 
     public function user()
@@ -51,5 +54,19 @@ class Pet extends Model
     public function contestEntries()
     {
         return $this->hasMany(ContestEntry::class);
+    }
+
+    protected $appends = ['image_url', 'cover_photo_url'];
+
+    public function getCoverPhotoUrlAttribute()
+    {
+        if (!$this->cover_photo) return null;
+        return asset('storage/' . $this->cover_photo);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if (!$this->photo) return null;
+        return url('storage/' . $this->photo);
     }
 }

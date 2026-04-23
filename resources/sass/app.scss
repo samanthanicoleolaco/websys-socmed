@@ -1,5 +1,13 @@
+@use 'theme' as themes;
+@use 'ui';
 // Import login styles
 @use 'login';
-@use 'feed';
-@use 'badges';
+@use 'pages/feed';
+@use 'pages/badges';
 @use 'settings';
+@use 'pages/sidebar';
+@use 'pages/messages';
+@use 'pages/adoption';
+@use 'pages/profile';
+@use 'pages/notifications';
+@use 'bottom-nav';

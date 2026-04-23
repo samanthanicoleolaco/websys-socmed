@@ -3,13 +3,15 @@ require('./bootstrap');
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Login from './components/login';
-import Feed from './components/Feed';
+import Feed from './components/pages/Feed';
 import AdminDashboard from './components/AdminDashboard';
 import Register from './components/Register';
-import Messages from './components/Messages';
-import BadgesContests from './components/BadgesContests';
+import Messages from './components/pages/Messages';
+import BadgesContests from './components/pages/BadgesContests';
 import AdoptionBoard from './components/AdoptionBoard';
 import Settings from './components/Settings';
+import Profile from './components/pages/Profile';
+import Notifications from './components/pages/Notifications';
 
 // Render components
 const container = document.getElementById('sam-virtudazo');
@@ -33,6 +35,10 @@ if (container) {
         root.render(<AdoptionBoard />);
     } else if (path === '/settings') {
         root.render(<Settings />);
+    } else if (path === '/profile' || path.startsWith('/profile/')) {
+        root.render(<Profile />);
+    } else if (path === '/notifications') {
+        root.render(<Notifications />);
     } else {
         root.render(<Feed />);
     }

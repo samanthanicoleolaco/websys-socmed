@@ -14,6 +14,11 @@ class Post extends Model
         'caption',
         'image',
         'video',
+        'location',
+        'location_lat',
+        'location_lon',
+        'location_place_id',
+        'views',
     ];
 
     public function pet()
@@ -39,5 +44,17 @@ class Post extends Model
     public function getCommentCountAttribute()
     {
         return $this->comments()->count();
+    }
+
+    protected $appends = ['image_url', 'video_url'];
+    
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? asset('storage/' . $this->image) : null;
+    }
+
+    public function getVideoUrlAttribute()
+    {
+        return $this->video ? asset('storage/' . $this->video) : null;
     }
 }

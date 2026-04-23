@@ -52,12 +52,19 @@ class RegisterController extends Controller
                 report($e);
             }
 
-            return response()->json(['success' => true, 'redirect' => '/dashboard']);
+            if ($request->expectsJson()) {
+                return response()->json(['success' => true, 'redirect' => '/']);
+            }
+
+            return redirect('/');
         } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => collect($e->errors())->flatten()->first() ?? 'Validation failed.',
-            ], 422);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => collect($e->errors())->flatten()->first() ?? 'Validation failed.',
+                ], 422);
+            }
+            throw $e;
         }
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Pet;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -15,97 +16,93 @@ class PostController extends Controller
         $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
 
-    /**
-     * Display a listing of posts from followed pets with pagination
-     */
     public function index(Request $request)
     {
-        $user = Auth::user();
         $query = Post::with(['pet.user', 'likes', 'comments']);
 
-        // If authenticated, show posts from followed pets, otherwise show all posts
-        if ($user) {
-            $followedPetIds = $user->pets()->with('following')->get()
-                ->pluck('following.*.following_pet_id')->flatten()->unique();
-            
-            if ($followedPetIds->isNotEmpty()) {
-                $query->whereIn('pet_id', $followedPetIds);
-            }
-        }
-
-        // Search functionality
         if ($request->has('search')) {
-            $search = $request->get('search');
-            $query->where('caption', 'like', '%' . $search . '%');
+            $query->where('caption', 'like', '%' . $request->get('search') . '%');
         }
 
-        $posts = $query->latest()->paginate(15);
+        $posts = $query->latest()->paginate(20);
 
         return response()->json($posts);
     }
 
-    /**
-     * Store a newly created post
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'pet_id' => 'required|exists:pets,id',
-            'caption' => 'required|string|max:2000',
-            'image' => 'nullable|string',
-            'video' => 'nullable|string',
+        $request->validate([
+            'caption'  => 'required|string|max:2000',
+            'image'    => 'nullable|image|max:10240',
+            'video'    => 'nullable|mimetypes:video/mp4,video/quicktime,video/webm|max:51200',
+            'location' => 'nullable|string|max:255',
+            'location_lat' => 'nullable|numeric',
+            'location_lon' => 'nullable|numeric',
+            'location_place_id' => 'nullable|string|max:255',
         ]);
 
-        // Check if user owns the pet
-        $pet = Pet::findOrFail($validated['pet_id']);
-        if ($pet->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        $user = Auth::user();
+
+        // Get user's first pet; create anonymous mapping if none
+        $pet = Pet::where('user_id', $user->id)->first();
+        if (!$pet) {
+            return response()->json(['message' => 'You need a pet profile to post.'], 422);
         }
 
-        $post = Post::create($validated);
+        $imagePath = null;
+        $videoPath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('posts/images', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            $videoPath = $request->file('video')->store('posts/videos', 'public');
+        }
+
+        $post = Post::create([
+            'pet_id'  => $pet->id,
+            'caption' => $request->caption,
+            'image'   => $imagePath,
+            'video'   => $videoPath,
+            'location' => $request->location,
+            'location_lat' => $request->location_lat,
+            'location_lon' => $request->location_lon,
+            'location_place_id' => $request->location_place_id,
+        ]);
 
         return response()->json($post->load(['pet.user', 'likes', 'comments']), 201);
     }
 
-    /**
-     * Display the specified post
-     */
     public function show(Post $post)
     {
         return response()->json($post->load(['pet.user', 'likes', 'comments.pet']));
     }
 
-    /**
-     * Update the specified post
-     */
     public function update(Request $request, Post $post)
     {
         if ($post->pet->user_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $validated = $request->validate([
+        $request->validate([
             'caption' => 'sometimes|required|string|max:2000',
-            'image' => 'sometimes|nullable|string',
-            'video' => 'sometimes|nullable|string',
         ]);
 
-        $post->update($validated);
-
+        $post->update($request->only('caption'));
         return response()->json($post->load(['pet.user', 'likes', 'comments']));
     }
 
-    /**
-     * Remove the specified post
-     */
     public function destroy(Post $post)
     {
         if ($post->pet->user_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $post->delete();
+        if ($post->image) Storage::disk('public')->delete($post->image);
+        if ($post->video) Storage::disk('public')->delete($post->video);
 
+        $post->delete();
         return response()->json(['message' => 'Post deleted successfully']);
     }
 }

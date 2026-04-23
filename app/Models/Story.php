@@ -21,6 +21,13 @@ class Story extends Model
         'expires_at' => 'datetime',
     ];
 
+    protected $appends = ['media_url'];
+
+    public function getMediaUrlAttribute()
+    {
+        return $this->media_path ? asset('storage/' . $this->media_path) : null;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

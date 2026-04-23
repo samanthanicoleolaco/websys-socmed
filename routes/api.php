@@ -86,6 +86,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
     Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount']);
     
+    // Story routes
+    Route::apiResource('stories', StoryController::class)->only(['index', 'store', 'destroy']);
+    Route::post('/stories/{story}/view', [StoryController::class, 'markAsViewed']);
+    
 });
 
 // Public read-only routes

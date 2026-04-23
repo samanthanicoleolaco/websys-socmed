@@ -1,0 +1,74 @@
+// resources/sass/_bottom-nav.scss
+
+@use 'theme';
+
+.bottom-nav {
+    display: none; // Hidden on desktop
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: rgba(var(--bg-card), 0.85);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border-color);
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 16px;
+
+    .bottom-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-muted);
+        transition: all 0.2s ease-in-out;
+        gap: 4px;
+        flex: 1;
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        &.active {
+            color: var(--primary-action);
+            .icon {
+                transform: translateY(-2px);
+                // weight: fill would be nice but we're using icons as components
+            }
+        }
+
+        &:hover:not(.active) {
+            color: var(--text-main);
+        }
+    }
+}
+
+// Media Query for Mobile
+@media (max-width: 768px) {
+    .bottom-nav {
+        display: flex;
+    }
+
+    // Hide the desktop sidebar on mobile if needed
+    .sidebar-aside {
+        display: none;
+    }
+
+    // Ensure main content takes full width and has space at bottom
+    .main-content, .modern-messages, .adoption-page {
+        margin-left: 0 !important;
+        padding-bottom: 80px !important; // Space for bottom nav
+    }
+}

@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });
 
 // Authentication routes
@@ -24,12 +26,22 @@ Route::get('/register', [App\Http\Controllers\RegisterController::class, 'showRe
 Route::post('/register', [App\Http\Controllers\RegisterController::class, 'register']);
 Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
+// Email Verification Routes
+Route::get('/email/verify', [App\Http\Controllers\VerificationController::class, 'show'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\VerificationController::class, 'verify'])->name('verification.verify');
+Route::post('/email/resend', [App\Http\Controllers\VerificationController::class, 'resend'])->name('verification.resend');
+
+// Home route
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
 // Password Reset endpoints (Fallback mapping for cached Javascript bundles)
 Route::post('/password/check-email', [App\Http\Controllers\LoginController::class, 'checkEmail']);
 Route::post('/password/reset', [App\Http\Controllers\LoginController::class, 'resetPassword']);
 
 
 // SPA Catch-all Route for any other page
-Route::get('/{any}', function () {
-    return view('welcome');
-})->where('any', '.*');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/{any}', function () {
+        return view('welcome');
+    })->where('any', '.*');
+});

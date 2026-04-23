@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import '../../sass/feed.scss';
-import Sidebar from './Sidebar';
-
-// SVG Icons
-const Icons = {
-    Dashboard: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" ry="1"></rect><rect x="14" y="3" width="7" height="7" rx="1" ry="1"></rect><rect x="14" y="14" width="7" height="7" rx="1" ry="1"></rect><rect x="3" y="14" width="7" height="7" rx="1" ry="1"></rect></svg>,
-    Posts: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>,
-    Chart: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>,
-    Setting: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>,
-    Logout: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>,
-    Search: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>,
-    Bell: () => <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-};
+import '../../sass/pages/feed.scss';
+import Sidebar from './pages/Sidebar';
+import { 
+    Layout, 
+    Article, 
+    ChartBar, 
+    Gear, 
+    SignOut, 
+    MagnifyingGlass, 
+    Bell,
+    Lock
+} from 'phosphor-react';
 
 const AdminDashboard = () => {
     // Layout UI States
@@ -24,6 +23,7 @@ const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
     const [posts, setPosts] = useState([]);
     const [logins, setLogins] = useState([]);
+    const [editingUser, setEditingUser] = useState(null);
 
     useEffect(() => {
         if (activeTab === 'dashboard') {
@@ -83,15 +83,25 @@ const AdminDashboard = () => {
         } catch (err) { console.error(err); }
     };
 
+    const handleUpdateUser = async (e) => {
+        e.preventDefault();
+        try {
+            await window.axios.put(`/api/admin/users/${editingUser.id}`, editingUser);
+            setEditingUser(null);
+            fetchUsers();
+            window.alert('User account synchronized successfully!');
+        } catch (err) { console.error(err); }
+    };
+
     const navItems = [
-        { id: 'dashboard', icon: <Icons.Dashboard />, text: 'Dashboard', active: activeTab === 'dashboard' },
-        { id: 'posts', icon: <Icons.Posts />, text: 'Posts Management', active: activeTab === 'posts' },
-        { id: 'reports', icon: <Icons.Chart />, text: 'Reports & Analytics', active: activeTab === 'reports' },
-        { id: 'settings', icon: <Icons.Setting />, text: 'System Settings', active: activeTab === 'settings' }
+        { id: 'dashboard', icon: <Layout size={20} weight="light" />, text: 'Dashboard', active: activeTab === 'dashboard' },
+        { id: 'posts', icon: <Article size={20} weight="light" />, text: 'Posts Management', active: activeTab === 'posts' },
+        { id: 'reports', icon: <ChartBar size={20} weight="light" />, text: 'Reports & Analytics', active: activeTab === 'reports' },
+        { id: 'settings', icon: <Gear size={20} weight="light" />, text: 'System Settings', active: activeTab === 'settings' }
     ];
 
     const bottomItems = [
-        { id: 'logout', icon: <Icons.Logout />, text: 'Log out' }
+        { id: 'logout', icon: <SignOut size={20} weight="light" />, text: 'Log out' }
     ];
 
     return (
@@ -103,10 +113,63 @@ const AdminDashboard = () => {
                 onNavClick={(item) => setActiveTab(item.id)}
             />
 
+            {/* User Edit Modal - Premium UI */}
+            {editingUser && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(30, 41, 59, 0.4)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="settings-content" style={{ width: '100%', maxWidth: '800px', minHeight: 'auto', maxHeight: '90vh', overflowY: 'auto' }}>
+                        <form className="settings-form" onSubmit={handleUpdateUser}>
+                            <div className="settings-header">
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div>
+                                        <h3>Manage Account</h3>
+                                        <p>Adjust privileges and profile details for {editingUser.name}.</p>
+                                    </div>
+                                    <button type="button" onClick={() => setEditingUser(null)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#64748B' }}>&times;</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" value={editingUser.name} onChange={e => setEditingUser({...editingUser, name: e.target.value})} />
+                                </div>
+                                <div className="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" value={editingUser.email} onChange={e => setEditingUser({...editingUser, email: e.target.value})} />
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label>Account Role</label>
+                                    <select value={editingUser.is_admin ? 'admin' : 'user'} onChange={e => setEditingUser({...editingUser, is_admin: e.target.value === 'admin'})}>
+                                        <option value="user">Regular User</option>
+                                        <option value="admin">Administrator</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label>Account Status</label>
+                                    <select defaultValue="active">
+                                        <option value="active">Active</option>
+                                        <option value="suspended">Suspended</option>
+                                        <option value="pending">Pending Verification</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="form-actions">
+                                <button type="button" className="btn-cancel" onClick={() => setEditingUser(null)}>Cancel</button>
+                                <button type="submit" className="btn-save">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             <main className="main-content">
                 <header className="top-nav">
                     <div className={`search-bar ${searchActive ? 'active' : ''}`}>
-                        <span className="search-icon"><Icons.Search /></span>
+                        <span className="search-icon"><MagnifyingGlass size={20} weight="light" /></span>
                         <input 
                             type="text" 
                             placeholder="Search..." 
@@ -117,7 +180,7 @@ const AdminDashboard = () => {
                         />
                     </div>
                     <div className="header-actions">
-                        <button className="icon-btn"><Icons.Bell /></button>
+                        <button className="icon-btn"><Bell size={22} weight="light" /></button>
                         <span style={{ fontWeight: 600, color: '#ffc26d', marginLeft: '10px' }}>System Admin</span>
                     </div>
                 </header>
@@ -162,8 +225,9 @@ const AdminDashboard = () => {
                                                     <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>{user.email}</td>
                                                     <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>{user.pets_count}</td>
                                                     <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>{new Date(user.created_at).toLocaleDateString()}</td>
-                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5' }}>
-                                                        <button onClick={(e) => handleDeleteUser(e, user.id)} style={{ background: '#f1416c', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>Remove User</button>
+                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', display: 'flex', gap: '8px' }}>
+                                                        <button onClick={() => setEditingUser(user)} style={{ background: '#334155', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>Edit</button>
+                                                        <button onClick={(e) => handleDeleteUser(e, user.id)} style={{ background: '#f1416c', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>Remove</button>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -235,27 +299,74 @@ const AdminDashboard = () => {
                             </div>
                         )}
 
-                        {/* System Settings View Placeholder */}
+                        {/* System Settings View - Professional Redesign */}
                         {activeTab === 'settings' && (
-                            <div className="post-card" style={{ padding: '30px', marginTop: '20px' }}>
-                                <h3 style={{ borderBottom: '1px solid #eee', paddingBottom: '15px', marginBottom: '25px', color: '#333' }}>System Settings</h3>
+                            <div className="settings-form" style={{ animation: 'slideUp 0.4s ease-out' }}>
+                                <div className="settings-header" style={{ marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid #eee' }}>
+                                    <h3 style={{ fontSize: '1.75rem', fontWeight: '800', color: '#1E293B', margin: 0 }}>System Configuration</h3>
+                                    <p style={{ color: '#64748B', fontSize: '1rem', marginTop: '4px' }}>Global settings for the Petverse platform.</p>
+                                </div>
                                 
-                                <div style={{ marginBottom: '25px' }}>
-                                    <h5 style={{ margin: '0 0 10px 0', fontSize: '15px' }}>Maintenance Mode</h5>
-                                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 10px 0' }}>Temporarily disable public access to the Pawtastic platform.</p>
-                                    <button style={{ background: '#e4e6ef', color: '#3f4254', border: 'none', padding: '8px 16px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Enable Maintenance</button>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                                    <div className="post-card" style={{ padding: '24px', margin: 0, border: '1px solid #E2E8F0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                                            <div style={{ padding: '10px', background: '#FEE2E2', borderRadius: '10px', color: '#EF4444' }}>
+                                                <Lock size={20} weight="fill" />
+                                            </div>
+                                            <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: '#334155' }}>Maintenance Mode</h4>
+                                        </div>
+                                        <p style={{ color: '#64748B', fontSize: '0.9rem', marginBottom: '20px', lineHeight: '1.5' }}>
+                                            Temporarily disable public access. Useful for deployments or critical fixes.
+                                        </p>
+                                        <button style={{ background: '#F8FAFC', color: '#334155', border: '1.5px solid #E2E8F0', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s' }}>
+                                            Activate Maintenance
+                                        </button>
+                                    </div>
+
+                                    <div className="post-card" style={{ padding: '24px', margin: 0, border: '1px solid #E2E8F0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                                            <div style={{ padding: '10px', background: '#FFF7ED', borderRadius: '10px', color: '#F59E0B' }}>
+                                                <ChartBar size={20} weight="fill" />
+                                            </div>
+                                            <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: '#334155' }}>Cache Optimization</h4>
+                                        </div>
+                                        <p style={{ color: '#64748B', fontSize: '0.9rem', marginBottom: '20px', lineHeight: '1.5' }}>
+                                            Refresh application cache to ensure all users see the latest content updates.
+                                        </p>
+                                        <button style={{ background: '#ffc26d', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(255, 194, 109, 0.2)' }}>
+                                            Purge All Cache
+                                        </button>
+                                    </div>
                                 </div>
 
-                                <div style={{ marginBottom: '25px' }}>
-                                    <h5 style={{ margin: '0 0 10px 0', fontSize: '15px' }}>Cache Management</h5>
-                                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 10px 0' }}>Clear application cache to force latest content updates.</p>
-                                    <button style={{ background: '#ffc26d', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Clear Cache</button>
-                                </div>
+                                <div className="post-card" style={{ padding: '24px', marginTop: '24px', border: '1px solid #E2E8F0' }}>
+                                    <h4 style={{ margin: '0 0 20px 0', fontSize: '1.25rem', fontWeight: '700', color: '#1E293B' }}>Access & Registration</h4>
+                                    
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 0', borderBottom: '1px solid #F1F5F9' }}>
+                                        <div>
+                                            <h5 style={{ margin: '0 0 4px 0', fontSize: '1rem', fontWeight: '600' }}>User Registration</h5>
+                                            <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748B' }}>Control whether new pet owners can join the platform.</p>
+                                        </div>
+                                        <label className="switch">
+                                            <input type="checkbox" defaultChecked />
+                                            <span className="slider"></span>
+                                        </label>
+                                    </div>
 
-                                <div>
-                                    <h5 style={{ margin: '0 0 10px 0', fontSize: '15px' }}>Registration</h5>
-                                    <p style={{ color: '#666', fontSize: '13px', margin: '0 0 10px 0' }}>Allow new users to create accounts.</p>
-                                    <input type="checkbox" defaultChecked id="regToggle" /> <label htmlFor="regToggle" style={{ fontSize: '14px', fontWeight: 'bold' }}>Enabled</label>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 0', borderBottom: '1px solid #F1F5F9' }}>
+                                        <div>
+                                            <h5 style={{ margin: '0 0 4px 0', fontSize: '1rem', fontWeight: '600' }}>Email Verification</h5>
+                                            <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748B' }}>Require all new signups to verify their email address.</p>
+                                        </div>
+                                        <label className="switch">
+                                            <input type="checkbox" />
+                                            <span className="slider"></span>
+                                        </label>
+                                    </div>
+
+                                    <div style={{ padding: '20px 0 0 0', textAlign: 'right' }}>
+                                        <button style={{ background: '#1E293B', color: 'white', border: 'none', padding: '12px 24px', borderRadius: '10px', fontWeight: '600', cursor: 'pointer' }}>Apply Global Changes</button>
+                                    </div>
                                 </div>
                             </div>
                         )}

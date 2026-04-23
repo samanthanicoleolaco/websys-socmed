@@ -46,9 +46,9 @@ const Register = () => {
                 <div className="sidebar-image"></div>
                 <div className="sidebar-content">
                     <div className="brand">
-                        <img src="/pet-logo.png" alt="Pawtastic Logo" className="brand-icon" /> Pawtastic
+                        <img src="/petlogo.png" alt="Petverse Logo" className="brand-icon" /> Petverse
                     </div>
-                    <h1 className="quote">"Join our Pawtastic family!"</h1>
+                    <h1 className="quote">"Join our Petverse family!"</h1>
                     <p className="description">
                         Create an account to start sharing your pet's <br />
                         beautiful journey with our community.

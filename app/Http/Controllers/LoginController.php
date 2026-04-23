@@ -35,10 +35,15 @@ class LoginController extends Controller
         ]);
 
         if (!Auth::attempt($credentials)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'The provided credentials do not match our records.',
-            ]);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'The provided credentials do not match our records.',
+                ]);
+            }
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ])->withInput($request->only('email', 'remember'));
         }
 
         $request->session()->regenerate();
@@ -54,10 +59,14 @@ class LoginController extends Controller
             report($e);
         }
 
-        // Always JSON so the SPA never follows a 302 and mis-reads HTML as a failed login.
-        $redirectUrl = Auth::user()->is_admin ? '/admin' : '/dashboard';
+        $redirectUrl = Auth::user()->is_admin ? '/admin' : '/';
 
-        return response()->json(['success' => true, 'redirect' => $redirectUrl]);
+        // Always JSON if expected, otherwise redirect
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'redirect' => $redirectUrl]);
+        }
+
+        return redirect()->intended($redirectUrl);
     }
 
     public function logout(Request $request)
@@ -67,13 +76,13 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 
     public function checkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
-        $user = \App\Models\User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
         if ($user) {
             return response()->json(['success' => true]);
         }
@@ -86,7 +95,7 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8'
         ]);
-        $user = \App\Models\User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
         if ($user) {
             $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
             $user->save();
