@@ -13,7 +13,10 @@ import {
     Star,
     Trophy,
     Plus,
-    Medal
+    Medal,
+    Calendar,
+    Tag,
+    BookmarkSimple
 } from "@phosphor-icons/react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
@@ -41,7 +44,6 @@ const Profile = () => {
             setLoading(true);
             const id = getPetId();
             
-            // Assuming /api/pets is paginated and returns { data: [...] }
             const myPetsRes = await axios.get("/api/pets");
             const petsArray = myPetsRes.data?.data || myPetsRes.data || [];
             setUserPets(Array.isArray(petsArray) ? petsArray : []);
@@ -91,18 +93,17 @@ const Profile = () => {
     const petType = pet.type || pet.species || "Aspin";
     const petAge = pet.age || "2 years old";
     
-    // Default badges to match the screenshot if none exist
+    // Updated badges to match screenshot style
     const badges = [
-        { id: 1, name: "Top Poster", description: "Posted 10+ times this week", icon: <Star weight="fill" />, colorClass: "gold", iconClass: "gold-icon" },
-        { id: 2, name: "Social Butterfly", description: "Received 500+ likes", icon: <Heart weight="fill" />, colorClass: "pink", iconClass: "pink-icon" },
-        { id: 3, name: "Contest Winner", description: "Won Spring 2024 contest", icon: <Trophy weight="fill" />, colorClass: "purple", iconClass: "purple-icon" },
-        { id: 4, name: "Adoption Hero", description: "Shared 5 adoption posts", icon: <Medal weight="fill" />, colorClass: "green", iconClass: "green-icon" },
+        { id: 1, name: "Pawfect Learner", description: "Mastering basic commands", icon: <Star weight="fill" />, color: "#898AA6" },
+        { id: 2, name: "Park Explorer", description: "Earned by visiting multiple parks", icon: <Trophy weight="fill" />, color: "#898AA6" },
+        { id: 3, name: "Social Butterfly", description: "Love meeting new people and animals", icon: <Heart weight="fill" />, color: "#898AA6" },
     ];
 
     const tabs = [
-        { id: "Posts", icon: <GridFour size={20} weight={activeTab === "Posts" ? "fill" : "regular"} /> },
-        { id: "Tagged", icon: <PawPrint size={20} weight={activeTab === "Tagged" ? "fill" : "regular"} /> },
-        { id: "Saved", icon: <Bookmark size={20} weight={activeTab === "Saved" ? "fill" : "regular"} /> },
+        { id: "Posts", icon: <GridFour size={20} /> },
+        { id: "Tagged", icon: <Tag size={20} /> },
+        { id: "Saved", icon: <BookmarkSimple size={20} /> },
     ];
 
     return (
@@ -110,136 +111,150 @@ const Profile = () => {
             <Sidebar />
 
             <main className="profile-main">
-                <header className="profile-header">
-                    {/* Cover Photo */}
-                    <div className="profile-cover">
-                        <img 
-                            src={pet.cover_photo_url || "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?q=80&w=2070&auto=format&fit=crop"} 
-                            alt="Cover" 
-                            className="profile-cover__img" 
-                        />
-                        {isOwnProfile && (
-                            <button className="profile-cover__edit-btn">
-                                <Camera size={18} weight="bold" />
-                                Edit Cover
-                            </button>
-                        )}
-                    </div>
-
-                    {/* Profile Info Section */}
-                    <div className="profile-info-section">
-                        <div className="profile-info-main">
-                            {/* Avatar */}
-                            <div className="profile-avatar-wrap">
-                                <div className="profile-avatar-img">
-                                    <img src={pet.image_url || "/images/default-pet.png"} alt={pet.name} />
-                                </div>
-                            </div>
-
-                            {/* Info Content */}
-                            <div className="profile-info-content">
-                                <h1 className="profile-info-content__name">{pet.name}</h1>
-                                <p className="profile-info-content__username">@{username}</p>
-
-                                <div className="profile-info-content__meta-line">
-                                    <span><PawPrint size={14} weight="fill" /> {petType}</span>
-                                    <span>{petAge}</span>
-                                    {pet.location && <span><MapPin size={14} weight="fill" /> {pet.location}</span>}
-                                </div>
-
-                                <div className="profile-info-content__stats-row">
-                                    <span>{postsCount} Post{postsCount !== 1 ? "s" : ""}</span>
-                                    <span>{followersCount} Follower{followersCount !== 1 ? "s" : ""}</span>
-                                    <span>{followingCount} Following</span>
-                                </div>
-
-                                <div className="profile-info-content__bio">
-                                    <span>{pet.bio || "Living life one tail wag at a time. Lover of parks, belly rubs, and every stranger I've ever met."}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="profile-header-actions">
-                            {isOwnProfile ? (
-                                <>
-                                    <button className="btn-profile btn-profile--primary">
-                                        <Plus size={18} weight="bold" />
-                                        Add Story
-                                    </button>
-                                    <button className="btn-profile btn-profile--secondary">
-                                        <PencilSimple size={18} weight="bold" />
-                                        Edit
-                                    </button>
-                                </>
-                            ) : (
-                                <button className={`btn-profile btn-profile--primary ${isFollowing ? 'following' : ''}`}>
-                                    {isFollowing ? 'Following' : 'Follow'}
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                </header>
-
-                <div className="badges-section">
-                    <div className="badges-section__header">
-                        <h3>Earned Badges</h3>
-                        <a href="#" className="view-all">View all</a>
-                    </div>
-                    <div className="badges-section__grid">
-                        {badges.map(badge => (
-                            <div key={badge.id} className={`badge-card ${badge.colorClass}`}>
-                                <div className={`badge-card__icon-wrap ${badge.iconClass}`}>
-                                    {badge.icon}
-                                </div>
-                                <div className="badge-card__content">
-                                    <h4>{badge.name}</h4>
-                                    <p>{badge.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="profile-tabs-nav">
-                    {tabs.map(tab => (
-                        <button
-                            type="button"
-                            key={tab.id}
-                            className={`tab-btn ${activeTab === tab.id ? "active" : ""}`}
-                            onClick={() => setActiveTab(tab.id)}
-                            aria-pressed={activeTab === tab.id}
-                        >
-                            {tab.icon}
-                            {tab.id}
+                {/* Cover Photo */}
+                <div className="profile-cover">
+                    <img 
+                        src={pet.cover_photo_url || "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?q=80&w=2070&auto=format&fit=crop"} 
+                        alt="Cover" 
+                        className="profile-cover__img" 
+                    />
+                    {isOwnProfile && (
+                        <button className="profile-cover__edit-btn">
+                            <Camera size={18} weight="bold" />
+                            Edit Cover
                         </button>
-                    ))}
+                    )}
                 </div>
 
-                <div className="profile-gallery-container">
-                    {pet.posts?.map((post) => (
-                        <div key={post.id} className="gallery-item">
-                            {post.video_url ? (
-                                <>
-                                    <video src={post.video_url} muted />
-                                    <div className="video-icon"><Play size={20} weight="fill" /></div>
-                                </>
-                            ) : (
-                                <img src={post.image_url} alt={post.caption} />
-                            )}
-                            <div className="gallery-item__overlay">
-                                <span><Heart size={20} weight="fill" /> {post.likes_count || 0}</span>
-                                <span><Eye size={20} weight="fill" /> {post.views || 0}</span>
+                {/* Profile Header - Horizontal Layout */}
+                <div className="profile-header">
+                    {/* Avatar */}
+                    <div className="profile-avatar">
+                        <img src={pet.image_url || "/images/default-pet.png"} alt={pet.name} />
+                    </div>
+
+                    {/* Info */}
+                    <div className="profile-info">
+                        <h1 className="profile-name">{pet.name}</h1>
+                        <p className="profile-username">@{username}</p>
+                        <div className="profile-stats">
+                            <span>{followersCount} Followers</span>
+                            <span className="dot">•</span>
+                            <span>{postsCount} Posts</span>
+                            <span className="dot">•</span>
+                            <span>{followingCount} Following</span>
+                        </div>
+                        <p className="profile-bio">{pet.bio || "Living life one tail wag at a time. Lover of parks, belly rubs, and every stranger I've ever met."}</p>
+                    </div>
+
+                    {/* Edit Button - Right Aligned */}
+                    {isOwnProfile && (
+                        <button className="btn-edit-profile">
+                            <PencilSimple size={16} weight="bold" />
+                            Edit Profile
+                        </button>
+                    )}
+                </div>
+
+                {/* Two Column Layout */}
+                <div className="profile-content-wrapper">
+                    {/* Left Sidebar */}
+                    <aside className="profile-sidebar">
+                        {/* Highlights */}
+                        <div className="sidebar-card">
+                            <h3>Highlights</h3>
+                            <div className="highlight-circle">
+                                <Plus size={32} weight="bold" />
                             </div>
                         </div>
-                    ))}
-                    {(!pet.posts || pet.posts.length === 0) && (
-                        <div className="profile-empty-state">
-                            <PawPrint size={48} />
-                            <p>No posts to show yet.</p>
-                            {isOwnProfile && <small>Share your first post to bring your profile to life.</small>}
+
+                        {/* Pet's Info */}
+                        <div className="sidebar-card">
+                            <div className="sidebar-card-header">
+                                <h3>Pet's Info</h3>
+                                <button className="view-all-link" onClick={() => alert("View All Pet Info")}>View All</button>
+                            </div>
+                            <div className="pet-info-list">
+                                <div className="pet-info-item">
+                                    <PawPrint size={16} weight="fill" />
+                                    <span>{petType}</span>
+                                </div>
+                                <div className="pet-info-item">
+                                    <Calendar size={16} weight="fill" />
+                                    <span>{petAge}</span>
+                                </div>
+                                {pet.location && (
+                                    <div className="pet-info-item">
+                                        <MapPin size={16} weight="fill" />
+                                        <span>{pet.location}</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    )}
+
+                        {/* Earned Badges */}
+                        <div className="sidebar-card">
+                            <div className="sidebar-card-header">
+                                <h3>Earned Badges</h3>
+                                <button className="view-all-link" onClick={() => alert("View All Badges")}>View All</button>
+                            </div>
+                            <div className="badges-list">
+                                {badges.map(badge => (
+                                    <div key={badge.id} className="badge-list-item">
+                                        <div className="badge-icon" style={{ backgroundColor: badge.color }}>
+                                            {badge.icon}
+                                        </div>
+                                        <div className="badge-text">
+                                            <h4>{badge.name}</h4>
+                                            <p>{badge.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </aside>
+
+                    {/* Right Content */}
+                    <div className="profile-content">
+                        {/* Tabs */}
+                        <div className="profile-tabs">
+                            {tabs.map(tab => (
+                                <button
+                                    type="button"
+                                    key={tab.id}
+                                    className={`tab-btn ${activeTab === tab.id ? "active" : ""}`}
+                                    onClick={() => setActiveTab(tab.id)}
+                                >
+                                    {tab.icon}
+                                    {tab.id}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Gallery Grid */}
+                        <div className="profile-gallery">
+                            {pet.posts?.map((post) => (
+                                <div key={post.id} className="gallery-item">
+                                    {post.video_url ? (
+                                        <>
+                                            <video src={post.video_url} muted />
+                                            <div className="video-icon"><Play size={20} weight="fill" /></div>
+                                        </>
+                                    ) : (
+                                        <img src={post.image_url} alt={post.caption} />
+                                    )}
+                                    <div className="gallery-overlay">
+                                        <span><Heart size={20} weight="fill" /> {post.likes_count || 0}</span>
+                                    </div>
+                                </div>
+                            ))}
+                            {(!pet.posts || pet.posts.length === 0) && (
+                                <div className="gallery-empty-message">
+                                    <p>No posts yet</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>

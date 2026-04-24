@@ -68,6 +68,28 @@ class AdminController extends Controller
     }
 
     /**
+     * PUT /api/admin/users/{user}
+     * Update user details.
+     */
+    public function updateUser(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'is_admin' => 'boolean'
+        ]);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        if (isset($validated['is_admin'])) {
+            $user->is_admin = $validated['is_admin'];
+        }
+        $user->save();
+
+        return response()->json(['message' => 'User updated successfully.', 'user' => $user]);
+    }
+
+    /**
      * GET /api/admin/posts
      * Paginated list of all posts with owner pet info.
      */

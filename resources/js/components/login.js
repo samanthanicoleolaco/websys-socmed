@@ -79,7 +79,7 @@ const Login = () => {
                 headers: { Accept: "application/json" },
             });
             if (data?.success) {
-                setSuccessMsg("Password successfully reset! You may now log in.");
+                setSuccessMsg("Password successfully reset! You may now sign in.");
                 setViewMode("login");
                 setEmail(resetEmail);
                 setPassword("");
@@ -95,7 +95,6 @@ const Login = () => {
         <div className="pawtastic-login">
             {/* Left Side: Branding & Image */}
             <div className="login-sidebar">
-                <div className="sidebar-image"></div>
                 <div className="sidebar-content">
                     <div className="brand">
                         <img src="/petlogo.png" alt="Petverse Logo" className="brand-icon" /> Petverse
@@ -131,11 +130,11 @@ const Login = () => {
                                 </div>
 
                                 <button type="submit" className="login-btn" disabled={loading}>
-                                    {loading ? "Logging in..." : "Log in"}
+                                    {loading ? "Signing in..." : "Sign in"}
                                 </button>
                             </form>
                             <p className="signup-text">
-                                New to Petverse? <a href="/register">Create an account</a>
+                                New to Petverse? <a href="/register">Sign up</a>
                             </p>
                         </>
                     )}

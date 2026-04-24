@@ -1,69 +1,102 @@
 // login.scss
 @use "sass:color";
-$primary-action: #D9A5A0;
-$primary:        #FAE1DD;
-$text:           #2F2F2F;
-$text-muted:     #7A7A7A;
+
+// Professional Corporate/Social Palette
+$primary-action: #1E293B; // Deep Slate
+$primary-hover:  #0F172A; // Darker Slate
+$primary-accent: #3B82F6; // Blue accent for specific highlights if needed
+$bg-main:        #F8FAFC; // Soft Slate background
+$text-dark:      #0F172A; // Near black for high contrast text
+$text-muted:     #64748B; // Muted slate for descriptions
 $font-serif:     'Playfair Display', serif;
-$font-sans:      'Inter', sans-serif;
+$font-sans:      'Inter', system-ui, -apple-system, sans-serif;
+
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatLogo {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1); }
+}
 
 .pawtastic-login {
     display: flex;
     min-height: 100vh;
     font-family: $font-sans;
-    background: #fff;
+    background: $bg-main;
+    color: $text-dark;
 
     .login-sidebar {
-        flex: 1;
+        flex: 1.1;
         display: flex;
         flex-direction: column;
-        background: #fff;
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.08);
+        z-index: 10;
+        position: relative;
+        justify-content: center;
 
-        .sidebar-image {
-            flex: 1;
-            background: url('/login-background.png') no-repeat top center/cover;
-            width: 100%;
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .sidebar-content {
-            padding: 2.5rem 4rem;
-            text-align: center;
-            color: $text;
+            padding: 3rem 4rem;
+            text-align: left;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+            z-index: 2;
         }
 
         .brand {
-            font-family: 'Akaya Kanadaka', cursive;
-            color: $primary-action;
-            font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
+            font-family: $font-sans;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            gap: 12px;
+            letter-spacing: -0.5px;
 
             .brand-icon {
-                height: 28px;
+                height: 32px;
                 width: auto;
                 object-fit: contain;
+                animation: floatLogo 4s ease-in-out infinite;
+                filter: brightness(0) invert(1); // Make logo white if it's dark
             }
         }
 
         .quote {
             font-family: $font-serif;
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: $text;
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -1px;
         }
 
         .description {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: $text-muted;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #94A3B8;
+            font-weight: 400;
         }
     }
 
@@ -73,53 +106,100 @@ $font-sans:      'Inter', sans-serif;
         align-items: center;
         justify-content: center;
         padding: 2rem;
+        background: $bg-main;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(217, 165, 160, 0.1) 0%, rgba(248, 250, 252, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
         .form-box {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            max-width: 400px;
+            max-width: 440px;
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background: #ffffff;
+            padding: 3.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid rgba(226, 232, 240, 0.8);
         }
 
         .welcome-text {
-            font-size: 2.2rem;
-            margin-bottom: 3rem;
-            font-weight: 400;
-            color: $text;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            font-weight: 800;
+            color: $text-dark;
+            letter-spacing: -0.5px;
+            text-align: left;
+            animation: fadeInScale 0.5s ease-out forwards;
+        }
+
+        .actual-form {
+            display: flex;
+            flex-direction: column;
         }
 
         .input-group {
             margin-bottom: 1.5rem;
             display: flex;
             flex-direction: column;
+            position: relative;
 
             label {
-                font-size: 0.9rem;
-                margin-bottom: 0.5rem;
-                color: $text-muted;
+                font-size: 0.85rem;
+                margin-bottom: 0.6rem;
+                color: #475569;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
 
             input {
-                padding: 0.8rem 1rem;
-                border: 1px solid #F0E5E2;
-                border-radius: 8px;
+                padding: 1.1rem 1.2rem;
+                border: 2px solid #E2E8F0;
+                background: #F8FAFC;
+                border-radius: 12px;
                 font-size: 1rem;
-                transition: border-color 0.2s;
-                color: $text;
+                transition: all 0.2s ease;
+                color: $text-dark;
+                font-weight: 500;
 
                 &:focus {
                     outline: none;
                     border-color: $primary-action;
-                    box-shadow: 0 0 0 3px rgba(217, 165, 160, 0.15);
+                    background: #ffffff;
+                    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.08);
+                }
+                
+                &::placeholder {
+                    color: #94A3B8;
+                    font-weight: 400;
                 }
             }
 
             .forgot-link {
-                align-self: flex-end;
-                font-size: 0.8rem;
-                color: $primary-action;
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 0.85rem;
+                color: $text-muted;
                 text-decoration: none;
-                margin-top: 0.5rem;
+                font-weight: 600;
+                transition: color 0.2s ease;
 
-                &:hover { text-decoration: underline; }
+                &:hover { color: $primary-action; text-decoration: underline; }
             }
         }
 
@@ -128,28 +208,55 @@ $font-sans:      'Inter', sans-serif;
             background: $primary-action;
             color: white;
             border: none;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            padding: 1.1rem;
+            border-radius: 12px;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
             margin-top: 1rem;
-            transition: opacity 0.2s, background 0.2s;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 12px rgba(30, 41, 59, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            &:hover { background: color.adjust($primary-action, $lightness: -8%); }
+            &:hover { 
+                background: $primary-hover; 
+                transform: translateY(-2px);
+                box-shadow: 0 8px 16px rgba(30, 41, 59, 0.2);
+            }
+            
+            &:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 8px rgba(30, 41, 59, 0.15);
+            }
+
+            &:disabled {
+                background: #94A3B8;
+                box-shadow: none;
+                cursor: not-allowed;
+                transform: none;
+            }
         }
 
         .signup-text {
-            text-align: left;
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            color: $text-muted;
+            text-align: center;
+            margin-top: 2.5rem;
+            font-size: 0.95rem;
+            color: #64748b;
 
             a {
                 color: $primary-action;
                 text-decoration: none;
-                font-weight: 600;
-                &:hover { text-decoration: underline; }
+                font-weight: 700;
+                margin-left: 0.4rem;
+                transition: all 0.2s ease;
+                border-bottom: 2px solid transparent;
+                padding-bottom: 2px;
+                
+                &:hover { 
+                    border-color: $primary-action;
+                }
             }
         }
     }
@@ -160,6 +267,16 @@ $font-sans:      'Inter', sans-serif;
         flex-direction: column;
         
         .login-sidebar { display: none; }
-        .login-form-container { padding: 4rem 1.5rem; }
+        .login-form-container { 
+            padding: 2rem 1.5rem; 
+            background: #ffffff;
+            
+            .form-box {
+                box-shadow: none;
+                border: none;
+                padding: 2rem;
+                max-width: 100%;
+            }
+        }
     }
 }

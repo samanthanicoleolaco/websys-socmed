@@ -108,6 +108,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     // User management
     Route::get('/users', [AdminController::class, 'users']);
+    Route::put('/users/{user}', [AdminController::class, 'updateUser']);
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser']);
     Route::patch('/users/{user}/toggle-admin', [AdminController::class, 'toggleAdmin']);
 

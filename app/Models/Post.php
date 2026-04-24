@@ -19,6 +19,11 @@ class Post extends Model
         'location_lon',
         'location_place_id',
         'views',
+        'tagged_pets',
+    ];
+
+    protected $casts = [
+        'tagged_pets' => 'array',
     ];
 
     public function pet()

@@ -39,6 +39,7 @@ class PostController extends Controller
             'location_lat' => 'nullable|numeric',
             'location_lon' => 'nullable|numeric',
             'location_place_id' => 'nullable|string|max:255',
+            'tagged_pets' => 'nullable|json',
         ]);
 
         $user = Auth::user();
@@ -60,6 +61,8 @@ class PostController extends Controller
             $videoPath = $request->file('video')->store('posts/videos', 'public');
         }
 
+        $taggedPets = $request->input('tagged_pets') ? json_decode($request->input('tagged_pets'), true) : null;
+
         $post = Post::create([
             'pet_id'  => $pet->id,
             'caption' => $request->caption,
@@ -69,6 +72,7 @@ class PostController extends Controller
             'location_lat' => $request->location_lat,
             'location_lon' => $request->location_lon,
             'location_place_id' => $request->location_place_id,
+            'tagged_pets' => $taggedPets,
         ]);
 
         return response()->json($post->load(['pet.user', 'likes', 'comments']), 201);

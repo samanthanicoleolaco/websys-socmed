@@ -218,6 +218,14 @@ const Feed = () => {
     const [isLocationPickerOpen, setIsLocationPickerOpen] = useState(false);
     const [locationSearchQuery, setLocationSearchQuery] = useState("");
     const [suggestedLocations, setSuggestedLocations] = useState([]);
+    
+    // Tagging state
+    const [isTagPickerOpen, setIsTagPickerOpen] = useState(false);
+    const [tagSearchQuery, setTagSearchQuery] = useState("");
+    const [suggestedPetsToTag, setSuggestedPetsToTag] = useState([]);
+    const [taggedPets, setTaggedPets] = useState([]);
+    const [isTagging, setIsTagging] = useState(false);
+
     const privacyMenuRef = useRef(null);
     
     const fileInputRef = useRef(null);
@@ -292,10 +300,12 @@ const Feed = () => {
         const formData = new FormData();
         formData.append("media", file);
         try {
-            await window.axios.post("/api/stories", formData);
+            await window.axios.post("/api/stories", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
             const res = await window.axios.get("/api/stories");
             setStories(res.data);
-        } catch (err) { alert("Upload failed"); }
+        } catch (err) { alert("Upload failed: " + (err.response?.data?.message || err.message)); }
     };
 
     const handleImageClick = () => imageInputRef.current?.click();
@@ -396,6 +406,9 @@ const Feed = () => {
                 if (postLocation.lon) formData.append("location_lon", postLocation.lon);
                 if (postLocation.id) formData.append("location_place_id", postLocation.id);
             }
+            if (taggedPets.length > 0) {
+                formData.append("tagged_pets", JSON.stringify(taggedPets.map(p => p.id)));
+            }
             if (postImage) formData.append("image", postImage);
             if (postVideo) formData.append("video", postVideo);
 
@@ -443,6 +456,7 @@ const Feed = () => {
             setPostText("");
             clearMedia();
             setPostLocation(null);
+            setTaggedPets([]);
             setExpanded(false);
         } finally {
             setIsPosting(false);
@@ -666,6 +680,53 @@ const Feed = () => {
         setLocationSearchQuery("");
     };
 
+    const handleTagClick = () => {
+        setIsTagPickerOpen(true);
+        fetchPetsToTag("");
+    };
+
+    const fetchPetsToTag = async (query = "") => {
+        setIsTagging(true);
+        try {
+            // In a real app we'd search users/pets via API. For now, fetch all or mock.
+            const res = await window.axios.get("/api/pets");
+            let data = res.data.data || res.data;
+            if (Array.isArray(data)) {
+                if (query.trim()) {
+                    data = data.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || (p.breed && p.breed.toLowerCase().includes(query.toLowerCase())));
+                }
+                // exclude self
+                if (userPet) {
+                    data = data.filter(p => p.id !== userPet.id);
+                }
+                setSuggestedPetsToTag(data.slice(0, 10)); // max 10
+            }
+        } catch (e) {
+            console.error(e);
+            // Fallback suggestions
+            setSuggestedPetsToTag([
+                { id: 101, name: "Luna", breed: "Husky", image_url: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_4.png" },
+                { id: 102, name: "Buddy", breed: "Golden Retriever", image_url: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_3.png" },
+                { id: 103, name: "Milo", breed: "Corgi", image_url: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_2.png" }
+            ].filter(p => p.name.toLowerCase().includes(query.toLowerCase())));
+        } finally {
+            setIsTagging(false);
+        }
+    };
+
+    const toggleTag = (pet) => {
+        if (taggedPets.find(p => p.id === pet.id)) {
+            setTaggedPets(taggedPets.filter(p => p.id !== pet.id));
+        } else {
+            setTaggedPets([...taggedPets, pet]);
+        }
+    };
+
+    const closeTagPicker = () => {
+        setIsTagPickerOpen(false);
+        setTagSearchQuery("");
+    };
+
     return (
         <div className="pawtastic-feed">
             <Sidebar />
@@ -826,10 +887,9 @@ const Feed = () => {
                                         <div className="group">
                                             <button className="action-btn" onClick={handleImageClick}><ImageIcon size={18} /> Photo</button>
                                             <button className="action-btn" onClick={handleVideoClick}><Video size={18} /> Video</button>
-                                            <button className="action-btn" onClick={() => {
-                                                setPostText(prev => prev + "@");
-                                                document.querySelector('.feed-composer__textarea')?.focus();
-                                            }}><At size={18} /> Tag</button>
+                                            <button className={`action-btn ${taggedPets.length > 0 ? 'active' : ''}`} onClick={handleTagClick}>
+                                                <At size={18} /> {taggedPets.length > 0 ? `${taggedPets.length} Tagged` : "Tag"}
+                                            </button>
                                             <button className={`action-btn ${postLocation ? 'active' : ''} ${isLocating ? 'loading' : ''}`} onClick={handleLocationClick} disabled={isLocating}>
                                                 <MapPin size={18} /> 
                                                 {isLocating ? "Locating..." : postLocation?.name || "Location"}
@@ -1057,6 +1117,95 @@ const Feed = () => {
                                                 </div>
                                             </button>
                                         ))}
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Tag Picker Modal */}
+            <AnimatePresence>
+                {isTagPickerOpen && (
+                    <motion.div
+                        className="location-picker-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={closeTagPicker}
+                    >
+                        <motion.div
+                            className="location-picker tag-picker-modal"
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="location-picker__header">
+                                <button className="back-btn" onClick={closeTagPicker}>
+                                    <CaretLeft size={24} weight="bold" />
+                                </button>
+                                <h3>Tag people</h3>
+                            </div>
+
+                            <div className="tag-picker__search-row">
+                                <div className="search-input-wrapper">
+                                    <MagnifyingGlass size={18} weight="bold" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search"
+                                        value={tagSearchQuery}
+                                        onChange={(e) => {
+                                            setTagSearchQuery(e.target.value);
+                                            fetchPetsToTag(e.target.value);
+                                        }}
+                                        autoFocus
+                                    />
+                                    {tagSearchQuery && (
+                                        <button className="clear-search" onClick={() => { setTagSearchQuery(""); fetchPetsToTag(""); }}>
+                                            <X size={16} />
+                                        </button>
+                                    )}
+                                </div>
+                                <button className="tag-picker__done" onClick={closeTagPicker}>Done</button>
+                            </div>
+
+                            <div className="location-picker__content">
+                                <h4 className="suggested-title">SUGGESTIONS</h4>
+                                {isTagging && suggestedPetsToTag.length === 0 ? (
+                                    <div className="loading-locations">
+                                        <span>Searching...</span>
+                                    </div>
+                                ) : (
+                                    <div className="locations-list">
+                                        {suggestedPetsToTag.map((pet) => {
+                                            const isTagged = taggedPets.find(p => p.id === pet.id);
+                                            return (
+                                                <button
+                                                    key={pet.id}
+                                                    className={`location-item tag-item ${isTagged ? 'selected' : ''}`}
+                                                    onClick={() => toggleTag(pet)}
+                                                >
+                                                    <div className="location-icon tag-avatar">
+                                                        <Avatar src={pet.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png"} size="sm" />
+                                                    </div>
+                                                    <div className="location-info">
+                                                        <span className="location-name">{pet.name || "Unknown"}</span>
+                                                        <span className="location-sub">{pet.breed || "Pet"}</span>
+                                                    </div>
+                                                    <div className="tag-checkbox">
+                                                        <div className={`checkbox-circle ${isTagged ? 'checked' : ''}`}>
+                                                            {isTagged && <div className="checkbox-inner" />}
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            );
+                                        })}
+                                        {suggestedPetsToTag.length === 0 && !isTagging && (
+                                            <div className="no-results">No people found.</div>
+                                        )}
                                     </div>
                                 )}
                             </div>

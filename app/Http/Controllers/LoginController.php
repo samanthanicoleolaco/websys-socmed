@@ -59,6 +59,23 @@ class LoginController extends Controller
             report($e);
         }
 
+        // Send Login Alert Email via EmailJS
+        try {
+            \Illuminate\Support\Facades\Http::post('https://api.emailjs.com/api/v1.0/email/send', [
+                'service_id' => 'service_yi1yhq4',
+                'template_id' => 'template_xee3u8a',
+                'user_id' => 'xkV0CNBFLOo70K7JC',
+                'accessToken' => 'MBX3J8JVbBXSPZA1EBaV1',
+                'template_params' => [
+                    'to_name' => Auth::user()->name ?? 'User',
+                    'to_email' => Auth::user()->email,
+                    'message' => 'You have successfully logged into Petverse. If this was not you, please secure your account immediately.',
+                ]
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
         $redirectUrl = Auth::user()->is_admin ? '/admin' : '/';
 
         // Always JSON if expected, otherwise redirect
