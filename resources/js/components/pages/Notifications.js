@@ -5,7 +5,6 @@ import {
     ChatCircle,
     UserPlus,
     Trophy,
-    PawPrint,
     Check,
     Trash,
     Bell,
@@ -20,7 +19,7 @@ const typeMeta = {
     follow:  { icon: UserPlus,    color: "#22c55e", label: "started following you" },
     contest: { icon: Trophy,      color: "#f59e0b", label: "contest update" },
     message: { icon: ChatCircle,  color: "#898AA6", label: "sent you a message" },
-    default: { icon: PawPrint,    color: "#898AA6", label: "notification" },
+    default: { icon: Bell,        color: "#898AA6", label: "notification" },
 };
 
 const Notifications = () => {

@@ -16,6 +16,7 @@ class StoryController extends Controller
         // Fetch active stories (unexpired) grouped by user
         $stories = Story::with(['user.pet'])
             ->where('expires_at', '>', Carbon::now())
+            ->where('is_archived', false)
             ->whereDoesntHave('user.pet', function ($query) {
                 $query->where('name', 'Max');
             })
@@ -73,10 +74,23 @@ class StoryController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        Storage::disk('public')->delete($story->media_path);
+        if ($story->media_path) {
+            Storage::disk('public')->delete($story->media_path);
+        }
         $story->delete();
 
         return response()->json(['message' => 'Story deleted successfully']);
+    }
+
+    public function archive(Story $story)
+    {
+        if ($story->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $story->update(['is_archived' => true]);
+
+        return response()->json(['message' => 'Story archived successfully']);
     }
 
     public function markAsViewed(Request $request, Story $story)

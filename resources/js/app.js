@@ -13,33 +13,47 @@ import Settings from './components/Settings';
 import Profile from './components/pages/Profile';
 import Notifications from './components/pages/Notifications';
 
+import { UserProvider, useUser } from './context/UserContext';
+
 // Render components
 const container = document.getElementById('sam-virtudazo');
+
 if (container) {
     const root = createRoot(container);
     
-    // Simple routing based on path
-    const path = window.location.pathname;
-    // Home "/" must show Feed — do not bundle with /login or sidebar "Home" loads the login screen
-    if (path === '/login') {
-        root.render(<Login />);
-    } else if (path === '/register') {
-        root.render(<Register />);
-    } else if (path.startsWith('/admin')) {
-        root.render(<AdminDashboard />);
-    } else if (path === '/messages') {
-        root.render(<Messages />);
-    } else if (path === '/badges') {
-        root.render(<BadgesContests />);
-    } else if (path === '/adoption' || path.startsWith('/adoption/')) {
-        root.render(<AdoptionBoard />);
-    } else if (path === '/settings') {
-        root.render(<Settings />);
-    } else if (path === '/profile' || path.startsWith('/profile/')) {
-        root.render(<Profile />);
-    } else if (path === '/notifications') {
-        root.render(<Notifications />);
-    } else {
-        root.render(<Feed />);
-    }
+    const AppContent = () => {
+        const { user, loading } = useUser();
+        const path = window.location.pathname;
+        
+        if (loading) {
+            return (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f8f9fa' }}>
+                    <div className="pawtastic-loader"></div>
+                </div>
+            );
+        }
+
+        if (path === '/login') return <Login />;
+        if (path === '/register') return <Register />;
+
+        if (!user) {
+            window.location.href = '/login';
+            return null;
+        }
+
+        if (path.startsWith('/admin')) return <AdminDashboard />;
+        if (path === '/messages') return <Messages />;
+        if (path === '/badges') return <BadgesContests />;
+        if (path === '/adoption' || path.startsWith('/adoption/')) return <AdoptionBoard />;
+        if (path === '/settings') return <Settings />;
+        if (path === '/profile' || path.startsWith('/profile/')) return <Profile />;
+        if (path === '/notifications') return <Notifications />;
+        return <Feed />;
+    };
+
+    root.render(
+        <UserProvider>
+            <AppContent />
+        </UserProvider>
+    );
 }

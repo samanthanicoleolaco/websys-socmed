@@ -130,7 +130,10 @@ const Profile = () => {
                 <div className="profile-header">
                     {/* Avatar */}
                     <div className="profile-avatar">
-                        <img src={pet.image_url || "/images/default-pet.png"} alt={pet.name} />
+                        <img 
+                            src={pet.image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(pet.name || 'Pet')}&background=898AA6&color=fff`} 
+                            alt={pet.name} 
+                        />
                     </div>
 
                     {/* Info */}

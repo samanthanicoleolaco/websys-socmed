@@ -25,7 +25,7 @@ const BADGES_DATA = [
     { id: 1, name: "Top Poster", description: "Posted 50+ times", icon: Star, gradient: "bg-gradient-orange", rarity: "Common", status: "earned" },
     { id: 2, name: "Social Butterfly", description: "Made 20+ friends", icon: Heart, gradient: "bg-gradient-pink", rarity: "Rare", status: "earned" },
     { id: 3, name: "Contest Winner", description: "Won a pet contest", icon: Trophy, gradient: "bg-gradient-yellow", rarity: "Epic", status: "earned" },
-    { id: 4, name: "Adoption Hero", description: "Helped 3 pets get adopted", icon: PawPrint, gradient: "bg-gradient-green", rarity: "Rare", status: "earned" },
+    { id: 4, name: "Adoption Hero", description: "Helped 3 pets get adopted", icon: Heart, gradient: "bg-gradient-green", rarity: "Rare", status: "earned" },
     { id: 5, name: "Champion", description: "Reach top 10 leaderboard", icon: Crown, gradient: "bg-gradient-gold", rarity: "Legendary", status: "in-progress", progress: 7, total: 10 },
     { id: 6, name: "Energizer", description: "Active 30 days in a row", icon: Lightning, gradient: "bg-gradient-blue", rarity: "Epic", status: "in-progress", progress: 18, total: 30 },
     { id: 7, name: "Community Star", description: "Received 500+ likes", icon: Medal, gradient: "bg-gradient-purple", rarity: "Rare", status: "in-progress", progress: 312, total: 500 },

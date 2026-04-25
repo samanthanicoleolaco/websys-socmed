@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Pet;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -52,6 +54,13 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+        if (!$user->hasVerifiedEmail()) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => ['Please verify your email before logging in to Petverse.'],
+            ]);
+        }
+
         $token = $user->createToken('pawtastic-token')->plainTextToken;
 
         return response()->json([
@@ -77,6 +86,74 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        $user = $request->user()->load('pet');
+        return response()->json($user);
+    }
+
+    /**
+     * Update user profile photo
+     */
+    public function updateProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|max:2048',
+        ]);
+
+        $user = $request->user();
+
+        if ($request->hasFile('photo')) {
+            // Delete old photo from user record if it exists
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete($user->profile_photo);
+            }
+
+            $path = $request->file('photo')->store('profile_photos', 'public');
+            
+            // Save to users table
+            $user->profile_photo = $path;
+            $user->save();
+
+            // Sync with the user's primary pet so it reflects on the Profile page and Feed
+            if ($user->pet) {
+                $user->pet->photo = $path;
+                $user->pet->save();
+            }
+
+            return response()->json([
+                'message' => 'Profile photo updated successfully',
+                'avatar_url' => url('storage/' . $path),
+            ]);
+        }
+
+        return response()->json(['message' => 'No photo uploaded'], 400);
+    }
+
+    /**
+     * Update user profile details
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+        
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'bio' => 'nullable|string|max:500',
+        ]);
+
+        $user->update($validated);
+
+        // Also update pet info if exists
+        if ($user->pet) {
+            $user->pet->update([
+                'location' => $request->location,
+                'bio' => $request->bio,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user->load('pet'),
+        ]);
     }
 }

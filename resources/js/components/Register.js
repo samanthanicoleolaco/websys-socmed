@@ -42,7 +42,8 @@ const Register = () => {
     return (
         <div className="pawtastic-login">
             {/* Left Side: Branding & Image */}
-            <div className="login-sidebar">
+            <div className="login-sidebar" style={{ backgroundImage: 'url(/images/register-bg.jpg)' }}>
+                <div className="sidebar-image"></div>
                 <div className="sidebar-content">
                     <div className="brand">
                         <img src="/petlogo.png" alt="Petverse Logo" className="brand-icon" /> Petverse
@@ -57,9 +58,9 @@ const Register = () => {
 
             {/* Right Side: Register Form */}
             <div className="login-form-container">
-                <div className="form-box">
-                    <h2 className="welcome-text" style={{ marginBottom: '0.5rem' }}>Create Account</h2>
-                    <p style={{ color: '#64748b', marginBottom: '2.5rem', fontSize: '1rem', fontWeight: '500' }}>Sign up to be part of the largest pet network.</p>
+                <div className="form-box" style={{ marginTop: '20px' }}>
+                    <h2 className="welcome-text">Create an Account</h2>
+                    <p style={{ color: '#888', marginBottom: '25px', fontSize: '14px' }}>Sign up to be part of the largest pet network.</p>
                     
                     <form onSubmit={handleSubmit} className="actual-form">
                         {error && <div className="error-msg">{error}</div>}
@@ -91,7 +92,6 @@ const Register = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                minLength="8"
                             />
                         </div>
 
@@ -102,17 +102,16 @@ const Register = () => {
                                 value={passwordConfirmation}
                                 onChange={(e) => setPasswordConfirmation(e.target.value)}
                                 required
-                                minLength="8"
                             />
                         </div>
 
-                        <button type="submit" className="login-btn" disabled={loading}>
-                            {loading ? "Signing up..." : "Sign up"}
+                        <button type="submit" className="login-btn" disabled={loading} style={{ marginTop: '10px' }}>
+                            {loading ? "Creating account..." : "Sign Up"}
                         </button>
                     </form>
 
                     <p className="signup-text">
-                        Already have an account? <a href="/login">Sign in</a>
+                        Already have an account? <a href="/login">Log in here</a>
                     </p>
                 </div>
             </div>

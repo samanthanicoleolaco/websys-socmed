@@ -22,6 +22,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'is_admin',
+        'profile_photo',
+        'email_verified_at',
+        'email_verification_code_hash',
+        'email_verification_expires_at',
     ];
 
     /**
@@ -41,6 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'email_verification_expires_at' => 'datetime',
         'is_admin'          => 'boolean',
     ];
 
@@ -63,6 +68,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAvatarUrlAttribute()
     {
+        if ($this->profile_photo) {
+            return url('storage/' . $this->profile_photo);
+        }
         if ($this->pet && $this->pet->photo) {
             return url('storage/' . $this->pet->photo);
         }

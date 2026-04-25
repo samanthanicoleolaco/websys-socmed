@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,35 +22,37 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            background-color: var(--bg-page);
+            color: var(--text-main);
         }
         .navbar {
-            background-color: #ffffff;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
         .nav-link {
             font-weight: 500;
-            color: #64748b;
+            color: var(--text-muted);
             transition: color 0.15s ease-in-out;
         }
         .nav-link:hover {
-            color: #0f172a;
+            color: var(--primary-action);
         }
         .card {
-            border: none;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
             transition: transform 0.2s;
         }
         .btn-primary {
-            background-color: #3b82f6;
-            border-color: #3b82f6;
+            background-color: var(--primary-action);
+            border-color: var(--primary-action);
             padding: 0.5rem 1.25rem;
             font-weight: 600;
         }
         .btn-primary:hover {
-            background-color: #2563eb;
-            border-color: #2563eb;
+            background-color: color-mix(in srgb, var(--primary-action), black 10%);
+            border-color: color-mix(in srgb, var(--primary-action), black 10%);
         }
     </style>
 </head>
@@ -59,7 +61,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand fw-bold text-primary" href="{{ url('/') }}">
-                    <i class="fas fa-paw me-2"></i>{{ config('app.name', 'Pawtastic') }}
+                    {{ config('app.name', 'Pawtastic') }}
                 </a>
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

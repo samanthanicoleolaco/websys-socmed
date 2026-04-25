@@ -17,9 +17,10 @@ import {
     Trash,
     X,
     MagnifyingGlass,
-    SignOut,
+    SignOut
 } from "@phosphor-icons/react";
 import BottomNav from "../BottomNav";
+import { useUser } from "../../context/UserContext";
 
 const typeMeta = {
     like:    { icon: Heart,       color: "#ef4444", label: "liked your post" },
@@ -30,55 +31,8 @@ const typeMeta = {
     default: { icon: PawPrint,    color: "#898AA6", label: "notification" },
 };
 
-const SearchResults = ({ query }) => {
-    const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        const fetchResults = async () => {
-            if (!query.trim()) return;
-            setLoading(true);
-            try {
-                const res = await window.axios.get(`/api/pets?search=${encodeURIComponent(query.trim())}`);
-                setResults(res.data.data || res.data || []);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        const debounce = setTimeout(fetchResults, 300);
-        return () => clearTimeout(debounce);
-    }, [query]);
-
-    if (loading) {
-        return <div style={{ padding: '12px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px' }}>Searching...</div>;
-    }
-
-    if (results.length === 0) {
-        return <div style={{ padding: '12px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px' }}>No pets found.</div>;
-    }
-
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {results.map(pet => (
-                <a key={pet.id} href={`/pets/${pet.id}`} style={{ 
-                    display: 'flex', alignItems: 'center', gap: '10px', padding: '12px', 
-                    textDecoration: 'none', borderBottom: '1px solid var(--border-color)', color: 'var(--text-main)'
-                }} className="search-result-item">
-                    <img src={pet.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png"} alt={pet.name} style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span style={{ fontWeight: 600, fontSize: '14px' }}>{pet.name}</span>
-                        <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{pet.breed || "Pet"}</span>
-                    </div>
-                </a>
-            ))}
-        </div>
-    );
-};
-
-const Sidebar = ({ brandText = "Petverse", navItems: propNavItems, bottomItems, onNavClick }) => {
+const Sidebar = ({ brandText = "Petverse" }) => {
+    const { user } = useUser();
     const currentPath = window.location.pathname;
 
     // Read persisted preference on mount
@@ -156,39 +110,56 @@ const Sidebar = ({ brandText = "Petverse", navItems: propNavItems, bottomItems, 
 
     const unreadCount = notifications.filter((n) => !n.is_read).length;
 
-    const defaultNavItems = [
+    const navItems = [
         { icon: <House size={22} />,       label: "Home",          route: "/"             },
         { icon: <Bell size={22} />,        label: "Notifications", route: "/notifications", isNotifTrigger: true },
         { icon: <ChatCircle size={22} />,  label: "Messages",      route: "/messages"      },
         { icon: <Medal size={22} />,       label: "Badges",        route: "/badges"        },
         { icon: <Heart size={22} />,       label: "Adoption",      route: "/adoption"      },
-        { icon: <User size={22} />,        label: "Profile",       route: "/profile"       },
+        { 
+            icon: user?.avatar_url ? (
+                <div className="sidebar-user-avatar">
+                    <img src={user.avatar_url} alt="Profile" />
+                </div>
+            ) : <User size={22} />,        
+            label: "Profile",       
+            route: "/profile"       
+        },
         { icon: <Gear size={22} />,        label: "Settings",      route: "/settings"      },
-        { icon: <SignOut size={22} />,     label: "Sign Out",      route: "#",             isSignOut: true },
+        { icon: <SignOut size={22} />,     label: "Logout",        route: "#",             isLogout: true },
     ];
 
-    const navItems = propNavItems || defaultNavItems;
+    const handleLogout = (e) => {
+        e.preventDefault();
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        if (csrfToken) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/logout';
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_token';
+            input.value = csrfToken;
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    };
 
     const isActive = (route) => {
-        if (route === "#") return false;
         if (route === "/") return currentPath === "/";
         return currentPath.startsWith(route);
     };
 
-    const handleNav = async (e, item) => {
+    const handleNav = (e, item) => {
+        if (item.isLogout) {
+            handleLogout(e);
+            return;
+        }
+        
         e.preventDefault();
         if (item.isNotifTrigger) {
             toggleNotifications();
-            return;
-        }
-        if (item.isSignOut) {
-            try {
-                await window.axios.post('/logout');
-                window.location.href = '/login';
-            } catch (err) {
-                console.error('Logout failed', err);
-                window.location.href = '/login';
-            }
             return;
         }
         window.location.href = item.route;
@@ -204,64 +175,34 @@ const Sidebar = ({ brandText = "Petverse", navItems: propNavItems, bottomItems, 
                 </div>
 
                 {/* Search Bar */}
-                <div className="sidebar-search" style={{ position: 'relative' }}>
+                <div className="sidebar-search">
                     <div className="sidebar-search__wrapper">
                         <MagnifyingGlass size={18} className="sidebar-search__icon" />
                         <input
                             type="text"
                             className="sidebar-search__input"
-                            placeholder="Search pets..."
+                            placeholder="Search..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && searchQuery.trim()) {
+                                    window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+                                }
+                            }}
                         />
                     </div>
-                    {/* Search Dropdown */}
-                    <AnimatePresence>
-                        {searchQuery.trim().length > 0 && (
-                            <motion.div 
-                                className="search-dropdown"
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                style={{
-                                    position: 'absolute',
-                                    top: '100%',
-                                    left: 0,
-                                    right: 0,
-                                    background: 'var(--bg-card)',
-                                    border: '1px solid var(--border-color)',
-                                    borderRadius: '8px',
-                                    marginTop: '8px',
-                                    maxHeight: '300px',
-                                    overflowY: 'auto',
-                                    zIndex: 50,
-                                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                                }}
-                            >
-                                <SearchResults query={searchQuery} />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </div>
 
                 {/* Nav */}
                 <nav className="sidebar-nav">
                     {navItems.map((item) => {
-                        const active = propNavItems ? item.active : isActive(item.route);
+                        const active = isActive(item.route);
                         const notifActive = item.isNotifTrigger && isNotifOpen;
-                        const label = item.label || item.text;
                         return (
                             <a
-                                key={item.id || label}
-                                href={item.route || "#"}
-                                onClick={(e) => {
-                                    if (onNavClick && propNavItems) {
-                                        e.preventDefault();
-                                        onNavClick(item);
-                                    } else {
-                                        handleNav(e, item);
-                                    }
-                                }}
+                                key={item.label}
+                                href={item.route}
+                                onClick={(e) => handleNav(e, item)}
                                 className={`nav-item ${active || notifActive ? "active" : ""}`}
                             >
                                 {(active || notifActive) && (
@@ -278,48 +219,22 @@ const Sidebar = ({ brandText = "Petverse", navItems: propNavItems, bottomItems, 
                                         <span className="nav-badge">{unreadCount}</span>
                                     )}
                                 </span>
-                                <span className="nav-label" style={{ position: "relative", zIndex: 1 }}>{label}</span>
+                                <span className="nav-label" style={{ position: "relative", zIndex: 1 }}>{item.label}</span>
                             </a>
                         );
                     })}
                 </nav>
 
                 {/* Footer */}
-                <div className="sidebar-footer" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-                    {bottomItems && bottomItems.map((item) => (
-                        <a
-                            key={item.id || item.text}
-                            href="#"
-                            onClick={async (e) => {
-                                e.preventDefault();
-                                if (item.id === 'logout') {
-                                    try {
-                                        await window.axios.post('/logout');
-                                        window.location.href = '/login';
-                                    } catch (err) {
-                                        console.error('Logout failed', err);
-                                        window.location.href = '/login';
-                                    }
-                                }
-                            }}
-                            className="nav-item"
-                            style={{ marginBottom: '15px' }}
-                        >
-                            <span className="nav-icon">{item.icon}</span>
-                            <span className="nav-label">{item.text || item.label}</span>
-                        </a>
-                    ))}
-                    
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                        <p style={{ margin: 0 }}>© 2024 Petverse</p>
-                        <button
-                            className="theme-toggle"
-                            onClick={toggleTheme}
-                            title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-                        >
-                            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-                        </button>
-                    </div>
+                <div className="sidebar-footer">
+                    <p>© 2024 Petverse</p>
+                    <button
+                        className="theme-toggle"
+                        onClick={toggleTheme}
+                        title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                    >
+                        {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                    </button>
                 </div>
             </aside>
 

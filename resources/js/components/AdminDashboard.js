@@ -105,7 +105,7 @@ const AdminDashboard = () => {
     ];
 
     return (
-        <div className="pawtastic-feed" style={{ background: '#f5f8fa' }}>
+        <div className="pawtastic-feed" style={{ background: 'var(--bg-page)' }}>
             <Sidebar 
                 brandText="Admin" 
                 navItems={navItems} 
@@ -124,7 +124,7 @@ const AdminDashboard = () => {
                                         <h3>Manage Account</h3>
                                         <p>Adjust privileges and profile details for {editingUser.name}.</p>
                                     </div>
-                                    <button type="button" onClick={() => setEditingUser(null)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#64748B' }}>&times;</button>
+                                    <button type="button" onClick={() => setEditingUser(null)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-muted)' }}>&times;</button>
                                 </div>
                             </div>
 
@@ -181,7 +181,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="header-actions">
                         <button className="icon-btn"><Bell size={22} weight="light" /></button>
-                        <span style={{ fontWeight: 600, color: '#ffc26d', marginLeft: '10px' }}>System Admin</span>
+                        <span style={{ fontWeight: 600, color: 'var(--primary-action)', marginLeft: '10px' }}>System Admin</span>
                     </div>
                 </header>
 
@@ -192,40 +192,40 @@ const AdminDashboard = () => {
                         {activeTab === 'dashboard' && (
                             <>
                                 <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-                                    <div style={{ flex: 1, background: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-                                        <h4 style={{ color: '#888', margin: '0 0 10px 0', fontSize: '12px', textTransform: 'uppercase' }}>Total Active Users</h4>
-                                        <h2 style={{ margin: 0, fontSize: '28px', color: '#ffb347' }}>{stats.total_users}</h2>
+                                    <div style={{ flex: 1, background: 'var(--bg-card)', border: '1px solid var(--border-color)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
+                                        <h4 style={{ color: 'var(--text-muted)', margin: '0 0 10px 0', fontSize: '12px', textTransform: 'uppercase' }}>Total Active Users</h4>
+                                        <h2 style={{ margin: 0, fontSize: '28px', color: 'var(--primary-action)' }}>{stats.total_users}</h2>
                                     </div>
-                                    <div style={{ flex: 1, background: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-                                        <h4 style={{ color: '#888', margin: '0 0 10px 0', fontSize: '12px', textTransform: 'uppercase' }}>Total Registered Pets</h4>
-                                        <h2 style={{ margin: 0, fontSize: '28px', color: '#ffb347' }}>{stats.total_pets}</h2>
+                                    <div style={{ flex: 1, background: 'var(--bg-card)', border: '1px solid var(--border-color)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
+                                        <h4 style={{ color: 'var(--text-muted)', margin: '0 0 10px 0', fontSize: '12px', textTransform: 'uppercase' }}>Total Registered Pets</h4>
+                                        <h2 style={{ margin: 0, fontSize: '28px', color: 'var(--primary-action)' }}>{stats.total_pets}</h2>
                                     </div>
-                                    <div style={{ flex: 1, background: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-                                        <h4 style={{ color: '#888', margin: '0 0 10px 0', fontSize: '12px', textTransform: 'uppercase' }}>Global Posts Created</h4>
-                                        <h2 style={{ margin: 0, fontSize: '28px', color: '#ffb347' }}>{stats.total_posts}</h2>
+                                    <div style={{ flex: 1, background: 'var(--bg-card)', border: '1px solid var(--border-color)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
+                                        <h4 style={{ color: 'var(--text-muted)', margin: '0 0 10px 0', fontSize: '12px', textTransform: 'uppercase' }}>Global Posts Created</h4>
+                                        <h2 style={{ margin: 0, fontSize: '28px', color: 'var(--primary-action)' }}>{stats.total_posts}</h2>
                                     </div>
                                 </div>
 
-                                <div className="post-card" style={{ padding: '20px', marginTop: '20px' }}>
-                                    <h3 style={{ borderBottom: '1px solid #eee', paddingBottom: '15px', marginBottom: '15px', color: '#333' }}>Platform Accounts</h3>
+                                <div className="post-card" style={{ padding: '20px', marginTop: '20px', background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+                                    <h3 style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '15px', marginBottom: '15px', color: 'var(--text-main)' }}>Platform Accounts</h3>
                                     <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                                         <thead>
                                             <tr>
-                                                <th style={{ padding: '10px', borderBottom: '2px solid #eee', color: '#888' }}>Name</th>
-                                                <th style={{ padding: '10px', borderBottom: '2px solid #eee', color: '#888' }}>Email</th>
-                                                <th style={{ padding: '10px', borderBottom: '2px solid #eee', color: '#888' }}>Pets</th>
-                                                <th style={{ padding: '10px', borderBottom: '2px solid #eee', color: '#888' }}>Joined</th>
-                                                <th style={{ padding: '10px', borderBottom: '2px solid #eee', color: '#888' }}>Actions</th>
+                                                <th style={{ padding: '10px', borderBottom: '2px solid var(--border-color)', color: 'var(--text-muted)' }}>Name</th>
+                                                <th style={{ padding: '10px', borderBottom: '2px solid var(--border-color)', color: 'var(--text-muted)' }}>Email</th>
+                                                <th style={{ padding: '10px', borderBottom: '2px solid var(--border-color)', color: 'var(--text-muted)' }}>Pets</th>
+                                                <th style={{ padding: '10px', borderBottom: '2px solid var(--border-color)', color: 'var(--text-muted)' }}>Joined</th>
+                                                <th style={{ padding: '10px', borderBottom: '2px solid var(--border-color)', color: 'var(--text-muted)' }}>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {users.map(user => (
                                                 <tr key={user.id}>
-                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', fontWeight: '500' }}>{user.name} {user.is_admin ? <span style={{ color: '#50cd89', fontSize: '10px', fontWeight: 'bold' }}>[ADMIN]</span> : ''}</td>
-                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>{user.email}</td>
-                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>{user.pets_count}</td>
-                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>{new Date(user.created_at).toLocaleDateString()}</td>
-                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', display: 'flex', gap: '8px' }}>
+                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', fontWeight: '500', color: 'var(--text-main)' }}>{user.name} {user.is_admin ? <span style={{ color: 'var(--success)', fontSize: '10px', fontWeight: 'bold' }}>[ADMIN]</span> : ''}</td>
+                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>{user.email}</td>
+                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>{user.pets_count}</td>
+                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>{new Date(user.created_at).toLocaleDateString()}</td>
+                                                    <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', display: 'flex', gap: '8px' }}>
                                                         <button onClick={() => setEditingUser(user)} style={{ background: '#334155', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>Edit</button>
                                                         <button onClick={(e) => handleDeleteUser(e, user.id)} style={{ background: '#f1416c', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>Remove</button>
                                                     </td>
@@ -285,7 +285,7 @@ const AdminDashboard = () => {
                                         {posts.map(post => (
                                             <tr key={post.id}>
                                                 <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>#{post.id}</td>
-                                                <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', fontWeight: '600', color: '#ffc26d' }}>{post.pet?.name || 'Unknown'}</td>
+                                                <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', fontWeight: '600', color: 'var(--primary-action)' }}>{post.pet?.name || 'Unknown'}</td>
                                                 <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#555' }}>{post.content ? post.content.substring(0, 40) + '...' : '(Media Post)'}</td>
                                                 <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#888' }}>{new Date(post.created_at).toLocaleDateString()}</td>
                                                 <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5' }}>

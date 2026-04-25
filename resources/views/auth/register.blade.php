@@ -6,18 +6,27 @@
         <div class="col-md-6">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="card-header bg-white py-4 text-center border-0">
-                    <h3 class="fw-bold text-primary mb-1">Create Account</h3>
-                    <p class="text-muted small">Join us today and enjoy our features</p>
+                    <h3 class="fw-bold text-primary mb-1">Join Petverse</h3>
+                    <p class="text-muted small">Create your account and verify your email to activate your pet profile</p>
                 </div>
                 <div class="card-body px-4 pb-4">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="row mb-3">
-                            <div class="col-md-12">
-                                <label for="name" class="form-label text-muted small fw-bold">{{ __('Name') }}</label>
-                                <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="John Doe">
-                                @error('name')
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label text-muted small fw-bold">First Name</label>
+                                <input id="first_name" type="text" class="form-control form-control-lg @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="given-name" autofocus placeholder="John">
+                                @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label text-muted small fw-bold">Last Name</label>
+                                <input id="last_name" type="text" class="form-control form-control-lg @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name" placeholder="Doe">
+                                @error('last_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

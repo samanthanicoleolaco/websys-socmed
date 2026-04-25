@@ -11,7 +11,8 @@ class LoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        // Removed 'guest' middleware to prevent server-side redirect loops in SPA mode.
+        // The React frontend handles authenticated state via UserContext.
     }
     /**
      * Show the application's login form.
@@ -54,23 +55,6 @@ class LoginController extends Controller
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
                 'login_at' => now(),
-            ]);
-        } catch (\Throwable $e) {
-            report($e);
-        }
-
-        // Send Login Alert Email via EmailJS
-        try {
-            \Illuminate\Support\Facades\Http::post('https://api.emailjs.com/api/v1.0/email/send', [
-                'service_id' => 'service_yi1yhq4',
-                'template_id' => 'template_xee3u8a',
-                'user_id' => 'xkV0CNBFLOo70K7JC',
-                'accessToken' => 'MBX3J8JVbBXSPZA1EBaV1',
-                'template_params' => [
-                    'to_name' => Auth::user()->name ?? 'User',
-                    'to_email' => Auth::user()->email,
-                    'message' => 'You have successfully logged into Petverse. If this was not you, please secure your account immediately.',
-                ]
             ]);
         } catch (\Throwable $e) {
             report($e);

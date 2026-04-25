@@ -24,17 +24,23 @@ import {
     At,
     CaretLeft,
     MagnifyingGlass,
+    Trash,
 } from "@phosphor-icons/react";
 import Sidebar from "./Sidebar";
+import axios from "axios";
+import { useUser } from "../../context/UserContext";
 import "../../../sass/pages/feed.scss";
 
 // ── Micro components ──────────────────────────────────────────────────
-const Avatar = ({ src, fallback, size = "md", online = false }) => (
-    <div className={`feed-avatar feed-avatar--${size} ${online ? "online" : ""}`}>
-        {src ? <img src={src} alt="avatar" /> : <span className="feed-avatar__fallback">{fallback}</span>}
-        {online && <span className="feed-avatar__dot" />}
-    </div>
-);
+const Avatar = ({ src, fallback, size = "md", online = false }) => {
+    const avatarSrc = src || (fallback ? `https://ui-avatars.com/api/?name=${encodeURIComponent(fallback)}&background=898AA6&color=fff` : "https://ui-avatars.com/api/?name=User&background=898AA6&color=fff");
+    return (
+        <div className={`feed-avatar feed-avatar--${size} ${online ? "online" : ""}`}>
+            <img src={avatarSrc} alt="avatar" />
+            {online && <span className="feed-avatar__dot" />}
+        </div>
+    );
+};
 
 const Button = ({ children, variant = "default", className = "", ...props }) => (
     <button className={`feed-btn feed-btn--${variant} ${className}`} {...props}>{children}</button>
@@ -201,16 +207,16 @@ const PostModal = ({ post, onClose, onLike }) => {
 };
 
 const Feed = () => {
+    const { user } = useUser();
     const [posts, setPosts] = useState([]);
     const [dynamicStories, setStories]    = useState([]);
     const [hiddenStoryUsers, setHiddenStoryUsers] = useState([]);
-    const [userPet, setUserPet]           = useState(null);
     const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
     const [viewerState, setViewerState]   = useState({ isOpen: false, userStories: [], currentIndex: 0 });
+    const [showStoryMenu, setShowStoryMenu] = useState(false);
     const [postText, setPostText]         = useState("");
     const [isCreateExpanded, setExpanded] = useState(false);
     const [isPosting, setIsPosting] = useState(false);
-    const [activePost, setActivePost] = useState(null);
     const [postPrivacy, setPostPrivacy] = useState("public");
     const [showPrivacyMenu, setShowPrivacyMenu] = useState(false);
     const [postLocation, setPostLocation] = useState(null);
@@ -218,14 +224,7 @@ const Feed = () => {
     const [isLocationPickerOpen, setIsLocationPickerOpen] = useState(false);
     const [locationSearchQuery, setLocationSearchQuery] = useState("");
     const [suggestedLocations, setSuggestedLocations] = useState([]);
-    
-    // Tagging state
-    const [isTagPickerOpen, setIsTagPickerOpen] = useState(false);
-    const [tagSearchQuery, setTagSearchQuery] = useState("");
-    const [suggestedPetsToTag, setSuggestedPetsToTag] = useState([]);
-    const [taggedPets, setTaggedPets] = useState([]);
-    const [isTagging, setIsTagging] = useState(false);
-
+    const [activePost, setActivePost] = useState(null);
     const privacyMenuRef = useRef(null);
     
     const fileInputRef = useRef(null);
@@ -242,15 +241,11 @@ const Feed = () => {
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                const [storiesRes, petsRes, postsRes] = await Promise.all([
+                const [storiesRes, postsRes] = await Promise.all([
                     window.axios.get("/api/stories"),
-                    window.axios.get("/api/pets"),
                     window.axios.get("/api/posts")
                 ]);
                 setStories(storiesRes.data);
-                if (petsRes.data && petsRes.data.length > 0) {
-                    setUserPet(petsRes.data[0]);
-                }
                 const mappedPosts = (postsRes.data?.data || postsRes.data || []).map((p) => ({
                     id: p.id,
                     author: p.pet?.name || p.user?.name || "Petverse User",
@@ -266,26 +261,26 @@ const Feed = () => {
                     comments: Array.isArray(p.comments) ? p.comments.length : (p.comments_count || p.comment_count || 0),
                     isLiked: false,
                 }));
-                setPosts(mappedPosts.length ? mappedPosts : [
-                    {
-                        id: 1,
-                        author: "Sarah & Mochi",
-                        breed: "Golden Retriever",
-                        location: "Riverside Park",
-                        avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
-                        time: "2h ago",
-                        content: "Golden hour with my best boy Mochi! 🌅🐾 He loves afternoon walks in the park. Every day is a new adventure with this fluff...",
-                        hashtags: ["#goldenretriever", "#doglife", "#goldenhour"],
-                        image: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
-                        likes: 142,
-                        comments: 18,
-                        isLiked: false,
-                    },
-                ]);
+                setPosts(mappedPosts);
             } catch (err) { console.error(err); }
         };
         fetchInitialData();
     }, []);
+
+    const handleDeleteStory = async (id) => {
+        try {
+            await axios.delete(`/api/stories/${id}`);
+            setStories(prev => prev.map(g => ({ ...g, stories: g.stories.filter(s => s.id !== id) })).filter(g => g.stories.length > 0));
+            setViewerState(p => ({ ...p, isOpen: false }));
+        } catch(e) { console.error(e); }
+    };
+
+    const handleArchiveStory = async (id) => {
+        try {
+            await axios.post(`/api/stories/${id}/archive`);
+            setViewerState(p => ({ ...p, isOpen: false }));
+        } catch(e) { console.error(e); }
+    };
 
     const handleAddClick = (e) => {
         if (e) e.stopPropagation();
@@ -300,12 +295,85 @@ const Feed = () => {
         const formData = new FormData();
         formData.append("media", file);
         try {
-            await window.axios.post("/api/stories", formData, {
-                headers: { "Content-Type": "multipart/form-data" }
-            });
+            await window.axios.post("/api/stories", formData);
             const res = await window.axios.get("/api/stories");
             setStories(res.data);
-        } catch (err) { alert("Upload failed: " + (err.response?.data?.message || err.message)); }
+        } catch (err) { alert("Upload failed"); }
+    };
+
+    const handleLocationClick = () => {
+        if (postLocation) {
+            setPostLocation(null);
+            return;
+        }
+        setIsLocationPickerOpen(true);
+        fetchNearbyLocations();
+    };
+
+    const fetchNearbyLocations = async () => {
+        setIsLocating(true);
+        if (!navigator.geolocation) {
+            setSuggestedLocations([
+                { id: 1, name: "Central Park", sub: "New York, USA", type: "park" },
+                { id: 2, name: "Downtown Area", sub: "City Center", type: "city" },
+                { id: 3, name: "Local Cafe", sub: "Nearby", type: "cafe" },
+            ]);
+            setIsLocating(false);
+            return;
+        }
+        
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                try {
+                    const reverseRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`);
+                    const reverseData = await reverseRes.json();
+                    const addr = reverseData.address || {};
+                    let cityName = addr.city || addr.town || addr.village || addr.county || "Current Location";
+                    let stateName = addr.state || addr.region || "";
+                    let countryName = addr.country || "";
+                    let roadName = addr.road || addr.pedestrian || addr.street || "";
+                    let currentSub = stateName ? `${cityName}, ${stateName}` : (countryName || "Nearby");
+                    
+                    const nearby = [
+                        { id: 1, name: roadName || "Current Location", sub: currentSub, type: "pin", lat: latitude, lon: longitude },
+                        { id: 2, name: "My Location", sub: `${cityName}, ${countryName || ""}`, type: "pin", lat: latitude, lon: longitude },
+                    ];
+                    setSuggestedLocations(nearby);
+                } catch {
+                    setSuggestedLocations([
+                        { id: 1, name: "Current Location", sub: "Nearby", type: "pin" },
+                        { id: 2, name: "Local Area", sub: "Nearby", type: "city" },
+                    ]);
+                } finally { setIsLocating(false); }
+            },
+            () => {
+                setSuggestedLocations([
+                    { id: 1, name: "Central Park", sub: "Popular location", type: "park" },
+                    { id: 2, name: "Downtown", sub: "City Center", type: "city" },
+                ]);
+                setIsLocating(false);
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    };
+
+    const searchLocations = async (query) => {
+        if (!query.trim()) { fetchNearbyLocations(); return; }
+        setIsLocating(true);
+        try {
+            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=8&addressdetails=1`);
+            const data = await res.json();
+            const results = data.map((item, index) => ({
+                id: item.place_id || index + 1,
+                name: item.namedetails?.name || item.name || item.display_name.split(",")[0],
+                sub: item.address?.city || item.address?.state || item.address?.country || "Nearby",
+                type: "city",
+                lat: item.lat,
+                lon: item.lon
+            }));
+            setSuggestedLocations(results);
+        } catch (err) { console.error(err); } finally { setIsLocating(false); }
     };
 
     const handleImageClick = () => imageInputRef.current?.click();
@@ -348,7 +416,6 @@ const Feed = () => {
             setViewerState(prev => ({ ...prev, isOpen: false }));
         }
     };
-    const prevStory = () => { if (viewerState.currentIndex > 0) setViewerState(p => ({ ...p, currentIndex: p.currentIndex - 1 })); };
 
     useEffect(() => {
         let timer;
@@ -362,7 +429,6 @@ const Feed = () => {
         const h = (e) => {
             if (addMenuRef.current && !addMenuRef.current.contains(e.target)) setIsAddMenuOpen(false);
             if (privacyMenuRef.current && !privacyMenuRef.current.contains(e.target)) setShowPrivacyMenu(false);
-            // Only collapse if clicking outside AND no content/media to preserve
             if (createCardRef.current && !createCardRef.current.contains(e.target)) {
                 if (!postText.trim() && !imagePreview && !videoPreview) {
                     setExpanded(false);
@@ -375,9 +441,6 @@ const Feed = () => {
 
     const toggleLike = (id) => {
         setPosts(posts.map(p => p.id === id ? { ...p, isLiked: !p.isLiked, likes: p.isLiked ? p.likes - 1 : p.likes + 1 } : p));
-        if (activePost && activePost.id === id) {
-            setActivePost(prev => ({ ...prev, isLiked: !prev.isLiked, likes: prev.isLiked ? prev.likes - 1 : prev.likes + 1 }));
-        }
     };
 
     const isValidMediaUrl = (url) => {
@@ -404,49 +467,25 @@ const Feed = () => {
                 formData.append("location", postLocation.name);
                 if (postLocation.lat) formData.append("location_lat", postLocation.lat);
                 if (postLocation.lon) formData.append("location_lon", postLocation.lon);
-                if (postLocation.id) formData.append("location_place_id", postLocation.id);
-            }
-            if (taggedPets.length > 0) {
-                formData.append("tagged_pets", JSON.stringify(taggedPets.map(p => p.id)));
             }
             if (postImage) formData.append("image", postImage);
             if (postVideo) formData.append("video", postVideo);
 
-            let createdPost = null;
-            try {
-                const res = await window.axios.post("/api/posts", formData, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                });
-                createdPost = res.data;
-            } catch (e) {
-                console.error("Post create failed", e);
-            }
-
-            const mapped = createdPost ? {
+            const res = await window.axios.post("/api/posts", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+            const createdPost = res.data;
+            const mapped = {
                 id: createdPost.id,
-                author: createdPost.pet?.name || createdPost.user?.name || userPet?.name || "You",
-                breed: createdPost.pet?.breed || userPet?.breed || "Pet",
+                author: createdPost.pet?.name || user?.name || "You",
+                breed: createdPost.pet?.breed || "Pet",
                 location: createdPost.location || "",
-                avatar: createdPost.pet?.image_url || createdPost.user?.avatar_url || userPet?.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
-                time: createdPost.created_at ? new Date(createdPost.created_at).toLocaleDateString() : "just now",
-                content: createdPost.caption || createdPost.content || trimmed,
-                hashtags: [],
-                image: createdPost.image_url || createdPost.media_url || null,
-                video: createdPost.video_url || null,
-                likes: 0,
-                comments: 0,
-                isLiked: false,
-            } : {
-                id: Date.now(),
-                author: userPet?.name || "You",
-                breed: userPet?.breed || "Pet",
-                location: postLocation?.name || "",
-                avatar: userPet?.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
+                avatar: createdPost.pet?.image_url || user?.avatar_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
                 time: "just now",
-                content: trimmed,
+                content: createdPost.caption || trimmed,
                 hashtags: [],
-                image: imagePreview || null,
-                video: videoPreview || null,
+                image: createdPost.image_url || null,
+                video: createdPost.video_url || null,
                 likes: 0,
                 comments: 0,
                 isLiked: false,
@@ -456,275 +495,10 @@ const Feed = () => {
             setPostText("");
             clearMedia();
             setPostLocation(null);
-            setTaggedPets([]);
             setExpanded(false);
         } finally {
             setIsPosting(false);
         }
-    };
-
-    const handleLocationClick = () => {
-        if (postLocation) {
-            setPostLocation(null);
-            return;
-        }
-        setIsLocationPickerOpen(true);
-        fetchNearbyLocations();
-    };
-
-    const fetchNearbyLocations = async () => {
-        setIsLocating(true);
-        if (!navigator.geolocation) {
-            setSuggestedLocations([
-                { id: 1, name: "Central Park", sub: "New York, USA", type: "park" },
-                { id: 2, name: "Downtown Area", sub: "City Center", type: "city" },
-                { id: 3, name: "Local Cafe", sub: "Nearby", type: "cafe" },
-            ]);
-            setIsLocating(false);
-            return;
-        }
-        
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const { latitude, longitude } = position.coords;
-                try {
-                    // Get current address
-                    const reverseRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`);
-                    const reverseData = await reverseRes.json();
-                    const addr = reverseData.address || {};
-                    
-                    // Build accurate address string
-                    let cityName = addr.city || addr.town || addr.village || addr.county || "Current Location";
-                    let stateName = addr.state || addr.region || "";
-                    let countryName = addr.country || "";
-                    let roadName = addr.road || addr.pedestrian || addr.street || "";
-                    
-                    // Build subtitle with City, State or City, Country
-                    let currentSub = stateName ? `${cityName}, ${stateName}` : (countryName || "Nearby");
-                    
-                    const nearby = [
-                        { 
-                            id: 1, 
-                            name: roadName || "Current Location", 
-                            sub: currentSub,
-                            type: "pin",
-                            lat: latitude,
-                            lon: longitude
-                        },
-                        { 
-                            id: 2, 
-                            name: "My Location", 
-                            sub: `${cityName}, ${countryName || ""}`,
-                            type: "pin",
-                            lat: latitude,
-                            lon: longitude
-                        },
-                    ];
-                    
-                    // Search for nearby POIs (parks, cafes, etc.) within ~2km
-                    const radius = 0.02; // roughly 2km
-                    const minLat = latitude - radius;
-                    const maxLat = latitude + radius;
-                    const minLon = longitude - radius;
-                    const maxLon = longitude + radius;
-                    
-                    // Query for specific amenities nearby
-                    const poiQueries = [
-                        { q: "park", type: "park" },
-                        { q: "cafe", type: "cafe" },
-                        { q: "restaurant", type: "cafe" },
-                        { q: "shopping mall", type: "shop" },
-                        { q: "gym", type: "park" },
-                    ];
-                    
-                    // Try to find nearby places
-                    try {
-                        const searchPromises = poiQueries.map(poi => 
-                            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(poi.q + " near " + cityName)}&limit=2&addressdetails=1&bounded=1&viewbox=${minLon},${maxLat},${maxLon},${minLat}`)
-                                .then(r => r.json())
-                                .then(data => data.map(item => ({ ...item, iconType: poi.type })))
-                        );
-                        
-                        const poiResults = await Promise.all(searchPromises);
-                        const allPois = poiResults.flat().slice(0, 5);
-                        
-                        allPois.forEach((poi, idx) => {
-                            const poiAddr = poi.address || {};
-                            const poiName = poi.name || poi.display_name?.split(",")[0];
-                            const poiSub = poiAddr.city || poiAddr.town || cityName;
-                            
-                            if (poiName && !nearby.some(n => n.name === poiName)) {
-                                nearby.push({
-                                    id: 10 + idx,
-                                    name: poiName,
-                                    sub: poiSub,
-                                    type: poi.iconType || "city",
-                                    lat: poi.lat,
-                                    lon: poi.lon
-                                });
-                            }
-                        });
-                    } catch (e) {
-                        // Ignore POI search errors, we already have current location
-                    }
-                    
-                    setSuggestedLocations(nearby);
-                } catch {
-                    setSuggestedLocations([
-                        { id: 1, name: "Current Location", sub: "Nearby", type: "pin" },
-                        { id: 2, name: "Local Area", sub: "Nearby", type: "city" },
-                    ]);
-                } finally {
-                    setIsLocating(false);
-                }
-            },
-            () => {
-                setSuggestedLocations([
-                    { id: 1, name: "Central Park", sub: "Popular location", type: "park" },
-                    { id: 2, name: "Downtown", sub: "City Center", type: "city" },
-                    { id: 3, name: "Shopping Mall", sub: "Nearby", type: "shop" },
-                ]);
-                setIsLocating(false);
-            },
-            { enableHighAccuracy: true, timeout: 10000 }
-        );
-    };
-
-    const searchLocations = async (query) => {
-        if (!query.trim()) {
-            fetchNearbyLocations();
-            return;
-        }
-        
-        setIsLocating(true);
-        try {
-            // Build search URL with location bias for better local results
-            let searchUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=8&addressdetails=1&extratags=1&namedetails=1`;
-            
-            // Add location bias if we have user location
-            if (navigator.geolocation) {
-                const position = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
-                }).catch(() => null);
-                
-                if (position) {
-                    const { latitude, longitude } = position.coords;
-                    // Bias search results toward user's location (within ~50km)
-                    searchUrl += `&lat=${latitude}&lon=${longitude}&bounded=1`;
-                }
-            }
-            
-            const res = await fetch(searchUrl);
-            const data = await res.json();
-            
-            const results = data.map((item, index) => {
-                // Extract detailed address components
-                const addr = item.address || {};
-                const placeName = item.namedetails?.name || item.name || item.display_name.split(",")[0];
-                
-                // Build smart subtitle based on place type
-                let subtitle = "";
-                if (addr.city && addr.state) {
-                    subtitle = `${addr.city}, ${addr.state}`;
-                } else if (addr.town && addr.state) {
-                    subtitle = `${addr.town}, ${addr.state}`;
-                } else if (addr.county && addr.state) {
-                    subtitle = `${addr.county}, ${addr.state}`;
-                } else if (addr.country) {
-                    subtitle = `${addr.country}`;
-                } else {
-                    subtitle = item.display_name.split(",").slice(1, 3).join(", ") || "Nearby";
-                }
-                
-                // Determine place type for icon
-                const typeClass = item.extratags?.amenity || item.type || addr.amenity;
-                let type = "city";
-                if (typeClass === "cafe" || typeClass === "restaurant" || typeClass === "fast_food" || typeClass === "coffee_shop") type = "cafe";
-                else if (typeClass === "park" || typeClass === "dog_park" || item.category === "leisure") type = "park";
-                else if (typeClass === "shop" || typeClass === "mall" || typeClass === "supermarket" || typeClass === "pet_shop") type = "shop";
-                else if (typeClass === "school" || typeClass === "university" || typeClass === "college") type = "school";
-                else if (typeClass === "hospital" || typeClass === "clinic" || typeClass === "veterinary") type = "hospital";
-                else if (typeClass === "hotel" || typeClass === "hostel") type = "hotel";
-                else if (addr.hotel || addr.tourism) type = "hotel";
-                
-                return {
-                    id: item.place_id || index + 1,
-                    name: placeName,
-                    sub: subtitle,
-                    type: type,
-                    lat: item.lat,
-                    lon: item.lon,
-                    fullAddress: item.display_name
-                };
-            });
-            
-            setSuggestedLocations(results);
-        } catch (err) {
-            console.error("Location search error:", err);
-            setSuggestedLocations([
-                { id: 1, name: query, sub: "Search result", type: "pin" },
-            ]);
-        } finally {
-            setIsLocating(false);
-        }
-    };
-
-    const selectLocation = (location) => {
-        setPostLocation(location);
-        setIsLocationPickerOpen(false);
-        setLocationSearchQuery("");
-    };
-
-    const closeLocationPicker = () => {
-        setIsLocationPickerOpen(false);
-        setLocationSearchQuery("");
-    };
-
-    const handleTagClick = () => {
-        setIsTagPickerOpen(true);
-        fetchPetsToTag("");
-    };
-
-    const fetchPetsToTag = async (query = "") => {
-        setIsTagging(true);
-        try {
-            // In a real app we'd search users/pets via API. For now, fetch all or mock.
-            const res = await window.axios.get("/api/pets");
-            let data = res.data.data || res.data;
-            if (Array.isArray(data)) {
-                if (query.trim()) {
-                    data = data.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || (p.breed && p.breed.toLowerCase().includes(query.toLowerCase())));
-                }
-                // exclude self
-                if (userPet) {
-                    data = data.filter(p => p.id !== userPet.id);
-                }
-                setSuggestedPetsToTag(data.slice(0, 10)); // max 10
-            }
-        } catch (e) {
-            console.error(e);
-            // Fallback suggestions
-            setSuggestedPetsToTag([
-                { id: 101, name: "Luna", breed: "Husky", image_url: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_4.png" },
-                { id: 102, name: "Buddy", breed: "Golden Retriever", image_url: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_3.png" },
-                { id: 103, name: "Milo", breed: "Corgi", image_url: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_2.png" }
-            ].filter(p => p.name.toLowerCase().includes(query.toLowerCase())));
-        } finally {
-            setIsTagging(false);
-        }
-    };
-
-    const toggleTag = (pet) => {
-        if (taggedPets.find(p => p.id === pet.id)) {
-            setTaggedPets(taggedPets.filter(p => p.id !== pet.id));
-        } else {
-            setTaggedPets([...taggedPets, pet]);
-        }
-    };
-
-    const closeTagPicker = () => {
-        setIsTagPickerOpen(false);
-        setTagSearchQuery("");
     };
 
     return (
@@ -748,7 +522,7 @@ const Feed = () => {
                                     <div className="feed-story" onClick={handleAddClick} style={{ cursor: 'pointer' }}>
                                         <div className="feed-story__ring feed-story__ring--add">
                                             <div className="feed-story__img-box">
-                                                <img src={userPet?.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png"} alt="Me" />
+                                                <img src={user?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Me')}&background=898AA6&color=fff`} alt="Me" />
                                             </div>
                                             <div className="feed-story__plus"><Plus weight="bold" /></div>
                                         </div>
@@ -756,33 +530,64 @@ const Feed = () => {
                                     </div>
                                 </div>
 
-                                {visibleStories.map(group => (
-                                    <div key={group.user.id} className="feed-story" onClick={() => openViewer(group)}>
-                                        <div className="feed-story__ring">
-                                            <div className="feed-story__img-box">
-                                                <img
-                                                    src={group.user.avatar_url || group.latest_story.media_url}
-                                                    alt="Story"
-                                                    onError={() => setHiddenStoryUsers((prev) => [...new Set([...prev, group.user.id])])}
-                                                />
+                                {visibleStories.map(group => {
+                                    const isOwn = user && group.user.id === user.id;
+                                    return (
+                                        <div key={group.user.id} className="feed-story" onClick={() => openViewer(group)}>
+                                            <div className="feed-story__ring">
+                                                <div className="feed-story__img-box">
+                                                    <img
+                                                        src={group.user.avatar_url || group.latest_story.media_url}
+                                                        alt="Story"
+                                                        onError={() => setHiddenStoryUsers((prev) => [...new Set([...prev, group.user.id])])}
+                                                    />
+                                                </div>
                                             </div>
+                                            <span className="feed-story__label">{isOwn ? "Your Story" : (group.user.pet?.name || group.user.name?.split(' ')[0] || 'Unknown')}</span>
                                         </div>
-                                        <span className="feed-story__label">{group.user.pet?.name || group.user.name?.split(' ')[0] || 'Unknown'}</span>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
 
-                        {/* Store Viewer */}
+                        {/* Story Viewer */}
                         <AnimatePresence>
                             {viewerState.isOpen && (
                                 <div className="story-viewer-v2">
                                     <div className="story-viewer-v2__bg" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))} />
                                     <div className="story-viewer-v2__main">
                                         <div className="story-viewer-v2__header">
-                                            <Avatar src={viewerState.userStories[0].user?.avatar_url} size="sm" />
-                                            <span className="name">{viewerState.userStories[0].user?.pet?.name || viewerState.userStories[0].user?.name}</span>
-                                            <button className="close" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))}><X /></button>
+                                            <div className="story-viewer-v2__user">
+                                                <Avatar src={viewerState.userStories[0].user?.avatar_url} size="sm" />
+                                                <span className="name">
+                                                    {user && viewerState.userStories[0].user?.id === user.id ? "Your Story" : (viewerState.userStories[0].user?.pet?.name || viewerState.userStories[0].user?.name)}
+                                                </span>
+                                            </div>
+                                            <div className="story-viewer-v2__actions">
+                                                {user && viewerState.userStories[0].user?.id === user.id && (
+                                                    <div className="story-options-trigger">
+                                                        <button className="dots-btn" onClick={() => setShowStoryMenu(!showStoryMenu)}><DotsThree size={24} weight="bold" /></button>
+                                                        <AnimatePresence>
+                                                            {showStoryMenu && (
+                                                                <motion.div 
+                                                                    className="story-menu"
+                                                                    initial={{ opacity: 0, y: 10 }}
+                                                                    animate={{ opacity: 1, y: 0 }}
+                                                                    exit={{ opacity: 0, y: 10 }}
+                                                                >
+                                                                    <button onClick={() => handleDeleteStory(viewerState.userStories[viewerState.currentIndex].id)}>
+                                                                        <Trash size={16} /> Delete Story
+                                                                    </button>
+                                                                    <button onClick={() => handleArchiveStory(viewerState.userStories[viewerState.currentIndex].id)}>
+                                                                        <Bookmark size={16} /> Archive Story
+                                                                    </button>
+                                                                </motion.div>
+                                                            )}
+                                                        </AnimatePresence>
+                                                    </div>
+                                                )}
+                                                <button className="close" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))}><X /></button>
+                                            </div>
                                         </div>
                                         <div className="story-viewer-v2__body">
                                             {viewerState.userStories[viewerState.currentIndex].media_type === 'video' ? (
@@ -803,15 +608,15 @@ const Feed = () => {
 
                             {!isCreateExpanded ? (
                                 <div className="feed-composer__trigger-row" onClick={() => setExpanded(true)}>
-                                    <Avatar src={userPet?.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png"} size="md" />
+                                    <Avatar src={user?.avatar_url} fallback={user?.name || 'Me'} size="md" />
                                     <div className="feed-composer__trigger-text">Share a moment with your pet...</div>
                                 </div>
                             ) : (
                                 <>
                                     <div className="feed-composer__header-row">
-                                        <Avatar src={userPet?.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png"} size="md" />
+                                        <Avatar src={user?.avatar_url} fallback={user?.name || 'Me'} size="md" />
                                         <div className="feed-composer__user-info">
-                                            <span className="feed-composer__username">{userPet?.name || "You"}</span>
+                                            <span className="feed-composer__username">{user?.pet?.name || user?.name || "You"}</span>
                                             <div className="feed-composer__privacy-wrapper" ref={privacyMenuRef}>
                                                 <button 
                                                     className="feed-composer__privacy"
@@ -887,9 +692,10 @@ const Feed = () => {
                                         <div className="group">
                                             <button className="action-btn" onClick={handleImageClick}><ImageIcon size={18} /> Photo</button>
                                             <button className="action-btn" onClick={handleVideoClick}><Video size={18} /> Video</button>
-                                            <button className={`action-btn ${taggedPets.length > 0 ? 'active' : ''}`} onClick={handleTagClick}>
-                                                <At size={18} /> {taggedPets.length > 0 ? `${taggedPets.length} Tagged` : "Tag"}
-                                            </button>
+                                            <button className="action-btn" onClick={() => {
+                                                setPostText(prev => prev + "@");
+                                                document.querySelector('.feed-composer__textarea')?.focus();
+                                            }}><At size={18} /> Tag</button>
                                             <button className={`action-btn ${postLocation ? 'active' : ''} ${isLocating ? 'loading' : ''}`} onClick={handleLocationClick} disabled={isLocating}>
                                                 <MapPin size={18} /> 
                                                 {isLocating ? "Locating..." : postLocation?.name || "Location"}
@@ -1117,95 +923,6 @@ const Feed = () => {
                                                 </div>
                                             </button>
                                         ))}
-                                    </div>
-                                )}
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Tag Picker Modal */}
-            <AnimatePresence>
-                {isTagPickerOpen && (
-                    <motion.div
-                        className="location-picker-overlay"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={closeTagPicker}
-                    >
-                        <motion.div
-                            className="location-picker tag-picker-modal"
-                            initial={{ y: "100%" }}
-                            animate={{ y: 0 }}
-                            exit={{ y: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="location-picker__header">
-                                <button className="back-btn" onClick={closeTagPicker}>
-                                    <CaretLeft size={24} weight="bold" />
-                                </button>
-                                <h3>Tag people</h3>
-                            </div>
-
-                            <div className="tag-picker__search-row">
-                                <div className="search-input-wrapper">
-                                    <MagnifyingGlass size={18} weight="bold" />
-                                    <input
-                                        type="text"
-                                        placeholder="Search"
-                                        value={tagSearchQuery}
-                                        onChange={(e) => {
-                                            setTagSearchQuery(e.target.value);
-                                            fetchPetsToTag(e.target.value);
-                                        }}
-                                        autoFocus
-                                    />
-                                    {tagSearchQuery && (
-                                        <button className="clear-search" onClick={() => { setTagSearchQuery(""); fetchPetsToTag(""); }}>
-                                            <X size={16} />
-                                        </button>
-                                    )}
-                                </div>
-                                <button className="tag-picker__done" onClick={closeTagPicker}>Done</button>
-                            </div>
-
-                            <div className="location-picker__content">
-                                <h4 className="suggested-title">SUGGESTIONS</h4>
-                                {isTagging && suggestedPetsToTag.length === 0 ? (
-                                    <div className="loading-locations">
-                                        <span>Searching...</span>
-                                    </div>
-                                ) : (
-                                    <div className="locations-list">
-                                        {suggestedPetsToTag.map((pet) => {
-                                            const isTagged = taggedPets.find(p => p.id === pet.id);
-                                            return (
-                                                <button
-                                                    key={pet.id}
-                                                    className={`location-item tag-item ${isTagged ? 'selected' : ''}`}
-                                                    onClick={() => toggleTag(pet)}
-                                                >
-                                                    <div className="location-icon tag-avatar">
-                                                        <Avatar src={pet.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png"} size="sm" />
-                                                    </div>
-                                                    <div className="location-info">
-                                                        <span className="location-name">{pet.name || "Unknown"}</span>
-                                                        <span className="location-sub">{pet.breed || "Pet"}</span>
-                                                    </div>
-                                                    <div className="tag-checkbox">
-                                                        <div className={`checkbox-circle ${isTagged ? 'checked' : ''}`}>
-                                                            {isTagged && <div className="checkbox-inner" />}
-                                                        </div>
-                                                    </div>
-                                                </button>
-                                            );
-                                        })}
-                                        {suggestedPetsToTag.length === 0 && !isTagging && (
-                                            <div className="no-results">No people found.</div>
-                                        )}
                                     </div>
                                 )}
                             </div>

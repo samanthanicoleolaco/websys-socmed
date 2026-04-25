@@ -1,28 +1,29 @@
-// Colors & Variables
-$primary-orange: #D9A5A0;
-$dark-bg: #1e1e2d;
-$dark-surface: #2b2b40;
-$text-light: #ffffff;
-$text-muted: #a1a5b7;
-$font-sans: 'Inter', sans-serif;
+// resources/sass/admin.scss
 
-body {
-    margin: 0;
-}
+// Professional Corporate/Social Palette - Using CSS Variables for Theme Support
+$primary-action: var(--primary-action, #898AA6);
+$bg-main:        var(--bg-page, #F8FAFC);
+$bg-card:        var(--bg-card, #FFFFFF);
+$text-dark:      var(--text-main, #0F172A);
+$text-muted:     var(--text-muted, #64748B);
+$border-color:   var(--border-color, #E2E8F0);
+$font-sans:      'Inter', system-ui, -apple-system, sans-serif;
 
 .admin-dashboard {
     display: flex;
     min-height: 100vh;
     font-family: $font-sans;
-    background: #f5f8fa;
-    color: #3f4254;
+    background: $bg-main;
+    color: $text-dark;
+    transition: all 0.3s ease;
 
     .admin-sidebar {
         width: 260px;
-        background: $dark-bg;
+        background: var(--bg-card);
         color: $text-muted;
         display: flex;
         flex-direction: column;
+        border-right: 1px solid $border-color;
 
         .admin-brand {
             padding: 2rem 1.5rem;
@@ -31,18 +32,17 @@ body {
             gap: 12px;
             font-size: 1.4rem;
             font-weight: 700;
-            color: $text-light;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: $text-dark;
+            border-bottom: 1px solid $border-color;
 
             .brand-logo {
                 height: 36px;
                 object-fit: contain;
-                /* Lighten the logo slightly for dark mode, or add shadow */
-                filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba($primary-orange, 0.4));
+                filter: none; // Remove invert if not needed, or use variable
             }
 
             span {
-                background: linear-gradient(135deg, $text-light, $primary-orange);
+                background: linear-gradient(135deg, $text-dark, $primary-action);
                 -webkit-background-clip: text;
                 background-clip: text;
                 -webkit-text-fill-color: transparent;
@@ -61,11 +61,12 @@ body {
                 cursor: pointer;
                 border-left: 4px solid transparent;
                 transition: all 0.3s ease;
+                color: $text-muted;
 
                 &:hover, &.active {
-                    background: $dark-surface;
-                    color: $primary-orange;
-                    border-left-color: $primary-orange;
+                    background: rgba(var(--primary-action-rgb), 0.05);
+                    color: $primary-action;
+                    border-left-color: $primary-action;
                 }
             }
         }
@@ -77,25 +78,26 @@ body {
         flex-direction: column;
 
         .admin-header {
-            background: #ffffff;
+            background: $bg-card;
             padding: 1.5rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border-bottom: 1px solid $border-color;
+            box-shadow: var(--shadow);
 
             h2 {
                 margin: 0;
                 font-size: 1.4rem;
                 font-weight: 600;
-                color: #181c32;
+                color: $text-dark;
             }
 
             .user-profile {
                 font-weight: 600;
-                color: #e0962a;
+                color: $primary-action;
                 padding: 0.6rem 1.2rem;
-                background: rgba($primary-orange, 0.15);
+                background: rgba(var(--primary-action-rgb), 0.1);
                 border-radius: 8px;
             }
         }
@@ -110,11 +112,11 @@ body {
                 margin-bottom: 2.5rem;
 
                 .card {
-                    background: #ffffff;
+                    background: $bg-card;
                     padding: 1.8rem;
                     border-radius: 12px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-                    border: 1px solid #eff2f5;
+                    box-shadow: var(--shadow);
+                    border: 1px solid $border-color;
 
                     h3 {
                         margin: 0 0 1rem 0;
@@ -128,27 +130,27 @@ body {
                         margin: 0;
                         font-size: 2.8rem;
                         font-weight: 700;
-                        color: #181c32;
+                        color: $text-dark;
 
                         &.text-danger {
-                            color: #f1416c;
+                            color: var(--danger);
                         }
                     }
                 }
             }
 
             .recent-activity {
-                background: #ffffff;
+                background: $bg-card;
                 padding: 2rem;
                 border-radius: 12px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-                border: 1px solid #eff2f5;
+                box-shadow: var(--shadow);
+                border: 1px solid $border-color;
 
                 h3 {
                     margin-top: 0;
                     margin-bottom: 1.8rem;
                     font-size: 1.2rem;
-                    color: #181c32;
+                    color: $text-dark;
                 }
 
                 .admin-table {
@@ -158,7 +160,7 @@ body {
                     th, td {
                         padding: 1.2rem;
                         text-align: left;
-                        border-bottom: 1px dashed #eff2f5;
+                        border-bottom: 1px dashed $border-color;
                     }
 
                     th {
@@ -171,10 +173,10 @@ body {
 
                     td {
                         font-weight: 500;
-                        color: #5e6278;
+                        color: $text-muted;
                         
                         &:first-child {
-                            color: #181c32;
+                            color: $text-dark;
                             font-weight: 600;
                         }
                     }
@@ -187,13 +189,13 @@ body {
                         text-transform: uppercase;
 
                         &.success {
-                            background: rgba(#50cd89, 0.1);
-                            color: #50cd89;
+                            background: rgba(var(--success-rgb), 0.1);
+                            color: var(--success);
                         }
                         
                         &.warning {
-                            background: rgba(#ffc700, 0.1);
-                            color: #ffc700;
+                            background: rgba(var(--warning-rgb), 0.1);
+                            color: var(--warning);
                         }
                     }
                 }

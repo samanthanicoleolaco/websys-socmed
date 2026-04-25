@@ -10,6 +10,12 @@
                     <p class="text-muted small">Please enter your credentials to login</p>
                 </div>
                 <div class="card-body px-4 pb-4">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

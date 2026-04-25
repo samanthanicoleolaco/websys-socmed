@@ -11,6 +11,20 @@
     --primary-action: #898AA6;
     --shadow:         0 4px 12px rgba(0, 0, 0, 0.06);
     --input-bg:       #FFFFFF;
+    --success:        #22c55e;
+    --danger:         #ef4444;
+    --warning:        #f59e0b;
+    --success-bg:     #f0fdf4;
+    --danger-bg:      #fef2f2;
+    --warning-bg:     #fffbeb;
+
+    // RGB values for transparency
+    --primary-action-rgb: 137, 138, 166;
+    --success-rgb:        34, 197, 94;
+    --danger-rgb:         239, 68, 68;
+    --warning-rgb:        245, 158, 11;
+    --bg-card-rgb:        255, 255, 255;
+    --text-main-rgb:      47, 47, 47;
 }
 
 // ── Smooth global transitions when toggling theme ──────────────────────────────
@@ -25,6 +39,11 @@ body,
 .modern-badges,
 .adoption-page,
 .settings-page,
+.admin-dashboard,
+.adoption-board,
+.register-page,
+.badges-contests,
+.notifications-page,
 .feed-card,
 .sidebar-aside,
 .msg-list-pane,
@@ -34,11 +53,15 @@ body,
 .msg-modal,
 .feed-create-modal,
 .post-menu__dropdown,
-.reaction-picker {
+.reaction-picker,
+.settings-card,
+.ui-card,
+.admin-card {
     transition:
         background-color 0.25s ease,
         border-color 0.25s ease,
-        color 0.2s ease;
+        color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 // ── Dark ───────────────────────────────────────────────────────────────────────
@@ -52,6 +75,17 @@ body,
     --primary-action: #C9A9C0;
     --shadow:         0 4px 20px rgba(0, 0, 0, 0.4);
     --input-bg:       #1A1F2E;
+    --success:        #4ade80;
+    --danger:         #f87171;
+    --warning-bg:     rgba(245, 158, 11, 0.15);
+
+    // RGB values for transparency in dark mode
+    --primary-action-rgb: 201, 169, 192;
+    --success-rgb:        74, 222, 128;
+    --danger-rgb:         248, 113, 113;
+    --warning-rgb:        251, 191, 36;
+    --bg-card-rgb:        28, 32, 40;
+    --text-main-rgb:      232, 234, 240;
 
     // Body & page wrappers — all use var(--bg-page) already,
     // but explicit body override ensures html bg matches
@@ -115,10 +149,87 @@ body,
     .badge-card-modern,
     .contest-banner { background-color: var(--bg-card) !important; border-color: var(--border-color) !important; }
 
-    // ── feed create modal specific elements ────────────────────────────
+    // ── Feed create modal specific elements ────────────────────────────
     .feed-create-modal__audience-btn,
     .feed-create-modal__add-row {
         background: var(--input-bg) !important;
         border-color: var(--border-color) !important;
     }
+
+    // ── Global Scrollbar for Dark Mode ──────────────────────────────────
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-page); }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    // ── Dropdowns and Popups ────────────────────────────────────────────
+    .dropdown-menu,
+    .popover,
+    .tooltip {
+        background-color: var(--bg-card) !important;
+        border-color: var(--border-color) !important;
+        color: var(--text-main) !important;
+    }
+
+    // ── Feed & Story Specifics ─────────────────────────────────────────
+    .feed-stories-container,
+    .feed-card,
+    .sidebar-card,
+    .post-card,
+    .admin-card {
+        background-color: var(--bg-card) !important;
+        border-color: var(--border-color) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .feed-story__img-box {
+        border-color: var(--bg-card) !important;
+        background-color: var(--bg-page) !important;
+    }
+
+    .feed-story__label { color: var(--text-main) !important; }
+
+    .feed-post-v2__header .user .meta .meta-top .name { color: var(--text-main) !important; }
+    .feed-post-v2__body .post-text { color: var(--text-main) !important; }
+    .feed-post-v2__footer { border-color: var(--border-color) !important; }
+    .feed-post-v2__footer .action-btn:hover { background-color: var(--bg-page) !important; color: var(--text-main) !important; }
+
+    // ── Forms & Inputs ────────────────────────────────────────────────
+    input, textarea, select {
+        background-color: var(--input-bg) !important;
+        border-color: var(--border-color) !important;
+        color: var(--text-main) !important;
+        &::placeholder { color: var(--text-muted) !important; }
+    }
+
+    // ── Modals ────────────────────────────────────────────────────────
+    .post-modal-content,
+    .settings-content {
+        background-color: var(--bg-card) !important;
+        color: var(--text-main) !important;
+    }
+
+    .post-modal-header,
+    .post-modal-footer {
+        border-color: var(--border-color) !important;
+    }
+}
+
+// ── Text Sizing ────────────────────────────────────────────────────────────────
+:root[data-text-size='small'] {
+    font-size: 14px;
+}
+
+:root[data-text-size='medium'] {
+    font-size: 16px;
+}
+
+:root[data-text-size='large'] {
+    font-size: 18px;
+}
+
+// Ensure all standard elements inherit the base size proportionally
+body {
+    font-size: 1rem;
+    line-height: 1.5;
 }

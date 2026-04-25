@@ -42,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // User routes
     Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/user/profile-photo', [AuthController::class, 'updateProfilePhoto']);
+    Route::post('/user/update', [AuthController::class, 'updateProfile']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     
     // Pet routes
@@ -88,6 +90,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Story routes
     Route::apiResource('stories', StoryController::class)->only(['index', 'store', 'destroy']);
+    Route::post('/stories/{story}/archive', [StoryController::class, 'archive']);
     Route::post('/stories/{story}/view', [StoryController::class, 'markAsViewed']);
     
 });
@@ -108,7 +111,6 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     // User management
     Route::get('/users', [AdminController::class, 'users']);
-    Route::put('/users/{user}', [AdminController::class, 'updateUser']);
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser']);
     Route::patch('/users/{user}/toggle-admin', [AdminController::class, 'toggleAdmin']);
 

@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest');
+        // Removed 'guest' middleware to prevent server-side redirect loops in SPA mode.
     }
 
     public function showRegistrationForm()
@@ -47,23 +47,6 @@ class RegisterController extends Controller
                     'ip_address' => $request->ip(),
                     'user_agent' => $request->userAgent(),
                     'login_at' => now(),
-                ]);
-            } catch (\Throwable $e) {
-                report($e);
-            }
-
-            // Send Welcome Email via EmailJS
-            try {
-                \Illuminate\Support\Facades\Http::post('https://api.emailjs.com/api/v1.0/email/send', [
-                    'service_id' => 'service_yi1yhq4',
-                    'template_id' => 'template_xee3u8a',
-                    'user_id' => 'xkV0CNBFLOo70K7JC',
-                    'accessToken' => 'MBX3J8JVbBXSPZA1EBaV1',
-                    'template_params' => [
-                        'to_name' => $user->name,
-                        'to_email' => $user->email,
-                        'message' => 'Welcome to Petverse! Your account has been successfully created. We are excited to see you and your pet!',
-                    ]
                 ]);
             } catch (\Throwable $e) {
                 report($e);

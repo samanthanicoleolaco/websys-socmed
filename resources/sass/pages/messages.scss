@@ -53,8 +53,8 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background: #22c55e;
-        border: 2px solid white;
+        background: var(--success);
+        border: 2px solid var(--bg-card);
     }
 
     &--online::after {
@@ -207,7 +207,7 @@
         top: 3px;
         left: 3px;
         transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        box-shadow: var(--shadow);
     }
 }
 
@@ -281,7 +281,7 @@
     }
 
     &__badge {
-        background: #ef4444;
+        background: var(--danger);
         color: white;
         font-size: 0.65rem;
         font-weight: 700;
@@ -309,7 +309,7 @@
     position: relative;
 
     &:hover {
-        background: rgba(137, 138, 166, 0.05);
+        background: rgba(var(--primary-action-rgb), 0.05);
     }
 
     &--active {
@@ -333,7 +333,7 @@
         align-items: center;
         justify-content: center;
         color: white;
-        border: 2px solid white;
+        border: 2px solid var(--bg-card);
     }
 
     &__body {
@@ -359,7 +359,7 @@
         text-overflow: ellipsis;
 
         &--request {
-            color: #d97706;
+            color: var(--warning);
         }
     }
 
@@ -430,7 +430,7 @@
 
     &__status {
         font-size: 0.72rem;
-        color: #22c55e;
+        color: var(--success);
         margin: 0;
     }
 
@@ -609,11 +609,11 @@
     cursor: pointer;
     font-family: inherit;
     transition: all 0.15s;
-    background: rgba(137, 138, 166, 0.1);
+    background: rgba(var(--primary-action-rgb), 0.1);
     color: var(--text-main);
 
     &:hover {
-        background: rgba(137, 138, 166, 0.2);
+        background: rgba(var(--primary-action-rgb), 0.2);
     }
 }
 
@@ -689,13 +689,12 @@
     z-index: 300;
 }
 
-// ── Group Chat Modal ──────────────────────────────────────────────────
-.msg-modal {
+.msg-group-modal {
     background: var(--bg-card);
     border-radius: 18px;
     width: 100%;
     max-width: 440px;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+    box-shadow: var(--shadow);
     overflow: hidden;
 
     &__header {
@@ -843,7 +842,7 @@
         transition: all 0.18s;
 
         &--enabled {
-            background: #1e3a8a; // Dark blue matching the reference
+            background: var(--primary-action); 
             color: white;
             cursor: pointer;
 

@@ -34,6 +34,7 @@ import {
 } from "@phosphor-icons/react";
 import Sidebar from './pages/Sidebar';
 import axios from 'axios';
+import { useUser } from '../context/UserContext';
 
 // ── UI Components ───────────
 
@@ -68,35 +69,26 @@ const Label = ({ children }) => <label className="settings-label">{children}</la
 // ── Settings Component ──────────────────────────────────────────────────
 
 const Settings = () => {
+    const { user: authUser, setUser: setAuthUser, refreshUser } = useUser();
     const [activeTab, setActiveTab] = useState('account');
     const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark');
-    const [textSize, setTextSize] = useState('medium');
+    const [textSize, setTextSize] = useState(() => localStorage.getItem('text-size') || 'medium');
     const [language, setLanguage] = useState('english');
     const fileInputRef = useRef(null);
     const [user, setUser] = useState({
-        displayName: 'Sarah & Mochi',
-        username: '@mochi_adventures',
-        email: 'sarah@petverse.com',
-        location: 'San Francisco, CA',
+        displayName: '',
+        username: '',
+        email: '',
+        location: '',
         website: '',
-        bio: 'Living life one tail wag at a time.',
-        petName: 'Mochi',
-        breed: 'Golden Retriever',
-        age: '2 years',
-        petBio: 'The goodest boy in the world'
+        bio: '',
+        petName: '',
+        breed: '',
+        age: '',
+        petBio: '',
+        avatar_url: null
     });
     
-    // Privacy toggles
-    const [privacy, setPrivacy] = useState({
-        publicProfile: true,
-        showLocation: true,
-        messagesFromAnyone: true,
-        showOnline: true,
-        storyReplies: true,
-        analytics: false
-    });
-    
-    // Notification toggles
     const [notifications, setNotifications] = useState({
         likes: true,
         comments: true,
@@ -109,6 +101,46 @@ const Settings = () => {
         push: true
     });
 
+    const [privacy, setPrivacy] = useState({
+        publicProfile: true,
+        showLocation: true,
+        messagesFromAnyone: false,
+        showOnline: true,
+        storyReplies: true,
+        analytics: true
+    });
+    const [isUploading, setIsUploading] = useState(false);
+
+    useEffect(() => {
+        if (authUser) {
+            setUser({
+                displayName: authUser.name || '',
+                username: authUser.email ? '@' + authUser.email.split('@')[0] : '',
+                email: authUser.email || '',
+                location: authUser.location || '',
+                website: authUser.website || '',
+                bio: authUser.bio || '',
+                petName: authUser.pet?.name || '',
+                breed: authUser.pet?.breed || '',
+                age: authUser.pet?.age || '',
+                petBio: authUser.pet?.bio || '',
+                avatar_url: authUser.avatar_url || null
+            });
+        }
+    }, [authUser]);
+
+    const fetchUser = async () => {
+        try {
+            await refreshUser();
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
     useEffect(() => {
         if (isDark) {
             document.documentElement.setAttribute('data-theme', 'dark');
@@ -119,19 +151,60 @@ const Settings = () => {
         }
     }, [isDark]);
 
-    const handleLogout = () => {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-        if (csrfToken) {
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '/logout';
-            const tokenInput = document.createElement('input');
-            tokenInput.type = 'hidden';
-            tokenInput.name = '_token';
-            tokenInput.value = csrfToken;
-            form.appendChild(tokenInput);
-            document.body.appendChild(form);
-            form.submit();
+    useEffect(() => {
+        document.documentElement.setAttribute('data-text-size', textSize);
+        localStorage.setItem('text-size', textSize);
+    }, [textSize]);
+
+
+    const handlePhotoChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('photo', file);
+        setIsUploading(true);
+
+        try {
+            const response = await axios.post('/api/user/profile-photo', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            const timestamp = new Date().getTime();
+            setUser(prev => ({ 
+                ...prev, 
+                avatar_url: `${response.data.avatar_url}?t=${timestamp}` 
+            }));
+            
+            // Persist to localStorage for other components to use as a quick cache if needed
+            localStorage.setItem('user_avatar', `${response.data.avatar_url}?t=${timestamp}`);
+            
+            alert('Profile picture saved successfully!');
+            refreshUser();
+        } catch (error) {
+            console.error("Error uploading photo:", error);
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
+    const triggerFileInput = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleSaveChanges = async () => {
+        try {
+            await axios.post('/api/user/update', {
+                name: user.displayName,
+                location: user.location,
+                bio: user.bio,
+            });
+            alert('Account settings updated successfully!');
+            refreshUser();
+        } catch (error) {
+            console.error("Error saving settings:", error);
+            alert('Failed to save settings.');
         }
     };
 
@@ -151,200 +224,220 @@ const Settings = () => {
             className="settings-section"
         >
             <Card className="account-card">
-                {/* Card Header - Account Title + Save Button */}
+                {/* Top Row: Title + Save Changes */}
                 <div className="account-card-header">
                     <h2>Account</h2>
-                    <Button variant="primary">Save Changes</Button>
+                    <button className="save-btn" onClick={handleSaveChanges}>Save Changes</button>
                 </div>
 
-                {/* Profile Photo Section - Inline */}
+                {/* Profile Header */}
                 <div className="account-profile-header">
-                    <div className="avatar-with-camera">
-                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=150&h=150&fit=crop" alt="Profile" className="profile-avatar-img" />
-                        <button className="camera-btn">
-                            <Camera size={14} weight="fill" />
-                        </button>
+                    <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handlePhotoChange} 
+                        style={{ display: 'none' }} 
+                        accept="image/*"
+                    />
+                    <div className={`avatar-container ${isUploading ? 'uploading' : ''}`} onClick={triggerFileInput}>
+                        <img 
+                            key={user.avatar_url}
+                            src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || 'User')}&background=898AA6&color=fff`} 
+                            alt="Profile" 
+                            className="profile-avatar-img" 
+                        />
+                        <div className="camera-badge">
+                            {isUploading ? (
+                                <div className="spinner-mini" />
+                            ) : (
+                                <Camera size={14} weight="fill" />
+                            )}
+                        </div>
                     </div>
-                    <div className="profile-photo-text">
-                        <h3>Sarah & Mochi</h3>
-                        <p className="username">@mochi_adventures</p>
-                        <button className="change-photo-link">Change profile photo</button>
+                    <div className="profile-info">
+                        <h3>{user.displayName}</h3>
+                        <p className="username">{user.username}</p>
                     </div>
                 </div>
 
-                {/* Form Grid - Exact Layout from Screenshot */}
+                {/* Account Form */}
                 <div className="account-form">
                     {/* Row 1: Display Name | Username */}
-                    <div className="settings-form-row two-col">
-                        <div className="settings-form-group">
-                            <label className="settings-form-label">DISPLAY NAME</label>
+                    <div className="form-row two-col">
+                        <div className="form-group">
+                            <label className="form-label">Display Name</label>
                             <input 
                                 type="text" 
-                                className="settings-form-input" 
-                                value="Sarah & Mochi"
+                                className="form-input" 
+                                value={user.displayName}
                                 onChange={(e) => setUser({...user, displayName: e.target.value})}
+                                placeholder="Your full name"
                             />
                         </div>
-                        <div className="settings-form-group">
-                            <label className="settings-form-label">USERNAME</label>
+                        <div className="form-group">
+                            <label className="form-label">Username</label>
                             <input 
                                 type="text" 
-                                className="settings-form-input" 
-                                value="@mochi_adventures"
+                                className="form-input" 
+                                value={user.username}
                                 onChange={(e) => setUser({...user, username: e.target.value})}
+                                placeholder="@username"
                             />
                         </div>
                     </div>
 
                     {/* Row 2: Email (Full Width) */}
-                    <div className="settings-form-row">
-                        <div className="settings-form-group full-width">
-                            <label className="settings-form-label">EMAIL ADDRESS</label>
-                            <div className="input-icon-wrapper">
-                                <Envelope size={16} className="input-icon" />
+                    <div className="form-row">
+                        <div className="form-group full-width">
+                            <label className="form-label">Email Address</label>
+                            <div className="input-with-icon">
+                                <Envelope size={18} />
                                 <input 
                                     type="email" 
-                                    className="settings-form-input with-icon" 
-                                    value="sarah@petverse.com"
+                                    className="form-input" 
+                                    value={user.email}
                                     onChange={(e) => setUser({...user, email: e.target.value})}
+                                    placeholder="email@example.com"
                                 />
                             </div>
                         </div>
                     </div>
 
                     {/* Row 3: Location | Website */}
-                    <div className="settings-form-row two-col">
-                        <div className="settings-form-group">
-                            <label className="settings-form-label">LOCATION</label>
+                    <div className="form-row two-col">
+                        <div className="form-group">
+                            <label className="form-label">Location</label>
                             <input 
                                 type="text" 
-                                className="settings-form-input" 
-                                value="San Francisco, CA"
+                                className="form-input" 
+                                value={user.location}
                                 onChange={(e) => setUser({...user, location: e.target.value})}
+                                placeholder="City, Country"
                             />
                         </div>
-                        <div className="settings-form-group">
-                            <label className="settings-form-label">WEBSITE</label>
+                        <div className="form-group">
+                            <label className="form-label">Website</label>
                             <input 
                                 type="text" 
-                                className="settings-form-input" 
-                                placeholder="https://..."
+                                className="form-input" 
                                 value={user.website}
                                 onChange={(e) => setUser({...user, website: e.target.value})}
+                                placeholder="https://yourwebsite.com"
                             />
                         </div>
                     </div>
 
-                    {/* Row 4: Bio */}
-                    <div className="settings-form-row">
-                        <div className="settings-form-group full-width">
-                            <label className="settings-form-label">BIO</label>
+                    {/* Row 4: Bio (Full Width) */}
+                    <div className="form-row">
+                        <div className="form-group full-width">
+                            <label className="form-label">Bio</label>
                             <textarea 
-                                className="settings-form-textarea" 
-                                rows={2}
-                                value="Living life one tail wag at a time."
+                                className="form-textarea" 
+                                rows={3}
+                                value={user.bio}
                                 onChange={(e) => setUser({...user, bio: e.target.value})}
+                                placeholder="Living life one tail wag at a time. 🐾"
                             />
                         </div>
                     </div>
                 </div>
 
-                {/* Divider */}
-                <div className="section-divider" />
-
-                {/* Pet Profile */}
+                {/* Pet Profile Section */}
                 <div className="pet-profile-section">
-                    <div className="section-title-icon">
-                        <PawPrint size={16} />
+                    <div className="section-title">
+                        <PawPrint size={18} weight="fill" />
                         <span>Pet Profile</span>
                     </div>
+                    <div className="section-divider" />
                     
                     <div className="account-form">
-                        {/* Row: Pet Name | Breed */}
-                        <div className="settings-form-row two-col">
-                            <div className="settings-form-group">
-                                <label className="settings-form-label">PET NAME</label>
+                        <div className="form-row two-col">
+                            <div className="form-group">
+                                <label className="form-label">Pet Name</label>
                                 <input 
                                     type="text" 
-                                    className="settings-form-input" 
-                                    value="Mochi"
+                                    className="form-input" 
+                                    value={user.petName}
                                     onChange={(e) => setUser({...user, petName: e.target.value})}
+                                    placeholder="Mochi"
                                 />
                             </div>
-                            <div className="settings-form-group">
-                                <label className="settings-form-label">BREED</label>
+                            <div className="form-group">
+                                <label className="form-label">Breed</label>
                                 <input 
                                     type="text" 
-                                    className="settings-form-input" 
-                                    value="Golden Retriever"
+                                    className="form-input" 
+                                    value={user.breed}
                                     onChange={(e) => setUser({...user, breed: e.target.value})}
+                                    placeholder="Golden Retriever"
                                 />
                             </div>
                         </div>
 
-                        {/* Row: Age | Pet Bio */}
-                        <div className="settings-form-row two-col">
-                            <div className="settings-form-group">
-                                <label className="settings-form-label">AGE</label>
+                        <div className="form-row two-col">
+                            <div className="form-group">
+                                <label className="form-label">Age</label>
                                 <input 
                                     type="text" 
-                                    className="settings-form-input" 
-                                    value="2 years"
+                                    className="form-input" 
+                                    value={user.age}
                                     onChange={(e) => setUser({...user, age: e.target.value})}
+                                    placeholder="2 years"
                                 />
                             </div>
-                            <div className="settings-form-group">
-                                <label className="settings-form-label">PET BIO</label>
+                            <div className="form-group">
+                                <label className="form-label">Pet Bio</label>
                                 <input 
                                     type="text" 
-                                    className="settings-form-input" 
-                                    value="The goodest boy in the world"
+                                    className="form-input" 
+                                    value={user.petBio}
                                     onChange={(e) => setUser({...user, petBio: e.target.value})}
+                                    placeholder="The goodest boy..."
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Divider */}
-                <div className="section-divider" />
-
-                {/* Password & Security */}
+                {/* Password & Security Section */}
                 <div className="password-section">
-                    <div className="section-title-icon">
-                        <Shield size={16} />
+                    <div className="section-title">
+                        <Shield size={18} weight="fill" />
                         <span>Password & Security</span>
                     </div>
+                    <div className="section-divider" />
                     
                     <div className="account-form">
-                        <div className="settings-form-row two-col">
-                            <div className="settings-form-group">
-                                <label className="settings-form-label">CURRENT PASSWORD</label>
+                        <div className="form-row two-col">
+                            <div className="form-group">
+                                <label className="form-label">Current Password</label>
                                 <input 
                                     type="password" 
-                                    className="settings-form-input" 
+                                    className="form-input" 
                                     placeholder="••••••••"
                                 />
                             </div>
-                            <div className="settings-form-group">
-                                <label className="settings-form-label">NEW PASSWORD</label>
+                            <div className="form-group">
+                                <label className="form-label">New Password</label>
                                 <input 
                                     type="password" 
-                                    className="settings-form-input" 
+                                    className="form-input" 
                                     placeholder="••••••••"
                                 />
                             </div>
                         </div>
-                    </div>
 
-                    <div className="two-factor-success">
-                        <CheckCircle size={16} weight="fill" />
-                        <span>Two-factor authentication is <strong>enabled</strong> on your account.</span>
+                        {/* 2FA Success Box */}
+                        <div className="two-factor-success">
+                            <CheckCircle size={18} weight="fill" />
+                            <span>Two-factor authentication is <strong>enabled</strong> on your account.</span>
+                        </div>
                     </div>
                 </div>
             </Card>
         </motion.div>
     );
+
 
     const renderPrivacy = () => (
         <motion.div 
@@ -353,12 +446,12 @@ const Settings = () => {
             exit={{ opacity: 0, y: -10 }}
             className="settings-section"
         >
-            <div className="settings-content-header">
-                <h2>Privacy</h2>
-                <Button variant="primary">Save Changes</Button>
-            </div>
-
-            <Card>
+            <Card className="settings-card">
+                <div className="settings-content-header" style={{ marginBottom: '24px' }}>
+                    <h2>Privacy</h2>
+                    <Button variant="primary" onClick={() => alert('Privacy settings saved!')}>Save Changes</Button>
+                </div>
+                
                 <div className="privacy-list">
                     <div className="privacy-item">
                         <div className="privacy-text">
@@ -367,6 +460,7 @@ const Settings = () => {
                         </div>
                         <Switch checked={privacy.publicProfile} onCheckedChange={(v) => setPrivacy({...privacy, publicProfile: v})} />
                     </div>
+                    
                     <div className="privacy-item">
                         <div className="privacy-text">
                             <h4>Show location on posts</h4>
@@ -374,6 +468,7 @@ const Settings = () => {
                         </div>
                         <Switch checked={privacy.showLocation} onCheckedChange={(v) => setPrivacy({...privacy, showLocation: v})} />
                     </div>
+
                     <div className="privacy-item">
                         <div className="privacy-text">
                             <h4>Messages from anyone</h4>
@@ -381,6 +476,7 @@ const Settings = () => {
                         </div>
                         <Switch checked={privacy.messagesFromAnyone} onCheckedChange={(v) => setPrivacy({...privacy, messagesFromAnyone: v})} />
                     </div>
+
                     <div className="privacy-item">
                         <div className="privacy-text">
                             <h4>Show online status</h4>
@@ -388,6 +484,7 @@ const Settings = () => {
                         </div>
                         <Switch checked={privacy.showOnline} onCheckedChange={(v) => setPrivacy({...privacy, showOnline: v})} />
                     </div>
+
                     <div className="privacy-item">
                         <div className="privacy-text">
                             <h4>Story replies</h4>
@@ -395,6 +492,7 @@ const Settings = () => {
                         </div>
                         <Switch checked={privacy.storyReplies} onCheckedChange={(v) => setPrivacy({...privacy, storyReplies: v})} />
                     </div>
+
                     <div className="privacy-item">
                         <div className="privacy-text">
                             <h4>Analytics & improvement</h4>
@@ -414,12 +512,11 @@ const Settings = () => {
             exit={{ opacity: 0, y: -10 }}
             className="settings-section"
         >
-            <div className="settings-content-header">
-                <h2>Notifications</h2>
-                <Button variant="primary">Save Changes</Button>
-            </div>
-
-            <Card>
+            <Card className="settings-card">
+                <div className="settings-content-header" style={{ marginBottom: '24px' }}>
+                    <h2>Notifications</h2>
+                    <Button variant="primary">Save Changes</Button>
+                </div>
                 <div className="notification-banner">
                     <Bell size={16} weight="fill" />
                     <span>You have 3 unread notifications this week.</span>
@@ -500,12 +597,11 @@ const Settings = () => {
             exit={{ opacity: 0, y: -10 }}
             className="settings-section"
         >
-            <div className="settings-content-header">
-                <h2>Appearance</h2>
-                <Button variant="primary">Save Changes</Button>
-            </div>
-
-            <Card>
+            <Card className="settings-card">
+                <div className="settings-content-header" style={{ marginBottom: '24px' }}>
+                    <h2>Appearance</h2>
+                    <Button variant="primary">Save Changes</Button>
+                </div>
                 <div className="appearance-section">
                     <Label>THEME</Label>
                     <div className="theme-cards">
@@ -648,6 +744,7 @@ const Settings = () => {
                                     <span className="nav-label">{tab.label}</span>
                                 </button>
                             ))}
+
                         </nav>
                     </aside>
 
