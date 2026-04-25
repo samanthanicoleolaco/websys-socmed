@@ -292,6 +292,8 @@ const Feed = () => {
                 likes: Array.isArray(p.likes) ? p.likes.length : (p.likes_count || p.like_count || 0),
                 comments: Array.isArray(p.comments) ? p.comments.length : (p.comments_count || p.comment_count || 0),
                 isLiked: false,
+                privacy: p.privacy || 'public',
+                tagged_pets: p.tagged_pets || []
             }));
             setPosts(mappedPosts);
         } catch (err) { console.error(err); }
@@ -396,7 +398,7 @@ const Feed = () => {
             const data = await res.json();
             const results = data.map((item, index) => ({
                 id: item.place_id || index + 1,
-                name: item.namedetails?.name || item.name || item.display_name.split(",")[0],
+                name: item.display_name.split(",").slice(0, 2).join(", "),
                 sub: item.display_name,
                 type: "pin",
                 lat: item.lat,
@@ -406,12 +408,16 @@ const Feed = () => {
         } catch (err) { console.error(err); } finally { setIsLocating(false); }
     };
 
-    const fetchSuggestedPets = async () => {
+    const fetchSuggestedPets = async (isSeeAll = false) => {
         setIsSearchingPets(true);
         try {
             const res = await window.axios.get("/api/pets");
             const data = res.data?.data || res.data || [];
-            setSuggestedPets(data.slice(0, 5));
+            if (isSeeAll) {
+                setSuggestedPets(data);
+            } else {
+                setSuggestedPets(data.slice(0, 5));
+            }
         } catch (err) { console.error(err); } finally { setIsSearchingPets(false); }
     };
 
@@ -443,8 +449,10 @@ const Feed = () => {
     const handleVideoClick = () => videoInputRef.current?.click();
 
     const handleFollow = async (followingPetId) => {
-        if (!user?.pet?.id) {
-            alert("You need a pet profile to follow others.");
+        // If user has no pet, we might need to refresh user or show a better message
+        const currentPetId = user?.pet?.id;
+        if (!currentPetId) {
+            alert("Please save your pet profile in Settings before following others.");
             return;
         }
         try {
@@ -641,7 +649,7 @@ const Feed = () => {
                 avatar: createdPost.pet?.image_url || user?.avatar_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
                 time: "just now",
                 content: createdPost.caption || trimmed,
-                hashtags: [],
+                hashtags: (createdPost.caption?.match(/#\w+/g) || []),
                 image: createdPost.image_url || null,
                 video: createdPost.video_url || null,
                 likes: 0,
@@ -656,6 +664,17 @@ const Feed = () => {
             setPostLocation(null);
             setTaggedPets([]);
             setExpanded(false);
+            
+            // If it's a contest entry, refresh the count
+            if (trimmed.includes('#springcutest')) {
+                const countRes = await window.axios.get("/api/posts?hashtag=springcutest");
+                setContestEntryCount(countRes.data?.total || 0);
+            }
+
+        } catch (err) {
+            console.error("Post error:", err);
+            const message = err.response?.data?.message || "Failed to post. Please check your connection and try again.";
+            alert(message);
         } finally {
             setIsPosting(false);
         }
@@ -988,6 +1007,13 @@ const Feed = () => {
                                             <div className="meta">
                                                 <div className="meta-top">
                                                     <span className="name">{post.author}</span>
+                                                    {post.tagged_pets && post.tagged_pets.length > 0 && (
+                                                        <span className="tagged-info" style={{fontSize: '13px', color: 'var(--text-muted)', marginLeft: '4px'}}>
+                                                            {" with "}
+                                                            <strong style={{color: 'var(--text-main)'}}>{post.tagged_pets[0].name || "a friend"}</strong>
+                                                            {post.tagged_pets.length > 1 && ` and ${post.tagged_pets.length - 1} others`}
+                                                        </span>
+                                                    )}
                                                     <span className="time">{post.time}</span>
                                                 </div>
                                                 <div className="meta-bottom">
@@ -1096,7 +1122,7 @@ const Feed = () => {
                         <Card className="sidebar-card">
                             <div className="sidebar-card__title sidebar-card__title--between">
                                 <span className="title-left"><Users /> <span>Suggested Pets</span></span>
-                                <button className="see-all-btn" onClick={() => setIsSeeAllPetsOpen(true)}>See all</button>
+                                <button className="see-all-btn" onClick={() => { setIsSeeAllPetsOpen(true); fetchSuggestedPets(true); }}>See all</button>
                             </div>
                             <div className="suggested-users">
                                 {suggestedPets.length === 0 ? (

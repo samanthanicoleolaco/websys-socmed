@@ -34,6 +34,14 @@ class PostController extends Controller
 
         $posts = $query->latest()->paginate(20);
 
+        // Transform tagged_pets IDs into Pet objects
+        $posts->getCollection()->transform(function ($post) {
+            if ($post->tagged_pets && is_array($post->tagged_pets)) {
+                $post->tagged_pets = Pet::whereIn('id', $post->tagged_pets)->get();
+            }
+            return $post;
+        });
+
         return response()->json($posts);
     }
 
@@ -48,14 +56,21 @@ class PostController extends Controller
             'location_lon' => 'nullable|numeric',
             'location_place_id' => 'nullable|string|max:255',
             'tagged_pets' => 'nullable|json',
+            'privacy' => 'nullable|string|in:public,friends,followers',
         ]);
 
         $user = Auth::user();
 
-        // Get user's first pet; create anonymous mapping if none
+        // Get user's first pet; create a default one if none exists to ensure posting works
         $pet = Pet::where('user_id', $user->id)->first();
         if (!$pet) {
-            return response()->json(['message' => 'You need a pet profile to post.'], 422);
+            $pet = Pet::create([
+                'user_id' => $user->id,
+                'name' => $user->name . "'s Pet",
+                'breed' => 'Golden Retriever', // Default fallback
+                'age' => 2,
+                'bio' => 'A happy pet on Petverse!',
+            ]);
         }
 
         $imagePath = null;
@@ -81,7 +96,12 @@ class PostController extends Controller
             'location_lon' => $request->location_lon,
             'location_place_id' => $request->location_place_id,
             'tagged_pets' => $taggedPets,
+            'privacy' => $request->input('privacy', 'public'),
         ]);
+
+        if ($post->tagged_pets && is_array($post->tagged_pets)) {
+            $post->tagged_pets = Pet::whereIn('id', $post->tagged_pets)->get();
+        }
 
         return response()->json($post->load(['pet.user', 'likes', 'comments']), 201);
     }
