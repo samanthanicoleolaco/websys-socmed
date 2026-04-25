@@ -391,13 +391,9 @@ const Messages = () => {
                             exit={{ scale: 0.94, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="msg-group-modal__header" style={{ position: 'relative', justifyContent: 'center' }}>
+                            <div className="msg-group-modal__header">
                                 <h3>New message</h3>
-                                <button 
-                                    className="msg-icon-btn" 
-                                    onClick={() => setShowGroupModal(false)}
-                                    style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: 'var(--text-main)', cursor: 'pointer' }}
-                                >
+                                <button className="msg-icon-btn" onClick={() => setShowGroupModal(false)}>
                                     <X size={20} />
                                 </button>
                             </div>
