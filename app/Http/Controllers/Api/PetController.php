@@ -33,6 +33,17 @@ class PetController extends Controller
 
         $pets = $query->paginate(15);
 
+        // Map is_following status if authenticated
+        if (Auth::check()) {
+            $userPetIds = Auth::user()->pets->pluck('id');
+            $pets->getCollection()->transform(function ($pet) use ($userPetIds) {
+                $pet->is_following = \App\Models\Follower::whereIn('follower_pet_id', $userPetIds)
+                    ->where('following_pet_id', $pet->id)
+                    ->exists();
+                return $pet;
+            });
+        }
+
         return response()->json($pets);
     }
 

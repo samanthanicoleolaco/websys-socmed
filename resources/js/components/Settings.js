@@ -199,6 +199,10 @@ const Settings = () => {
                 name: user.displayName,
                 location: user.location,
                 bio: user.bio,
+                petName: user.petName,
+                breed: user.breed,
+                age: user.age,
+                petBio: user.petBio
             });
             alert('Account settings updated successfully!');
             refreshUser();

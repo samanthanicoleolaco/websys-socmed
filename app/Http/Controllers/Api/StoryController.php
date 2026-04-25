@@ -93,6 +93,21 @@ class StoryController extends Controller
         return response()->json(['message' => 'Story archived successfully']);
     }
 
+    public function update(Request $request, Story $story)
+    {
+        if ($story->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'visibility' => 'required|string|in:public,followers',
+        ]);
+
+        $story->update(['visibility' => $request->visibility]);
+
+        return response()->json(['message' => 'Visibility updated successfully', 'story' => $story]);
+    }
+
     public function markAsViewed(Request $request, Story $story)
     {
         StoryView::firstOrCreate([

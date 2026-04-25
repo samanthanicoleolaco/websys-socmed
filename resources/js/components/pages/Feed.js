@@ -25,6 +25,10 @@ import {
     CaretLeft,
     MagnifyingGlass,
     Trash,
+    Download,
+    Lock,
+    ShieldCheck,
+    CaretRight,
 } from "@phosphor-icons/react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
@@ -111,7 +115,90 @@ const PostMenu = ({ postId }) => {
 
 // ── Feed Component ─────────────────────────────────────────────────────
 
+const PostLikesModal = ({ postId, onClose }) => {
+    const [likes, setLikes] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchLikes = async () => {
+            try {
+                const res = await window.axios.get(`/api/posts/${postId}/likes`);
+                setLikes(res.data.data || res.data || []);
+            } catch (err) { console.error(err); } finally { setLoading(false); }
+        };
+        fetchLikes();
+    }, [postId]);
+
+    return (
+        <div className="location-picker-overlay" style={{ zIndex: 1100 }}>
+            <motion.div 
+                className="location-picker" 
+                style={{ maxWidth: '400px', height: '500px' }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+            >
+                <div className="location-picker__header">
+                    <button className="back-btn" onClick={onClose}><CaretLeft size={24} /></button>
+                    <h3>Likes</h3>
+                </div>
+                <div className="location-picker__content" style={{ padding: '0' }}>
+                    {loading ? <div className="loading-locations">Loading...</div> : (
+                        <div className="locations-list">
+                            {likes.length === 0 ? <div className="loading-locations">No likes yet.</div> : 
+                                likes.map((u) => (
+                                    <div key={u.id} className="location-item" style={{ cursor: 'default' }}>
+                                        <Avatar src={u.avatar} size="sm" />
+                                        <div className="location-info">
+                                            <span className="location-name">{u.name}</span>
+                                            <span className="location-sub">@{u.name.toLowerCase().replace(/\s+/g, '')}</span>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    )}
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
 const PostModal = ({ post, onClose, onLike }) => {
+    const [commentText, setCommentText] = useState("");
+    const [comments, setComments] = useState([]);
+    const [isPostingComment, setIsPostingComment] = useState(false);
+    const [showLikesModal, setShowLikesModal] = useState(false);
+
+    useEffect(() => {
+        if (post) fetchComments();
+    }, [post]);
+
+    const fetchComments = async () => {
+        try {
+            const res = await window.axios.get(`/api/posts/${post.id}/comments`);
+            setComments(res.data.data || res.data || []);
+        } catch (err) { console.error(err); }
+    };
+
+    const handleCommentSubmit = async () => {
+        if (!commentText.trim() || isPostingComment) return;
+        setIsPostingComment(true);
+        try {
+            const res = await window.axios.post('/api/comments', {
+                post_id: post.id,
+                pet_id: window.userPetId || 1, // Fallback for testing, should use real pet ID
+                content: commentText
+            });
+            setComments([res.data, ...comments]);
+            setCommentText("");
+        } catch (err) {
+            console.error(err);
+            alert("Failed to post comment.");
+        } finally {
+            setIsPostingComment(false);
+        }
+    };
+
     if (!post) return null;
     return (
         <div className="post-modal-overlay">
@@ -170,10 +257,29 @@ const PostModal = ({ post, onClose, onLike }) => {
                             </div>
                         </div>
                         <div className="post-modal-comments">
-                            <div className="empty-state">
-                                <span>No comments yet.</span>
-                                <span>Start the conversation.</span>
-                            </div>
+                            {comments.length === 0 ? (
+                                <div className="empty-state">
+                                    <span>No comments yet.</span>
+                                    <span>Start the conversation.</span>
+                                </div>
+                            ) : (
+                                comments.map(c => (
+                                    <div key={c.id} className="comment-item" style={{ display: 'flex', gap: '12px', marginBottom: '16px', padding: '0 4px' }}>
+                                        <Avatar src={c.pet?.photo_url} size="sm" />
+                                        <div className="comment-content">
+                                            <div style={{ background: 'var(--bg-page)', padding: '8px 12px', borderRadius: '12px' }}>
+                                                <span className="author-name" style={{ fontWeight: '700', fontSize: '13px', marginRight: '6px' }}>{c.pet?.name || 'User'}</span>
+                                                <span className="text" style={{ fontSize: '13px', color: 'var(--text-main)' }}>{c.content}</span>
+                                            </div>
+                                            <div className="comment-meta" style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '11px', color: 'var(--text-muted)', paddingLeft: '8px' }}>
+                                                <span>Just now</span>
+                                                <button style={{ background: 'none', border: 'none', color: 'inherit', fontWeight: '600', cursor: 'pointer' }}>Like</button>
+                                                <button style={{ background: 'none', border: 'none', color: 'inherit', fontWeight: '600', cursor: 'pointer' }}>Reply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
 
@@ -194,12 +300,27 @@ const PostModal = ({ post, onClose, onLike }) => {
                                 <Bookmark size={24} />
                             </button>
                         </div>
-                        <div className="likes-count">{post.likes} likes</div>
+                        <div className="likes-count" onClick={() => setShowLikesModal(true)} style={{ cursor: 'pointer', fontWeight: '700' }}>
+                            {post.likes} likes
+                        </div>
                         <div className="add-comment">
-                            <input type="text" placeholder="Add a comment..." />
-                            <button className="post-btn">Post</button>
+                            <input 
+                                type="text" 
+                                placeholder="Add a comment..." 
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
+                            />
+                            <button 
+                                className="post-btn" 
+                                onClick={handleCommentSubmit}
+                                disabled={!commentText.trim() || isPostingComment}
+                            >
+                                {isPostingComment ? '...' : 'Post'}
+                            </button>
                         </div>
                     </div>
+                    {showLikesModal && <PostLikesModal postId={post.id} onClose={() => setShowLikesModal(false)} />}
                 </div>
             </motion.div>
         </div>
@@ -224,8 +345,22 @@ const Feed = () => {
     const [isLocationPickerOpen, setIsLocationPickerOpen] = useState(false);
     const [locationSearchQuery, setLocationSearchQuery] = useState("");
     const [suggestedLocations, setSuggestedLocations] = useState([]);
+    
+    const [isTagPickerOpen, setIsTagPickerOpen] = useState(false);
+    const [taggedPets, setTaggedPets] = useState([]);
+    const [petSearchQuery, setPetSearchQuery] = useState("");
+    const [suggestedPets, setSuggestedPets] = useState([]);
+    const [isSearchingPets, setIsSearchingPets] = useState(false);
+
     const [activePost, setActivePost] = useState(null);
+    const [showVisibilitySubmenu, setShowVisibilitySubmenu] = useState(false);
+    const [storyProgress, setStoryProgress] = useState(0);
+    const [filterTag, setFilterTag] = useState(null);
+    const [isSeeAllPetsOpen, setIsSeeAllPetsOpen] = useState(false);
+    const [contestEntryCount, setContestEntryCount] = useState(0);
+
     const privacyMenuRef = useRef(null);
+    const storyMenuRef = useRef(null);
     
     const fileInputRef = useRef(null);
     const imageInputRef = useRef(null);
@@ -238,49 +373,63 @@ const Feed = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const [videoPreview, setVideoPreview] = useState(null);
 
+    // Reset submenu when story menu closes
+    useEffect(() => {
+        if (!showStoryMenu) setShowVisibilitySubmenu(false);
+    }, [showStoryMenu]);
+
+    // Handle click outside for story menu
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (storyMenuRef.current && !storyMenuRef.current.contains(e.target)) {
+                setShowStoryMenu(false);
+            }
+        };
+        if (showStoryMenu) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [showStoryMenu]);
+
+    const fetchPosts = async (hashtag = null) => {
+        try {
+            const url = hashtag ? `/api/posts?hashtag=${encodeURIComponent(hashtag)}` : "/api/posts";
+            const res = await window.axios.get(url);
+            const mappedPosts = (res.data?.data || res.data || []).map((p) => ({
+                id: p.id,
+                author: p.pet?.name || p.user?.name || "Petverse User",
+                breed: p.pet?.breed || "Pet",
+                location: p.location || "",
+                avatar: p.pet?.image_url || p.user?.avatar_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
+                time: p.created_at ? new Date(p.created_at).toLocaleDateString() : "just now",
+                content: p.caption || p.content || "",
+                hashtags: (p.caption?.match(/#\w+/g) || []),
+                image: p.image_url || p.media_url || null,
+                video: p.video_url || null,
+                likes: Array.isArray(p.likes) ? p.likes.length : (p.likes_count || p.like_count || 0),
+                comments: Array.isArray(p.comments) ? p.comments.length : (p.comments_count || p.comment_count || 0),
+                isLiked: false,
+                privacy: p.privacy || 'public',
+                tagged_pets: p.tagged_pets || []
+            }));
+            setPosts(mappedPosts);
+        } catch (err) { console.error(err); }
+    };
+
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                const [storiesRes, postsRes] = await Promise.all([
-                    window.axios.get("/api/stories"),
-                    window.axios.get("/api/posts")
-                ]);
+                const storiesRes = await window.axios.get("/api/stories");
                 setStories(storiesRes.data);
-                const mappedPosts = (postsRes.data?.data || postsRes.data || []).map((p) => ({
-                    id: p.id,
-                    author: p.pet?.name || p.user?.name || "Petverse User",
-                    breed: p.pet?.breed || "Pet",
-                    location: p.location || "",
-                    avatar: p.pet?.image_url || p.user?.avatar_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
-                    time: p.created_at ? new Date(p.created_at).toLocaleDateString() : "just now",
-                    content: p.caption || p.content || "",
-                    hashtags: [],
-                    image: p.image_url || p.media_url || null,
-                    video: p.video_url || null,
-                    likes: Array.isArray(p.likes) ? p.likes.length : (p.likes_count || p.like_count || 0),
-                    comments: Array.isArray(p.comments) ? p.comments.length : (p.comments_count || p.comment_count || 0),
-                    isLiked: false,
-                }));
-                setPosts(mappedPosts);
+                fetchPosts(filterTag);
+                
+                // Fetch contest entry count
+                const contestRes = await window.axios.get("/api/posts?hashtag=springcutest");
+                setContestEntryCount(contestRes.data?.total || 0);
             } catch (err) { console.error(err); }
         };
         fetchInitialData();
-    }, []);
-
-    const handleDeleteStory = async (id) => {
-        try {
-            await axios.delete(`/api/stories/${id}`);
-            setStories(prev => prev.map(g => ({ ...g, stories: g.stories.filter(s => s.id !== id) })).filter(g => g.stories.length > 0));
-            setViewerState(p => ({ ...p, isOpen: false }));
-        } catch(e) { console.error(e); }
-    };
-
-    const handleArchiveStory = async (id) => {
-        try {
-            await axios.post(`/api/stories/${id}/archive`);
-            setViewerState(p => ({ ...p, isOpen: false }));
-        } catch(e) { console.error(e); }
-    };
+    }, [filterTag]);
 
     const handleAddClick = (e) => {
         if (e) e.stopPropagation();
@@ -366,9 +515,9 @@ const Feed = () => {
             const data = await res.json();
             const results = data.map((item, index) => ({
                 id: item.place_id || index + 1,
-                name: item.namedetails?.name || item.name || item.display_name.split(",")[0],
-                sub: item.address?.city || item.address?.state || item.address?.country || "Nearby",
-                type: "city",
+                name: item.display_name.split(",").slice(0, 2).join(", "),
+                sub: item.display_name,
+                type: "pin",
                 lat: item.lat,
                 lon: item.lon
             }));
@@ -376,8 +525,65 @@ const Feed = () => {
         } catch (err) { console.error(err); } finally { setIsLocating(false); }
     };
 
+    const fetchSuggestedPets = async (isSeeAll = false) => {
+        setIsSearchingPets(true);
+        try {
+            const res = await window.axios.get("/api/pets");
+            const data = res.data?.data || res.data || [];
+            if (isSeeAll) {
+                setSuggestedPets(data);
+            } else {
+                setSuggestedPets(data.slice(0, 5));
+            }
+        } catch (err) { console.error(err); } finally { setIsSearchingPets(false); }
+    };
+
+    const searchPets = async (query) => {
+        if (!query.trim()) { fetchSuggestedPets(); return; }
+        setIsSearchingPets(true);
+        try {
+            const res = await window.axios.get(`/api/pets?search=${encodeURIComponent(query)}`);
+            const data = res.data?.data || res.data || [];
+            setSuggestedPets(data.slice(0, 8));
+        } catch (err) { console.error(err); } finally { setIsSearchingPets(false); }
+    };
+
+    const handleTagClick = () => {
+        setIsTagPickerOpen(true);
+        fetchSuggestedPets();
+    };
+
+    const toggleTagPet = (pet) => {
+        setTaggedPets(prev => {
+            if (prev.some(p => p.id === pet.id)) {
+                return prev.filter(p => p.id !== pet.id);
+            }
+            return [...prev, pet];
+        });
+    };
+
     const handleImageClick = () => imageInputRef.current?.click();
     const handleVideoClick = () => videoInputRef.current?.click();
+
+    const handleFollow = async (followingPetId) => {
+        // If user has no pet, we might need to refresh user or show a better message
+        const currentPetId = user?.pet?.id;
+        if (!currentPetId) {
+            alert("Please save your pet profile in Settings before following others.");
+            return;
+        }
+        try {
+            await window.axios.post("/api/follow", {
+                follower_pet_id: user.pet.id,
+                following_pet_id: followingPetId
+            });
+            // Update local state to show followed
+            setSuggestedPets(prev => prev.map(p => p.id === followingPetId ? { ...p, is_following: true } : p));
+        } catch (err) {
+            console.error(err);
+            alert("Already following or error occurred");
+        }
+    };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -408,6 +614,57 @@ const Feed = () => {
         if (videoInputRef.current) videoInputRef.current.value = "";
     };
 
+    const handleDeleteStory = async (id) => {
+        if (!confirm("Are you sure you want to delete this story?")) return;
+        try {
+            await window.axios.delete(`/api/stories/${id}`);
+            setStories(prev => prev.map(g => ({ ...g, stories: g.stories.filter(s => s.id !== id) })).filter(g => g.stories.length > 0));
+            setViewerState(p => ({ ...p, isOpen: false }));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleArchiveStory = async (id) => {
+        try {
+            await window.axios.post(`/api/stories/${id}/archive`);
+            setStories(prev => prev.map(g => ({ ...g, stories: g.stories.filter(s => s.id !== id) })).filter(g => g.stories.length > 0));
+            setViewerState(p => ({ ...p, isOpen: false }));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleUpdateVisibility = async (id, visibility) => {
+        try {
+            await window.axios.patch(`/api/stories/${id}`, { visibility });
+            // Update local state in groups
+            setStories(prev => prev.map(g => ({
+                ...g,
+                stories: g.stories.map(s => s.id === id ? { ...s, visibility } : s)
+            })));
+            
+            setViewerState(prev => {
+                const updated = [...prev.userStories];
+                updated[prev.currentIndex] = { ...updated[prev.currentIndex], visibility };
+                return { ...prev, userStories: updated };
+            });
+            setShowStoryMenu(false);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleSaveStory = (story) => {
+        const link = document.createElement('a');
+        link.href = story.media_url || story.media_path; // Use whatever property is available
+        link.download = `petverse-story-${story.id}.${story.media_type === 'video' ? 'mp4' : 'jpg'}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setShowStoryMenu(false);
+    };
+
     const openViewer = (group) => setViewerState({ isOpen: true, userStories: group.stories, currentIndex: 0 });
     const nextStory = () => {
         if (viewerState.currentIndex < viewerState.userStories.length - 1) {
@@ -416,13 +673,35 @@ const Feed = () => {
             setViewerState(prev => ({ ...prev, isOpen: false }));
         }
     };
+    const prevStory = () => {
+        if (viewerState.currentIndex > 0) {
+            setViewerState(prev => ({ ...prev, currentIndex: prev.currentIndex - 1 }));
+        }
+    };
 
     useEffect(() => {
-        let timer;
-        if (viewerState.isOpen && viewerState.userStories[viewerState.currentIndex]?.media_type === 'image') {
-            timer = setTimeout(nextStory, 5000);
+        let progressInterval;
+        if (viewerState.isOpen) {
+            setStoryProgress(0);
+            const duration = 5000; // 5 seconds per story
+            const interval = 30; // smoother update every 30ms
+            const step = (interval / duration) * 100;
+
+            progressInterval = setInterval(() => {
+                setStoryProgress(prev => {
+                    if (prev >= 100) {
+                        clearInterval(progressInterval);
+                        nextStory();
+                        return 0;
+                    }
+                    return prev + step;
+                });
+            }, interval);
         }
-        return () => clearTimeout(timer);
+        return () => {
+            clearInterval(progressInterval);
+            setStoryProgress(0);
+        };
     }, [viewerState.isOpen, viewerState.currentIndex]);
 
     useEffect(() => {
@@ -471,6 +750,10 @@ const Feed = () => {
             if (postImage) formData.append("image", postImage);
             if (postVideo) formData.append("video", postVideo);
 
+            if (taggedPets.length > 0) {
+                formData.append("tagged_pets", JSON.stringify(taggedPets.map(p => p.id)));
+            }
+
             const res = await window.axios.post("/api/posts", formData, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
@@ -483,19 +766,32 @@ const Feed = () => {
                 avatar: createdPost.pet?.image_url || user?.avatar_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
                 time: "just now",
                 content: createdPost.caption || trimmed,
-                hashtags: [],
+                hashtags: (createdPost.caption?.match(/#\w+/g) || []),
                 image: createdPost.image_url || null,
                 video: createdPost.video_url || null,
                 likes: 0,
                 comments: 0,
                 isLiked: false,
+                tagged_pets: createdPost.tagged_pets || []
             };
 
             setPosts((prev) => [mapped, ...prev]);
             setPostText("");
             clearMedia();
             setPostLocation(null);
+            setTaggedPets([]);
             setExpanded(false);
+            
+            // If it's a contest entry, refresh the count
+            if (trimmed.includes('#springcutest')) {
+                const countRes = await window.axios.get("/api/posts?hashtag=springcutest");
+                setContestEntryCount(countRes.data?.total || 0);
+            }
+
+        } catch (err) {
+            console.error("Post error:", err);
+            const message = err.response?.data?.message || "Failed to post. Please check your connection and try again.";
+            alert(message);
         } finally {
             setIsPosting(false);
         }
@@ -531,7 +827,6 @@ const Feed = () => {
                                 </div>
 
                                 {visibleStories.map(group => {
-                                    const isOwn = user && group.user.id === user.id;
                                     return (
                                         <div key={group.user.id} className="feed-story" onClick={() => openViewer(group)}>
                                             <div className="feed-story__ring">
@@ -543,7 +838,7 @@ const Feed = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <span className="feed-story__label">{isOwn ? "Your Story" : (group.user.pet?.name || group.user.name?.split(' ')[0] || 'Unknown')}</span>
+                                            <span className="feed-story__label">{(group.user.pet?.name || group.user.name?.split(' ')[0] || 'Unknown')}</span>
                                         </div>
                                     );
                                 })}
@@ -555,38 +850,101 @@ const Feed = () => {
                             {viewerState.isOpen && (
                                 <div className="story-viewer-v2">
                                     <div className="story-viewer-v2__bg" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))} />
-                                    <div className="story-viewer-v2__main">
+                                    <div className="story-viewer-v2__main" onClick={(e) => e.stopPropagation()}>
+                                        {/* Progress Bars */}
+                                        <div className="story-viewer-v2__progress-bars">
+                                            {viewerState.userStories.map((_, idx) => (
+                                                <div key={idx} className="story-progress-bg">
+                                                    <div 
+                                                        className="story-progress-fill" 
+                                                        style={{ 
+                                                            width: idx < viewerState.currentIndex ? '100%' : (idx === viewerState.currentIndex ? `${storyProgress}%` : '0%') 
+                                                        }} 
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+
                                         <div className="story-viewer-v2__header">
                                             <div className="story-viewer-v2__user">
-                                                <Avatar src={viewerState.userStories[0].user?.avatar_url} size="sm" />
-                                                <span className="name">
-                                                    {user && viewerState.userStories[0].user?.id === user.id ? "Your Story" : (viewerState.userStories[0].user?.pet?.name || viewerState.userStories[0].user?.name)}
-                                                </span>
+                                                <Avatar src={viewerState.userStories[viewerState.currentIndex].user?.avatar_url} size="sm" />
+                                                <div className="user-info">
+                                                    <div className="top-line">
+                                                        <span className="name">
+                                                            {viewerState.userStories[viewerState.currentIndex].user?.pet?.name || viewerState.userStories[viewerState.currentIndex].user?.name}
+                                                        </span>
+                                                        <span className="time">
+                                                            {(() => {
+                                                                const diff = Math.floor((new Date() - new Date(viewerState.userStories[viewerState.currentIndex].created_at)) / 1000);
+                                                                if (diff < 60) return `${diff}s`;
+                                                                if (diff < 3600) return `${Math.floor(diff / 60)}m`;
+                                                                if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
+                                                                return new Date(viewerState.userStories[viewerState.currentIndex].created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                                                            })()}
+                                                        </span>
+                                                    </div>
+                                                    <div className="visibility-icon">
+                                                        {viewerState.userStories[viewerState.currentIndex].visibility === 'public' ? (
+                                                            <Globe size={14} weight="bold" />
+                                                        ) : (
+                                                            <Users size={14} weight="bold" />
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="story-viewer-v2__actions">
-                                                {user && viewerState.userStories[0].user?.id === user.id && (
-                                                    <div className="story-options-trigger">
-                                                        <button className="dots-btn" onClick={() => setShowStoryMenu(!showStoryMenu)}><DotsThree size={24} weight="bold" /></button>
+                                                {user && viewerState.userStories[viewerState.currentIndex].user?.id === user.id && (
+                                                    <div className="story-options-trigger" ref={storyMenuRef}>
+                                                        <button className="dots-btn" onClick={() => setShowStoryMenu(!showStoryMenu)}>
+                                                            <DotsThree size={28} weight="bold" />
+                                                        </button>
                                                         <AnimatePresence>
                                                             {showStoryMenu && (
                                                                 <motion.div 
                                                                     className="story-menu"
-                                                                    initial={{ opacity: 0, y: 10 }}
-                                                                    animate={{ opacity: 1, y: 0 }}
-                                                                    exit={{ opacity: 0, y: 10 }}
+                                                                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                                                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
                                                                 >
-                                                                    <button onClick={() => handleDeleteStory(viewerState.userStories[viewerState.currentIndex].id)}>
-                                                                        <Trash size={16} /> Delete Story
-                                                                    </button>
-                                                                    <button onClick={() => handleArchiveStory(viewerState.userStories[viewerState.currentIndex].id)}>
-                                                                        <Bookmark size={16} /> Archive Story
-                                                                    </button>
+                                                                    {!showVisibilitySubmenu ? (
+                                                                        <>
+                                                                            <button onClick={() => handleDeleteStory(viewerState.userStories[viewerState.currentIndex].id)} className="delete">
+                                                                                <Trash size={18} /> <span>Delete Story</span>
+                                                                            </button>
+                                                                            <button onClick={() => handleSaveStory(viewerState.userStories[viewerState.currentIndex])}>
+                                                                                <Download size={18} /> <span>Save</span>
+                                                                            </button>
+                                                                            <button onClick={() => setShowVisibilitySubmenu(true)} className="has-submenu">
+                                                                                <Users size={18} /> <span>Story Privacy</span> <CaretRight size={14} />
+                                                                            </button>
+                                                                        </>
+                                                                    ) : (
+                                                                        <div className="visibility-submenu">
+                                                                            <button className="submenu-header" onClick={() => setShowVisibilitySubmenu(false)}>
+                                                                                <CaretLeft size={14} /> <span>Back</span>
+                                                                            </button>
+                                                                            <button 
+                                                                                onClick={() => handleUpdateVisibility(viewerState.userStories[viewerState.currentIndex].id, 'public')}
+                                                                                className={viewerState.userStories[viewerState.currentIndex].visibility === 'public' ? 'active' : ''}
+                                                                            >
+                                                                                <Globe size={18} /> <span>Public</span>
+                                                                            </button>
+                                                                            <button 
+                                                                                onClick={() => handleUpdateVisibility(viewerState.userStories[viewerState.currentIndex].id, 'followers')}
+                                                                                className={viewerState.userStories[viewerState.currentIndex].visibility === 'followers' ? 'active' : ''}
+                                                                            >
+                                                                                <Users size={18} /> <span>Followers only</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    )}
                                                                 </motion.div>
                                                             )}
                                                         </AnimatePresence>
                                                     </div>
                                                 )}
-                                                <button className="close" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))}><X /></button>
+                                                <button className="close-btn" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))}>
+                                                    <X size={28} weight="bold" />
+                                                </button>
                                             </div>
                                         </div>
                                         <div className="story-viewer-v2__body">
@@ -596,7 +954,33 @@ const Feed = () => {
                                                 <img src={viewerState.userStories[viewerState.currentIndex].media_url} alt="Story" />
                                             )}
                                         </div>
+
+                                        {/* Owner Footer */}
+                                        {user && viewerState.userStories[viewerState.currentIndex].user?.id === user.id && (
+                                            <div className="story-viewer-v2__footer">
+                                                <div className="footer-item" onClick={() => alert("Viewing insights...")}>
+                                                    <div className="icon-circle">
+                                                        <Users size={20} weight="bold" />
+                                                    </div>
+                                                    <span>Viewers</span>
+                                                </div>
+                                                <div className="footer-item" onClick={() => alert("Added to Highlights!")}>
+                                                    <div className="icon-circle">
+                                                        <Heart size={20} weight="bold" />
+                                                    </div>
+                                                    <span>Highlights</span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
+
+                                    {/* Navigation Arrows */}
+                                    <button className="nav-arrow prev" onClick={prevStory} style={{ display: viewerState.currentIndex === 0 ? 'none' : 'flex' }}>
+                                        <CaretLeft size={32} weight="bold" />
+                                    </button>
+                                    <button className="nav-arrow next" onClick={nextStory}>
+                                        <CaretRight size={32} weight="bold" />
+                                    </button>
                                 </div>
                             )}
                         </AnimatePresence>
@@ -670,9 +1054,7 @@ const Feed = () => {
                                         placeholder="Share a moment with your pet..."
                                         value={postText}
                                         onChange={e => {
-                                            if (e.target.value.length <= 280) {
-                                                setPostText(e.target.value);
-                                            }
+                                            setPostText(e.target.value);
                                         }}
                                         rows={2}
                                         autoFocus
@@ -692,17 +1074,16 @@ const Feed = () => {
                                         <div className="group">
                                             <button className="action-btn" onClick={handleImageClick}><ImageIcon size={18} /> Photo</button>
                                             <button className="action-btn" onClick={handleVideoClick}><Video size={18} /> Video</button>
-                                            <button className="action-btn" onClick={() => {
-                                                setPostText(prev => prev + "@");
-                                                document.querySelector('.feed-composer__textarea')?.focus();
-                                            }}><At size={18} /> Tag</button>
+                                            <button className={`action-btn ${taggedPets.length > 0 ? 'active' : ''}`} onClick={handleTagClick}>
+                                                <At size={18} /> 
+                                                {taggedPets.length > 0 ? `${taggedPets.length} Tagged` : "Tag"}
+                                            </button>
                                             <button className={`action-btn ${postLocation ? 'active' : ''} ${isLocating ? 'loading' : ''}`} onClick={handleLocationClick} disabled={isLocating}>
                                                 <MapPin size={18} /> 
                                                 {isLocating ? "Locating..." : postLocation?.name || "Location"}
                                             </button>
                                         </div>
                                         <div className="group-right">
-                                            <span className="char-count">{postText.length}/280</span>
                                             <button
                                                 className={`post-submit-btn ${(postText.trim().length > 0 || imagePreview || videoPreview) ? 'active' : ''}`}
                                                 onClick={submitPost}
@@ -716,6 +1097,21 @@ const Feed = () => {
                             )}
                         </Card>
 
+                        {/* Filter Indicator */}
+                        {filterTag && (
+                            <div className="feed-filter-indicator">
+                                <Card className="filter-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', marginBottom: '20px', background: 'rgba(233, 30, 140, 0.1)', border: '1px solid rgba(233, 30, 140, 0.2)' }}>
+                                    <div className="filter-info" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        <TrendUp size={20} weight="fill" color="#e91e8c" />
+                                        <span>Showing results for <strong>#{filterTag}</strong></span>
+                                    </div>
+                                    <button className="clear-filter" onClick={() => setFilterTag(null)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                                        <X size={18} />
+                                    </button>
+                                </Card>
+                            </div>
+                        )}
+
                         {/* Posts List */}
                         <div className="feed-post-list">
                             {posts.map(post => {
@@ -728,6 +1124,13 @@ const Feed = () => {
                                             <div className="meta">
                                                 <div className="meta-top">
                                                     <span className="name">{post.author}</span>
+                                                    {post.tagged_pets && post.tagged_pets.length > 0 && (
+                                                        <span className="tagged-info" style={{fontSize: '13px', color: 'var(--text-muted)', marginLeft: '4px'}}>
+                                                            {" with "}
+                                                            <strong style={{color: 'var(--text-main)'}}>{post.tagged_pets[0].name || "a friend"}</strong>
+                                                            {post.tagged_pets.length > 1 && ` and ${post.tagged_pets.length - 1} others`}
+                                                        </span>
+                                                    )}
                                                     <span className="time">{post.time}</span>
                                                 </div>
                                                 <div className="meta-bottom">
@@ -756,7 +1159,15 @@ const Feed = () => {
                                         </div>
                                         {post.hashtags && post.hashtags.length > 0 && (
                                             <div className="hashtags">
-                                                {post.hashtags.map(tag => <span key={tag}>{tag}</span>)}
+                                                {post.hashtags.map(tag => (
+                                                    <span 
+                                                        key={tag} 
+                                                        onClick={(e) => { e.stopPropagation(); setFilterTag(tag.replace('#', '')); }}
+                                                        className="hashtag-pill clickable"
+                                                    >
+                                                        {tag}
+                                                    </span>
+                                                ))}
                                             </div>
                                         )}
                                         {post.video && (
@@ -786,21 +1197,35 @@ const Feed = () => {
                         <Card className="sidebar-card">
                             <div className="sidebar-card__title"><TrendUp /> <span>Trending Tags</span></div>
                             <div className="tag-list">
-                                <div className="tag-row"><span>1&nbsp;&nbsp;#goldenretriever</span> <span className="count">2.4k</span></div>
-                                <div className="tag-row"><span>2&nbsp;&nbsp;#catstagram</span> <span className="count">1.8k</span></div>
-                                <div className="tag-row"><span>3&nbsp;&nbsp;#zoomies</span> <span className="count">980</span></div>
-                                <div className="tag-row"><span>4&nbsp;&nbsp;#adoptdontshop</span> <span className="count">6.3k</span></div>
-                                <div className="tag-row"><span>5&nbsp;&nbsp;#petlife</span> <span className="count">5.6k</span></div>
+                                <div className="tag-row clickable" onClick={() => setFilterTag("springcutest")}>
+                                    <span>1&nbsp;&nbsp;#springcutest</span> <span className="count">NEW</span>
+                                </div>
+                                <div className="tag-row clickable" onClick={() => setFilterTag("goldenretriever")}>
+                                    <span>2&nbsp;&nbsp;#goldenretriever</span> <span className="count">2.4k</span>
+                                </div>
+                                <div className="tag-row clickable" onClick={() => setFilterTag("catstagram")}>
+                                    <span>3&nbsp;&nbsp;#catstagram</span> <span className="count">1.8k</span>
+                                </div>
+                                <div className="tag-row clickable" onClick={() => setFilterTag("zoomies")}>
+                                    <span>4&nbsp;&nbsp;#zoomies</span> <span className="count">980</span>
+                                </div>
+                                <div className="tag-row clickable" onClick={() => setFilterTag("petlife")}>
+                                    <span>5&nbsp;&nbsp;#petlife</span> <span className="count">5.6k</span>
+                                </div>
                             </div>
                         </Card>
 
                         <Card className="sidebar-card">
                             <div className="sidebar-card__title"><Trophy /> <span>Live Contest</span></div>
-                            <div className="live-contest">
+                            <div 
+                                className="live-contest clickable" 
+                                onClick={() => window.location.href = '/badges?enterContest=true'}
+                                style={{ cursor: 'pointer' }}
+                            >
                                 <div className="live-contest__top">
                                     <div>
                                         <div className="contest-name">Spring Cutest Pet</div>
-                                        <div className="contest-sub">Ends in 2 days · 847 entries</div>
+                                        <div className="contest-sub">Ends in 2 days · {contestEntryCount} entries</div>
                                     </div>
                                     <span className="live-pill">LIVE</span>
                                 </div>
@@ -814,19 +1239,25 @@ const Feed = () => {
                         <Card className="sidebar-card">
                             <div className="sidebar-card__title sidebar-card__title--between">
                                 <span className="title-left"><Users /> <span>Suggested Pets</span></span>
-                                <button className="see-all-btn">See all</button>
+                                <button className="see-all-btn" onClick={() => { setIsSeeAllPetsOpen(true); fetchSuggestedPets(true); }}>See all</button>
                             </div>
                             <div className="suggested-users">
-                                <div className="user-row">
-                                    <Avatar src="https://c.animaapp.com/mnucpod10UwxJn/img/ai_4.png" size="md" />
-                                    <div className="info"><span className="name">Luna</span><span className="sub">12 mutuals</span></div>
-                                    <button className="follow-btn">Follow</button>
-                                </div>
-                                <div className="user-row">
-                                    <Avatar src="https://c.animaapp.com/mnucpod10UwxJn/img/ai_3.png" size="md" />
-                                    <div className="info"><span className="name">Buddy</span><span className="sub">8 mutuals</span></div>
-                                    <button className="follow-btn">Follow</button>
-                                </div>
+                                {suggestedPets.length === 0 ? (
+                                    <div className="empty-suggested">No suggestions yet</div>
+                                ) : (
+                                    suggestedPets.slice(0, 3).map(pet => (
+                                        <div className="user-row" key={pet.id}>
+                                            <Avatar src={pet.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_4.png"} size="md" />
+                                            <div className="info"><span className="name">{pet.name}</span><span className="sub">{pet.breed}</span></div>
+                                            <button 
+                                                className={`follow-btn ${pet.is_following ? 'following' : ''}`}
+                                                onClick={() => handleFollow(pet.id)}
+                                            >
+                                                {pet.is_following ? 'Following' : 'Follow'}
+                                            </button>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </Card>
                     </aside>
@@ -847,7 +1278,6 @@ const Feed = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={closeLocationPicker}
                     >
                         <motion.div
                             className="location-picker"
@@ -855,10 +1285,9 @@ const Feed = () => {
                             animate={{ y: 0 }}
                             exit={{ y: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            onClick={(e) => e.stopPropagation()}
                         >
                             <div className="location-picker__header">
-                                <button className="back-btn" onClick={closeLocationPicker}>
+                                <button className="back-btn" onClick={() => setIsLocationPickerOpen(false)}>
                                     <CaretLeft size={24} weight="bold" />
                                 </button>
                                 <h3>Search for location</h3>
@@ -873,20 +1302,11 @@ const Feed = () => {
                                         value={locationSearchQuery}
                                         onChange={(e) => {
                                             setLocationSearchQuery(e.target.value);
-                                            if (e.target.value.trim()) {
-                                                const timeoutId = setTimeout(() => searchLocations(e.target.value), 300);
-                                                return () => clearTimeout(timeoutId);
-                                            }
+                                            searchLocations(e.target.value);
                                         }}
                                     />
                                     {locationSearchQuery && (
-                                        <button
-                                            className="clear-search"
-                                            onClick={() => {
-                                                setLocationSearchQuery("");
-                                                fetchNearbyLocations();
-                                            }}
-                                        >
+                                        <button className="clear-search" onClick={() => setLocationSearchQuery("")}>
                                             <X size={16} />
                                         </button>
                                     )}
@@ -896,26 +1316,13 @@ const Feed = () => {
                             <div className="location-picker__content">
                                 <h4 className="suggested-title">Suggested</h4>
                                 {isLocating ? (
-                                    <div className="loading-locations">
-                                        <span>Finding nearby places...</span>
-                                    </div>
+                                    <div className="loading-locations">Finding nearby places...</div>
                                 ) : (
                                     <div className="locations-list">
                                         {suggestedLocations.map((loc) => (
-                                            <button
-                                                key={loc.id}
-                                                className="location-item"
-                                                onClick={() => selectLocation(loc)}
-                                            >
+                                            <button key={loc.id} className="location-item" onClick={() => { setPostLocation(loc); setIsLocationPickerOpen(false); }}>
                                                 <div className="location-icon">
-                                                    {loc.type === "park" && <span>🏃</span>}
-                                                    {loc.type === "cafe" && <span>☕</span>}
-                                                    {loc.type === "shop" && <span>🛍️</span>}
-                                                    {loc.type === "pin" && <MapPin size={20} weight="fill" />}
-                                                    {loc.type === "city" && <span>🏙️</span>}
-                                                    {loc.type === "school" && <span>🎓</span>}
-                                                    {loc.type === "hospital" && <span>🏥</span>}
-                                                    {loc.type === "hotel" && <span>🏨</span>}
+                                                    <MapPin size={20} weight="fill" />
                                                 </div>
                                                 <div className="location-info">
                                                     <span className="location-name">{loc.name}</span>
@@ -925,6 +1332,122 @@ const Feed = () => {
                                         ))}
                                     </div>
                                 )}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Tag Picker Modal */}
+            <AnimatePresence>
+                {isTagPickerOpen && (
+                    <motion.div
+                        className="location-picker-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <motion.div
+                            className="location-picker"
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        >
+                            <div className="location-picker__header">
+                                <button className="back-btn" onClick={() => setIsTagPickerOpen(false)}>
+                                    <CaretLeft size={24} weight="bold" />
+                                </button>
+                                <h3>Tag people</h3>
+                                <button className="done-btn" onClick={() => setIsTagPickerOpen(false)}>Done</button>
+                            </div>
+
+                            <div className="location-picker__search">
+                                <div className="search-input-wrapper">
+                                    <MagnifyingGlass size={18} weight="bold" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search"
+                                        value={petSearchQuery}
+                                        onChange={(e) => {
+                                            setPetSearchQuery(e.target.value);
+                                            searchPets(e.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="location-picker__content">
+                                <h4 className="suggested-title">SUGGESTIONS</h4>
+                                {isSearchingPets ? (
+                                    <div className="loading-locations">Searching pets...</div>
+                                ) : (
+                                    <div className="locations-list">
+                                        {suggestedPets.map((pet) => (
+                                            <button 
+                                                key={pet.id} 
+                                                className={`location-item pet-item ${taggedPets.some(p => p.id === pet.id) ? 'selected' : ''}`} 
+                                                onClick={() => toggleTagPet(pet)}
+                                            >
+                                                <Avatar src={pet.image_url} size="sm" />
+                                                <div className="location-info">
+                                                    <span className="location-name">{pet.name}</span>
+                                                    <span className="location-sub">{pet.breed}</span>
+                                                </div>
+                                                <div className="selection-indicator">
+                                                    {taggedPets.some(p => p.id === pet.id) && <ShieldCheck size={20} weight="fill" color="#e91e8c" />}
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* See All Pets Modal */}
+            <AnimatePresence>
+                {isSeeAllPetsOpen && (
+                    <motion.div
+                        className="location-picker-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <motion.div
+                            className="location-picker"
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        >
+                            <div className="location-picker__header">
+                                <button className="back-btn" onClick={() => setIsSeeAllPetsOpen(false)}>
+                                    <CaretLeft size={24} weight="bold" />
+                                </button>
+                                <h3>Suggested Pets</h3>
+                            </div>
+
+                            <div className="location-picker__content">
+                                <div className="locations-list">
+                                    {suggestedPets.map((pet) => (
+                                        <div key={pet.id} className="location-item pet-item" style={{ cursor: 'default', display: 'flex', alignItems: 'center' }}>
+                                            <Avatar src={pet.image_url} size="sm" />
+                                            <div className="location-info">
+                                                <span className="location-name">{pet.name}</span>
+                                                <span className="location-sub">{pet.breed}</span>
+                                            </div>
+                                            <button 
+                                                className={`follow-btn ${pet.is_following ? 'following' : ''}`}
+                                                style={{ marginLeft: 'auto', background: pet.is_following ? 'var(--bg-card)' : 'var(--primary-action)', color: pet.is_following ? 'var(--text-main)' : 'white', border: pet.is_following ? '1px solid var(--border-color)' : 'none', padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}
+                                                onClick={() => handleFollow(pet.id)}
+                                            >
+                                                {pet.is_following ? 'Following' : 'Follow'}
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>
