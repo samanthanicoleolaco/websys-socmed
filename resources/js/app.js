@@ -48,6 +48,15 @@ if (container) {
         if (path === '/settings') return <Settings />;
         if (path === '/profile' || path.startsWith('/profile/')) return <Profile />;
         if (path === '/notifications') return <Notifications />;
+        if (path === '/homefeed') return <Feed />;
+
+        // If at root, redirect to /homefeed
+        if (path === '/') {
+            window.history.replaceState(null, '', '/homefeed');
+            return <Feed />;
+        }
+
+        // Catch-all for other protected paths
         return <Feed />;
     };
 

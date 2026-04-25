@@ -111,7 +111,7 @@ const Sidebar = ({ brandText = "Petverse" }) => {
     const unreadCount = notifications.filter((n) => !n.is_read).length;
 
     const navItems = [
-        { icon: <House size={22} />,       label: "Home",          route: "/"             },
+        { icon: <House size={22} />,       label: "Home",          route: "/homefeed"     },
         { icon: <Bell size={22} />,        label: "Notifications", route: "/notifications", isNotifTrigger: true },
         { icon: <ChatCircle size={22} />,  label: "Messages",      route: "/messages"      },
         { icon: <Medal size={22} />,       label: "Badges",        route: "/badges"        },
