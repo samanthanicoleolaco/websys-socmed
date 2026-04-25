@@ -89,7 +89,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount']);
     
     // Story routes
-    Route::apiResource('stories', StoryController::class)->only(['index', 'store', 'destroy']);
+    Route::apiResource('stories', StoryController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('/stories/{story}/archive', [StoryController::class, 'archive']);
     Route::post('/stories/{story}/view', [StoryController::class, 'markAsViewed']);
     

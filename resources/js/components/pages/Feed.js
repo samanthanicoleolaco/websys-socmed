@@ -25,6 +25,10 @@ import {
     CaretLeft,
     MagnifyingGlass,
     Trash,
+    Download,
+    Lock,
+    ShieldCheck,
+    CaretRight,
 } from "@phosphor-icons/react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
@@ -225,7 +229,9 @@ const Feed = () => {
     const [locationSearchQuery, setLocationSearchQuery] = useState("");
     const [suggestedLocations, setSuggestedLocations] = useState([]);
     const [activePost, setActivePost] = useState(null);
+    const [showVisibilitySubmenu, setShowVisibilitySubmenu] = useState(false);
     const privacyMenuRef = useRef(null);
+    const storyMenuRef = useRef(null);
     
     const fileInputRef = useRef(null);
     const imageInputRef = useRef(null);
@@ -237,6 +243,24 @@ const Feed = () => {
     const [postVideo, setPostVideo] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [videoPreview, setVideoPreview] = useState(null);
+
+    // Reset submenu when story menu closes
+    useEffect(() => {
+        if (!showStoryMenu) setShowVisibilitySubmenu(false);
+    }, [showStoryMenu]);
+
+    // Handle click outside for story menu
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (storyMenuRef.current && !storyMenuRef.current.contains(e.target)) {
+                setShowStoryMenu(false);
+            }
+        };
+        if (showStoryMenu) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [showStoryMenu]);
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -408,6 +432,52 @@ const Feed = () => {
         if (videoInputRef.current) videoInputRef.current.value = "";
     };
 
+    const handleDeleteStory = async (id) => {
+        if (!confirm("Are you sure you want to delete this story?")) return;
+        try {
+            await window.axios.delete(`/api/stories/${id}`);
+            setStories(prev => prev.filter(s => s.id !== id));
+            setViewerState(p => ({ ...p, isOpen: false }));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleArchiveStory = async (id) => {
+        try {
+            await window.axios.post(`/api/stories/${id}/archive`);
+            setStories(prev => prev.filter(s => s.id !== id));
+            setViewerState(p => ({ ...p, isOpen: false }));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleUpdateVisibility = async (id, visibility) => {
+        try {
+            await window.axios.patch(`/api/stories/${id}`, { visibility });
+            // Update local state in viewer if needed
+            setViewerState(prev => {
+                const updated = [...prev.userStories];
+                updated[prev.currentIndex] = { ...updated[prev.currentIndex], visibility };
+                return { ...prev, userStories: updated };
+            });
+            setShowStoryMenu(false);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleSaveStory = (story) => {
+        const link = document.createElement('a');
+        link.href = story.media_url;
+        link.download = `petverse-story-${story.id}.${story.media_type === 'video' ? 'mp4' : 'jpg'}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setShowStoryMenu(false);
+    };
+
     const openViewer = (group) => setViewerState({ isOpen: true, userStories: group.stories, currentIndex: 0 });
     const nextStory = () => {
         if (viewerState.currentIndex < viewerState.userStories.length - 1) {
@@ -555,38 +625,89 @@ const Feed = () => {
                             {viewerState.isOpen && (
                                 <div className="story-viewer-v2">
                                     <div className="story-viewer-v2__bg" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))} />
-                                    <div className="story-viewer-v2__main">
+                                    <div className="story-viewer-v2__main" onClick={(e) => e.stopPropagation()}>
+                                        {/* Progress Bars */}
+                                        <div className="story-viewer-v2__progress-bars">
+                                            {viewerState.userStories.map((_, idx) => (
+                                                <div key={idx} className="story-progress-bg">
+                                                    <div 
+                                                        className="story-progress-fill" 
+                                                        style={{ 
+                                                            width: idx < viewerState.currentIndex ? '100%' : (idx === viewerState.currentIndex ? '50%' : '0%') 
+                                                        }} 
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+
                                         <div className="story-viewer-v2__header">
                                             <div className="story-viewer-v2__user">
-                                                <Avatar src={viewerState.userStories[0].user?.avatar_url} size="sm" />
-                                                <span className="name">
-                                                    {user && viewerState.userStories[0].user?.id === user.id ? "Your Story" : (viewerState.userStories[0].user?.pet?.name || viewerState.userStories[0].user?.name)}
-                                                </span>
+                                                <Avatar src={viewerState.userStories[viewerState.currentIndex].user?.avatar_url} size="sm" />
+                                                <div className="user-info">
+                                                    <span className="name">
+                                                        {user && viewerState.userStories[viewerState.currentIndex].user?.id === user.id ? "Your Story" : (viewerState.userStories[viewerState.currentIndex].user?.pet?.name || viewerState.userStories[viewerState.currentIndex].user?.name)}
+                                                    </span>
+                                                    <span className="time">
+                                                        {new Date(viewerState.userStories[viewerState.currentIndex].created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                                                    </span>
+                                                </div>
                                             </div>
                                             <div className="story-viewer-v2__actions">
-                                                {user && viewerState.userStories[0].user?.id === user.id && (
-                                                    <div className="story-options-trigger">
-                                                        <button className="dots-btn" onClick={() => setShowStoryMenu(!showStoryMenu)}><DotsThree size={24} weight="bold" /></button>
+                                                {user && viewerState.userStories[viewerState.currentIndex].user?.id === user.id && (
+                                                    <div className="story-options-trigger" ref={storyMenuRef}>
+                                                        <button className="dots-btn" onClick={() => setShowStoryMenu(!showStoryMenu)}>
+                                                            <DotsThree size={24} weight="bold" />
+                                                        </button>
                                                         <AnimatePresence>
                                                             {showStoryMenu && (
                                                                 <motion.div 
                                                                     className="story-menu"
-                                                                    initial={{ opacity: 0, y: 10 }}
-                                                                    animate={{ opacity: 1, y: 0 }}
-                                                                    exit={{ opacity: 0, y: 10 }}
+                                                                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                                                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
                                                                 >
-                                                                    <button onClick={() => handleDeleteStory(viewerState.userStories[viewerState.currentIndex].id)}>
-                                                                        <Trash size={16} /> Delete Story
-                                                                    </button>
-                                                                    <button onClick={() => handleArchiveStory(viewerState.userStories[viewerState.currentIndex].id)}>
-                                                                        <Bookmark size={16} /> Archive Story
-                                                                    </button>
+                                                                    {!showVisibilitySubmenu ? (
+                                                                        <>
+                                                                            <button onClick={() => handleDeleteStory(viewerState.userStories[viewerState.currentIndex].id)} className="delete">
+                                                                                <Trash size={18} /> <span>Delete Story</span>
+                                                                            </button>
+                                                                            <button onClick={() => handleArchiveStory(viewerState.userStories[viewerState.currentIndex].id)}>
+                                                                                <Bookmark size={18} /> <span>Archive</span>
+                                                                            </button>
+                                                                            <button onClick={() => handleSaveStory(viewerState.userStories[viewerState.currentIndex])}>
+                                                                                <Download size={18} /> <span>Save</span>
+                                                                            </button>
+                                                                            <button onClick={() => setShowVisibilitySubmenu(true)} className="has-submenu">
+                                                                                <ShieldCheck size={18} /> <span>Who can see this</span> <CaretRight size={14} />
+                                                                            </button>
+                                                                        </>
+                                                                    ) : (
+                                                                        <div className="visibility-submenu">
+                                                                            <button className="submenu-header" onClick={() => setShowVisibilitySubmenu(false)}>
+                                                                                <CaretLeft size={14} /> <span>Back</span>
+                                                                            </button>
+                                                                            <button 
+                                                                                onClick={() => handleUpdateVisibility(viewerState.userStories[viewerState.currentIndex].id, 'public')}
+                                                                                className={viewerState.userStories[viewerState.currentIndex].visibility === 'public' ? 'active' : ''}
+                                                                            >
+                                                                                <Globe size={18} /> <span>Public</span>
+                                                                            </button>
+                                                                            <button 
+                                                                                onClick={() => handleUpdateVisibility(viewerState.userStories[viewerState.currentIndex].id, 'followers')}
+                                                                                className={viewerState.userStories[viewerState.currentIndex].visibility === 'followers' ? 'active' : ''}
+                                                                            >
+                                                                                <Lock size={18} /> <span>Followers only</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    )}
                                                                 </motion.div>
                                                             )}
                                                         </AnimatePresence>
                                                     </div>
                                                 )}
-                                                <button className="close" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))}><X /></button>
+                                                <button className="close-btn" onClick={() => setViewerState(p => ({ ...p, isOpen: false }))}>
+                                                    <X size={20} weight="bold" />
+                                                </button>
                                             </div>
                                         </div>
                                         <div className="story-viewer-v2__body">
