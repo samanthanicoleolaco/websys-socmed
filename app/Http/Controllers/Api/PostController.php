@@ -66,8 +66,8 @@ class PostController extends Controller
         if (!$pet) {
             $pet = Pet::create([
                 'user_id' => $user->id,
-                'name' => $user->name . "'s Pet",
-                'breed' => 'Golden Retriever', // Default fallback
+                'name' => 'Pet',
+                'breed' => 'Golden Retriever',
                 'age' => 2,
                 'bio' => 'A happy pet on Petverse!',
             ]);

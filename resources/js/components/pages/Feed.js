@@ -115,7 +115,90 @@ const PostMenu = ({ postId }) => {
 
 // ── Feed Component ─────────────────────────────────────────────────────
 
+const PostLikesModal = ({ postId, onClose }) => {
+    const [likes, setLikes] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchLikes = async () => {
+            try {
+                const res = await window.axios.get(`/api/posts/${postId}/likes`);
+                setLikes(res.data.data || res.data || []);
+            } catch (err) { console.error(err); } finally { setLoading(false); }
+        };
+        fetchLikes();
+    }, [postId]);
+
+    return (
+        <div className="location-picker-overlay" style={{ zIndex: 1100 }}>
+            <motion.div 
+                className="location-picker" 
+                style={{ maxWidth: '400px', height: '500px' }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+            >
+                <div className="location-picker__header">
+                    <button className="back-btn" onClick={onClose}><CaretLeft size={24} /></button>
+                    <h3>Likes</h3>
+                </div>
+                <div className="location-picker__content" style={{ padding: '0' }}>
+                    {loading ? <div className="loading-locations">Loading...</div> : (
+                        <div className="locations-list">
+                            {likes.length === 0 ? <div className="loading-locations">No likes yet.</div> : 
+                                likes.map((u) => (
+                                    <div key={u.id} className="location-item" style={{ cursor: 'default' }}>
+                                        <Avatar src={u.avatar} size="sm" />
+                                        <div className="location-info">
+                                            <span className="location-name">{u.name}</span>
+                                            <span className="location-sub">@{u.name.toLowerCase().replace(/\s+/g, '')}</span>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    )}
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
 const PostModal = ({ post, onClose, onLike }) => {
+    const [commentText, setCommentText] = useState("");
+    const [comments, setComments] = useState([]);
+    const [isPostingComment, setIsPostingComment] = useState(false);
+    const [showLikesModal, setShowLikesModal] = useState(false);
+
+    useEffect(() => {
+        if (post) fetchComments();
+    }, [post]);
+
+    const fetchComments = async () => {
+        try {
+            const res = await window.axios.get(`/api/posts/${post.id}/comments`);
+            setComments(res.data.data || res.data || []);
+        } catch (err) { console.error(err); }
+    };
+
+    const handleCommentSubmit = async () => {
+        if (!commentText.trim() || isPostingComment) return;
+        setIsPostingComment(true);
+        try {
+            const res = await window.axios.post('/api/comments', {
+                post_id: post.id,
+                pet_id: window.userPetId || 1, // Fallback for testing, should use real pet ID
+                content: commentText
+            });
+            setComments([res.data, ...comments]);
+            setCommentText("");
+        } catch (err) {
+            console.error(err);
+            alert("Failed to post comment.");
+        } finally {
+            setIsPostingComment(false);
+        }
+    };
+
     if (!post) return null;
     return (
         <div className="post-modal-overlay">
@@ -174,10 +257,29 @@ const PostModal = ({ post, onClose, onLike }) => {
                             </div>
                         </div>
                         <div className="post-modal-comments">
-                            <div className="empty-state">
-                                <span>No comments yet.</span>
-                                <span>Start the conversation.</span>
-                            </div>
+                            {comments.length === 0 ? (
+                                <div className="empty-state">
+                                    <span>No comments yet.</span>
+                                    <span>Start the conversation.</span>
+                                </div>
+                            ) : (
+                                comments.map(c => (
+                                    <div key={c.id} className="comment-item" style={{ display: 'flex', gap: '12px', marginBottom: '16px', padding: '0 4px' }}>
+                                        <Avatar src={c.pet?.photo_url} size="sm" />
+                                        <div className="comment-content">
+                                            <div style={{ background: 'var(--bg-page)', padding: '8px 12px', borderRadius: '12px' }}>
+                                                <span className="author-name" style={{ fontWeight: '700', fontSize: '13px', marginRight: '6px' }}>{c.pet?.name || 'User'}</span>
+                                                <span className="text" style={{ fontSize: '13px', color: 'var(--text-main)' }}>{c.content}</span>
+                                            </div>
+                                            <div className="comment-meta" style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '11px', color: 'var(--text-muted)', paddingLeft: '8px' }}>
+                                                <span>Just now</span>
+                                                <button style={{ background: 'none', border: 'none', color: 'inherit', fontWeight: '600', cursor: 'pointer' }}>Like</button>
+                                                <button style={{ background: 'none', border: 'none', color: 'inherit', fontWeight: '600', cursor: 'pointer' }}>Reply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
 
@@ -198,12 +300,27 @@ const PostModal = ({ post, onClose, onLike }) => {
                                 <Bookmark size={24} />
                             </button>
                         </div>
-                        <div className="likes-count">{post.likes} likes</div>
+                        <div className="likes-count" onClick={() => setShowLikesModal(true)} style={{ cursor: 'pointer', fontWeight: '700' }}>
+                            {post.likes} likes
+                        </div>
                         <div className="add-comment">
-                            <input type="text" placeholder="Add a comment..." />
-                            <button className="post-btn">Post</button>
+                            <input 
+                                type="text" 
+                                placeholder="Add a comment..." 
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
+                            />
+                            <button 
+                                className="post-btn" 
+                                onClick={handleCommentSubmit}
+                                disabled={!commentText.trim() || isPostingComment}
+                            >
+                                {isPostingComment ? '...' : 'Post'}
+                            </button>
                         </div>
                     </div>
+                    {showLikesModal && <PostLikesModal postId={post.id} onClose={() => setShowLikesModal(false)} />}
                 </div>
             </motion.div>
         </div>
