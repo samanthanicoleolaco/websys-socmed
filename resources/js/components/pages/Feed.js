@@ -452,7 +452,7 @@ const Feed = () => {
         // If user has no pet, we might need to refresh user or show a better message
         const currentPetId = user?.pet?.id;
         if (!currentPetId) {
-            alert("Please save your pet profile in Settings before following others.");
+            alert("Please save your pet info in Settings before following others.");
             return;
         }
         try {

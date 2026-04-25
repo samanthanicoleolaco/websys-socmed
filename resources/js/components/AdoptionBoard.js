@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, MapPin, PawPrint, X } from "@phosphor-icons/react";
+import { Heart, MapPin, PawPrint, Plus, X } from "@phosphor-icons/react";
 import Sidebar from "./pages/Sidebar";
 import "../../sass/pages/adoption.scss";
 
@@ -110,6 +110,8 @@ const AdoptionBoard = () => {
     const [selectedPet, setSelectedPet] = useState(null);
     const [adoptFormPet, setAdoptFormPet] = useState(null);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [putForAdoptionOpen, setPutForAdoptionOpen] = useState(false);
+    const [putFormSubmitted, setPutFormSubmitted] = useState(false);
 
     const toggleSave = (id) => {
         setPets((prev) =>
@@ -124,6 +126,15 @@ const AdoptionBoard = () => {
             setAdoptFormPet(null);
             setFormSubmitted(false);
             setSelectedPet(null);
+        }, 2000);
+    };
+
+    const handlePutSubmit = (e) => {
+        e.preventDefault();
+        setPutFormSubmitted(true);
+        setTimeout(() => {
+            setPutForAdoptionOpen(false);
+            setPutFormSubmitted(false);
         }, 2000);
     };
 
@@ -143,6 +154,10 @@ const AdoptionBoard = () => {
                             Browse our lovable pets waiting for a forever home.
                         </p>
                     </div>
+                    <Button variant="default" onClick={() => setPutForAdoptionOpen(true)}>
+                        <Plus size={18} weight="bold" />
+                        Pet for Adoption
+                    </Button>
                 </div>
 
                 {/* Grid */}
@@ -314,6 +329,79 @@ const AdoptionBoard = () => {
                                         <div className="adopt-form__actions">
                                             <Button variant="outline" type="button" onClick={() => setAdoptFormPet(null)}>Cancel</Button>
                                             <Button variant="default" type="submit">Submit Application</Button>
+                                        </div>
+                                    </form>
+                                )}
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+
+            {/* Put for Adoption Modal */}
+            <AnimatePresence>
+                {putForAdoptionOpen && (
+                    <div className="adopt-modal-overlay" onClick={() => setPutForAdoptionOpen(false)}>
+                        <motion.div
+                            className="adopt-modal adopt-modal--form"
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="adopt-modal__header-bar">
+                                <h3>List Pet for Adoption</h3>
+                                <button className="adopt-modal__close-alt" onClick={() => setPutForAdoptionOpen(false)}>
+                                    <X size={20} />
+                                </button>
+                            </div>
+                            <div className="adopt-modal__form-content">
+                                {putFormSubmitted ? (
+                                    <div className="adopt-modal__success">
+                                        <div className="adopt-modal__success-icon"><PawPrint size={40} weight="fill" color="#ef4444" /></div>
+                                        <h4>Listing Created!</h4>
+                                        <p>Your pet has been successfully listed for adoption. We'll help find them a loving home!</p>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={handlePutSubmit} className="adopt-form">
+                                        <p className="adopt-form__desc">Fill out the details below to list your pet for adoption. Make sure to provide accurate information.</p>
+                                        
+                                        <div className="adopt-form__row">
+                                            <div className="adopt-form__group">
+                                                <label>Pet Name</label>
+                                                <input type="text" required placeholder="e.g. Buddy" />
+                                            </div>
+                                            <div className="adopt-form__group">
+                                                <label>Pet Type/Breed</label>
+                                                <input type="text" required placeholder="e.g. Golden Retriever" />
+                                            </div>
+                                        </div>
+
+                                        <div className="adopt-form__row">
+                                            <div className="adopt-form__group">
+                                                <label>Age</label>
+                                                <input type="text" required placeholder="e.g. 2 years" />
+                                            </div>
+                                            <div className="adopt-form__group">
+                                                <label>Location</label>
+                                                <input type="text" required placeholder="e.g. San Francisco, CA" />
+                                            </div>
+                                        </div>
+
+                                        <div className="adopt-form__group">
+                                            <label>Description</label>
+                                            <textarea required placeholder="Tell potential adopters about your pet's personality, habits, and needs..." rows={4}></textarea>
+                                        </div>
+
+                                        <div className="adopt-form__group">
+                                            <label>Pet Image URL</label>
+                                            <input type="url" placeholder="https://example.com/pet-image.jpg" />
+                                            <span className="adopt-form__hint">For now, please provide a direct link to an image.</span>
+                                        </div>
+                                        
+                                        <div className="adopt-form__actions">
+                                            <Button variant="outline" type="button" onClick={() => setPutForAdoptionOpen(null)}>Cancel</Button>
+                                            <Button variant="default" type="submit">Create Listing</Button>
                                         </div>
                                     </form>
                                 )}

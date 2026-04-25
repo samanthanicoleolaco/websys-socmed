@@ -385,46 +385,48 @@ const Messages = () => {
                         onClick={() => setShowGroupModal(false)}
                     >
                         <motion.div
-                            className="msg-group-modal"
+                            className="pv-msg-modal"
                             initial={{ scale: 0.94, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.94, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
+                            style={{ display: 'flex', flexDirection: 'column' }}
                         >
-                            <div className="msg-group-modal__header">
+                            <div className="pv-msg-modal__header">
                                 <h3>New message</h3>
                                 <button className="msg-icon-btn" onClick={() => setShowGroupModal(false)}>
                                     <X size={20} />
                                 </button>
                             </div>
                             
-                            <div className="msg-group-modal__search-to">
+                            <div className="pv-msg-modal__search-to" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <span className="to-label">To:</span>
                                 <input
-                                    className="msg-group-modal__search-input"
+                                    className="pv-msg-modal__search-input"
                                     placeholder="Search..."
                                     value={groupName}
                                     onChange={(e) => setGroupName(e.target.value)}
+                                    style={{ flex: 1, width: '100%' }}
                                 />
                             </div>
 
-                            <div className="msg-group-modal__body">
-                                <p className="msg-group-modal__section-label">Suggested</p>
-                                <div className="msg-group-modal__member-list">
+                            <div className="pv-msg-modal__body" style={{ display: 'flex', flexDirection: 'column' }}>
+                                <p className="pv-msg-modal__section-label">Suggested</p>
+                                <div className="pv-msg-modal__member-list" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                     {groupMembers.map((m) => {
                                         const isSelected = selectedMembers.includes(m.id);
                                         return (
                                             <button
                                                 key={m.id}
-                                                className={`msg-group-modal__member ${isSelected ? "msg-group-modal__member--selected" : ""}`}
+                                                className={`pv-msg-modal__member ${isSelected ? "pv-msg-modal__member--selected" : ""}`}
                                                 onClick={() => toggleMember(m.id)}
                                             >
                                                 <Avatar fallback={m.initial} size="md" color={m.color} />
-                                                <div className="msg-group-modal__member-info">
+                                                <div className="pv-msg-modal__member-info">
                                                     <span className="member-name">{m.name}</span>
                                                     <span className="member-username">{m.name.toLowerCase().replace(/\s+/g, '')}</span>
                                                 </div>
-                                                <div className={`msg-group-modal__member-radio ${isSelected ? 'selected' : ''}`}>
+                                                <div className={`pv-msg-modal__member-radio ${isSelected ? 'selected' : ''}`}>
                                                     {isSelected && <div className="radio-inner" />}
                                                 </div>
                                             </button>
@@ -432,9 +434,9 @@ const Messages = () => {
                                     })}
                                 </div>
                             </div>
-                            <div className="msg-group-modal__footer">
+                            <div className="pv-msg-modal__footer">
                                 <button
-                                    className={`msg-group-modal__create-btn ${selectedMembers.length > 0 ? "msg-group-modal__create-btn--enabled" : ""}`}
+                                    className={`pv-msg-modal__create-btn ${selectedMembers.length > 0 ? "pv-msg-modal__create-btn--enabled" : ""}`}
                                     disabled={!selectedMembers.length}
                                 >
                                     Chat

@@ -346,11 +346,11 @@ const Settings = () => {
                     </div>
                 </div>
 
-                {/* Pet Profile Section */}
+                {/* Pet Info Section */}
                 <div className="pet-profile-section">
                     <div className="section-title">
                         <PawPrint size={18} weight="fill" />
-                        <span>Pet Profile</span>
+                        <span>Pet Info</span>
                     </div>
                     <div className="section-divider" />
                     
@@ -459,7 +459,7 @@ const Settings = () => {
                 <div className="privacy-list">
                     <div className="privacy-item">
                         <div className="privacy-text">
-                            <h4>Public pet profile</h4>
+                            <h4>Public pet info</h4>
                             <p>Anyone can view your pet's profile and posts</p>
                         </div>
                         <Switch checked={privacy.publicProfile} onCheckedChange={(v) => setPrivacy({...privacy, publicProfile: v})} />

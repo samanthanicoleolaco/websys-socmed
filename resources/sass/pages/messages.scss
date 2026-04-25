@@ -56,10 +56,6 @@
         background: var(--success);
         border: 2px solid var(--bg-card);
     }
-
-    &--online::after {
-        content: '';
-    }
 }
 
 // ── Icon Button ───────────────────────────────────────────────────────
@@ -689,7 +685,7 @@
     z-index: 3000;
 }
 
-.msg-group-modal {
+.pv-msg-modal {
     background: var(--bg-card);
     border-radius: 20px;
     width: 100%;
@@ -721,6 +717,7 @@
         display: flex;
         flex-direction: column;
         gap: 14px;
+        overflow-y: auto;
     }
 
     &__search-to {

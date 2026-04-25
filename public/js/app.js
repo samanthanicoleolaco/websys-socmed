@@ -3456,10 +3456,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Heart.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MapPin.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
-/* harmony import */ var _pages_Sidebar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/Sidebar */ "./resources/js/components/pages/Sidebar.js");
-/* harmony import */ var _sass_pages_adoption_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../sass/pages/adoption.scss */ "./resources/sass/pages/adoption.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
+/* harmony import */ var _pages_Sidebar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/Sidebar */ "./resources/js/components/pages/Sidebar.js");
+/* harmony import */ var _sass_pages_adoption_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../sass/pages/adoption.scss */ "./resources/sass/pages/adoption.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["children", "className", "variant"];
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -3487,7 +3488,7 @@ var Card = function Card(_ref) {
   var children = _ref.children,
     _ref$className = _ref.className,
     className = _ref$className === void 0 ? "" : _ref$className;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
     className: "adopt-card ".concat(className),
     children: children
   });
@@ -3499,7 +3500,7 @@ var Button = function Button(_ref2) {
     _ref2$variant = _ref2.variant,
     variant = _ref2$variant === void 0 ? "default" : _ref2$variant,
     props = _objectWithoutProperties(_ref2, _excluded);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", _objectSpread(_objectSpread({
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", _objectSpread(_objectSpread({
     className: "adopt-btn adopt-btn--".concat(variant, " ").concat(className)
   }, props), {}, {
     children: children
@@ -3509,7 +3510,7 @@ var Badge = function Badge(_ref3) {
   var children = _ref3.children,
     _ref3$className = _ref3.className,
     className = _ref3$className === void 0 ? "" : _ref3$className;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
     className: "adopt-badge ".concat(className),
     children: children
   });
@@ -3604,6 +3605,14 @@ var AdoptionBoard = function AdoptionBoard() {
     _useState8 = _slicedToArray(_useState7, 2),
     formSubmitted = _useState8[0],
     setFormSubmitted = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    putForAdoptionOpen = _useState0[0],
+    setPutForAdoptionOpen = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState10 = _slicedToArray(_useState1, 2),
+    putFormSubmitted = _useState10[0],
+    setPutFormSubmitted = _useState10[1];
   var toggleSave = function toggleSave(id) {
     setPets(function (prev) {
       return prev.map(function (pet) {
@@ -3622,30 +3631,47 @@ var AdoptionBoard = function AdoptionBoard() {
       setSelectedPet(null);
     }, 2000);
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+  var handlePutSubmit = function handlePutSubmit(e) {
+    e.preventDefault();
+    setPutFormSubmitted(true);
+    setTimeout(function () {
+      setPutForAdoptionOpen(false);
+      setPutFormSubmitted(false);
+    }, 2000);
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
     className: "adoption-page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Sidebar__WEBPACK_IMPORTED_MODULE_7__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("main", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Sidebar__WEBPACK_IMPORTED_MODULE_8__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("main", {
       className: "adoption-main",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
         className: "adoption-header",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
           className: "adoption-header__text",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("h1", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("h1", {
             className: "adoption-header__title",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.PawPrint, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.PawPrint, {
               size: 32,
               weight: "fill",
               className: "adoption-header__icon"
             }), "Find Your Perfect Companion"]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
             className: "adoption-header__subtitle",
             children: "Browse our lovable pets waiting for a forever home."
           })]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(Button, {
+          variant: "default",
+          onClick: function onClick() {
+            return setPutForAdoptionOpen(true);
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Plus, {
+            size: 18,
+            weight: "bold"
+          }), "Pet for Adoption"]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
         className: "adoption-grid",
         children: pets.map(function (pet) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
             initial: {
               opacity: 0,
               y: 20
@@ -3658,69 +3684,69 @@ var AdoptionBoard = function AdoptionBoard() {
               duration: 0.3,
               delay: pet.id * 0.05
             },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(Card, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(Card, {
               className: "pet-card",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                 className: "pet-card__image-wrap",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("img", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("img", {
                   src: pet.image,
                   alt: pet.imageAlt,
                   className: "pet-card__image"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
                   className: "pet-card__save-btn ".concat(pet.saved ? "pet-card__save-btn--saved" : ""),
                   onClick: function onClick() {
                     return toggleSave(pet.id);
                   },
                   "aria-label": pet.saved ? "Unsave pet" : "Save pet",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
                     size: 20,
                     weight: pet.saved ? "fill" : "regular"
                   })
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                 className: "pet-card__content",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                   className: "pet-card__header",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h2", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h2", {
                       className: "pet-card__name",
                       children: pet.name
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
                       className: "pet-card__breed",
                       children: pet.breed
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Badge, {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
                     className: "pet-card__age",
                     children: pet.age
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
                   className: "pet-card__description",
                   children: pet.description
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                   className: "pet-card__location",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.MapPin, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.MapPin, {
                     size: 14
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
                     children: pet.location
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
                   className: "pet-card__tags",
                   children: pet.tags.map(function (tag) {
-                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Badge, {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
                       className: "pet-card__tag",
                       children: tag
                     }, tag);
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                   className: "pet-card__actions",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Button, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
                     variant: "outline",
                     className: "pet-card__btn",
                     onClick: function onClick() {
                       return setSelectedPet(pet);
                     },
                     children: "Learn More"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Button, {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
                     variant: "default",
                     className: "pet-card__btn",
                     onClick: function onClick() {
@@ -3734,13 +3760,13 @@ var AdoptionBoard = function AdoptionBoard() {
           }, pet.id);
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: selectedPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: selectedPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
         className: "adopt-modal-overlay",
         onClick: function onClick() {
           return setSelectedPet(null);
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "adopt-modal",
           initial: {
             scale: 0.95,
@@ -3757,60 +3783,60 @@ var AdoptionBoard = function AdoptionBoard() {
           onClick: function onClick(e) {
             return e.stopPropagation();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
             className: "adopt-modal__image-wrap",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("img", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("img", {
               src: selectedPet.image,
               alt: selectedPet.imageAlt,
               className: "adopt-modal__image"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
               className: "adopt-modal__close",
               onClick: function onClick() {
                 return setSelectedPet(null);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.X, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.X, {
                 size: 20
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
             className: "adopt-modal__content",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
               className: "adopt-modal__header",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h2", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h2", {
                 className: "adopt-modal__name",
                 children: selectedPet.name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Badge, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
                 className: "adopt-modal__age",
                 children: selectedPet.age
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
               className: "adopt-modal__breed",
               children: selectedPet.breed
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
               className: "adopt-modal__location",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.MapPin, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.MapPin, {
                 size: 16
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
                 children: selectedPet.location
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
               className: "adopt-modal__section",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("h3", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("h3", {
                 children: ["About ", selectedPet.name]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
                 children: selectedPet.description
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
               className: "adopt-modal__tags",
               children: selectedPet.tags.map(function (tag) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Badge, {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
                   className: "adopt-modal__tag",
                   children: tag
                 }, tag);
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
               className: "adopt-modal__actions",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Button, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
                 variant: "default",
                 className: "adopt-modal__btn",
                 onClick: function onClick() {
@@ -3822,13 +3848,13 @@ var AdoptionBoard = function AdoptionBoard() {
           })]
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: adoptFormPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: adoptFormPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
         className: "adopt-modal-overlay",
         onClick: function onClick() {
           return setAdoptFormPet(null);
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "adopt-modal adopt-modal--form",
           initial: {
             scale: 0.95,
@@ -3845,90 +3871,229 @@ var AdoptionBoard = function AdoptionBoard() {
           onClick: function onClick(e) {
             return e.stopPropagation();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
             className: "adopt-modal__header-bar",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("h3", {
               children: ["Adopt ", adoptFormPet.name]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
               className: "adopt-modal__close-alt",
               onClick: function onClick() {
                 return setAdoptFormPet(null);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.X, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.X, {
                 size: 20
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
             className: "adopt-modal__form-content",
-            children: formSubmitted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            children: formSubmitted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
               className: "adopt-modal__success",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
                 className: "adopt-modal__success-icon",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
                   size: 40,
                   weight: "fill",
                   color: "#ef4444"
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h4", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h4", {
                 children: "Application Submitted!"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("p", {
                 children: ["Thank you! Our team will review your application for ", adoptFormPet.name, " and get back to you soon."]
               })]
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("form", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("form", {
               onSubmit: handleAdoptSubmit,
               className: "adopt-form",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("p", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("p", {
                 className: "adopt-form__desc",
                 children: ["Please provide some details so we can process your adoption application for ", adoptFormPet.name, "."]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
                   children: "Full Name"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
                   type: "text",
                   required: true,
                   placeholder: "John Doe"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
                   children: "Email Address"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
                   type: "email",
                   required: true,
                   placeholder: "john@example.com"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
                   children: "Phone Number"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
                   type: "tel",
                   required: true,
                   placeholder: "(555) 123-4567"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
                   children: "Why are you a good fit?"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("textarea", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("textarea", {
                   required: true,
                   placeholder: "Tell us why you'd be a great parent for ".concat(adoptFormPet.name, "..."),
                   rows: 3
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
                 className: "adopt-form__actions",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Button, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
                   variant: "outline",
                   type: "button",
                   onClick: function onClick() {
                     return setAdoptFormPet(null);
                   },
                   children: "Cancel"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Button, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
                   variant: "default",
                   type: "submit",
                   children: "Submit Application"
+                })]
+              })]
+            })
+          })]
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: putForAdoptionOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+        className: "adopt-modal-overlay",
+        onClick: function onClick() {
+          return setPutForAdoptionOpen(false);
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          className: "adopt-modal adopt-modal--form",
+          initial: {
+            scale: 0.95,
+            opacity: 0
+          },
+          animate: {
+            scale: 1,
+            opacity: 1
+          },
+          exit: {
+            scale: 0.95,
+            opacity: 0
+          },
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+            className: "adopt-modal__header-bar",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h3", {
+              children: "List Pet for Adoption"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
+              className: "adopt-modal__close-alt",
+              onClick: function onClick() {
+                return setPutForAdoptionOpen(false);
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.X, {
+                size: 20
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+            className: "adopt-modal__form-content",
+            children: putFormSubmitted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              className: "adopt-modal__success",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+                className: "adopt-modal__success-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.PawPrint, {
+                  size: 40,
+                  weight: "fill",
+                  color: "#ef4444"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h4", {
+                children: "Listing Created!"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+                children: "Your pet has been successfully listed for adoption. We'll help find them a loving home!"
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("form", {
+              onSubmit: handlePutSubmit,
+              className: "adopt-form",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+                className: "adopt-form__desc",
+                children: "Fill out the details below to list your pet for adoption. Make sure to provide accurate information."
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                className: "adopt-form__row",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                  className: "adopt-form__group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                    children: "Pet Name"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                    type: "text",
+                    required: true,
+                    placeholder: "e.g. Buddy"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                  className: "adopt-form__group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                    children: "Pet Type/Breed"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                    type: "text",
+                    required: true,
+                    placeholder: "e.g. Golden Retriever"
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                className: "adopt-form__row",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                  className: "adopt-form__group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                    children: "Age"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                    type: "text",
+                    required: true,
+                    placeholder: "e.g. 2 years"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                  className: "adopt-form__group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                    children: "Location"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                    type: "text",
+                    required: true,
+                    placeholder: "e.g. San Francisco, CA"
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                className: "adopt-form__group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                  children: "Description"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("textarea", {
+                  required: true,
+                  placeholder: "Tell potential adopters about your pet's personality, habits, and needs...",
+                  rows: 4
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                className: "adopt-form__group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                  children: "Pet Image URL"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                  type: "url",
+                  placeholder: "https://example.com/pet-image.jpg"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
+                  className: "adopt-form__hint",
+                  children: "For now, please provide a direct link to an image."
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                className: "adopt-form__actions",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                  variant: "outline",
+                  type: "button",
+                  onClick: function onClick() {
+                    return setPutForAdoptionOpen(null);
+                  },
+                  children: "Cancel"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                  variant: "default",
+                  type: "submit",
+                  children: "Create Listing"
                 })]
               })]
             })
@@ -4607,7 +4772,11 @@ var Settings = function Settings() {
             return axios__WEBPACK_IMPORTED_MODULE_21___default().post('/api/user/update', {
               name: user.displayName,
               location: user.location,
-              bio: user.bio
+              bio: user.bio,
+              petName: user.petName,
+              breed: user.breed,
+              age: user.age,
+              petBio: user.petBio
             });
           case 1:
             alert('Account settings updated successfully!');
@@ -4845,7 +5014,7 @@ var Settings = function Settings() {
               size: 18,
               weight: "fill"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("span", {
-              children: "Pet Profile"
+              children: "Pet Info"
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
             className: "section-divider"
@@ -5014,7 +5183,7 @@ var Settings = function Settings() {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
               className: "privacy-text",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("h4", {
-                children: "Public pet profile"
+                children: "Public pet info"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("p", {
                 children: "Anyone can view your pet's profile and posts"
               })]
@@ -6274,7 +6443,7 @@ var ContestEntryModal = function ContestEntryModal(_ref) {
             _context.p = 4;
             _t = _context.v;
             console.error(_t);
-            alert(((_err$response = _t.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || "Failed to submit entry. Make sure you have a pet profile.");
+            alert(((_err$response = _t.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || "Failed to submit entry. Make sure you have your pet info filled out.");
           case 5:
             _context.p = 5;
             setIsSubmitting(false);
@@ -7372,7 +7541,9 @@ var Feed = function Feed() {
                 video: p.video_url || null,
                 likes: Array.isArray(p.likes) ? p.likes.length : p.likes_count || p.like_count || 0,
                 comments: Array.isArray(p.comments) ? p.comments.length : p.comments_count || p.comment_count || 0,
-                isLiked: false
+                isLiked: false,
+                privacy: p.privacy || 'public',
+                tagged_pets: p.tagged_pets || []
               };
             });
             setPosts(mappedPosts);
@@ -7627,10 +7798,9 @@ var Feed = function Feed() {
           case 4:
             data = _context6.v;
             results = data.map(function (item, index) {
-              var _item$namedetails;
               return {
                 id: item.place_id || index + 1,
-                name: ((_item$namedetails = item.namedetails) === null || _item$namedetails === void 0 ? void 0 : _item$namedetails.name) || item.name || item.display_name.split(",")[0],
+                name: item.display_name.split(",").slice(0, 2).join(", "),
                 sub: item.display_name,
                 type: "pin",
                 lat: item.lat,
@@ -7659,10 +7829,16 @@ var Feed = function Feed() {
   }();
   var fetchSuggestedPets = /*#__PURE__*/function () {
     var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
-      var _res$data2, res, data, _t6;
+      var isSeeAll,
+        _res$data2,
+        res,
+        data,
+        _args7 = arguments,
+        _t6;
       return _regenerator().w(function (_context7) {
         while (1) switch (_context7.p = _context7.n) {
           case 0:
+            isSeeAll = _args7.length > 0 && _args7[0] !== undefined ? _args7[0] : false;
             setIsSearchingPets(true);
             _context7.p = 1;
             _context7.n = 2;
@@ -7670,7 +7846,11 @@ var Feed = function Feed() {
           case 2:
             res = _context7.v;
             data = ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.data) || res.data || [];
-            setSuggestedPets(data.slice(0, 5));
+            if (isSeeAll) {
+              setSuggestedPets(data);
+            } else {
+              setSuggestedPets(data.slice(0, 5));
+            }
             _context7.n = 4;
             break;
           case 3:
@@ -7757,15 +7937,17 @@ var Feed = function Feed() {
   var handleFollow = /*#__PURE__*/function () {
     var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(followingPetId) {
       var _user$pet;
-      var _t8;
+      var currentPetId, _t8;
       return _regenerator().w(function (_context9) {
         while (1) switch (_context9.p = _context9.n) {
           case 0:
-            if (user !== null && user !== void 0 && (_user$pet = user.pet) !== null && _user$pet !== void 0 && _user$pet.id) {
+            // If user has no pet, we might need to refresh user or show a better message
+            currentPetId = user === null || user === void 0 || (_user$pet = user.pet) === null || _user$pet === void 0 ? void 0 : _user$pet.id;
+            if (currentPetId) {
               _context9.n = 1;
               break;
             }
-            alert("You need a pet profile to follow others.");
+            alert("Please save your pet info in Settings before following others.");
             return _context9.a(2);
           case 1:
             _context9.p = 1;
@@ -8062,7 +8244,7 @@ var Feed = function Feed() {
   });
   var submitPost = /*#__PURE__*/function () {
     var _ref16 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11() {
-      var trimmed, _createdPost$pet, _createdPost$pet2, _createdPost$pet3, formData, res, createdPost, mapped;
+      var trimmed, _createdPost$pet, _createdPost$pet2, _createdPost$pet3, _createdPost$caption, formData, res, createdPost, mapped, _countRes$data, countRes, _err$response, message, _t10;
       return _regenerator().w(function (_context11) {
         while (1) switch (_context11.p = _context11.n) {
           case 0:
@@ -8107,7 +8289,7 @@ var Feed = function Feed() {
               avatar: ((_createdPost$pet3 = createdPost.pet) === null || _createdPost$pet3 === void 0 ? void 0 : _createdPost$pet3.image_url) || (user === null || user === void 0 ? void 0 : user.avatar_url) || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
               time: "just now",
               content: createdPost.caption || trimmed,
-              hashtags: [],
+              hashtags: ((_createdPost$caption = createdPost.caption) === null || _createdPost$caption === void 0 ? void 0 : _createdPost$caption.match(/#\w+/g)) || [],
               image: createdPost.image_url || null,
               video: createdPost.video_url || null,
               likes: 0,
@@ -8123,14 +8305,34 @@ var Feed = function Feed() {
             setPostLocation(null);
             setTaggedPets([]);
             setExpanded(false);
+
+            // If it's a contest entry, refresh the count
+            if (!trimmed.includes('#springcutest')) {
+              _context11.n = 5;
+              break;
+            }
+            _context11.n = 4;
+            return window.axios.get("/api/posts?hashtag=springcutest");
           case 4:
-            _context11.p = 4;
-            setIsPosting(false);
-            return _context11.f(4);
+            countRes = _context11.v;
+            setContestEntryCount(((_countRes$data = countRes.data) === null || _countRes$data === void 0 ? void 0 : _countRes$data.total) || 0);
           case 5:
+            _context11.n = 7;
+            break;
+          case 6:
+            _context11.p = 6;
+            _t10 = _context11.v;
+            console.error("Post error:", _t10);
+            message = ((_err$response = _t10.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || "Failed to post. Please check your connection and try again.";
+            alert(message);
+          case 7:
+            _context11.p = 7;
+            setIsPosting(false);
+            return _context11.f(7);
+          case 8:
             return _context11.a(2);
         }
-      }, _callee11, null, [[2,, 4, 5]]);
+      }, _callee11, null, [[2, 6, 7, 8]]);
     }));
     return function submitPost() {
       return _ref16.apply(this, arguments);
@@ -8729,6 +8931,19 @@ var Feed = function Feed() {
                         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
                           className: "name",
                           children: post.author
+                        }), post.tagged_pets && post.tagged_pets.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("span", {
+                          className: "tagged-info",
+                          style: {
+                            fontSize: '13px',
+                            color: 'var(--text-muted)',
+                            marginLeft: '4px'
+                          },
+                          children: [" with ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("strong", {
+                            style: {
+                              color: 'var(--text-main)'
+                            },
+                            children: post.tagged_pets[0].name || "a friend"
+                          }), post.tagged_pets.length > 1 && " and ".concat(post.tagged_pets.length - 1, " others")]
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
                           className: "time",
                           children: post.time
@@ -8942,7 +9157,8 @@ var Feed = function Feed() {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
                 className: "see-all-btn",
                 onClick: function onClick() {
-                  return setIsSeeAllPetsOpen(true);
+                  setIsSeeAllPetsOpen(true);
+                  fetchSuggestedPets(true);
                 },
                 children: "See all"
               })]
@@ -9902,7 +10118,7 @@ var Messages = function Messages() {
           return setShowGroupModal(false);
         },
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
-          className: "msg-modal",
+          className: "pv-msg-modal",
           initial: {
             scale: 0.94,
             opacity: 0
@@ -9918,8 +10134,12 @@ var Messages = function Messages() {
           onClick: function onClick(e) {
             return e.stopPropagation();
           },
+          style: {
+            display: 'flex',
+            flexDirection: 'column'
+          },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
-            className: "msg-modal__header",
+            className: "pv-msg-modal__header",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h3", {
               children: "New message"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
@@ -9932,29 +10152,47 @@ var Messages = function Messages() {
               })
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
-            className: "msg-modal__search-to",
+            className: "pv-msg-modal__search-to",
+            style: {
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
+            },
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
               className: "to-label",
               children: "To:"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("input", {
-              className: "msg-modal__search-input",
+              className: "pv-msg-modal__search-input",
               placeholder: "Search...",
               value: groupName,
               onChange: function onChange(e) {
                 return setGroupName(e.target.value);
+              },
+              style: {
+                flex: 1,
+                width: '100%'
               }
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
-            className: "msg-modal__body",
+            className: "pv-msg-modal__body",
+            style: {
+              display: 'flex',
+              flexDirection: 'column'
+            },
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
-              className: "msg-modal__section-label",
+              className: "pv-msg-modal__section-label",
               children: "Suggested"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
-              className: "msg-modal__member-list",
+              className: "pv-msg-modal__member-list",
+              style: {
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px'
+              },
               children: groupMembers.map(function (m) {
                 var isSelected = selectedMembers.includes(m.id);
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("button", {
-                  className: "msg-modal__member ".concat(isSelected ? "msg-modal__member--selected" : ""),
+                  className: "pv-msg-modal__member ".concat(isSelected ? "pv-msg-modal__member--selected" : ""),
                   onClick: function onClick() {
                     return toggleMember(m.id);
                   },
@@ -9963,7 +10201,7 @@ var Messages = function Messages() {
                     size: "md",
                     color: m.color
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
-                    className: "msg-modal__member-info",
+                    className: "pv-msg-modal__member-info",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
                       className: "member-name",
                       children: m.name
@@ -9972,7 +10210,7 @@ var Messages = function Messages() {
                       children: m.name.toLowerCase().replace(/\s+/g, '')
                     })]
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
-                    className: "msg-modal__member-radio ".concat(isSelected ? 'selected' : ''),
+                    className: "pv-msg-modal__member-radio ".concat(isSelected ? 'selected' : ''),
                     children: isSelected && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
                       className: "radio-inner"
                     })
@@ -9981,9 +10219,9 @@ var Messages = function Messages() {
               })
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
-            className: "msg-modal__footer",
+            className: "pv-msg-modal__footer",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
-              className: "msg-modal__create-btn ".concat(selectedMembers.length > 0 ? "msg-modal__create-btn--enabled" : ""),
+              className: "pv-msg-modal__create-btn ".concat(selectedMembers.length > 0 ? "pv-msg-modal__create-btn--enabled" : ""),
               disabled: !selectedMembers.length,
               children: "Chat"
             })
@@ -11588,7 +11826,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".adoption-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.adoption-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 40px;\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n@media (max-width: 768px) {\n  .adoption-main {\n    margin-left: 0;\n    padding: 20px;\n    padding-bottom: 100px;\n  }\n}\n\n.adoption-header {\n  margin-bottom: 8px;\n}\n.adoption-header__text {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.adoption-header__title {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  font-size: 2rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adoption-header__icon {\n  color: var(--primary-action);\n}\n.adoption-header__subtitle {\n  font-size: 1rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.adoption-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));\n  gap: 24px;\n}\n@media (max-width: 480px) {\n  .adoption-grid {\n    grid-template-columns: 1fr;\n  }\n}\n\n.adopt-card {\n  background-color: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 16px;\n  overflow: hidden;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);\n  transition: box-shadow 0.2s, transform 0.2s;\n}\n.adopt-card:hover {\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);\n  transform: translateY(-2px);\n}\n\n.pet-card__image-wrap {\n  position: relative;\n  height: 220px;\n  overflow: hidden;\n}\n.pet-card__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 0.4s;\n}\n.adopt-card:hover .pet-card__image {\n  transform: scale(1.04);\n}\n.pet-card__save-btn {\n  position: absolute;\n  top: 12px;\n  right: 12px;\n  width: 40px;\n  background: rgba(var(--bg-card-rgb), 0.8);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: all 0.2s;\n  backdrop-filter: blur(4px);\n}\n.pet-card__save-btn:hover {\n  background: var(--bg-card);\n  transform: scale(1.1);\n}\n.pet-card__save-btn--saved {\n  color: #ef4444;\n}\n.pet-card__content {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.pet-card__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: flex-start;\n}\n.pet-card__name {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 2px 0;\n}\n.pet-card__breed {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n.pet-card__description {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  display: -webkit-box;\n  -webkit-line-clamp: 3;\n  line-clamp: 3;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n.pet-card__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.pet-card__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n}\n.pet-card__tag {\n  font-size: 0.7rem;\n  font-weight: 600;\n  padding: 3px 10px;\n  background-color: var(--primary-color);\n  color: var(--primary-action);\n  border-radius: 999px;\n}\n.pet-card__age {\n  font-size: 0.75rem;\n  font-weight: 700;\n  padding: 4px 10px;\n  background-color: var(--primary-action);\n  color: white;\n  border-radius: 999px;\n  white-space: nowrap;\n}\n.pet-card__actions {\n  display: flex;\n  gap: 10px;\n  margin-top: 4px;\n}\n.pet-card__actions .pet-card__btn {\n  flex: 1;\n}\n\n.adopt-btn {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  padding: 9px 16px;\n  border-radius: 10px;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  transition: all 0.2s;\n  border: none;\n  font-family: inherit;\n}\n.adopt-btn--default {\n  background-color: var(--primary-action);\n  color: white;\n}\n.adopt-btn--default:hover {\n  filter: brightness(0.92);\n}\n.adopt-btn--outline {\n  background: transparent;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.adopt-btn--outline:hover {\n  background-color: var(--bg-page);\n}\n.adopt-btn--ghost {\n  background: transparent;\n  color: var(--text-main);\n}\n.adopt-btn--ghost:hover {\n  background: rgba(var(--text-main-rgb), 0.05);\n}\n\n.adopt-badge {\n  display: inline-flex;\n  align-items: center;\n  padding: 3px 10px;\n  border-radius: 999px;\n  font-size: 0.75rem;\n  font-weight: 600;\n}\n\n.adopt-modal-overlay {\n  position: fixed;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.45);\n  backdrop-filter: blur(4px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 300;\n  padding: 20px;\n}\n\n.adopt-modal {\n  background: var(--bg-card);\n  border-radius: 20px;\n  width: 100%;\n  max-width: 480px;\n  box-shadow: var(--shadow);\n  overflow: hidden;\n  position: relative;\n  max-height: 90vh;\n  display: flex;\n  flex-direction: column;\n}\n.adopt-modal__image-wrap {\n  position: relative;\n  height: 280px;\n  flex-shrink: 0;\n}\n.adopt-modal__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.adopt-modal__close {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.4);\n  color: white;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close:hover {\n  background: rgba(0, 0, 0, 0.6);\n}\n.adopt-modal__close-alt {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  color: var(--text-main);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close-alt:hover {\n  background: var(--border-color);\n}\n.adopt-modal__header-bar {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 24px 16px;\n  border-bottom: 1px solid var(--border-color);\n}\n.adopt-modal__header-bar h3 {\n  font-size: 1.25rem;\n  font-weight: 800;\n  margin: 0;\n  color: var(--text-main);\n}\n.adopt-modal__content {\n  padding: 24px;\n  overflow-y: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.adopt-modal__form-content {\n  padding: 24px;\n  overflow-y: auto;\n}\n.adopt-modal__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.adopt-modal__name {\n  font-size: 1.6rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__age {\n  font-size: 0.8rem;\n  background: var(--primary-action);\n  color: white;\n}\n.adopt-modal__breed {\n  font-size: 1rem;\n  color: var(--text-muted);\n  margin: -8px 0 0 0;\n}\n.adopt-modal__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.9rem;\n  color: var(--text-muted);\n}\n.adopt-modal__section h3 {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 8px 0;\n}\n.adopt-modal__section p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n}\n.adopt-modal__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 4px;\n}\n.adopt-modal__tag {\n  background: var(--primary-color);\n  color: var(--primary-action);\n  font-size: 0.8rem;\n}\n.adopt-modal__actions {\n  margin-top: 8px;\n}\n.adopt-modal__actions .adopt-modal__btn {\n  width: 100%;\n  padding: 14px;\n  font-size: 1rem;\n  border-radius: 12px;\n}\n.adopt-modal__success {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  padding: 40px 20px;\n  gap: 16px;\n}\n.adopt-modal__success-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background: rgba(var(--danger-rgb), 0.1);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.adopt-modal__success h4 {\n  font-size: 1.4rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__success p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  max-width: 300px;\n}\n\n.adopt-form {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n.adopt-form__desc {\n  font-size: 0.9rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n  margin: 0;\n}\n.adopt-form__group {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.adopt-form__group label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.adopt-form__group input, .adopt-form__group textarea {\n  width: 100%;\n  padding: 12px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 10px;\n  background: var(--bg-page);\n  font-size: 0.95rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.adopt-form__group input:focus, .adopt-form__group textarea:focus {\n  border-color: var(--primary-action);\n}\n.adopt-form__group input::-moz-placeholder, .adopt-form__group textarea::-moz-placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group input::placeholder, .adopt-form__group textarea::placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group textarea {\n  resize: vertical;\n  min-height: 80px;\n}\n.adopt-form__actions {\n  display: flex;\n  gap: 12px;\n  margin-top: 8px;\n}\n.adopt-form__actions button {\n  flex: 1;\n  padding: 12px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".adoption-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.adoption-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 40px;\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n@media (max-width: 768px) {\n  .adoption-main {\n    margin-left: 0;\n    padding: 20px;\n    padding-bottom: 100px;\n  }\n}\n\n.adoption-header {\n  margin-bottom: 8px;\n  display: flex;\n  justify-content: space-between;\n  align-items: flex-end;\n}\n.adoption-header__text {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.adoption-header__title {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  font-size: 2rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adoption-header__icon {\n  color: var(--primary-action);\n}\n.adoption-header__subtitle {\n  font-size: 1rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.adoption-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));\n  gap: 24px;\n}\n@media (max-width: 480px) {\n  .adoption-grid {\n    grid-template-columns: 1fr;\n  }\n}\n\n.adopt-card {\n  background-color: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 16px;\n  overflow: hidden;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);\n  transition: box-shadow 0.2s, transform 0.2s;\n}\n.adopt-card:hover {\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);\n  transform: translateY(-2px);\n}\n\n.pet-card__image-wrap {\n  position: relative;\n  height: 220px;\n  overflow: hidden;\n}\n.pet-card__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 0.4s;\n}\n.adopt-card:hover .pet-card__image {\n  transform: scale(1.04);\n}\n.pet-card__save-btn {\n  position: absolute;\n  top: 12px;\n  right: 12px;\n  width: 40px;\n  background: rgba(var(--bg-card-rgb), 0.8);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: all 0.2s;\n  backdrop-filter: blur(4px);\n}\n.pet-card__save-btn:hover {\n  background: var(--bg-card);\n  transform: scale(1.1);\n}\n.pet-card__save-btn--saved {\n  color: #ef4444;\n}\n.pet-card__content {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.pet-card__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: flex-start;\n}\n.pet-card__name {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 2px 0;\n}\n.pet-card__breed {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n.pet-card__description {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  display: -webkit-box;\n  -webkit-line-clamp: 3;\n  line-clamp: 3;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n.pet-card__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.pet-card__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n}\n.pet-card__tag {\n  font-size: 0.7rem;\n  font-weight: 600;\n  padding: 3px 10px;\n  background-color: var(--primary-color);\n  color: var(--primary-action);\n  border-radius: 999px;\n}\n.pet-card__age {\n  font-size: 0.75rem;\n  font-weight: 700;\n  padding: 4px 10px;\n  background-color: var(--primary-action);\n  color: white;\n  border-radius: 999px;\n  white-space: nowrap;\n}\n.pet-card__actions {\n  display: flex;\n  gap: 10px;\n  margin-top: 4px;\n}\n.pet-card__actions .pet-card__btn {\n  flex: 1;\n}\n\n.adopt-btn {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  padding: 9px 16px;\n  border-radius: 10px;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  transition: all 0.2s;\n  border: none;\n  font-family: inherit;\n}\n.adopt-btn--default {\n  background-color: var(--primary-action);\n  color: white;\n}\n.adopt-btn--default:hover {\n  filter: brightness(0.92);\n}\n.adopt-btn--outline {\n  background: transparent;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.adopt-btn--outline:hover {\n  background-color: var(--bg-page);\n}\n.adopt-btn--ghost {\n  background: transparent;\n  color: var(--text-main);\n}\n.adopt-btn--ghost:hover {\n  background: rgba(var(--text-main-rgb), 0.05);\n}\n\n.adopt-badge {\n  display: inline-flex;\n  align-items: center;\n  padding: 3px 10px;\n  border-radius: 999px;\n  font-size: 0.75rem;\n  font-weight: 600;\n}\n\n.adopt-modal-overlay {\n  position: fixed;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.45);\n  backdrop-filter: blur(4px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 300;\n  padding: 20px;\n}\n\n.adopt-modal {\n  background: var(--bg-card);\n  border-radius: 20px;\n  width: 100%;\n  max-width: 480px;\n  box-shadow: var(--shadow);\n  overflow: hidden;\n  position: relative;\n  max-height: 90vh;\n  display: flex;\n  flex-direction: column;\n}\n.adopt-modal__image-wrap {\n  position: relative;\n  height: 280px;\n  flex-shrink: 0;\n}\n.adopt-modal__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.adopt-modal__close {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.4);\n  color: white;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close:hover {\n  background: rgba(0, 0, 0, 0.6);\n}\n.adopt-modal__close-alt {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  color: var(--text-main);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close-alt:hover {\n  background: var(--border-color);\n}\n.adopt-modal__header-bar {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 24px 16px;\n  border-bottom: 1px solid var(--border-color);\n}\n.adopt-modal__header-bar h3 {\n  font-size: 1.25rem;\n  font-weight: 800;\n  margin: 0;\n  color: var(--text-main);\n}\n.adopt-modal__content {\n  padding: 24px;\n  overflow-y: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.adopt-modal__form-content {\n  padding: 24px;\n  overflow-y: auto;\n}\n.adopt-modal__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.adopt-modal__name {\n  font-size: 1.6rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__age {\n  font-size: 0.8rem;\n  background: var(--primary-action);\n  color: white;\n}\n.adopt-modal__breed {\n  font-size: 1rem;\n  color: var(--text-muted);\n  margin: -8px 0 0 0;\n}\n.adopt-modal__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.9rem;\n  color: var(--text-muted);\n}\n.adopt-modal__section h3 {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 8px 0;\n}\n.adopt-modal__section p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n}\n.adopt-modal__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 4px;\n}\n.adopt-modal__tag {\n  background: var(--primary-color);\n  color: var(--primary-action);\n  font-size: 0.8rem;\n}\n.adopt-modal__actions {\n  margin-top: 8px;\n}\n.adopt-modal__actions .adopt-modal__btn {\n  width: 100%;\n  padding: 14px;\n  font-size: 1rem;\n  border-radius: 12px;\n}\n.adopt-modal__success {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  padding: 40px 20px;\n  gap: 16px;\n}\n.adopt-modal__success-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background: rgba(var(--danger-rgb), 0.1);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.adopt-modal__success h4 {\n  font-size: 1.4rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__success p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  max-width: 300px;\n}\n\n.adopt-form {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n.adopt-form__desc {\n  font-size: 0.9rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n  margin: 0;\n}\n.adopt-form__group {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.adopt-form__group label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.adopt-form__group input, .adopt-form__group textarea {\n  width: 100%;\n  padding: 12px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 10px;\n  background: var(--bg-page);\n  font-size: 0.95rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.adopt-form__group input:focus, .adopt-form__group textarea:focus {\n  border-color: var(--primary-action);\n}\n.adopt-form__group input::-moz-placeholder, .adopt-form__group textarea::-moz-placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group input::placeholder, .adopt-form__group textarea::placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group textarea {\n  resize: vertical;\n  min-height: 80px;\n}\n.adopt-form__actions {\n  display: flex;\n  gap: 12px;\n  margin-top: 8px;\n}\n.adopt-form__actions button {\n  flex: 1;\n  padding: 12px;\n}\n.adopt-form__row {\n  display: flex;\n  gap: 16px;\n}\n.adopt-form__row .adopt-form__group {\n  flex: 1;\n}\n@media (max-width: 480px) {\n  .adopt-form__row {\n    flex-direction: column;\n    gap: 20px;\n  }\n}\n.adopt-form__hint {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  margin-top: 4px;\n  opacity: 0.8;\n}\n\n@media (max-width: 640px) {\n  .adoption-header {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: 20px;\n  }\n  .adoption-header .adopt-btn {\n    width: 100%;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11660,7 +11898,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@charset \"UTF-8\";\n.messages-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.msg-avatar {\n  position: relative;\n  border-radius: 50%;\n  overflow: hidden;\n  flex-shrink: 0;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.msg-avatar--sm {\n  width: 28px;\n  height: 28px;\n}\n.msg-avatar--md {\n  width: 42px;\n  height: 42px;\n}\n.msg-avatar--lg {\n  width: 52px;\n  height: 52px;\n}\n.msg-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.msg-avatar__fallback {\n  font-weight: 700;\n  color: white;\n  font-size: 0.85rem;\n  line-height: 1;\n}\n.msg-avatar__dot {\n  position: absolute;\n  bottom: 1px;\n  right: 1px;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n}\n.msg-avatar--online::after {\n  content: \"\";\n}\n\n.msg-icon-btn {\n  width: 34px;\n  height: 34px;\n  border-radius: 9px;\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.15s;\n  flex-shrink: 0;\n}\n.msg-icon-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.msg-icon-btn--active {\n  background: var(--primary-color);\n  color: var(--primary-action);\n}\n\n.msg-list-pane {\n  width: 330px;\n  flex-shrink: 0;\n  margin-left: 260px;\n  border-right: 1px solid var(--border-color);\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  background: var(--bg-card);\n  overflow: hidden;\n}\n@media (max-width: 768px) {\n  .msg-list-pane {\n    display: none;\n  }\n}\n.msg-list-pane__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 28px 16px;\n  flex-shrink: 0;\n}\n.msg-list-pane__title {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-list-pane__icons {\n  display: flex;\n  gap: 2px;\n}\n\n.msg-settings-popup {\n  position: absolute;\n  top: calc(100% + 8px);\n  right: 0;\n  width: 220px;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 16px;\n  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);\n  z-index: 50;\n}\n.msg-settings-popup__label {\n  font-size: 0.68rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  letter-spacing: 0.08em;\n  margin: 0 0 10px;\n}\n.msg-settings-popup__item {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  margin: 0 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.msg-settings-popup__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 12px 0;\n}\n.msg-settings-popup__link {\n  background: none;\n  border: none;\n  font-size: 0.8rem;\n  color: var(--primary-action);\n  cursor: pointer;\n  padding: 0;\n  font-family: inherit;\n  font-weight: 500;\n}\n.msg-settings-popup__link:hover {\n  text-decoration: underline;\n}\n\n.msg-toggle-switch {\n  width: 36px;\n  height: 20px;\n  border-radius: 20px;\n  background: var(--border-color);\n  border: none;\n  position: relative;\n  cursor: pointer;\n  transition: background 0.3s ease;\n  padding: 0;\n}\n.msg-toggle-switch.on {\n  background: var(--primary-action);\n}\n.msg-toggle-switch.on .msg-toggle-switch__thumb {\n  transform: translateX(16px);\n  background: white;\n}\n.msg-toggle-switch__thumb {\n  width: 14px;\n  height: 14px;\n  border-radius: 50%;\n  background: white;\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n  box-shadow: var(--shadow);\n}\n\n.msg-search {\n  position: relative;\n  padding: 10px 28px;\n  flex-shrink: 0;\n}\n.msg-search__icon {\n  position: absolute;\n  left: 36px;\n  top: 50%;\n  transform: translateY(-50%);\n  color: var(--text-muted);\n  pointer-events: none;\n}\n.msg-search__input {\n  width: 100%;\n  padding: 8px 12px 8px 36px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.825rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  box-sizing: border-box;\n  transition: border-color 0.2s;\n}\n.msg-search__input:focus {\n  border-color: var(--primary-action);\n}\n.msg-search__input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.msg-search__input::placeholder {\n  color: var(--text-muted);\n}\n\n.msg-tabs {\n  display: flex;\n  gap: 8px;\n  padding: 0 28px 12px;\n  flex-shrink: 0;\n}\n\n.msg-tab {\n  flex: 1;\n  padding: 7px 12px;\n  border-radius: 20px;\n  border: 1px solid var(--border-color);\n  background: none;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.18s;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n}\n.msg-tab--active {\n  background: var(--primary-action);\n  border-color: var(--primary-action);\n  color: white;\n}\n.msg-tab__badge {\n  background: var(--danger);\n  color: white;\n  font-size: 0.65rem;\n  font-weight: 700;\n  padding: 1px 5px;\n  border-radius: 999px;\n  line-height: 1.4;\n}\n\n.msg-chat-list {\n  flex: 1;\n  overflow-y: auto;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-chat-item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 26px;\n  cursor: pointer;\n  transition: background 0.15s;\n  position: relative;\n}\n.msg-chat-item:hover {\n  background: rgba(var(--primary-action-rgb), 0.05);\n}\n.msg-chat-item--active {\n  background: var(--primary-color);\n}\n.msg-chat-item__avatar-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n.msg-chat-item__group-badge {\n  position: absolute;\n  bottom: -2px;\n  right: -2px;\n  width: 16px;\n  height: 16px;\n  background: var(--primary-action);\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  border: 2px solid var(--bg-card);\n}\n.msg-chat-item__body {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.msg-chat-item__top {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.msg-chat-item__name {\n  font-size: 0.875rem;\n  font-weight: 600;\n  color: var(--text-main);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item__name--request {\n  color: var(--warning);\n}\n.msg-chat-item__time {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.msg-chat-item__preview {\n  font-size: 0.78rem;\n  color: var(--text-muted);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item--request .msg-chat-item__preview::before {\n  content: \"🔔 \";\n  font-size: 0.7rem;\n}\n\n.msg-unread-badge {\n  background: var(--primary-action);\n  color: white;\n  font-size: 0.7rem;\n  font-weight: 700;\n  padding: 2px 7px;\n  border-radius: 999px;\n  flex-shrink: 0;\n  min-width: 20px;\n  text-align: center;\n}\n\n.msg-main-pane {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  overflow: hidden;\n  background: var(--bg-page);\n}\n\n.msg-chat-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  background: var(--bg-card);\n  border-bottom: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n.msg-chat-header__left {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.msg-chat-header__name {\n  font-size: 0.9rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-chat-header__status {\n  font-size: 0.72rem;\n  color: var(--success);\n  margin: 0;\n}\n.msg-chat-header__right {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n\n.msg-back-btn {\n  display: none;\n}\n@media (max-width: 768px) {\n  .msg-back-btn {\n    display: flex;\n  }\n}\n\n.msg-viewport {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-bubble-row {\n  display: flex;\n}\n.msg-bubble-row--self {\n  justify-content: flex-end;\n}\n.msg-bubble-row--other {\n  justify-content: flex-start;\n}\n\n.msg-bubble {\n  max-width: 60%;\n  padding: 10px 14px;\n  border-radius: 16px;\n  font-size: 0.875rem;\n  line-height: 1.5;\n}\n.msg-bubble-row--self .msg-bubble {\n  background: var(--primary-action);\n  color: white;\n  border-bottom-right-radius: 4px;\n}\n.msg-bubble-row--other .msg-bubble {\n  background: var(--bg-card);\n  color: var(--text-main);\n  border-bottom-left-radius: 4px;\n  border: 1px solid var(--border-color);\n}\n.msg-bubble p {\n  margin: 0 0 4px;\n}\n.msg-bubble__time {\n  font-size: 0.67rem;\n  opacity: 0.65;\n  display: block;\n  text-align: right;\n}\n\n.msg-input-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 12px 16px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n\n.msg-input {\n  flex: 1;\n  padding: 9px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.875rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.msg-input:focus {\n  border-color: var(--primary-action);\n}\n\n.msg-send-btn {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--primary-action);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  cursor: pointer;\n  flex-shrink: 0;\n  transition: filter 0.18s;\n}\n.msg-send-btn:hover {\n  filter: brightness(0.9);\n}\n.msg-send-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n\n.msg-request-footer {\n  padding: 16px 20px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  align-items: center;\n}\n.msg-request-footer__text {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  text-align: center;\n  line-height: 1.5;\n  margin: 0;\n  max-width: 600px;\n}\n.msg-request-footer__text strong {\n  color: var(--text-main);\n}\n.msg-request-footer__link {\n  color: var(--primary-action);\n  cursor: pointer;\n}\n.msg-request-footer__link:hover {\n  text-decoration: underline;\n}\n.msg-request-footer__actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  max-width: 600px;\n}\n\n.msg-request-btn {\n  flex: 1;\n  padding: 10px 16px;\n  border-radius: 8px;\n  border: none;\n  font-size: 0.9rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.15s;\n  background: rgba(var(--primary-action-rgb), 0.1);\n  color: var(--text-main);\n}\n.msg-request-btn:hover {\n  background: rgba(var(--primary-action-rgb), 0.2);\n}\n\n.msg-empty-state {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n  padding: 40px;\n  gap: 12px;\n}\n.msg-empty-state__icon {\n  width: 96px;\n  height: 96px;\n  border-radius: 24px;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-muted);\n  margin-bottom: 8px;\n}\n.msg-empty-state__title {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-empty-state__sub {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  max-width: 260px;\n  line-height: 1.5;\n  margin: 0;\n}\n.msg-empty-state__btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 10px 20px;\n  border-radius: 12px;\n  background: var(--primary-action);\n  color: white;\n  border: none;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  margin-top: 4px;\n  transition: filter 0.18s;\n}\n.msg-empty-state__btn:hover {\n  filter: brightness(0.9);\n}\n\n.msg-modal-overlay {\n  position: fixed;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.45);\n  backdrop-filter: blur(4px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 300;\n}\n\n.msg-group-modal {\n  background: var(--bg-card);\n  border-radius: 18px;\n  width: 100%;\n  max-width: 440px;\n  box-shadow: var(--shadow);\n  overflow: hidden;\n}\n.msg-group-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 18px 20px 14px;\n  border-bottom: 1px solid var(--border-color);\n}\n.msg-group-modal__header h3 {\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-group-modal__body {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 14px;\n}\n.msg-group-modal__search-to {\n  display: flex;\n  align-items: center;\n  padding: 10px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.msg-group-modal__search-to .to-label {\n  font-size: 0.95rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin-right: 12px;\n}\n.msg-group-modal__search-input {\n  width: 100%;\n  padding: 6px 0;\n  border: none;\n  background: transparent;\n  font-size: 0.9rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n}\n.msg-group-modal__search-input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.msg-group-modal__search-input::placeholder {\n  color: var(--text-muted);\n}\n.msg-group-modal__section-label {\n  font-size: 0.68rem;\n  font-weight: 700;\n  letter-spacing: 0.08em;\n  color: var(--text-muted);\n  margin: 0;\n}\n.msg-group-modal__member-list {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.msg-group-modal__member {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 14px;\n  border-radius: 12px;\n  border: none;\n  background: transparent;\n  cursor: pointer;\n  font-family: inherit;\n  text-align: left;\n  transition: all 0.15s;\n  width: 100%;\n}\n.msg-group-modal__member:hover {\n  background: var(--bg-page);\n}\n.msg-group-modal__member-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n}\n.msg-group-modal__member-info .member-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.msg-group-modal__member-info .member-username {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.msg-group-modal__member-radio {\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  border: 2px solid var(--text-muted);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-left: auto;\n  transition: all 0.2s;\n}\n.msg-group-modal__member-radio.selected {\n  border-color: var(--primary-action);\n  background: transparent;\n}\n.msg-group-modal__member-radio.selected .radio-inner {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background: var(--primary-action);\n}\n.msg-group-modal__footer {\n  padding: 14px 20px;\n  border-top: 1px solid var(--border-color);\n}\n.msg-group-modal__create-btn {\n  width: 100%;\n  padding: 11px;\n  border-radius: 12px;\n  border: none;\n  background: var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: not-allowed;\n  font-family: inherit;\n  transition: all 0.18s;\n}\n.msg-group-modal__create-btn--enabled {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.msg-group-modal__create-btn--enabled:hover {\n  filter: brightness(0.92);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@charset \"UTF-8\";\n.messages-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.msg-avatar {\n  position: relative;\n  border-radius: 50%;\n  overflow: hidden;\n  flex-shrink: 0;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.msg-avatar--sm {\n  width: 28px;\n  height: 28px;\n}\n.msg-avatar--md {\n  width: 42px;\n  height: 42px;\n}\n.msg-avatar--lg {\n  width: 52px;\n  height: 52px;\n}\n.msg-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.msg-avatar__fallback {\n  font-weight: 700;\n  color: white;\n  font-size: 0.85rem;\n  line-height: 1;\n}\n.msg-avatar__dot {\n  position: absolute;\n  bottom: 1px;\n  right: 1px;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n}\n\n.msg-icon-btn {\n  width: 34px;\n  height: 34px;\n  border-radius: 9px;\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.15s;\n  flex-shrink: 0;\n}\n.msg-icon-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.msg-icon-btn--active {\n  background: var(--primary-color);\n  color: var(--primary-action);\n}\n\n.msg-list-pane {\n  width: 330px;\n  flex-shrink: 0;\n  margin-left: 260px;\n  border-right: 1px solid var(--border-color);\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  background: var(--bg-card);\n  overflow: hidden;\n}\n@media (max-width: 768px) {\n  .msg-list-pane {\n    display: none;\n  }\n}\n.msg-list-pane__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 28px 16px;\n  flex-shrink: 0;\n}\n.msg-list-pane__title {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-list-pane__icons {\n  display: flex;\n  gap: 2px;\n}\n\n.msg-settings-popup {\n  position: absolute;\n  top: calc(100% + 8px);\n  right: 0;\n  width: 220px;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 16px;\n  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);\n  z-index: 50;\n}\n.msg-settings-popup__label {\n  font-size: 0.68rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  letter-spacing: 0.08em;\n  margin: 0 0 10px;\n}\n.msg-settings-popup__item {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  margin: 0 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.msg-settings-popup__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 12px 0;\n}\n.msg-settings-popup__link {\n  background: none;\n  border: none;\n  font-size: 0.8rem;\n  color: var(--primary-action);\n  cursor: pointer;\n  padding: 0;\n  font-family: inherit;\n  font-weight: 500;\n}\n.msg-settings-popup__link:hover {\n  text-decoration: underline;\n}\n\n.msg-toggle-switch {\n  width: 36px;\n  height: 20px;\n  border-radius: 20px;\n  background: var(--border-color);\n  border: none;\n  position: relative;\n  cursor: pointer;\n  transition: background 0.3s ease;\n  padding: 0;\n}\n.msg-toggle-switch.on {\n  background: var(--primary-action);\n}\n.msg-toggle-switch.on .msg-toggle-switch__thumb {\n  transform: translateX(16px);\n  background: white;\n}\n.msg-toggle-switch__thumb {\n  width: 14px;\n  height: 14px;\n  border-radius: 50%;\n  background: white;\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n  box-shadow: var(--shadow);\n}\n\n.msg-search {\n  position: relative;\n  padding: 10px 28px;\n  flex-shrink: 0;\n}\n.msg-search__icon {\n  position: absolute;\n  left: 36px;\n  top: 50%;\n  transform: translateY(-50%);\n  color: var(--text-muted);\n  pointer-events: none;\n}\n.msg-search__input {\n  width: 100%;\n  padding: 8px 12px 8px 36px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.825rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  box-sizing: border-box;\n  transition: border-color 0.2s;\n}\n.msg-search__input:focus {\n  border-color: var(--primary-action);\n}\n.msg-search__input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.msg-search__input::placeholder {\n  color: var(--text-muted);\n}\n\n.msg-tabs {\n  display: flex;\n  gap: 8px;\n  padding: 0 28px 12px;\n  flex-shrink: 0;\n}\n\n.msg-tab {\n  flex: 1;\n  padding: 7px 12px;\n  border-radius: 20px;\n  border: 1px solid var(--border-color);\n  background: none;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.18s;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n}\n.msg-tab--active {\n  background: var(--primary-action);\n  border-color: var(--primary-action);\n  color: white;\n}\n.msg-tab__badge {\n  background: var(--danger);\n  color: white;\n  font-size: 0.65rem;\n  font-weight: 700;\n  padding: 1px 5px;\n  border-radius: 999px;\n  line-height: 1.4;\n}\n\n.msg-chat-list {\n  flex: 1;\n  overflow-y: auto;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-chat-item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 26px;\n  cursor: pointer;\n  transition: background 0.15s;\n  position: relative;\n}\n.msg-chat-item:hover {\n  background: rgba(var(--primary-action-rgb), 0.05);\n}\n.msg-chat-item--active {\n  background: var(--primary-color);\n}\n.msg-chat-item__avatar-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n.msg-chat-item__group-badge {\n  position: absolute;\n  bottom: -2px;\n  right: -2px;\n  width: 16px;\n  height: 16px;\n  background: var(--primary-action);\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  border: 2px solid var(--bg-card);\n}\n.msg-chat-item__body {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.msg-chat-item__top {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.msg-chat-item__name {\n  font-size: 0.875rem;\n  font-weight: 600;\n  color: var(--text-main);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item__name--request {\n  color: var(--warning);\n}\n.msg-chat-item__time {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.msg-chat-item__preview {\n  font-size: 0.78rem;\n  color: var(--text-muted);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item--request .msg-chat-item__preview::before {\n  content: \"🔔 \";\n  font-size: 0.7rem;\n}\n\n.msg-unread-badge {\n  background: var(--primary-action);\n  color: white;\n  font-size: 0.7rem;\n  font-weight: 700;\n  padding: 2px 7px;\n  border-radius: 999px;\n  flex-shrink: 0;\n  min-width: 20px;\n  text-align: center;\n}\n\n.msg-main-pane {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  overflow: hidden;\n  background: var(--bg-page);\n}\n\n.msg-chat-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  background: var(--bg-card);\n  border-bottom: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n.msg-chat-header__left {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.msg-chat-header__name {\n  font-size: 0.9rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-chat-header__status {\n  font-size: 0.72rem;\n  color: var(--success);\n  margin: 0;\n}\n.msg-chat-header__right {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n\n.msg-back-btn {\n  display: none;\n}\n@media (max-width: 768px) {\n  .msg-back-btn {\n    display: flex;\n  }\n}\n\n.msg-viewport {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-bubble-row {\n  display: flex;\n}\n.msg-bubble-row--self {\n  justify-content: flex-end;\n}\n.msg-bubble-row--other {\n  justify-content: flex-start;\n}\n\n.msg-bubble {\n  max-width: 60%;\n  padding: 10px 14px;\n  border-radius: 16px;\n  font-size: 0.875rem;\n  line-height: 1.5;\n}\n.msg-bubble-row--self .msg-bubble {\n  background: var(--primary-action);\n  color: white;\n  border-bottom-right-radius: 4px;\n}\n.msg-bubble-row--other .msg-bubble {\n  background: var(--bg-card);\n  color: var(--text-main);\n  border-bottom-left-radius: 4px;\n  border: 1px solid var(--border-color);\n}\n.msg-bubble p {\n  margin: 0 0 4px;\n}\n.msg-bubble__time {\n  font-size: 0.67rem;\n  opacity: 0.65;\n  display: block;\n  text-align: right;\n}\n\n.msg-input-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 12px 16px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n\n.msg-input {\n  flex: 1;\n  padding: 9px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.875rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.msg-input:focus {\n  border-color: var(--primary-action);\n}\n\n.msg-send-btn {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--primary-action);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  cursor: pointer;\n  flex-shrink: 0;\n  transition: filter 0.18s;\n}\n.msg-send-btn:hover {\n  filter: brightness(0.9);\n}\n.msg-send-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n\n.msg-request-footer {\n  padding: 16px 20px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  align-items: center;\n}\n.msg-request-footer__text {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  text-align: center;\n  line-height: 1.5;\n  margin: 0;\n  max-width: 600px;\n}\n.msg-request-footer__text strong {\n  color: var(--text-main);\n}\n.msg-request-footer__link {\n  color: var(--primary-action);\n  cursor: pointer;\n}\n.msg-request-footer__link:hover {\n  text-decoration: underline;\n}\n.msg-request-footer__actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  max-width: 600px;\n}\n\n.msg-request-btn {\n  flex: 1;\n  padding: 10px 16px;\n  border-radius: 8px;\n  border: none;\n  font-size: 0.9rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.15s;\n  background: rgba(var(--primary-action-rgb), 0.1);\n  color: var(--text-main);\n}\n.msg-request-btn:hover {\n  background: rgba(var(--primary-action-rgb), 0.2);\n}\n\n.msg-empty-state {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n  padding: 40px;\n  gap: 12px;\n}\n.msg-empty-state__icon {\n  width: 96px;\n  height: 96px;\n  border-radius: 24px;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-muted);\n  margin-bottom: 8px;\n}\n.msg-empty-state__title {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-empty-state__sub {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  max-width: 260px;\n  line-height: 1.5;\n  margin: 0;\n}\n.msg-empty-state__btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 10px 20px;\n  border-radius: 12px;\n  background: var(--primary-action);\n  color: white;\n  border: none;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  margin-top: 4px;\n  transition: filter 0.18s;\n}\n.msg-empty-state__btn:hover {\n  filter: brightness(0.9);\n}\n\n.msg-modal-overlay {\n  position: fixed;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.4);\n  backdrop-filter: blur(8px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 3000;\n}\n\n.pv-msg-modal {\n  background: var(--bg-card);\n  border-radius: 20px;\n  width: 100%;\n  max-width: 460px;\n  max-height: 80vh;\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  border: 1px solid var(--border-color);\n}\n.pv-msg-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 18px 20px 14px;\n  border-bottom: 1px solid var(--border-color);\n}\n.pv-msg-modal__header h3 {\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.pv-msg-modal__body {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 14px;\n  overflow-y: auto;\n}\n.pv-msg-modal__search-to {\n  display: flex;\n  align-items: center;\n  padding: 12px 24px;\n  border-bottom: 1px solid var(--border-color);\n  gap: 12px;\n}\n.pv-msg-modal__search-to .to-label {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.pv-msg-modal__search-input {\n  width: 100%;\n  padding: 6px 0;\n  border: none;\n  background: transparent;\n  font-size: 0.9rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n}\n.pv-msg-modal__search-input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.pv-msg-modal__search-input::placeholder {\n  color: var(--text-muted);\n}\n.pv-msg-modal__section-label {\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin-bottom: 4px;\n  padding-left: 4px;\n}\n.pv-msg-modal__member-list {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.pv-msg-modal__member {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 14px;\n  border-radius: 12px;\n  border: none;\n  background: transparent;\n  cursor: pointer;\n  font-family: inherit;\n  text-align: left;\n  transition: all 0.15s;\n  width: 100%;\n}\n.pv-msg-modal__member:hover {\n  background: rgba(var(--primary-action-rgb), 0.06);\n}\n.pv-msg-modal__member--selected {\n  background: rgba(var(--primary-action-rgb), 0.03);\n}\n.pv-msg-modal__member-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n}\n.pv-msg-modal__member-info .member-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.pv-msg-modal__member-info .member-username {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.pv-msg-modal__member-radio {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  border: 2px solid var(--border-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-left: auto;\n  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);\n  background: var(--bg-page);\n}\n.pv-msg-modal__member-radio.selected {\n  border-color: var(--primary-action);\n  background: var(--primary-action);\n}\n.pv-msg-modal__member-radio.selected .radio-inner {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: white;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.pv-msg-modal__footer {\n  padding: 14px 20px;\n  border-top: 1px solid var(--border-color);\n}\n.pv-msg-modal__create-btn {\n  width: 100%;\n  padding: 11px;\n  border-radius: 12px;\n  border: none;\n  background: var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.9rem;\n  font-weight: 700;\n  cursor: not-allowed;\n  font-family: inherit;\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.pv-msg-modal__create-btn--enabled {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.pv-msg-modal__create-btn--enabled:hover {\n  filter: brightness(0.92);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

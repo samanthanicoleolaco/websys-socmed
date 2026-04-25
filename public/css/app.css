@@ -4413,9 +4413,6 @@ body {
   background: var(--success);
   border: 2px solid var(--bg-card);
 }
-.msg-avatar--online::after {
-  content: "";
-}
 
 .msg-icon-btn {
   width: 34px;
@@ -4973,54 +4970,59 @@ body {
 .msg-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 300;
+  z-index: 3000;
 }
 
-.msg-group-modal {
+.pv-msg-modal {
   background: var(--bg-card);
-  border-radius: 18px;
+  border-radius: 20px;
   width: 100%;
-  max-width: 440px;
-  box-shadow: var(--shadow);
+  max-width: 460px;
+  max-height: 80vh;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
 }
-.msg-group-modal__header {
+.pv-msg-modal__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 18px 20px 14px;
   border-bottom: 1px solid var(--border-color);
 }
-.msg-group-modal__header h3 {
+.pv-msg-modal__header h3 {
   font-size: 1rem;
   font-weight: 700;
   color: var(--text-main);
   margin: 0;
 }
-.msg-group-modal__body {
+.pv-msg-modal__body {
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  overflow-y: auto;
 }
-.msg-group-modal__search-to {
+.pv-msg-modal__search-to {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-bottom: 1px solid var(--border-color);
+  gap: 12px;
 }
-.msg-group-modal__search-to .to-label {
-  font-size: 0.95rem;
-  font-weight: 700;
+.pv-msg-modal__search-to .to-label {
+  font-size: 0.9rem;
+  font-weight: 600;
   color: var(--text-main);
-  margin-right: 12px;
 }
-.msg-group-modal__search-input {
+.pv-msg-modal__search-input {
   width: 100%;
   padding: 6px 0;
   border: none;
@@ -5030,25 +5032,25 @@ body {
   outline: none;
   font-family: inherit;
 }
-.msg-group-modal__search-input::-moz-placeholder {
+.pv-msg-modal__search-input::-moz-placeholder {
   color: var(--text-muted);
 }
-.msg-group-modal__search-input::placeholder {
+.pv-msg-modal__search-input::placeholder {
   color: var(--text-muted);
 }
-.msg-group-modal__section-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin: 0;
+.pv-msg-modal__section-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  padding-left: 4px;
 }
-.msg-group-modal__member-list {
+.pv-msg-modal__member-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.msg-group-modal__member {
+.pv-msg-modal__member {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -5062,68 +5064,73 @@ body {
   transition: all 0.15s;
   width: 100%;
 }
-.msg-group-modal__member:hover {
-  background: var(--bg-page);
+.pv-msg-modal__member:hover {
+  background: rgba(var(--primary-action-rgb), 0.06);
 }
-.msg-group-modal__member-info {
+.pv-msg-modal__member--selected {
+  background: rgba(var(--primary-action-rgb), 0.03);
+}
+.pv-msg-modal__member-info {
   display: flex;
   flex-direction: column;
   gap: 2px;
   flex: 1;
 }
-.msg-group-modal__member-info .member-name {
+.pv-msg-modal__member-info .member-name {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-main);
 }
-.msg-group-modal__member-info .member-username {
+.pv-msg-modal__member-info .member-username {
   font-size: 0.8rem;
   color: var(--text-muted);
 }
-.msg-group-modal__member-radio {
-  width: 22px;
-  height: 22px;
+.pv-msg-modal__member-radio {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  border: 2px solid var(--text-muted);
+  border: 2px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: auto;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bg-page);
 }
-.msg-group-modal__member-radio.selected {
+.pv-msg-modal__member-radio.selected {
   border-color: var(--primary-action);
-  background: transparent;
-}
-.msg-group-modal__member-radio.selected .radio-inner {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
   background: var(--primary-action);
 }
-.msg-group-modal__footer {
+.pv-msg-modal__member-radio.selected .radio-inner {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.pv-msg-modal__footer {
   padding: 14px 20px;
   border-top: 1px solid var(--border-color);
 }
-.msg-group-modal__create-btn {
+.pv-msg-modal__create-btn {
   width: 100%;
   padding: 11px;
   border-radius: 12px;
   border: none;
   background: var(--border-color);
   color: var(--text-muted);
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: not-allowed;
   font-family: inherit;
-  transition: all 0.18s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.msg-group-modal__create-btn--enabled {
+.pv-msg-modal__create-btn--enabled {
   background: var(--primary-action);
   color: white;
   cursor: pointer;
 }
-.msg-group-modal__create-btn--enabled:hover {
+.pv-msg-modal__create-btn--enabled:hover {
   filter: brightness(0.92);
 }
 
@@ -5152,6 +5159,9 @@ body {
 
 .adoption-header {
   margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 .adoption-header__text {
   display: flex;
@@ -5596,7 +5606,36 @@ body {
   flex: 1;
   padding: 12px;
 }
+.adopt-form__row {
+  display: flex;
+  gap: 16px;
+}
+.adopt-form__row .adopt-form__group {
+  flex: 1;
+}
+@media (max-width: 480px) {
+  .adopt-form__row {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+.adopt-form__hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  opacity: 0.8;
+}
 
+@media (max-width: 640px) {
+  .adoption-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .adoption-header .adopt-btn {
+    width: 100%;
+  }
+}
 .profile-page {
   display: flex;
   min-height: 100vh;

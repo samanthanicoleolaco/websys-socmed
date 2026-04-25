@@ -90,7 +90,7 @@ const ContestEntryModal = ({ isOpen, onClose }) => {
             window.location.href = "/homefeed";
         } catch (err) {
             console.error(err);
-            alert(err.response?.data?.message || "Failed to submit entry. Make sure you have a pet profile.");
+            alert(err.response?.data?.message || "Failed to submit entry. Make sure you have your pet info filled out.");
         } finally {
             setIsSubmitting(false);
         }
