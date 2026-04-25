@@ -291,21 +291,6 @@ const Feed = () => {
         fetchInitialData();
     }, []);
 
-    const handleDeleteStory = async (id) => {
-        try {
-            await axios.delete(`/api/stories/${id}`);
-            setStories(prev => prev.map(g => ({ ...g, stories: g.stories.filter(s => s.id !== id) })).filter(g => g.stories.length > 0));
-            setViewerState(p => ({ ...p, isOpen: false }));
-        } catch(e) { console.error(e); }
-    };
-
-    const handleArchiveStory = async (id) => {
-        try {
-            await axios.post(`/api/stories/${id}/archive`);
-            setViewerState(p => ({ ...p, isOpen: false }));
-        } catch(e) { console.error(e); }
-    };
-
     const handleAddClick = (e) => {
         if (e) e.stopPropagation();
         if (fileInputRef.current) {
@@ -436,7 +421,7 @@ const Feed = () => {
         if (!confirm("Are you sure you want to delete this story?")) return;
         try {
             await window.axios.delete(`/api/stories/${id}`);
-            setStories(prev => prev.filter(s => s.id !== id));
+            setStories(prev => prev.map(g => ({ ...g, stories: g.stories.filter(s => s.id !== id) })).filter(g => g.stories.length > 0));
             setViewerState(p => ({ ...p, isOpen: false }));
         } catch (err) {
             console.error(err);
@@ -446,7 +431,7 @@ const Feed = () => {
     const handleArchiveStory = async (id) => {
         try {
             await window.axios.post(`/api/stories/${id}/archive`);
-            setStories(prev => prev.filter(s => s.id !== id));
+            setStories(prev => prev.map(g => ({ ...g, stories: g.stories.filter(s => s.id !== id) })).filter(g => g.stories.length > 0));
             setViewerState(p => ({ ...p, isOpen: false }));
         } catch (err) {
             console.error(err);
@@ -456,7 +441,12 @@ const Feed = () => {
     const handleUpdateVisibility = async (id, visibility) => {
         try {
             await window.axios.patch(`/api/stories/${id}`, { visibility });
-            // Update local state in viewer if needed
+            // Update local state in groups
+            setStories(prev => prev.map(g => ({
+                ...g,
+                stories: g.stories.map(s => s.id === id ? { ...s, visibility } : s)
+            })));
+            
             setViewerState(prev => {
                 const updated = [...prev.userStories];
                 updated[prev.currentIndex] = { ...updated[prev.currentIndex], visibility };
@@ -470,7 +460,7 @@ const Feed = () => {
 
     const handleSaveStory = (story) => {
         const link = document.createElement('a');
-        link.href = story.media_url;
+        link.href = story.media_url || story.media_path; // Use whatever property is available
         link.download = `petverse-story-${story.id}.${story.media_type === 'video' ? 'mp4' : 'jpg'}`;
         document.body.appendChild(link);
         link.click();

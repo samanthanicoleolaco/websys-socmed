@@ -1055,47 +1055,180 @@ body {
 .story-viewer-v2__bg {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(20px);
 }
 .story-viewer-v2__main {
   position: relative;
   width: 100%;
-  max-width: 420px;
-  aspect-ratio: 9/16;
+  max-width: 440px;
+  height: 100%;
+  max-height: 90vh;
   background: #000;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 480px) {
+  .story-viewer-v2__main {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+}
+.story-viewer-v2__progress-bars {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  gap: 4px;
+  z-index: 100;
+}
+.story-viewer-v2__progress-bars .story-progress-bg {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.story-viewer-v2__progress-bars .story-progress-fill {
+  height: 100%;
+  background: #fff;
+  transition: width 0.1s linear;
 }
 .story-viewer-v2__header {
-  padding: 16px;
+  padding: 24px 16px 32px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
   z-index: 10;
   position: absolute;
   top: 0;
   width: 100%;
 }
-.story-viewer-v2__header .name {
-  color: white;
-  font-weight: 700;
-  flex: 1;
+.story-viewer-v2__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.story-viewer-v2__header .close {
-  background: none;
+.story-viewer-v2__user .user-info {
+  display: flex;
+  flex-direction: column;
+}
+.story-viewer-v2__user .user-info .name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.story-viewer-v2__user .user-info .time {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.story-viewer-v2__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.story-viewer-v2__actions .dots-btn, .story-viewer-v2__actions .close-btn {
+  background: transparent;
   border: none;
-  color: white;
+  color: #fff;
   cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.story-viewer-v2__actions .dots-btn:hover, .story-viewer-v2__actions .close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.story-viewer-v2 .story-options-trigger {
+  position: relative;
+}
+.story-viewer-v2 .story-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  background: rgba(30, 30, 35, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  min-width: 220px;
+  padding: 6px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  z-index: 200;
+}
+.story-viewer-v2 .story-menu button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+.story-viewer-v2 .story-menu button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.story-viewer-v2 .story-menu button svg {
+  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.9);
+}
+.story-viewer-v2 .story-menu button.delete {
+  color: #ff4d4d;
+}
+.story-viewer-v2 .story-menu button.delete svg {
+  color: #ff4d4d;
+}
+.story-viewer-v2 .story-menu button.delete:hover {
+  background: rgba(255, 77, 77, 0.1);
+}
+.story-viewer-v2 .story-menu button.has-submenu {
+  justify-content: space-between;
+}
+.story-viewer-v2 .story-menu button.has-submenu span {
+  flex: 1;
+  text-align: left;
+  margin-left: 12px;
+}
+.story-viewer-v2 .story-menu button.has-submenu svg:last-child {
+  opacity: 0.5;
+}
+.story-viewer-v2 .story-menu button.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 700;
+}
+.story-viewer-v2 .story-menu button.active svg {
+  opacity: 1;
+}
+.story-viewer-v2 .story-menu .visibility-submenu .submenu-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  margin-bottom: 4px;
+  padding-bottom: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
 }
 .story-viewer-v2__body {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #000;
 }
 .story-viewer-v2__body img, .story-viewer-v2__body video {
   width: 100%;
