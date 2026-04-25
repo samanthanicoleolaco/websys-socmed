@@ -142,13 +142,24 @@ class AuthController extends Controller
         ]);
 
         $user->update($validated);
+        
+        // Handle pet details
+        $petData = [
+            'name' => $request->input('petName'),
+            'breed' => $request->input('breed'),
+            'age' => $request->input('age'),
+            'bio' => $request->input('petBio'),
+            'location' => $request->input('location'),
+        ];
 
-        // Also update pet info if exists
+        // Clean up nulls
+        $petData = array_filter($petData, function($v) { return !is_null($v); });
+
         if ($user->pet) {
-            $user->pet->update([
-                'location' => $request->location,
-                'bio' => $request->bio,
-            ]);
+            $user->pet->update($petData);
+        } else if ($request->input('petName')) {
+            // Create a pet if none exists but name is provided
+            $user->pet()->create($petData);
         }
 
         return response()->json([

@@ -24,6 +24,14 @@ class PostController extends Controller
             $query->where('caption', 'like', '%' . $request->get('search') . '%');
         }
 
+        if ($request->has('hashtag')) {
+            $hashtag = $request->get('hashtag');
+            if (!str_starts_with($hashtag, '#')) {
+                $hashtag = '#' . $hashtag;
+            }
+            $query->where('caption', 'like', '%' . $hashtag . '%');
+        }
+
         $posts = $query->latest()->paginate(20);
 
         return response()->json($posts);

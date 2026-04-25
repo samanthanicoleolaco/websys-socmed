@@ -14,14 +14,19 @@ return new class extends Migration
     public function up()
     {
         Schema::table('stories', function (Blueprint $table) {
-            $table->string('visibility')->default('public')->after('is_archived'); // public, followers
+            //
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::table('stories', function (Blueprint $table) {
-            $table->dropColumn('visibility');
+            //
         });
     }
 };

@@ -2067,7 +2067,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _components_login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/login */ "./resources/js/components/login.js");
 /* harmony import */ var _components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/Feed */ "./resources/js/components/pages/Feed.js");
-/* harmony import */ var _components_pages_Feed__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_AdminDashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/AdminDashboard */ "./resources/js/components/AdminDashboard.js");
 /* harmony import */ var _components_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Register */ "./resources/js/components/Register.js");
 /* harmony import */ var _components_pages_Messages__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/Messages */ "./resources/js/components/pages/Messages.js");
@@ -2130,16 +2129,16 @@ if (container) {
     if (path === '/settings') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_Settings__WEBPACK_IMPORTED_MODULE_9__["default"], {});
     if (path === '/profile' || path.startsWith('/profile/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Profile__WEBPACK_IMPORTED_MODULE_10__["default"], {});
     if (path === '/notifications') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Notifications__WEBPACK_IMPORTED_MODULE_11__["default"], {});
-    if (path === '/homefeed') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)((_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3___default()), {});
+    if (path === '/homefeed') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
 
     // If at root, redirect to /homefeed
     if (path === '/') {
       window.history.replaceState(null, '', '/homefeed');
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)((_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3___default()), {});
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
     }
 
     // Catch-all for other protected paths
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)((_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3___default()), {});
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
   };
   root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_context_UserContext__WEBPACK_IMPORTED_MODULE_12__.UserProvider, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(AppContent, {})
@@ -6026,20 +6025,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Camera.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/CheckCircle.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Crown.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Fire.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Heart.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Lightning.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/LockKey.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Medal.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Smiley.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Sparkle.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Star.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Users.es.js");
-/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
-/* harmony import */ var _sass_pages_badges_scss__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../../sass/pages/badges.scss */ "./resources/sass/pages/badges.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/CloudArrowUp.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Crown.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Fire.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Heart.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Lightning.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/LockKey.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Medal.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Smiley.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Sparkle.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Star.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Users.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
+/* harmony import */ var _sass_pages_badges_scss__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../../sass/pages/badges.scss */ "./resources/sass/pages/badges.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -6058,7 +6063,7 @@ var BADGES_DATA = [{
   id: 1,
   name: "Top Poster",
   description: "Posted 50+ times",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Star,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Star,
   gradient: "bg-gradient-orange",
   rarity: "Common",
   status: "earned"
@@ -6066,7 +6071,7 @@ var BADGES_DATA = [{
   id: 2,
   name: "Social Butterfly",
   description: "Made 20+ friends",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Heart,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Heart,
   gradient: "bg-gradient-pink",
   rarity: "Rare",
   status: "earned"
@@ -6074,7 +6079,7 @@ var BADGES_DATA = [{
   id: 3,
   name: "Contest Winner",
   description: "Won a pet contest",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Trophy,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trophy,
   gradient: "bg-gradient-yellow",
   rarity: "Epic",
   status: "earned"
@@ -6082,7 +6087,7 @@ var BADGES_DATA = [{
   id: 4,
   name: "Adoption Hero",
   description: "Helped 3 pets get adopted",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Heart,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Heart,
   gradient: "bg-gradient-green",
   rarity: "Rare",
   status: "earned"
@@ -6090,7 +6095,7 @@ var BADGES_DATA = [{
   id: 5,
   name: "Champion",
   description: "Reach top 10 leaderboard",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Crown,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Crown,
   gradient: "bg-gradient-gold",
   rarity: "Legendary",
   status: "in-progress",
@@ -6100,7 +6105,7 @@ var BADGES_DATA = [{
   id: 6,
   name: "Energizer",
   description: "Active 30 days in a row",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Lightning,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.Lightning,
   gradient: "bg-gradient-blue",
   rarity: "Epic",
   status: "in-progress",
@@ -6110,7 +6115,7 @@ var BADGES_DATA = [{
   id: 7,
   name: "Community Star",
   description: "Received 500+ likes",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Medal,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Medal,
   gradient: "bg-gradient-purple",
   rarity: "Rare",
   status: "in-progress",
@@ -6120,7 +6125,7 @@ var BADGES_DATA = [{
   id: 8,
   name: "Happy Vibes",
   description: "Spread joy to 100 users",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Smiley,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Smiley,
   gradient: "bg-gradient-teal",
   rarity: "Common",
   status: "in-progress",
@@ -6140,7 +6145,7 @@ var BADGES_DATA = [{
   id: 10,
   name: "Viral Moment",
   description: "Post reached 1000 views",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Fire,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire,
   gradient: "bg-gradient-red",
   rarity: "Epic",
   status: "locked",
@@ -6150,7 +6155,7 @@ var BADGES_DATA = [{
   id: 11,
   name: "Super Fan",
   description: "Follow 50 pet profiles",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Users,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Users,
   gradient: "bg-gradient-blue",
   rarity: "Common",
   status: "locked",
@@ -6160,7 +6165,7 @@ var BADGES_DATA = [{
   id: 12,
   name: "Legendary Pet",
   description: "All badges earned",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Sparkle,
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Sparkle,
   gradient: "bg-gradient-magenta",
   rarity: "Legendary",
   status: "locked",
@@ -6203,15 +6208,251 @@ var LEADERBOARD_DATA = [{
   xp: "3,100 XP",
   avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_1.png"
 }];
-var BadgesContests = function BadgesContests() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("All"),
+var ContestEntryModal = function ContestEntryModal(_ref) {
+  var isOpen = _ref.isOpen,
+    onClose = _ref.onClose;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
-    badgeFilter = _useState2[0],
-    setBadgeFilter = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("Week"),
+    selectedImage = _useState2[0],
+    setSelectedImage = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState4 = _slicedToArray(_useState3, 2),
-    leaderboardFilter = _useState4[0],
-    setLeaderboardFilter = _useState4[1];
+    caption = _useState4[0],
+    setCaption = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    isSubmitting = _useState6[0],
+    setIsSubmitting = _useState6[1];
+  var handleFileChange = function handleFileChange(e) {
+    var file = e.target.files[0];
+    if (file) {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        return setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var formData, finalCaption, fileInput, _err$response, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            if (!(!selectedImage || isSubmitting)) {
+              _context.n = 1;
+              break;
+            }
+            return _context.a(2);
+          case 1:
+            setIsSubmitting(true);
+            _context.p = 2;
+            formData = new FormData(); // Automatically append the contest hashtag as requested
+            finalCaption = caption.includes("#springcutest") ? caption : "".concat(caption, " #springcutest");
+            formData.append("caption", finalCaption);
+
+            // Convert data URL to Blob if necessary, but handleFileChange should have the file
+            // Let's assume we store the file object in a new state or get it from handled file
+            fileInput = document.getElementById('contest-photo');
+            if (fileInput.files[0]) {
+              formData.append("image", fileInput.files[0]);
+            }
+            _context.n = 3;
+            return window.axios.post("/api/posts", formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+          case 3:
+            onClose();
+            alert("Entry submitted successfully! Your photo is now live on the feed with #springcutest");
+            // Optional: redirect to home to see the post
+            window.location.href = "/homefeed";
+            _context.n = 5;
+            break;
+          case 4:
+            _context.p = 4;
+            _t = _context.v;
+            console.error(_t);
+            alert(((_err$response = _t.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || "Failed to submit entry. Make sure you have a pet profile.");
+          case 5:
+            _context.p = 5;
+            setIsSubmitting(false);
+            return _context.f(5);
+          case 6:
+            return _context.a(2);
+        }
+      }, _callee, null, [[2, 4, 5, 6]]);
+    }));
+    return function handleSubmit() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  if (!isOpen) return null;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+      className: "contest-modal-overlay",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        className: "contest-modal-bg",
+        initial: {
+          opacity: 0
+        },
+        animate: {
+          opacity: 1
+        },
+        exit: {
+          opacity: 0
+        },
+        onClick: onClose
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        className: "contest-modal-content",
+        initial: {
+          opacity: 0,
+          scale: 0.9,
+          y: 20
+        },
+        animate: {
+          opacity: 1,
+          scale: 1,
+          y: 0
+        },
+        exit: {
+          opacity: 0,
+          scale: 0.9,
+          y: 20
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          className: "modal-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+            children: "Enter Contest"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+            onClick: onClose,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.X, {
+              size: 24,
+              weight: "bold"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          className: "modal-body",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            className: "contest-brief",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trophy, {
+              size: 24,
+              weight: "fill",
+              color: "#eab308"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              children: "Spring Cutest Pet"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            className: "image-upload-area",
+            onClick: function onClick() {
+              return document.getElementById('contest-photo').click();
+            },
+            children: [selectedImage ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("img", {
+              src: selectedImage,
+              alt: "Preview",
+              className: "preview-img"
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+              className: "upload-placeholder",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.CloudArrowUp, {
+                size: 48,
+                weight: "duotone"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+                children: "Click to upload your pet's spring photo"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                children: "Supports JPG, PNG (Max 5MB)"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+              type: "file",
+              id: "contest-photo",
+              hidden: true,
+              accept: "image/*",
+              onChange: handleFileChange
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            className: "caption-area",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+              children: "Tell us about this photo"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("textarea", {
+              placeholder: "E.g. Mochi enjoying the cherry blossoms...",
+              value: caption,
+              onChange: function onChange(e) {
+                return setCaption(e.target.value);
+              }
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            className: "modal-footer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+              className: "cancel-btn",
+              onClick: onClose,
+              children: "Cancel"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+              className: "submit-btn ".concat(isSubmitting ? 'loading' : ''),
+              disabled: !selectedImage || isSubmitting,
+              onClick: handleSubmit,
+              children: isSubmitting ? "Submitting..." : "Submit Entry"
+            })]
+          })]
+        })]
+      })]
+    })
+  });
+};
+var BadgesContests = function BadgesContests() {
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("All"),
+    _useState8 = _slicedToArray(_useState7, 2),
+    badgeFilter = _useState8[0],
+    setBadgeFilter = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("Week"),
+    _useState0 = _slicedToArray(_useState9, 2),
+    leaderboardFilter = _useState0[0],
+    setLeaderboardFilter = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState10 = _slicedToArray(_useState1, 2),
+    showContestModal = _useState10[0],
+    setShowContestModal = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState12 = _slicedToArray(_useState11, 2),
+    entryCount = _useState12[0],
+    setEntryCount = _useState12[1];
+  var fetchEntryCount = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      var _res$data, res, total, _t2;
+      return _regenerator().w(function (_context2) {
+        while (1) switch (_context2.p = _context2.n) {
+          case 0:
+            _context2.p = 0;
+            _context2.n = 1;
+            return window.axios.get("/api/posts?hashtag=springcutest");
+          case 1:
+            res = _context2.v;
+            // The API returns paginated data, but the 'total' field has the count
+            total = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.total) || 0;
+            setEntryCount(total);
+            _context2.n = 3;
+            break;
+          case 2:
+            _context2.p = 2;
+            _t2 = _context2.v;
+            console.error(_t2);
+          case 3:
+            return _context2.a(2);
+        }
+      }, _callee2, null, [[0, 2]]);
+    }));
+    return function fetchEntryCount() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    fetchEntryCount();
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('enterContest') === 'true') {
+      setShowContestModal(true);
+      // Optional: clean up URL without reload
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
   var filteredBadges = BADGES_DATA.filter(function (badge) {
     if (badgeFilter === "All") return true;
     if (badgeFilter === "Earned") return badge.status === "earned";
@@ -6219,31 +6460,31 @@ var BadgesContests = function BadgesContests() {
     if (badgeFilter === "Locked") return badge.status === "locked";
     return true;
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
     className: "pawtastic-feed modern-badges",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_16__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("main", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_18__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("main", {
       className: "feed-main",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("header", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("header", {
         className: "page-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("h1", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h1", {
           children: "Badges & Contests"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
           children: "Earn achievements, track pet milestones, and climb the leaderboard!"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("section", {
         className: "badges-section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
           className: "section-top",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
             children: "Your Badges"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
             className: "badges-count",
             children: "4 / 12 earned"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
           className: "filters-row",
           children: ["All", "Earned", "In Progress", "Locked"].map(function (f) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("button", {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
               className: "filter-btn ".concat(badgeFilter === f ? "active" : ""),
               onClick: function onClick() {
                 return setBadgeFilter(f);
@@ -6251,11 +6492,11 @@ var BadgesContests = function BadgesContests() {
               children: f
             }, f);
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
           className: "badges-grid",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
             children: filteredBadges.map(function (badge) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
                 layout: true,
                 initial: {
                   opacity: 0,
@@ -6273,45 +6514,45 @@ var BadgesContests = function BadgesContests() {
                   duration: 0.2
                 },
                 className: "badge-card ".concat(badge.status, " border-").concat(badge.rarity.toLowerCase()),
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
                   className: "badge-card__top-icon",
-                  children: [badge.status === "earned" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.CheckCircle, {
+                  children: [badge.status === "earned" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.CheckCircle, {
                     className: "status-icon earned-icon",
                     weight: "fill"
-                  }), (badge.status === "in-progress" || badge.status === "locked") && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.LockKey, {
+                  }), (badge.status === "in-progress" || badge.status === "locked") && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.LockKey, {
                     className: "status-icon locked-icon",
                     weight: "bold"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
                   className: "badge-icon-wrap ".concat(badge.gradient),
                   children: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(badge.icon, {
                     size: 32,
                     weight: "fill",
                     color: "#fff"
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("h4", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
                   className: "badge-name",
                   children: badge.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
                   className: "badge-desc",
                   children: badge.description
-                }), badge.progress !== undefined ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+                }), badge.progress !== undefined ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
                   className: "badge-progress",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
                     className: "progress-bar",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
                       className: "progress-fill fill-".concat(badge.rarity.toLowerCase()),
                       style: {
                         width: "".concat(badge.progress / badge.total * 100, "%")
                       }
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
                     className: "progress-text",
                     children: [badge.progress, "/", badge.total]
                   })]
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
                   className: "badge-spacer"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                   className: "badge-rarity rarity-".concat(badge.rarity.toLowerCase()),
                   children: badge.rarity
                 })]
@@ -6319,16 +6560,16 @@ var BadgesContests = function BadgesContests() {
             })
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("section", {
         className: "leaderboard-section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
           className: "section-top",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
             children: "Leaderboard"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
             className: "filters-row small-filters",
             children: ["Week", "Month", "All Time"].map(function (f) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("button", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
                 className: "filter-btn ".concat(leaderboardFilter === f ? "active" : ""),
                 onClick: function onClick() {
                   return setLeaderboardFilter(f);
@@ -6337,92 +6578,173 @@ var BadgesContests = function BadgesContests() {
               }, f);
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
           className: "leaderboard-list",
           children: [LEADERBOARD_DATA.map(function (user, index) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
               className: "leaderboard-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
                 className: "rank-badge rank-".concat(user.rank),
-                children: user.rank === 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Crown, {
+                children: user.rank === 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Crown, {
                   size: 20,
                   weight: "fill",
                   color: "#fff"
                 }) : user.rank
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
                 className: "user-avatar",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("img", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("img", {
                   src: user.avatar,
                   alt: user.name
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
                 className: "user-info",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                   className: "user-name",
                   children: user.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
                   className: "user-stats",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("span", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
                     className: "stat",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Medal, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Medal, {
                       size: 14,
                       weight: "fill"
                     }), " ", user.badges, " badges"]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
                     className: "stat",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Fire, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire, {
                       size: 14,
                       weight: "fill"
                     }), " ", user.streak, " streak"]
                   })]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
                 className: "user-xp",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                   className: "xp-val",
                   children: user.xp.split(" ")[0]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                   className: "xp-lbl",
                   children: "XP"
                 })]
               })]
             }, user.rank);
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
             className: "leaderboard-item current-user-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
               className: "rank-badge rank-3",
               children: "3"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
               className: "user-avatar",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("img", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("img", {
                 src: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
                 alt: "You"
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
               className: "user-info",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                 className: "user-name",
                 children: "You (Sarah & Mochi)"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
                 className: "user-stats",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                   className: "stat text-dark",
                   children: "Top 5% this week \uD83D\uDE80"
                 })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
               className: "user-xp",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                 className: "xp-val",
                 children: "3,990"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
                 className: "xp-lbl",
                 children: "XP"
               })]
             })]
           })]
         })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("section", {
+        className: "contests-section",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          className: "section-top",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+            children: "Live Contest"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+            className: "live-pill",
+            children: "LIVE"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+          className: "contest-banner-card",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            className: "contest-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+              className: "contest-info-main",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                className: "contest-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trophy, {
+                  size: 40,
+                  weight: "fill",
+                  color: "#fff"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                className: "text-details",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h3", {
+                  children: "Spring Cutest Pet"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+                  children: "Share your pet's best spring-themed photo and win an Epic Badge + 1000 XP!"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                  className: "contest-meta",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
+                    className: "meta-item",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire, {
+                      size: 16,
+                      weight: "bold"
+                    }), " 2 days left"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
+                    className: "meta-item",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Users, {
+                      size: 16,
+                      weight: "bold"
+                    }), " ", entryCount, " entries"]
+                  })]
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+              className: "contest-action-area",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                className: "contest-progress-wrap",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                  className: "progress-labels",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                    children: "Current Progress"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                    children: "75%"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                  className: "progress-bar",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                    className: "progress-fill",
+                    style: {
+                      width: '75%'
+                    }
+                  })
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+                className: "enter-contest-btn",
+                onClick: function onClick() {
+                  return setShowContestModal(true);
+                },
+                children: "Enter Contest"
+              })]
+            })]
+          })
+        })]
       })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(ContestEntryModal, {
+      isOpen: showContestModal,
+      onClose: function onClose() {
+        return setShowContestModal(false);
+      }
     })]
   });
 };
@@ -6434,9 +6756,2547 @@ var BadgesContests = function BadgesContests() {
 /*!***********************************************!*\
   !*** ./resources/js/components/pages/Feed.js ***!
   \***********************************************/
-() {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\iamsa\\websys\\resources\\js\\components\\pages\\Feed.js: Identifier 'handleDeleteStory' has already been declared. (435:10)\n\n\u001b[0m \u001b[90m 433 |\u001b[39m     }\u001b[33m;\u001b[39m\n \u001b[90m 434 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 435 |\u001b[39m     \u001b[36mconst\u001b[39m handleDeleteStory \u001b[33m=\u001b[39m \u001b[36masync\u001b[39m (id) \u001b[33m=>\u001b[39m {\n \u001b[90m     |\u001b[39m           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 436 |\u001b[39m         \u001b[36mif\u001b[39m (\u001b[33m!\u001b[39mconfirm(\u001b[32m\"Are you sure you want to delete this story?\"\u001b[39m)) \u001b[36mreturn\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 437 |\u001b[39m         \u001b[36mtry\u001b[39m {\n \u001b[90m 438 |\u001b[39m             \u001b[36mawait\u001b[39m window\u001b[33m.\u001b[39maxios\u001b[33m.\u001b[39m\u001b[36mdelete\u001b[39m(\u001b[32m`/api/stories/${id}`\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n    at constructor (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:365:19)\n    at JSXParserMixin.raise (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:6599:19)\n    at ScopeHandler.checkRedeclarationInScope (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:1619:19)\n    at ScopeHandler.declareName (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:1585:12)\n    at JSXParserMixin.declareNameFromIdentifier (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:7567:16)\n    at JSXParserMixin.checkIdentifier (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:7563:12)\n    at JSXParserMixin.checkLVal (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:7500:12)\n    at JSXParserMixin.parseVarId (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13412:10)\n    at JSXParserMixin.parseVar (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13383:12)\n    at JSXParserMixin.parseVarStatement (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13230:10)\n    at JSXParserMixin.parseStatementContent (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12851:23)\n    at JSXParserMixin.parseStatementLike (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12767:17)\n    at JSXParserMixin.parseStatementListItem (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12747:17)\n    at JSXParserMixin.parseBlockOrModuleBlockBody (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13316:61)\n    at JSXParserMixin.parseBlockBody (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13309:10)\n    at JSXParserMixin.parseBlock (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13297:10)\n    at JSXParserMixin.parseFunctionBody (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12100:24)\n    at JSXParserMixin.parseArrowExpression (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12075:10)\n    at JSXParserMixin.parseParenAndDistinguishExpression (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:11687:12)\n    at JSXParserMixin.parseExprAtom (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:11331:23)\n    at JSXParserMixin.parseExprAtom (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:4764:20)\n    at JSXParserMixin.parseExprSubscripts (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:11081:23)\n    at JSXParserMixin.parseUpdate (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:11066:21)\n    at JSXParserMixin.parseMaybeUnary (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:11046:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:10899:61)\n    at JSXParserMixin.parseExprOps (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:10904:23)\n    at JSXParserMixin.parseMaybeConditional (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:10881:23)\n    at JSXParserMixin.parseMaybeAssign (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:10831:21)\n    at C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:10800:39\n    at JSXParserMixin.allowInAnd (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12421:16)\n    at JSXParserMixin.parseMaybeAssignAllowIn (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:10800:17)\n    at JSXParserMixin.parseVar (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13384:91)\n    at JSXParserMixin.parseVarStatement (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13230:10)\n    at JSXParserMixin.parseStatementContent (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12851:23)\n    at JSXParserMixin.parseStatementLike (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12767:17)\n    at JSXParserMixin.parseModuleItem (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12744:17)\n    at JSXParserMixin.parseBlockOrModuleBlockBody (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13316:36)\n    at JSXParserMixin.parseBlockBody (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:13309:10)\n    at JSXParserMixin.parseProgram (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12622:10)\n    at JSXParserMixin.parseTopLevel (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:12612:25)\n    at JSXParserMixin.parse (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:14488:25)\n    at parse (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\parser\\lib\\index.js:14522:38)\n    at parser (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\core\\lib\\parser\\index.js:41:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:64:37)\n    at normalizeFile.next (<anonymous>)\n    at run (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\core\\lib\\transformation\\index.js:22:50)\n    at run.next (<anonymous>)\n    at transform (C:\\Users\\iamsa\\websys\\node_modules\\@babel\\core\\lib\\transform.js:22:33)\n    at transform.next (<anonymous>)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs");
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/At.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Bookmark.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/CaretDown.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/CaretLeft.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/CaretRight.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/ChatCircle.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/DotsThree.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Download.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/EyeSlash.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/FlagBanner.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Globe.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Heart.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Image.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MagnifyingGlass.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MapPin.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PaperPlaneRight.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/ShareNetwork.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/ShieldCheck.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trash.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/TrendUp.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/User.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/UserPlus.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Users.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Video.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_31__);
+/* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../../context/UserContext */ "./resources/js/context/UserContext.js");
+/* harmony import */ var _sass_pages_feed_scss__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../../../sass/pages/feed.scss */ "./resources/sass/pages/feed.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var _excluded = ["children", "variant", "className"];
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+
+
+
+
+
+
+
+
+// ── Micro components ──────────────────────────────────────────────────
+
+var Avatar = function Avatar(_ref) {
+  var src = _ref.src,
+    fallback = _ref.fallback,
+    _ref$size = _ref.size,
+    size = _ref$size === void 0 ? "md" : _ref$size,
+    _ref$online = _ref.online,
+    online = _ref$online === void 0 ? false : _ref$online;
+  var avatarSrc = src || (fallback ? "https://ui-avatars.com/api/?name=".concat(encodeURIComponent(fallback), "&background=898AA6&color=fff") : "https://ui-avatars.com/api/?name=User&background=898AA6&color=fff");
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+    className: "feed-avatar feed-avatar--".concat(size, " ").concat(online ? "online" : ""),
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("img", {
+      src: avatarSrc,
+      alt: "avatar"
+    }), online && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+      className: "feed-avatar__dot"
+    })]
+  });
+};
+var Button = function Button(_ref2) {
+  var children = _ref2.children,
+    _ref2$variant = _ref2.variant,
+    variant = _ref2$variant === void 0 ? "default" : _ref2$variant,
+    _ref2$className = _ref2.className,
+    className = _ref2$className === void 0 ? "" : _ref2$className,
+    props = _objectWithoutProperties(_ref2, _excluded);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", _objectSpread(_objectSpread({
+    className: "feed-btn feed-btn--".concat(variant, " ").concat(className)
+  }, props), {}, {
+    children: children
+  }));
+};
+var Card = function Card(_ref3) {
+  var children = _ref3.children,
+    _ref3$className = _ref3.className,
+    className = _ref3$className === void 0 ? "" : _ref3$className,
+    innerRef = _ref3.innerRef;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+    ref: innerRef,
+    className: "feed-card ".concat(className),
+    children: children
+  });
+};
+
+// ── Reactions ────────────────────────────────────────────────────────
+var REACTIONS = [{
+  key: "pup",
+  emoji: "🐶",
+  label: "Love it!",
+  color: "#f7a821"
+}, {
+  key: "cat",
+  emoji: "🐱",
+  label: "Cute!",
+  color: "#e91e8c"
+}, {
+  key: "bunny",
+  emoji: "🐰",
+  label: "Aww!",
+  color: "#f06292"
+}, {
+  key: "fox",
+  emoji: "🦊",
+  label: "Wow!",
+  color: "#f7b125"
+}, {
+  key: "paw",
+  emoji: "🐾",
+  label: "Paw it!",
+  color: "#898AA6"
+}];
+var MENU_ITEMS = [{
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Bookmark,
+  label: "Save this post",
+  sub: "Add to your saved posts collection.",
+  color: "var(--text-main)"
+}, {
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_26__.UserPlus,
+  label: "Follow this pet",
+  sub: "See more from this pet in your feed.",
+  color: "var(--text-main)"
+}, {
+  divider: true
+}, {
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.EyeSlash,
+  label: "Hide from my feed",
+  sub: "See fewer posts like this.",
+  color: "#e11d48"
+}, {
+  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.FlagBanner,
+  label: "Report to Petverse",
+  sub: "Help us keep the community safe.",
+  color: "#e11d48"
+}];
+var PostMenu = function PostMenu(_ref4) {
+  var postId = _ref4.postId;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    open = _useState2[0],
+    setOpen = _useState2[1];
+  var ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var h = function h(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    if (open) document.addEventListener("mousedown", h);
+    return function () {
+      return document.removeEventListener("mousedown", h);
+    };
+  }, [open]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+    className: "post-menu",
+    ref: ref,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+      className: "post-menu__trigger",
+      onClick: function onClick() {
+        return setOpen(!open);
+      },
+      "aria-label": "More options",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.DotsThree, {
+        size: 20,
+        weight: "bold"
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: open && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        className: "post-menu__dropdown",
+        initial: {
+          opacity: 0,
+          scale: 0.95,
+          y: -8
+        },
+        animate: {
+          opacity: 1,
+          scale: 1,
+          y: 0
+        },
+        exit: {
+          opacity: 0,
+          scale: 0.95,
+          y: -8
+        },
+        transition: {
+          duration: 0.15,
+          ease: "easeOut"
+        },
+        children: MENU_ITEMS.map(function (item, i) {
+          return item.divider ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+            className: "post-menu__divider"
+          }, i) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+            className: "post-menu__item ".concat(item.color === '#e11d48' ? 'danger' : ''),
+            onClick: function onClick() {
+              return setOpen(false);
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(item.icon, {
+              size: 18,
+              weight: "duotone"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "item-text",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                className: "label",
+                children: item.label
+              }), item.sub && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                className: "sub",
+                children: item.sub
+              })]
+            })]
+          }, i);
+        })
+      })
+    })]
+  });
+};
+
+// ── Feed Component ─────────────────────────────────────────────────────
+
+var PostModal = function PostModal(_ref5) {
+  var post = _ref5.post,
+    onClose = _ref5.onClose,
+    onLike = _ref5.onLike;
+  if (!post) return null;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+    className: "post-modal-overlay",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+      className: "post-modal-bg",
+      onClick: onClose
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+      className: "post-modal-content ".concat(post.image || post.video ? 'has-image' : 'text-only'),
+      initial: {
+        opacity: 0,
+        scale: 0.95,
+        y: 20
+      },
+      animate: {
+        opacity: 1,
+        scale: 1,
+        y: 0
+      },
+      exit: {
+        opacity: 0,
+        scale: 0.95,
+        y: 20
+      },
+      transition: {
+        duration: 0.2,
+        ease: "easeOut"
+      },
+      children: [post.video && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+        className: "post-modal-media",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("video", {
+          src: post.video,
+          controls: true,
+          autoPlay: true
+        })
+      }), post.image && !post.video && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+        className: "post-modal-media",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("img", {
+          src: post.image,
+          alt: "Post content"
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+        className: "post-modal-sidebar",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+          className: "post-modal-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "user",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+              src: post.avatar,
+              size: "md",
+              online: true
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "meta",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "meta-top",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "name",
+                  children: post.author
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "time",
+                  children: post.time
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "meta-bottom",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "breed",
+                  children: post.breed
+                }), post.location && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("span", {
+                  className: "location",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.MapPin, {
+                    size: 12,
+                    weight: "fill"
+                  }), " ", post.location]
+                })]
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+            className: "close-btn",
+            onClick: onClose,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_29__.X, {
+              size: 20,
+              weight: "bold"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+          className: "post-modal-scrollable",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "post-modal-caption",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+              src: post.avatar,
+              size: "sm"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "caption-content",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                className: "author-name",
+                children: post.author
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                className: "text",
+                children: post.content
+              }), post.hashtags && post.hashtags.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                className: "hashtags",
+                children: post.hashtags.map(function (tag) {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                    children: tag
+                  }, tag);
+                })
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+            className: "post-modal-comments",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "empty-state",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                children: "No comments yet."
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                children: "Start the conversation."
+              })]
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+          className: "post-modal-footer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "actions",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "actions-left",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "action-btn ".concat(post.isLiked ? 'active' : ''),
+                onClick: function onClick() {
+                  return onLike(post.id);
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Heart, {
+                  size: 24,
+                  weight: post.isLiked ? "fill" : "bold"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "action-btn",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.ChatCircle, {
+                  size: 24
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "action-btn",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_20__.ShareNetwork, {
+                  size: 24
+                })
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+              className: "action-btn bookmark",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Bookmark, {
+                size: 24
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "likes-count",
+            children: [post.likes, " likes"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "add-comment",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("input", {
+              type: "text",
+              placeholder: "Add a comment..."
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+              className: "post-btn",
+              children: "Post"
+            })]
+          })]
+        })]
+      })]
+    })]
+  });
+};
+var Feed = function Feed() {
+  var _viewerState$userStor, _viewerState$userStor2, _viewerState$userStor3, _viewerState$userStor4, _viewerState$userStor5, _user$pet2;
+  var _useUser = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_32__.useUser)(),
+    user = _useUser.user;
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    posts = _useState4[0],
+    setPosts = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState6 = _slicedToArray(_useState5, 2),
+    dynamicStories = _useState6[0],
+    setStories = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState8 = _slicedToArray(_useState7, 2),
+    hiddenStoryUsers = _useState8[0],
+    setHiddenStoryUsers = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    isAddMenuOpen = _useState0[0],
+    setIsAddMenuOpen = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      isOpen: false,
+      userStories: [],
+      currentIndex: 0
+    }),
+    _useState10 = _slicedToArray(_useState1, 2),
+    viewerState = _useState10[0],
+    setViewerState = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showStoryMenu = _useState12[0],
+    setShowStoryMenu = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState14 = _slicedToArray(_useState13, 2),
+    postText = _useState14[0],
+    setPostText = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    isCreateExpanded = _useState16[0],
+    setExpanded = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    isPosting = _useState18[0],
+    setIsPosting = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("public"),
+    _useState20 = _slicedToArray(_useState19, 2),
+    postPrivacy = _useState20[0],
+    setPostPrivacy = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    showPrivacyMenu = _useState22[0],
+    setShowPrivacyMenu = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    postLocation = _useState24[0],
+    setPostLocation = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    isLocating = _useState26[0],
+    setIsLocating = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState28 = _slicedToArray(_useState27, 2),
+    isLocationPickerOpen = _useState28[0],
+    setIsLocationPickerOpen = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState30 = _slicedToArray(_useState29, 2),
+    locationSearchQuery = _useState30[0],
+    setLocationSearchQuery = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState32 = _slicedToArray(_useState31, 2),
+    suggestedLocations = _useState32[0],
+    setSuggestedLocations = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState34 = _slicedToArray(_useState33, 2),
+    isTagPickerOpen = _useState34[0],
+    setIsTagPickerOpen = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState36 = _slicedToArray(_useState35, 2),
+    taggedPets = _useState36[0],
+    setTaggedPets = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState38 = _slicedToArray(_useState37, 2),
+    petSearchQuery = _useState38[0],
+    setPetSearchQuery = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState40 = _slicedToArray(_useState39, 2),
+    suggestedPets = _useState40[0],
+    setSuggestedPets = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    isSearchingPets = _useState42[0],
+    setIsSearchingPets = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState44 = _slicedToArray(_useState43, 2),
+    activePost = _useState44[0],
+    setActivePost = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    showVisibilitySubmenu = _useState46[0],
+    setShowVisibilitySubmenu = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState48 = _slicedToArray(_useState47, 2),
+    storyProgress = _useState48[0],
+    setStoryProgress = _useState48[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState50 = _slicedToArray(_useState49, 2),
+    filterTag = _useState50[0],
+    setFilterTag = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    isSeeAllPetsOpen = _useState52[0],
+    setIsSeeAllPetsOpen = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState54 = _slicedToArray(_useState53, 2),
+    contestEntryCount = _useState54[0],
+    setContestEntryCount = _useState54[1];
+  var privacyMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var storyMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var fileInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var imageInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var videoInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var addMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var createCardRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState56 = _slicedToArray(_useState55, 2),
+    postImage = _useState56[0],
+    setPostImage = _useState56[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState58 = _slicedToArray(_useState57, 2),
+    postVideo = _useState58[0],
+    setPostVideo = _useState58[1];
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState60 = _slicedToArray(_useState59, 2),
+    imagePreview = _useState60[0],
+    setImagePreview = _useState60[1];
+  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState62 = _slicedToArray(_useState61, 2),
+    videoPreview = _useState62[0],
+    setVideoPreview = _useState62[1];
+
+  // Reset submenu when story menu closes
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!showStoryMenu) setShowVisibilitySubmenu(false);
+  }, [showStoryMenu]);
+
+  // Handle click outside for story menu
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var handleClickOutside = function handleClickOutside(e) {
+      if (storyMenuRef.current && !storyMenuRef.current.contains(e.target)) {
+        setShowStoryMenu(false);
+      }
+    };
+    if (showStoryMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return function () {
+      return document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showStoryMenu]);
+  var fetchPosts = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var hashtag,
+        _res$data,
+        url,
+        res,
+        mappedPosts,
+        _args = arguments,
+        _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            hashtag = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
+            _context.p = 1;
+            url = hashtag ? "/api/posts?hashtag=".concat(encodeURIComponent(hashtag)) : "/api/posts";
+            _context.n = 2;
+            return window.axios.get(url);
+          case 2:
+            res = _context.v;
+            mappedPosts = (((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || res.data || []).map(function (p) {
+              var _p$pet, _p$user, _p$pet2, _p$pet3, _p$user2, _p$caption;
+              return {
+                id: p.id,
+                author: ((_p$pet = p.pet) === null || _p$pet === void 0 ? void 0 : _p$pet.name) || ((_p$user = p.user) === null || _p$user === void 0 ? void 0 : _p$user.name) || "Petverse User",
+                breed: ((_p$pet2 = p.pet) === null || _p$pet2 === void 0 ? void 0 : _p$pet2.breed) || "Pet",
+                location: p.location || "",
+                avatar: ((_p$pet3 = p.pet) === null || _p$pet3 === void 0 ? void 0 : _p$pet3.image_url) || ((_p$user2 = p.user) === null || _p$user2 === void 0 ? void 0 : _p$user2.avatar_url) || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
+                time: p.created_at ? new Date(p.created_at).toLocaleDateString() : "just now",
+                content: p.caption || p.content || "",
+                hashtags: ((_p$caption = p.caption) === null || _p$caption === void 0 ? void 0 : _p$caption.match(/#\w+/g)) || [],
+                image: p.image_url || p.media_url || null,
+                video: p.video_url || null,
+                likes: Array.isArray(p.likes) ? p.likes.length : p.likes_count || p.like_count || 0,
+                comments: Array.isArray(p.comments) ? p.comments.length : p.comments_count || p.comment_count || 0,
+                isLiked: false
+              };
+            });
+            setPosts(mappedPosts);
+            _context.n = 4;
+            break;
+          case 3:
+            _context.p = 3;
+            _t = _context.v;
+            console.error(_t);
+          case 4:
+            return _context.a(2);
+        }
+      }, _callee, null, [[1, 3]]);
+    }));
+    return function fetchPosts() {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var fetchInitialData = /*#__PURE__*/function () {
+      var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+        var _contestRes$data, storiesRes, contestRes, _t2;
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.p = _context2.n) {
+            case 0:
+              _context2.p = 0;
+              _context2.n = 1;
+              return window.axios.get("/api/stories");
+            case 1:
+              storiesRes = _context2.v;
+              setStories(storiesRes.data);
+              fetchPosts(filterTag);
+
+              // Fetch contest entry count
+              _context2.n = 2;
+              return window.axios.get("/api/posts?hashtag=springcutest");
+            case 2:
+              contestRes = _context2.v;
+              setContestEntryCount(((_contestRes$data = contestRes.data) === null || _contestRes$data === void 0 ? void 0 : _contestRes$data.total) || 0);
+              _context2.n = 4;
+              break;
+            case 3:
+              _context2.p = 3;
+              _t2 = _context2.v;
+              console.error(_t2);
+            case 4:
+              return _context2.a(2);
+          }
+        }, _callee2, null, [[0, 3]]);
+      }));
+      return function fetchInitialData() {
+        return _ref7.apply(this, arguments);
+      };
+    }();
+    fetchInitialData();
+  }, [filterTag]);
+  var handleAddClick = function handleAddClick(e) {
+    if (e) e.stopPropagation();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  var handleFileChange = /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(e) {
+      var file, formData, res, _t3;
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.p = _context3.n) {
+          case 0:
+            file = e.target.files[0];
+            if (file) {
+              _context3.n = 1;
+              break;
+            }
+            return _context3.a(2);
+          case 1:
+            formData = new FormData();
+            formData.append("media", file);
+            _context3.p = 2;
+            _context3.n = 3;
+            return window.axios.post("/api/stories", formData);
+          case 3:
+            _context3.n = 4;
+            return window.axios.get("/api/stories");
+          case 4:
+            res = _context3.v;
+            setStories(res.data);
+            _context3.n = 6;
+            break;
+          case 5:
+            _context3.p = 5;
+            _t3 = _context3.v;
+            alert("Upload failed");
+          case 6:
+            return _context3.a(2);
+        }
+      }, _callee3, null, [[2, 5]]);
+    }));
+    return function handleFileChange(_x) {
+      return _ref8.apply(this, arguments);
+    };
+  }();
+  var handleLocationClick = function handleLocationClick() {
+    if (postLocation) {
+      setPostLocation(null);
+      return;
+    }
+    setIsLocationPickerOpen(true);
+    fetchNearbyLocations();
+  };
+  var fetchNearbyLocations = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+      return _regenerator().w(function (_context5) {
+        while (1) switch (_context5.n) {
+          case 0:
+            setIsLocating(true);
+            if (navigator.geolocation) {
+              _context5.n = 1;
+              break;
+            }
+            setSuggestedLocations([{
+              id: 1,
+              name: "Central Park",
+              sub: "New York, USA",
+              type: "park"
+            }, {
+              id: 2,
+              name: "Downtown Area",
+              sub: "City Center",
+              type: "city"
+            }, {
+              id: 3,
+              name: "Local Cafe",
+              sub: "Nearby",
+              type: "cafe"
+            }]);
+            setIsLocating(false);
+            return _context5.a(2);
+          case 1:
+            navigator.geolocation.getCurrentPosition(/*#__PURE__*/function () {
+              var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(position) {
+                var _position$coords, latitude, longitude, reverseRes, reverseData, addr, cityName, stateName, countryName, roadName, currentSub, nearby, _t4;
+                return _regenerator().w(function (_context4) {
+                  while (1) switch (_context4.p = _context4.n) {
+                    case 0:
+                      _position$coords = position.coords, latitude = _position$coords.latitude, longitude = _position$coords.longitude;
+                      _context4.p = 1;
+                      _context4.n = 2;
+                      return fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=".concat(latitude, "&lon=").concat(longitude, "&zoom=18&addressdetails=1"));
+                    case 2:
+                      reverseRes = _context4.v;
+                      _context4.n = 3;
+                      return reverseRes.json();
+                    case 3:
+                      reverseData = _context4.v;
+                      addr = reverseData.address || {};
+                      cityName = addr.city || addr.town || addr.village || addr.county || "Current Location";
+                      stateName = addr.state || addr.region || "";
+                      countryName = addr.country || "";
+                      roadName = addr.road || addr.pedestrian || addr.street || "";
+                      currentSub = stateName ? "".concat(cityName, ", ").concat(stateName) : countryName || "Nearby";
+                      nearby = [{
+                        id: 1,
+                        name: roadName || "Current Location",
+                        sub: currentSub,
+                        type: "pin",
+                        lat: latitude,
+                        lon: longitude
+                      }, {
+                        id: 2,
+                        name: "My Location",
+                        sub: "".concat(cityName, ", ").concat(countryName || ""),
+                        type: "pin",
+                        lat: latitude,
+                        lon: longitude
+                      }];
+                      setSuggestedLocations(nearby);
+                      _context4.n = 5;
+                      break;
+                    case 4:
+                      _context4.p = 4;
+                      _t4 = _context4.v;
+                      setSuggestedLocations([{
+                        id: 1,
+                        name: "Current Location",
+                        sub: "Nearby",
+                        type: "pin"
+                      }, {
+                        id: 2,
+                        name: "Local Area",
+                        sub: "Nearby",
+                        type: "city"
+                      }]);
+                    case 5:
+                      _context4.p = 5;
+                      setIsLocating(false);
+                      return _context4.f(5);
+                    case 6:
+                      return _context4.a(2);
+                  }
+                }, _callee4, null, [[1, 4, 5, 6]]);
+              }));
+              return function (_x2) {
+                return _ref0.apply(this, arguments);
+              };
+            }(), function () {
+              setSuggestedLocations([{
+                id: 1,
+                name: "Central Park",
+                sub: "Popular location",
+                type: "park"
+              }, {
+                id: 2,
+                name: "Downtown",
+                sub: "City Center",
+                type: "city"
+              }]);
+              setIsLocating(false);
+            }, {
+              enableHighAccuracy: true,
+              timeout: 10000
+            });
+          case 2:
+            return _context5.a(2);
+        }
+      }, _callee5);
+    }));
+    return function fetchNearbyLocations() {
+      return _ref9.apply(this, arguments);
+    };
+  }();
+  var searchLocations = /*#__PURE__*/function () {
+    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(query) {
+      var res, data, results, _t5;
+      return _regenerator().w(function (_context6) {
+        while (1) switch (_context6.p = _context6.n) {
+          case 0:
+            if (query.trim()) {
+              _context6.n = 1;
+              break;
+            }
+            fetchNearbyLocations();
+            return _context6.a(2);
+          case 1:
+            setIsLocating(true);
+            _context6.p = 2;
+            _context6.n = 3;
+            return fetch("https://nominatim.openstreetmap.org/search?format=json&q=".concat(encodeURIComponent(query), "&limit=8&addressdetails=1"));
+          case 3:
+            res = _context6.v;
+            _context6.n = 4;
+            return res.json();
+          case 4:
+            data = _context6.v;
+            results = data.map(function (item, index) {
+              var _item$namedetails;
+              return {
+                id: item.place_id || index + 1,
+                name: ((_item$namedetails = item.namedetails) === null || _item$namedetails === void 0 ? void 0 : _item$namedetails.name) || item.name || item.display_name.split(",")[0],
+                sub: item.display_name,
+                type: "pin",
+                lat: item.lat,
+                lon: item.lon
+              };
+            });
+            setSuggestedLocations(results);
+            _context6.n = 6;
+            break;
+          case 5:
+            _context6.p = 5;
+            _t5 = _context6.v;
+            console.error(_t5);
+          case 6:
+            _context6.p = 6;
+            setIsLocating(false);
+            return _context6.f(6);
+          case 7:
+            return _context6.a(2);
+        }
+      }, _callee6, null, [[2, 5, 6, 7]]);
+    }));
+    return function searchLocations(_x3) {
+      return _ref1.apply(this, arguments);
+    };
+  }();
+  var fetchSuggestedPets = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
+      var _res$data2, res, data, _t6;
+      return _regenerator().w(function (_context7) {
+        while (1) switch (_context7.p = _context7.n) {
+          case 0:
+            setIsSearchingPets(true);
+            _context7.p = 1;
+            _context7.n = 2;
+            return window.axios.get("/api/pets");
+          case 2:
+            res = _context7.v;
+            data = ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.data) || res.data || [];
+            setSuggestedPets(data.slice(0, 5));
+            _context7.n = 4;
+            break;
+          case 3:
+            _context7.p = 3;
+            _t6 = _context7.v;
+            console.error(_t6);
+          case 4:
+            _context7.p = 4;
+            setIsSearchingPets(false);
+            return _context7.f(4);
+          case 5:
+            return _context7.a(2);
+        }
+      }, _callee7, null, [[1, 3, 4, 5]]);
+    }));
+    return function fetchSuggestedPets() {
+      return _ref10.apply(this, arguments);
+    };
+  }();
+  var searchPets = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(query) {
+      var _res$data3, res, data, _t7;
+      return _regenerator().w(function (_context8) {
+        while (1) switch (_context8.p = _context8.n) {
+          case 0:
+            if (query.trim()) {
+              _context8.n = 1;
+              break;
+            }
+            fetchSuggestedPets();
+            return _context8.a(2);
+          case 1:
+            setIsSearchingPets(true);
+            _context8.p = 2;
+            _context8.n = 3;
+            return window.axios.get("/api/pets?search=".concat(encodeURIComponent(query)));
+          case 3:
+            res = _context8.v;
+            data = ((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.data) || res.data || [];
+            setSuggestedPets(data.slice(0, 8));
+            _context8.n = 5;
+            break;
+          case 4:
+            _context8.p = 4;
+            _t7 = _context8.v;
+            console.error(_t7);
+          case 5:
+            _context8.p = 5;
+            setIsSearchingPets(false);
+            return _context8.f(5);
+          case 6:
+            return _context8.a(2);
+        }
+      }, _callee8, null, [[2, 4, 5, 6]]);
+    }));
+    return function searchPets(_x4) {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  var handleTagClick = function handleTagClick() {
+    setIsTagPickerOpen(true);
+    fetchSuggestedPets();
+  };
+  var toggleTagPet = function toggleTagPet(pet) {
+    setTaggedPets(function (prev) {
+      if (prev.some(function (p) {
+        return p.id === pet.id;
+      })) {
+        return prev.filter(function (p) {
+          return p.id !== pet.id;
+        });
+      }
+      return [].concat(_toConsumableArray(prev), [pet]);
+    });
+  };
+  var handleImageClick = function handleImageClick() {
+    var _imageInputRef$curren;
+    return (_imageInputRef$curren = imageInputRef.current) === null || _imageInputRef$curren === void 0 ? void 0 : _imageInputRef$curren.click();
+  };
+  var handleVideoClick = function handleVideoClick() {
+    var _videoInputRef$curren;
+    return (_videoInputRef$curren = videoInputRef.current) === null || _videoInputRef$curren === void 0 ? void 0 : _videoInputRef$curren.click();
+  };
+  var handleFollow = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(followingPetId) {
+      var _user$pet;
+      var _t8;
+      return _regenerator().w(function (_context9) {
+        while (1) switch (_context9.p = _context9.n) {
+          case 0:
+            if (user !== null && user !== void 0 && (_user$pet = user.pet) !== null && _user$pet !== void 0 && _user$pet.id) {
+              _context9.n = 1;
+              break;
+            }
+            alert("You need a pet profile to follow others.");
+            return _context9.a(2);
+          case 1:
+            _context9.p = 1;
+            _context9.n = 2;
+            return window.axios.post("/api/follow", {
+              follower_pet_id: user.pet.id,
+              following_pet_id: followingPetId
+            });
+          case 2:
+            // Update local state to show followed
+            setSuggestedPets(function (prev) {
+              return prev.map(function (p) {
+                return p.id === followingPetId ? _objectSpread(_objectSpread({}, p), {}, {
+                  is_following: true
+                }) : p;
+              });
+            });
+            _context9.n = 4;
+            break;
+          case 3:
+            _context9.p = 3;
+            _t8 = _context9.v;
+            console.error(_t8);
+            alert("Already following or error occurred");
+          case 4:
+            return _context9.a(2);
+        }
+      }, _callee9, null, [[1, 3]]);
+    }));
+    return function handleFollow(_x5) {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+  var handleImageChange = function handleImageChange(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    setPostImage(file);
+    setImagePreview(URL.createObjectURL(file));
+    setPostVideo(null);
+    setVideoPreview(null);
+    setExpanded(true);
+  };
+  var handleVideoChange = function handleVideoChange(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    setPostVideo(file);
+    setVideoPreview(URL.createObjectURL(file));
+    setPostImage(null);
+    setImagePreview(null);
+    setExpanded(true);
+  };
+  var clearMedia = function clearMedia() {
+    setPostImage(null);
+    setPostVideo(null);
+    setImagePreview(null);
+    setVideoPreview(null);
+    if (imageInputRef.current) imageInputRef.current.value = "";
+    if (videoInputRef.current) videoInputRef.current.value = "";
+  };
+  var handleDeleteStory = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(id) {
+      var _t9;
+      return _regenerator().w(function (_context0) {
+        while (1) switch (_context0.p = _context0.n) {
+          case 0:
+            if (confirm("Are you sure you want to delete this story?")) {
+              _context0.n = 1;
+              break;
+            }
+            return _context0.a(2);
+          case 1:
+            _context0.p = 1;
+            _context0.n = 2;
+            return window.axios["delete"]("/api/stories/".concat(id));
+          case 2:
+            setStories(function (prev) {
+              return prev.map(function (g) {
+                return _objectSpread(_objectSpread({}, g), {}, {
+                  stories: g.stories.filter(function (s) {
+                    return s.id !== id;
+                  })
+                });
+              }).filter(function (g) {
+                return g.stories.length > 0;
+              });
+            });
+            setViewerState(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                isOpen: false
+              });
+            });
+            _context0.n = 4;
+            break;
+          case 3:
+            _context0.p = 3;
+            _t9 = _context0.v;
+            console.error(_t9);
+          case 4:
+            return _context0.a(2);
+        }
+      }, _callee0, null, [[1, 3]]);
+    }));
+    return function handleDeleteStory(_x6) {
+      return _ref13.apply(this, arguments);
+    };
+  }();
+  var handleArchiveStory = /*#__PURE__*/function () {
+    var _ref14 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(id) {
+      var _t0;
+      return _regenerator().w(function (_context1) {
+        while (1) switch (_context1.p = _context1.n) {
+          case 0:
+            _context1.p = 0;
+            _context1.n = 1;
+            return window.axios.post("/api/stories/".concat(id, "/archive"));
+          case 1:
+            setStories(function (prev) {
+              return prev.map(function (g) {
+                return _objectSpread(_objectSpread({}, g), {}, {
+                  stories: g.stories.filter(function (s) {
+                    return s.id !== id;
+                  })
+                });
+              }).filter(function (g) {
+                return g.stories.length > 0;
+              });
+            });
+            setViewerState(function (p) {
+              return _objectSpread(_objectSpread({}, p), {}, {
+                isOpen: false
+              });
+            });
+            _context1.n = 3;
+            break;
+          case 2:
+            _context1.p = 2;
+            _t0 = _context1.v;
+            console.error(_t0);
+          case 3:
+            return _context1.a(2);
+        }
+      }, _callee1, null, [[0, 2]]);
+    }));
+    return function handleArchiveStory(_x7) {
+      return _ref14.apply(this, arguments);
+    };
+  }();
+  var handleUpdateVisibility = /*#__PURE__*/function () {
+    var _ref15 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(id, visibility) {
+      var _t1;
+      return _regenerator().w(function (_context10) {
+        while (1) switch (_context10.p = _context10.n) {
+          case 0:
+            _context10.p = 0;
+            _context10.n = 1;
+            return window.axios.patch("/api/stories/".concat(id), {
+              visibility: visibility
+            });
+          case 1:
+            // Update local state in groups
+            setStories(function (prev) {
+              return prev.map(function (g) {
+                return _objectSpread(_objectSpread({}, g), {}, {
+                  stories: g.stories.map(function (s) {
+                    return s.id === id ? _objectSpread(_objectSpread({}, s), {}, {
+                      visibility: visibility
+                    }) : s;
+                  })
+                });
+              });
+            });
+            setViewerState(function (prev) {
+              var updated = _toConsumableArray(prev.userStories);
+              updated[prev.currentIndex] = _objectSpread(_objectSpread({}, updated[prev.currentIndex]), {}, {
+                visibility: visibility
+              });
+              return _objectSpread(_objectSpread({}, prev), {}, {
+                userStories: updated
+              });
+            });
+            setShowStoryMenu(false);
+            _context10.n = 3;
+            break;
+          case 2:
+            _context10.p = 2;
+            _t1 = _context10.v;
+            console.error(_t1);
+          case 3:
+            return _context10.a(2);
+        }
+      }, _callee10, null, [[0, 2]]);
+    }));
+    return function handleUpdateVisibility(_x8, _x9) {
+      return _ref15.apply(this, arguments);
+    };
+  }();
+  var handleSaveStory = function handleSaveStory(story) {
+    var link = document.createElement('a');
+    link.href = story.media_url || story.media_path; // Use whatever property is available
+    link.download = "petverse-story-".concat(story.id, ".").concat(story.media_type === 'video' ? 'mp4' : 'jpg');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setShowStoryMenu(false);
+  };
+  var openViewer = function openViewer(group) {
+    return setViewerState({
+      isOpen: true,
+      userStories: group.stories,
+      currentIndex: 0
+    });
+  };
+  var nextStory = function nextStory() {
+    if (viewerState.currentIndex < viewerState.userStories.length - 1) {
+      setViewerState(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          currentIndex: prev.currentIndex + 1
+        });
+      });
+    } else {
+      setViewerState(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          isOpen: false
+        });
+      });
+    }
+  };
+  var prevStory = function prevStory() {
+    if (viewerState.currentIndex > 0) {
+      setViewerState(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          currentIndex: prev.currentIndex - 1
+        });
+      });
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var progressInterval;
+    if (viewerState.isOpen) {
+      setStoryProgress(0);
+      var duration = 5000; // 5 seconds per story
+      var interval = 30; // smoother update every 30ms
+      var step = interval / duration * 100;
+      progressInterval = setInterval(function () {
+        setStoryProgress(function (prev) {
+          if (prev >= 100) {
+            clearInterval(progressInterval);
+            nextStory();
+            return 0;
+          }
+          return prev + step;
+        });
+      }, interval);
+    }
+    return function () {
+      clearInterval(progressInterval);
+      setStoryProgress(0);
+    };
+  }, [viewerState.isOpen, viewerState.currentIndex]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var h = function h(e) {
+      if (addMenuRef.current && !addMenuRef.current.contains(e.target)) setIsAddMenuOpen(false);
+      if (privacyMenuRef.current && !privacyMenuRef.current.contains(e.target)) setShowPrivacyMenu(false);
+      if (createCardRef.current && !createCardRef.current.contains(e.target)) {
+        if (!postText.trim() && !imagePreview && !videoPreview) {
+          setExpanded(false);
+        }
+      }
+    };
+    document.addEventListener("mousedown", h);
+    return function () {
+      return document.removeEventListener("mousedown", h);
+    };
+  }, [postText, imagePreview, videoPreview]);
+  var toggleLike = function toggleLike(id) {
+    setPosts(posts.map(function (p) {
+      return p.id === id ? _objectSpread(_objectSpread({}, p), {}, {
+        isLiked: !p.isLiked,
+        likes: p.isLiked ? p.likes - 1 : p.likes + 1
+      }) : p;
+    }));
+  };
+  var isValidMediaUrl = function isValidMediaUrl(url) {
+    if (!url || typeof url !== "string") return false;
+    return /^(https?:\/\/|\/|data:image\/|blob:)/i.test(url.trim());
+  };
+  var visibleStories = dynamicStories.filter(function (group) {
+    var _group$stories;
+    return (group === null || group === void 0 ? void 0 : group.user) && (group === null || group === void 0 || (_group$stories = group.stories) === null || _group$stories === void 0 ? void 0 : _group$stories.length) && !hiddenStoryUsers.includes(group.user.id);
+  }).filter(function (group) {
+    var _group$user, _group$latest_story, _group$stories2;
+    var media = (group === null || group === void 0 || (_group$user = group.user) === null || _group$user === void 0 ? void 0 : _group$user.avatar_url) || (group === null || group === void 0 || (_group$latest_story = group.latest_story) === null || _group$latest_story === void 0 ? void 0 : _group$latest_story.media_url) || (group === null || group === void 0 || (_group$stories2 = group.stories) === null || _group$stories2 === void 0 || (_group$stories2 = _group$stories2[0]) === null || _group$stories2 === void 0 ? void 0 : _group$stories2.media_url);
+    return isValidMediaUrl(media);
+  });
+  var submitPost = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11() {
+      var trimmed, _createdPost$pet, _createdPost$pet2, _createdPost$pet3, formData, res, createdPost, mapped;
+      return _regenerator().w(function (_context11) {
+        while (1) switch (_context11.p = _context11.n) {
+          case 0:
+            trimmed = postText.trim();
+            if (!(!trimmed && !postImage && !postVideo || isPosting)) {
+              _context11.n = 1;
+              break;
+            }
+            return _context11.a(2);
+          case 1:
+            setIsPosting(true);
+            _context11.p = 2;
+            formData = new FormData();
+            formData.append("caption", trimmed);
+            formData.append("privacy", postPrivacy);
+            if (postLocation) {
+              formData.append("location", postLocation.name);
+              if (postLocation.lat) formData.append("location_lat", postLocation.lat);
+              if (postLocation.lon) formData.append("location_lon", postLocation.lon);
+            }
+            if (postImage) formData.append("image", postImage);
+            if (postVideo) formData.append("video", postVideo);
+            if (taggedPets.length > 0) {
+              formData.append("tagged_pets", JSON.stringify(taggedPets.map(function (p) {
+                return p.id;
+              })));
+            }
+            _context11.n = 3;
+            return window.axios.post("/api/posts", formData, {
+              headers: {
+                "Content-Type": "multipart/form-data"
+              }
+            });
+          case 3:
+            res = _context11.v;
+            createdPost = res.data;
+            mapped = {
+              id: createdPost.id,
+              author: ((_createdPost$pet = createdPost.pet) === null || _createdPost$pet === void 0 ? void 0 : _createdPost$pet.name) || (user === null || user === void 0 ? void 0 : user.name) || "You",
+              breed: ((_createdPost$pet2 = createdPost.pet) === null || _createdPost$pet2 === void 0 ? void 0 : _createdPost$pet2.breed) || "Pet",
+              location: createdPost.location || "",
+              avatar: ((_createdPost$pet3 = createdPost.pet) === null || _createdPost$pet3 === void 0 ? void 0 : _createdPost$pet3.image_url) || (user === null || user === void 0 ? void 0 : user.avatar_url) || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
+              time: "just now",
+              content: createdPost.caption || trimmed,
+              hashtags: [],
+              image: createdPost.image_url || null,
+              video: createdPost.video_url || null,
+              likes: 0,
+              comments: 0,
+              isLiked: false,
+              tagged_pets: createdPost.tagged_pets || []
+            };
+            setPosts(function (prev) {
+              return [mapped].concat(_toConsumableArray(prev));
+            });
+            setPostText("");
+            clearMedia();
+            setPostLocation(null);
+            setTaggedPets([]);
+            setExpanded(false);
+          case 4:
+            _context11.p = 4;
+            setIsPosting(false);
+            return _context11.f(4);
+          case 5:
+            return _context11.a(2);
+        }
+      }, _callee11, null, [[2,, 4, 5]]);
+    }));
+    return function submitPost() {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+    className: "pawtastic-feed",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_30__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("main", {
+      className: "feed-main",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+        className: "feed-page-header",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("h1", {
+          className: "feed-page-header__title",
+          children: "Home Feed"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("p", {
+          className: "feed-page-header__sub",
+          children: "See what your pet community is up to \uD83D\uDC3E"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+        className: "feed-layout",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+          className: "feed-center",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "feed-stories-container",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("input", {
+              type: "file",
+              ref: fileInputRef,
+              style: {
+                display: "none"
+              },
+              accept: "image/*,video/*",
+              onChange: handleFileChange
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "feed-stories",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                className: "feed-story-wrap",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "feed-story",
+                  onClick: handleAddClick,
+                  style: {
+                    cursor: 'pointer'
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "feed-story__ring feed-story__ring--add",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                      className: "feed-story__img-box",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("img", {
+                        src: (user === null || user === void 0 ? void 0 : user.avatar_url) || "https://ui-avatars.com/api/?name=".concat(encodeURIComponent((user === null || user === void 0 ? void 0 : user.name) || 'Me'), "&background=898AA6&color=fff"),
+                        alt: "Me"
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                      className: "feed-story__plus",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__.Plus, {
+                        weight: "bold"
+                      })
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                    className: "feed-story__label",
+                    children: "Add Story"
+                  })]
+                })
+              }), visibleStories.map(function (group) {
+                var _group$user$pet, _group$user$name;
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "feed-story",
+                  onClick: function onClick() {
+                    return openViewer(group);
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                    className: "feed-story__ring",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                      className: "feed-story__img-box",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("img", {
+                        src: group.user.avatar_url || group.latest_story.media_url,
+                        alt: "Story",
+                        onError: function onError() {
+                          return setHiddenStoryUsers(function (prev) {
+                            return _toConsumableArray(new Set([].concat(_toConsumableArray(prev), [group.user.id])));
+                          });
+                        }
+                      })
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                    className: "feed-story__label",
+                    children: ((_group$user$pet = group.user.pet) === null || _group$user$pet === void 0 ? void 0 : _group$user$pet.name) || ((_group$user$name = group.user.name) === null || _group$user$name === void 0 ? void 0 : _group$user$name.split(' ')[0]) || 'Unknown'
+                  })]
+                }, group.user.id);
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+            children: viewerState.isOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "story-viewer-v2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                className: "story-viewer-v2__bg",
+                onClick: function onClick() {
+                  return setViewerState(function (p) {
+                    return _objectSpread(_objectSpread({}, p), {}, {
+                      isOpen: false
+                    });
+                  });
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "story-viewer-v2__main",
+                onClick: function onClick(e) {
+                  return e.stopPropagation();
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                  className: "story-viewer-v2__progress-bars",
+                  children: viewerState.userStories.map(function (_, idx) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                      className: "story-progress-bg",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                        className: "story-progress-fill",
+                        style: {
+                          width: idx < viewerState.currentIndex ? '100%' : idx === viewerState.currentIndex ? "".concat(storyProgress, "%") : '0%'
+                        }
+                      })
+                    }, idx);
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "story-viewer-v2__header",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "story-viewer-v2__user",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+                      src: (_viewerState$userStor = viewerState.userStories[viewerState.currentIndex].user) === null || _viewerState$userStor === void 0 ? void 0 : _viewerState$userStor.avatar_url,
+                      size: "sm"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                      className: "user-info",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                        className: "top-line",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                          className: "name",
+                          children: ((_viewerState$userStor2 = viewerState.userStories[viewerState.currentIndex].user) === null || _viewerState$userStor2 === void 0 || (_viewerState$userStor2 = _viewerState$userStor2.pet) === null || _viewerState$userStor2 === void 0 ? void 0 : _viewerState$userStor2.name) || ((_viewerState$userStor3 = viewerState.userStories[viewerState.currentIndex].user) === null || _viewerState$userStor3 === void 0 ? void 0 : _viewerState$userStor3.name)
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                          className: "time",
+                          children: function () {
+                            var diff = Math.floor((new Date() - new Date(viewerState.userStories[viewerState.currentIndex].created_at)) / 1000);
+                            if (diff < 60) return "".concat(diff, "s");
+                            if (diff < 3600) return "".concat(Math.floor(diff / 60), "m");
+                            if (diff < 86400) return "".concat(Math.floor(diff / 3600), "h");
+                            return new Date(viewerState.userStories[viewerState.currentIndex].created_at).toLocaleDateString(undefined, {
+                              month: 'short',
+                              day: 'numeric'
+                            });
+                          }()
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                        className: "visibility-icon",
+                        children: viewerState.userStories[viewerState.currentIndex].visibility === 'public' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Globe, {
+                          size: 14,
+                          weight: "bold"
+                        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__.Users, {
+                          size: 14,
+                          weight: "bold"
+                        })
+                      })]
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "story-viewer-v2__actions",
+                    children: [user && ((_viewerState$userStor4 = viewerState.userStories[viewerState.currentIndex].user) === null || _viewerState$userStor4 === void 0 ? void 0 : _viewerState$userStor4.id) === user.id && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                      className: "story-options-trigger",
+                      ref: storyMenuRef,
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                        className: "dots-btn",
+                        onClick: function onClick() {
+                          return setShowStoryMenu(!showStoryMenu);
+                        },
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.DotsThree, {
+                          size: 28,
+                          weight: "bold"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+                        children: showStoryMenu && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+                          className: "story-menu",
+                          initial: {
+                            opacity: 0,
+                            scale: 0.95,
+                            y: 10
+                          },
+                          animate: {
+                            opacity: 1,
+                            scale: 1,
+                            y: 0
+                          },
+                          exit: {
+                            opacity: 0,
+                            scale: 0.95,
+                            y: 10
+                          },
+                          children: !showVisibilitySubmenu ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.Fragment, {
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                              onClick: function onClick() {
+                                return handleDeleteStory(viewerState.userStories[viewerState.currentIndex].id);
+                              },
+                              className: "delete",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_22__.Trash, {
+                                size: 18
+                              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                                children: "Delete Story"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                              onClick: function onClick() {
+                                return handleSaveStory(viewerState.userStories[viewerState.currentIndex]);
+                              },
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Download, {
+                                size: 18
+                              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                                children: "Save"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                              onClick: function onClick() {
+                                return setShowVisibilitySubmenu(true);
+                              },
+                              className: "has-submenu",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__.Users, {
+                                size: 18
+                              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                                children: "Story Privacy"
+                              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.CaretRight, {
+                                size: 14
+                              })]
+                            })]
+                          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                            className: "visibility-submenu",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                              className: "submenu-header",
+                              onClick: function onClick() {
+                                return setShowVisibilitySubmenu(false);
+                              },
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.CaretLeft, {
+                                size: 14
+                              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                                children: "Back"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                              onClick: function onClick() {
+                                return handleUpdateVisibility(viewerState.userStories[viewerState.currentIndex].id, 'public');
+                              },
+                              className: viewerState.userStories[viewerState.currentIndex].visibility === 'public' ? 'active' : '',
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Globe, {
+                                size: 18
+                              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                                children: "Public"
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                              onClick: function onClick() {
+                                return handleUpdateVisibility(viewerState.userStories[viewerState.currentIndex].id, 'followers');
+                              },
+                              className: viewerState.userStories[viewerState.currentIndex].visibility === 'followers' ? 'active' : '',
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__.Users, {
+                                size: 18
+                              }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                                children: "Followers only"
+                              })]
+                            })]
+                          })
+                        })
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                      className: "close-btn",
+                      onClick: function onClick() {
+                        return setViewerState(function (p) {
+                          return _objectSpread(_objectSpread({}, p), {}, {
+                            isOpen: false
+                          });
+                        });
+                      },
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_29__.X, {
+                        size: 28,
+                        weight: "bold"
+                      })
+                    })]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                  className: "story-viewer-v2__body",
+                  children: viewerState.userStories[viewerState.currentIndex].media_type === 'video' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("video", {
+                    src: viewerState.userStories[viewerState.currentIndex].media_url,
+                    autoPlay: true,
+                    controls: true
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("img", {
+                    src: viewerState.userStories[viewerState.currentIndex].media_url,
+                    alt: "Story"
+                  })
+                }), user && ((_viewerState$userStor5 = viewerState.userStories[viewerState.currentIndex].user) === null || _viewerState$userStor5 === void 0 ? void 0 : _viewerState$userStor5.id) === user.id && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "story-viewer-v2__footer",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "footer-item",
+                    onClick: function onClick() {
+                      return alert("Viewing insights...");
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                      className: "icon-circle",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__.Users, {
+                        size: 20,
+                        weight: "bold"
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      children: "Viewers"
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "footer-item",
+                    onClick: function onClick() {
+                      return alert("Added to Highlights!");
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                      className: "icon-circle",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Heart, {
+                        size: 20,
+                        weight: "bold"
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      children: "Highlights"
+                    })]
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "nav-arrow prev",
+                onClick: prevStory,
+                style: {
+                  display: viewerState.currentIndex === 0 ? 'none' : 'flex'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.CaretLeft, {
+                  size: 32,
+                  weight: "bold"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "nav-arrow next",
+                onClick: nextStory,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.CaretRight, {
+                  size: 32,
+                  weight: "bold"
+                })
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(Card, {
+            innerRef: createCardRef,
+            className: "feed-composer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("input", {
+              type: "file",
+              ref: imageInputRef,
+              style: {
+                display: "none"
+              },
+              accept: "image/*",
+              onChange: handleImageChange
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("input", {
+              type: "file",
+              ref: videoInputRef,
+              style: {
+                display: "none"
+              },
+              accept: "video/*",
+              onChange: handleVideoChange
+            }), !isCreateExpanded ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "feed-composer__trigger-row",
+              onClick: function onClick() {
+                return setExpanded(true);
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+                src: user === null || user === void 0 ? void 0 : user.avatar_url,
+                fallback: (user === null || user === void 0 ? void 0 : user.name) || 'Me',
+                size: "md"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                className: "feed-composer__trigger-text",
+                children: "Share a moment with your pet..."
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.Fragment, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "feed-composer__header-row",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+                  src: user === null || user === void 0 ? void 0 : user.avatar_url,
+                  fallback: (user === null || user === void 0 ? void 0 : user.name) || 'Me',
+                  size: "md"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "feed-composer__user-info",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                    className: "feed-composer__username",
+                    children: (user === null || user === void 0 || (_user$pet2 = user.pet) === null || _user$pet2 === void 0 ? void 0 : _user$pet2.name) || (user === null || user === void 0 ? void 0 : user.name) || "You"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "feed-composer__privacy-wrapper",
+                    ref: privacyMenuRef,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                      className: "feed-composer__privacy",
+                      onClick: function onClick() {
+                        return setShowPrivacyMenu(!showPrivacyMenu);
+                      },
+                      children: [postPrivacy === "public" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.Fragment, {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Globe, {
+                          size: 12
+                        }), " Public"]
+                      }), postPrivacy === "friends" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.Fragment, {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__.Users, {
+                          size: 12
+                        }), " Friends"]
+                      }), postPrivacy === "followers" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.Fragment, {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_25__.User, {
+                          size: 12
+                        }), " Followers"]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.CaretDown, {
+                        size: 10
+                      })]
+                    }), showPrivacyMenu && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                      className: "privacy-menu",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                        className: "privacy-option ".concat(postPrivacy === "public" ? "active" : ""),
+                        onClick: function onClick() {
+                          setPostPrivacy("public");
+                          setShowPrivacyMenu(false);
+                        },
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Globe, {
+                          size: 16
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                          className: "privacy-info",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                            className: "label",
+                            children: "Public"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                            className: "desc",
+                            children: "Anyone can see your post"
+                          })]
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                        className: "privacy-option ".concat(postPrivacy === "friends" ? "active" : ""),
+                        onClick: function onClick() {
+                          setPostPrivacy("friends");
+                          setShowPrivacyMenu(false);
+                        },
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__.Users, {
+                          size: 16
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                          className: "privacy-info",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                            className: "label",
+                            children: "Friends"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                            className: "desc",
+                            children: "Only your friends can see"
+                          })]
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                        className: "privacy-option ".concat(postPrivacy === "followers" ? "active" : ""),
+                        onClick: function onClick() {
+                          setPostPrivacy("followers");
+                          setShowPrivacyMenu(false);
+                        },
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_25__.User, {
+                          size: 16
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                          className: "privacy-info",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                            className: "label",
+                            children: "Followers"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                            className: "desc",
+                            children: "Only your followers can see"
+                          })]
+                        })]
+                      })]
+                    })]
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("textarea", {
+                className: "feed-composer__textarea",
+                placeholder: "Share a moment with your pet...",
+                value: postText,
+                onChange: function onChange(e) {
+                  setPostText(e.target.value);
+                },
+                rows: 2,
+                autoFocus: true
+              }), (imagePreview || videoPreview) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "feed-composer__media-preview",
+                children: [imagePreview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("img", {
+                  src: imagePreview,
+                  alt: "Preview"
+                }), videoPreview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("video", {
+                  src: videoPreview,
+                  controls: true
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                  className: "feed-composer__media-clear",
+                  onClick: clearMedia,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_29__.X, {
+                    size: 14,
+                    weight: "bold"
+                  })
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                className: "feed-composer__divider"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "feed-composer__actions",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                    className: "action-btn",
+                    onClick: handleImageClick,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Image, {
+                      size: 18
+                    }), " Photo"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                    className: "action-btn",
+                    onClick: handleVideoClick,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_28__.Video, {
+                      size: 18
+                    }), " Video"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                    className: "action-btn ".concat(taggedPets.length > 0 ? 'active' : ''),
+                    onClick: handleTagClick,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.At, {
+                      size: 18
+                    }), taggedPets.length > 0 ? "".concat(taggedPets.length, " Tagged") : "Tag"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                    className: "action-btn ".concat(postLocation ? 'active' : '', " ").concat(isLocating ? 'loading' : ''),
+                    onClick: handleLocationClick,
+                    disabled: isLocating,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.MapPin, {
+                      size: 18
+                    }), isLocating ? "Locating..." : (postLocation === null || postLocation === void 0 ? void 0 : postLocation.name) || "Location"]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                  className: "group-right",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                    className: "post-submit-btn ".concat(postText.trim().length > 0 || imagePreview || videoPreview ? 'active' : ''),
+                    onClick: submitPost,
+                    disabled: isPosting || !postText.trim() && !imagePreview && !videoPreview,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_18__.PaperPlaneRight, {
+                      weight: "fill",
+                      size: 16
+                    }), " Post"]
+                  })
+                })]
+              })]
+            })]
+          }), filterTag && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+            className: "feed-filter-indicator",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(Card, {
+              className: "filter-card",
+              style: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '12px 20px',
+                marginBottom: '20px',
+                background: 'rgba(233, 30, 140, 0.1)',
+                border: '1px solid rgba(233, 30, 140, 0.2)'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "filter-info",
+                style: {
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_23__.TrendUp, {
+                  size: 20,
+                  weight: "fill",
+                  color: "#e91e8c"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("span", {
+                  children: ["Showing results for ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("strong", {
+                    children: ["#", filterTag]
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "clear-filter",
+                onClick: function onClick() {
+                  return setFilterTag(null);
+                },
+                style: {
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_29__.X, {
+                  size: 18
+                })
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+            className: "feed-post-list",
+            children: posts.map(function (post) {
+              var isTruncated = post.content.length > 150;
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(Card, {
+                className: "feed-post-v2",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "feed-post-v2__header",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "user",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+                      src: post.avatar,
+                      size: "md",
+                      online: true
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                      className: "meta",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                        className: "meta-top",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                          className: "name",
+                          children: post.author
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                          className: "time",
+                          children: post.time
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                        className: "meta-bottom",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                          className: "breed",
+                          children: post.breed
+                        }), post.location && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("span", {
+                          className: "location",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.MapPin, {
+                            size: 12,
+                            weight: "fill"
+                          }), " ", post.location]
+                        })]
+                      })]
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                    className: "actions",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(PostMenu, {
+                      postId: post.id
+                    })
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "feed-post-v2__body",
+                  onClick: function onClick() {
+                    return setActivePost(post);
+                  },
+                  style: {
+                    cursor: 'pointer'
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                    className: "post-text",
+                    children: isTruncated ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.Fragment, {
+                      children: [post.content, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                        className: "text-more",
+                        children: "less"
+                      })]
+                    }) : post.content
+                  }), post.hashtags && post.hashtags.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                    className: "hashtags",
+                    children: post.hashtags.map(function (tag) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                        onClick: function onClick(e) {
+                          e.stopPropagation();
+                          setFilterTag(tag.replace('#', ''));
+                        },
+                        className: "hashtag-pill clickable",
+                        children: tag
+                      }, tag);
+                    })
+                  }), post.video && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("video", {
+                    src: post.video,
+                    controls: true,
+                    className: "main-video"
+                  }), post.image && !post.video && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("img", {
+                    src: post.image,
+                    alt: "Post content",
+                    className: "main-img"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "feed-post-v2__footer",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                    className: "action-btn ".concat(post.isLiked ? 'active' : ''),
+                    onClick: function onClick() {
+                      return toggleLike(post.id);
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Heart, {
+                      size: 20,
+                      weight: post.isLiked ? "fill" : "bold"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      children: post.likes
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                    className: "action-btn",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.ChatCircle, {
+                      size: 20,
+                      weight: "bold"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      children: post.comments
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                    className: "action-btn",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_20__.ShareNetwork, {
+                      size: 20,
+                      weight: "bold"
+                    })
+                  })]
+                })]
+              }, post.id);
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("aside", {
+          className: "feed-right-col",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(Card, {
+            className: "sidebar-card",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "sidebar-card__title",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_23__.TrendUp, {}), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                children: "Trending Tags"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "tag-list",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "tag-row clickable",
+                onClick: function onClick() {
+                  return setFilterTag("springcutest");
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  children: "1\xA0\xA0#springcutest"
+                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "count",
+                  children: "NEW"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "tag-row clickable",
+                onClick: function onClick() {
+                  return setFilterTag("goldenretriever");
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  children: "2\xA0\xA0#goldenretriever"
+                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "count",
+                  children: "2.4k"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "tag-row clickable",
+                onClick: function onClick() {
+                  return setFilterTag("catstagram");
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  children: "3\xA0\xA0#catstagram"
+                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "count",
+                  children: "1.8k"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "tag-row clickable",
+                onClick: function onClick() {
+                  return setFilterTag("zoomies");
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  children: "4\xA0\xA0#zoomies"
+                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "count",
+                  children: "980"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "tag-row clickable",
+                onClick: function onClick() {
+                  return setFilterTag("petlife");
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  children: "5\xA0\xA0#petlife"
+                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "count",
+                  children: "5.6k"
+                })]
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(Card, {
+            className: "sidebar-card",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "sidebar-card__title",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_24__.Trophy, {}), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                children: "Live Contest"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "live-contest clickable",
+              onClick: function onClick() {
+                return window.location.href = '/badges?enterContest=true';
+              },
+              style: {
+                cursor: 'pointer'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                className: "live-contest__top",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                    className: "contest-name",
+                    children: "Spring Cutest Pet"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "contest-sub",
+                    children: ["Ends in 2 days \xB7 ", contestEntryCount, " entries"]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  className: "live-pill",
+                  children: "LIVE"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                className: "contest-progress",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                  className: "contest-progress__bar"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Button, {
+                variant: "primary",
+                className: "contest-btn",
+                children: "Enter Contest"
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(Card, {
+            className: "sidebar-card",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "sidebar-card__title sidebar-card__title--between",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("span", {
+                className: "title-left",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_27__.Users, {}), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                  children: "Suggested Pets"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "see-all-btn",
+                onClick: function onClick() {
+                  return setIsSeeAllPetsOpen(true);
+                },
+                children: "See all"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+              className: "suggested-users",
+              children: suggestedPets.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                className: "empty-suggested",
+                children: "No suggestions yet"
+              }) : suggestedPets.slice(0, 3).map(function (pet) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "user-row",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+                    src: pet.image_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_4.png",
+                    size: "md"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "info",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "name",
+                      children: pet.name
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "sub",
+                      children: pet.breed
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                    className: "follow-btn ".concat(pet.is_following ? 'following' : ''),
+                    onClick: function onClick() {
+                      return handleFollow(pet.id);
+                    },
+                    children: pet.is_following ? 'Following' : 'Follow'
+                  })]
+                }, pet.id);
+              })
+            })]
+          })]
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: activePost && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(PostModal, {
+        post: activePost,
+        onClose: function onClose() {
+          return setActivePost(null);
+        },
+        onLike: toggleLike
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: isLocationPickerOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        className: "location-picker-overlay",
+        initial: {
+          opacity: 0
+        },
+        animate: {
+          opacity: 1
+        },
+        exit: {
+          opacity: 0
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          className: "location-picker",
+          initial: {
+            y: "100%"
+          },
+          animate: {
+            y: 0
+          },
+          exit: {
+            y: "100%"
+          },
+          transition: {
+            type: "spring",
+            damping: 25,
+            stiffness: 300
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "location-picker__header",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+              className: "back-btn",
+              onClick: function onClick() {
+                return setIsLocationPickerOpen(false);
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.CaretLeft, {
+                size: 24,
+                weight: "bold"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("h3", {
+              children: "Search for location"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+            className: "location-picker__search",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "search-input-wrapper",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.MagnifyingGlass, {
+                size: 18,
+                weight: "bold"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("input", {
+                type: "text",
+                placeholder: "Where are you?",
+                value: locationSearchQuery,
+                onChange: function onChange(e) {
+                  setLocationSearchQuery(e.target.value);
+                  searchLocations(e.target.value);
+                }
+              }), locationSearchQuery && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                className: "clear-search",
+                onClick: function onClick() {
+                  return setLocationSearchQuery("");
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_29__.X, {
+                  size: 16
+                })
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "location-picker__content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("h4", {
+              className: "suggested-title",
+              children: "Suggested"
+            }), isLocating ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+              className: "loading-locations",
+              children: "Finding nearby places..."
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+              className: "locations-list",
+              children: suggestedLocations.map(function (loc) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                  className: "location-item",
+                  onClick: function onClick() {
+                    setPostLocation(loc);
+                    setIsLocationPickerOpen(false);
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                    className: "location-icon",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.MapPin, {
+                      size: 20,
+                      weight: "fill"
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "location-info",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "location-name",
+                      children: loc.name
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "location-sub",
+                      children: loc.sub
+                    })]
+                  })]
+                }, loc.id);
+              })
+            })]
+          })]
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: isTagPickerOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        className: "location-picker-overlay",
+        initial: {
+          opacity: 0
+        },
+        animate: {
+          opacity: 1
+        },
+        exit: {
+          opacity: 0
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          className: "location-picker",
+          initial: {
+            y: "100%"
+          },
+          animate: {
+            y: 0
+          },
+          exit: {
+            y: "100%"
+          },
+          transition: {
+            type: "spring",
+            damping: 25,
+            stiffness: 300
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "location-picker__header",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+              className: "back-btn",
+              onClick: function onClick() {
+                return setIsTagPickerOpen(false);
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.CaretLeft, {
+                size: 24,
+                weight: "bold"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("h3", {
+              children: "Tag people"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+              className: "done-btn",
+              onClick: function onClick() {
+                return setIsTagPickerOpen(false);
+              },
+              children: "Done"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+            className: "location-picker__search",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+              className: "search-input-wrapper",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.MagnifyingGlass, {
+                size: 18,
+                weight: "bold"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("input", {
+                type: "text",
+                placeholder: "Search",
+                value: petSearchQuery,
+                onChange: function onChange(e) {
+                  setPetSearchQuery(e.target.value);
+                  searchPets(e.target.value);
+                }
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "location-picker__content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("h4", {
+              className: "suggested-title",
+              children: "SUGGESTIONS"
+            }), isSearchingPets ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+              className: "loading-locations",
+              children: "Searching pets..."
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+              className: "locations-list",
+              children: suggestedPets.map(function (pet) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("button", {
+                  className: "location-item pet-item ".concat(taggedPets.some(function (p) {
+                    return p.id === pet.id;
+                  }) ? 'selected' : ''),
+                  onClick: function onClick() {
+                    return toggleTagPet(pet);
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+                    src: pet.image_url,
+                    size: "sm"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "location-info",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "location-name",
+                      children: pet.name
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "location-sub",
+                      children: pet.breed
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+                    className: "selection-indicator",
+                    children: taggedPets.some(function (p) {
+                      return p.id === pet.id;
+                    }) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_21__.ShieldCheck, {
+                      size: 20,
+                      weight: "fill",
+                      color: "#e91e8c"
+                    })
+                  })]
+                }, pet.id);
+              })
+            })]
+          })]
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: isSeeAllPetsOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        className: "location-picker-overlay",
+        initial: {
+          opacity: 0
+        },
+        animate: {
+          opacity: 1
+        },
+        exit: {
+          opacity: 0
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          className: "location-picker",
+          initial: {
+            y: "100%"
+          },
+          animate: {
+            y: 0
+          },
+          exit: {
+            y: "100%"
+          },
+          transition: {
+            type: "spring",
+            damping: 25,
+            stiffness: 300
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+            className: "location-picker__header",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+              className: "back-btn",
+              onClick: function onClick() {
+                return setIsSeeAllPetsOpen(false);
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.CaretLeft, {
+                size: 24,
+                weight: "bold"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("h3", {
+              children: "Suggested Pets"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+            className: "location-picker__content",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("div", {
+              className: "locations-list",
+              children: suggestedPets.map(function (pet) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                  className: "location-item pet-item",
+                  style: {
+                    cursor: 'default',
+                    display: 'flex',
+                    alignItems: 'center'
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)(Avatar, {
+                    src: pet.image_url,
+                    size: "sm"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsxs)("div", {
+                    className: "location-info",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "location-name",
+                      children: pet.name
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("span", {
+                      className: "location-sub",
+                      children: pet.breed
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_34__.jsx)("button", {
+                    className: "follow-btn ".concat(pet.is_following ? 'following' : ''),
+                    style: {
+                      marginLeft: 'auto',
+                      background: pet.is_following ? 'var(--bg-card)' : 'var(--primary-action)',
+                      color: pet.is_following ? 'var(--text-main)' : 'white',
+                      border: pet.is_following ? '1px solid var(--border-color)' : 'none',
+                      padding: '6px 12px',
+                      borderRadius: '20px',
+                      fontSize: '12px',
+                      fontWeight: '600'
+                    },
+                    onClick: function onClick() {
+                      return handleFollow(pet.id);
+                    },
+                    children: pet.is_following ? 'Following' : 'Follow'
+                  })]
+                }, pet.id);
+              })
+            })
+          })]
+        })
+      })
+    })]
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Feed);
 
 /***/ },
 
@@ -8752,7 +11612,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".modern-badges .page-header {\n  margin-bottom: 8px;\n}\n.modern-badges .page-header h1 {\n  font-size: 2.25rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin-bottom: 8px;\n  letter-spacing: -0.02em;\n}\n.modern-badges .page-header p {\n  font-size: 1.1rem;\n  color: var(--text-muted);\n}\n.modern-badges .section-top {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-bottom: 20px;\n}\n.modern-badges .section-top h2 {\n  font-size: 1.5rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .section-top .badges-count {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  background: var(--border-color);\n  padding: 6px 12px;\n  border-radius: 20px;\n}\n.modern-badges .filters-row {\n  display: flex;\n  gap: 8px;\n  margin-bottom: 24px;\n  overflow-x: auto;\n  padding-bottom: 8px;\n}\n.modern-badges .filters-row::-webkit-scrollbar {\n  height: 4px;\n}\n.modern-badges .filters-row::-webkit-scrollbar-thumb {\n  background-color: var(--border-color);\n  border-radius: 4px;\n}\n.modern-badges .filters-row .filter-btn {\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.875rem;\n  font-weight: 600;\n  padding: 8px 16px;\n  border-radius: 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  white-space: nowrap;\n}\n.modern-badges .filters-row .filter-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.modern-badges .filters-row .filter-btn.active {\n  background: var(--text-main);\n  color: var(--bg-card);\n  border-color: var(--text-main);\n  box-shadow: var(--shadow);\n}\n.modern-badges .badges-section {\n  margin-bottom: 16px;\n}\n.modern-badges .badges-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));\n  gap: 24px;\n}\n.modern-badges .badge-card {\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 24px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  position: relative;\n  box-shadow: var(--shadow);\n  border: 2px solid transparent;\n  transition: transform 0.2s ease, box-shadow 0.2s ease;\n}\n.modern-badges .badge-card:hover {\n  transform: translateY(-4px);\n}\n.modern-badges .badge-card.border-common {\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.border-rare {\n  border-color: rgba(59, 130, 246, 0.2);\n}\n.modern-badges .badge-card.border-epic {\n  border-color: rgba(168, 85, 247, 0.2);\n}\n.modern-badges .badge-card.border-legendary {\n  border-color: rgba(234, 179, 8, 0.2);\n}\n.modern-badges .badge-card.locked {\n  opacity: 0.8;\n  background: var(--bg-page);\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.locked .badge-icon-wrap {\n  filter: grayscale(100%);\n  opacity: 0.5;\n}\n.modern-badges .badge-card .badge-card__top-icon {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon {\n  font-size: 24px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.earned-icon {\n  color: var(--success);\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.locked-icon {\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-icon-wrap {\n  width: 72px;\n  height: 72px;\n  border-radius: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-bottom: 16px;\n  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-orange {\n  background: linear-gradient(135deg, #fb923c, #ea580c);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-pink {\n  background: linear-gradient(135deg, #f472b6, #db2777);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-yellow {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-green {\n  background: linear-gradient(135deg, #34d399, #059669);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-gold {\n  background: linear-gradient(135deg, #fbbf24, #d97706);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-blue {\n  background: linear-gradient(135deg, #60a5fa, #2563eb);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-purple {\n  background: linear-gradient(135deg, #c084fc, #9333ea);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-teal {\n  background: linear-gradient(135deg, #2dd4bf, #0d9488);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-red {\n  background: linear-gradient(135deg, #f87171, #dc2626);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-magenta {\n  background: linear-gradient(135deg, #e879f9, #c026d3);\n}\n.modern-badges .badge-card .badge-name {\n  font-size: 1.125rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 4px 0;\n}\n.modern-badges .badge-card .badge-desc {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  margin: 0 0 16px 0;\n  line-height: 1.4;\n  height: 40px;\n}\n.modern-badges .badge-card .badge-progress {\n  width: 100%;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 3px;\n  overflow: hidden;\n  margin-bottom: 6px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill {\n  height: 100%;\n  border-radius: 3px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-common {\n  background: var(--text-muted);\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-rare {\n  background: #3b82f6;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-epic {\n  background: #a855f7;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-legendary {\n  background: #eab308;\n}\n.modern-badges .badge-card .badge-progress .progress-text {\n  font-size: 0.75rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-spacer {\n  height: 38px;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-rarity {\n  font-size: 0.7rem;\n  font-weight: 800;\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n  padding: 4px 12px;\n  border-radius: 12px;\n}\n.modern-badges .badge-card .badge-rarity.rarity-common {\n  color: var(--text-muted);\n  background: var(--border-color);\n}\n.modern-badges .badge-card .badge-rarity.rarity-rare {\n  color: #3b82f6;\n  background: rgba(59, 130, 246, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-epic {\n  color: #9333ea;\n  background: rgba(147, 51, 234, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-legendary {\n  color: #d97706;\n  background: rgba(217, 119, 6, 0.1333333333);\n}\n.modern-badges .leaderboard-section {\n  margin-top: 24px;\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 32px;\n  box-shadow: var(--shadow);\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-section {\n    padding: 20px;\n  }\n}\n.modern-badges .leaderboard-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.modern-badges .leaderboard-item {\n  display: flex;\n  align-items: center;\n  padding: 16px 24px;\n  background: var(--bg-page);\n  border-radius: 16px;\n  transition: transform 0.2s;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item {\n    padding: 12px;\n    gap: 12px;\n  }\n}\n.modern-badges .leaderboard-item:hover {\n  transform: translateX(4px);\n  background: var(--border-color);\n}\n.modern-badges .leaderboard-item.current-user-item {\n  margin-top: 12px;\n  background: var(--primary-color);\n  border: 1px solid var(--border-color);\n  box-shadow: var(--shadow);\n}\n.modern-badges .leaderboard-item.current-user-item .user-name {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .stat {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .stat.text-dark {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-val {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-lbl {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .rank-badge {\n  width: 40px;\n  height: 40px;\n  border-radius: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-weight: 800;\n  font-size: 1.1rem;\n  margin-right: 20px;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item .rank-badge {\n    width: 32px;\n    height: 32px;\n    margin-right: 0;\n  }\n}\n.modern-badges .leaderboard-item .rank-badge.rank-1 {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n  color: white;\n  box-shadow: 0 4px 10px rgba(234, 179, 8, 0.3);\n}\n.modern-badges .leaderboard-item .rank-badge.rank-2 {\n  background: linear-gradient(135deg, #e2e8f0, #94a3b8);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-3 {\n  background: linear-gradient(135deg, #fed7aa, #c2410c);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-4, .modern-badges .leaderboard-item .rank-badge.rank-5 {\n  background: var(--border-color);\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-avatar {\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  overflow: hidden;\n  margin-right: 16px;\n  border: 2px solid var(--bg-card);\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .leaderboard-item .user-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.modern-badges .leaderboard-item .user-info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.modern-badges .leaderboard-item .user-info .user-name {\n  font-weight: 700;\n  font-size: 1.05rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-info .user-stats {\n  display: flex;\n  gap: 16px;\n}\n.modern-badges .leaderboard-item .user-info .user-stats .stat {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-xp {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n.modern-badges .leaderboard-item .user-xp .xp-val {\n  font-weight: 800;\n  font-size: 1.1rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-xp .xp-lbl {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".modern-badges .page-header {\n  margin-bottom: 8px;\n}\n.modern-badges .page-header h1 {\n  font-size: 2.25rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin-bottom: 8px;\n  letter-spacing: -0.02em;\n}\n.modern-badges .page-header p {\n  font-size: 1.1rem;\n  color: var(--text-muted);\n}\n.modern-badges .section-top {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-bottom: 20px;\n}\n.modern-badges .section-top h2 {\n  font-size: 1.5rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .section-top .badges-count {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  background: var(--border-color);\n  padding: 6px 12px;\n  border-radius: 20px;\n}\n.modern-badges .filters-row {\n  display: flex;\n  gap: 8px;\n  margin-bottom: 24px;\n  overflow-x: auto;\n  padding-bottom: 8px;\n}\n.modern-badges .filters-row::-webkit-scrollbar {\n  height: 4px;\n}\n.modern-badges .filters-row::-webkit-scrollbar-thumb {\n  background-color: var(--border-color);\n  border-radius: 4px;\n}\n.modern-badges .filters-row .filter-btn {\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.875rem;\n  font-weight: 600;\n  padding: 8px 16px;\n  border-radius: 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  white-space: nowrap;\n}\n.modern-badges .filters-row .filter-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.modern-badges .filters-row .filter-btn.active {\n  background: var(--text-main);\n  color: var(--bg-card);\n  border-color: var(--text-main);\n  box-shadow: var(--shadow);\n}\n.modern-badges .badges-section {\n  margin-bottom: 16px;\n}\n.modern-badges .badges-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));\n  gap: 24px;\n}\n.modern-badges .badge-card {\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 24px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  position: relative;\n  box-shadow: var(--shadow);\n  border: 2px solid transparent;\n  transition: transform 0.2s ease, box-shadow 0.2s ease;\n}\n.modern-badges .badge-card:hover {\n  transform: translateY(-4px);\n}\n.modern-badges .badge-card.border-common {\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.border-rare {\n  border-color: rgba(59, 130, 246, 0.2);\n}\n.modern-badges .badge-card.border-epic {\n  border-color: rgba(168, 85, 247, 0.2);\n}\n.modern-badges .badge-card.border-legendary {\n  border-color: rgba(234, 179, 8, 0.2);\n}\n.modern-badges .badge-card.locked {\n  opacity: 0.8;\n  background: var(--bg-page);\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.locked .badge-icon-wrap {\n  filter: grayscale(100%);\n  opacity: 0.5;\n}\n.modern-badges .badge-card .badge-card__top-icon {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon {\n  font-size: 24px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.earned-icon {\n  color: var(--success);\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.locked-icon {\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-icon-wrap {\n  width: 72px;\n  height: 72px;\n  border-radius: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-bottom: 16px;\n  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-orange {\n  background: linear-gradient(135deg, #fb923c, #ea580c);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-pink {\n  background: linear-gradient(135deg, #f472b6, #db2777);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-yellow {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-green {\n  background: linear-gradient(135deg, #34d399, #059669);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-gold {\n  background: linear-gradient(135deg, #fbbf24, #d97706);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-blue {\n  background: linear-gradient(135deg, #60a5fa, #2563eb);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-purple {\n  background: linear-gradient(135deg, #c084fc, #9333ea);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-teal {\n  background: linear-gradient(135deg, #2dd4bf, #0d9488);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-red {\n  background: linear-gradient(135deg, #f87171, #dc2626);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-magenta {\n  background: linear-gradient(135deg, #e879f9, #c026d3);\n}\n.modern-badges .badge-card .badge-name {\n  font-size: 1.125rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 4px 0;\n}\n.modern-badges .badge-card .badge-desc {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  margin: 0 0 16px 0;\n  line-height: 1.4;\n  height: 40px;\n}\n.modern-badges .badge-card .badge-progress {\n  width: 100%;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 3px;\n  overflow: hidden;\n  margin-bottom: 6px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill {\n  height: 100%;\n  border-radius: 3px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-common {\n  background: var(--text-muted);\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-rare {\n  background: #3b82f6;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-epic {\n  background: #a855f7;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-legendary {\n  background: #eab308;\n}\n.modern-badges .badge-card .badge-progress .progress-text {\n  font-size: 0.75rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-spacer {\n  height: 38px;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-rarity {\n  font-size: 0.7rem;\n  font-weight: 800;\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n  padding: 4px 12px;\n  border-radius: 12px;\n}\n.modern-badges .badge-card .badge-rarity.rarity-common {\n  color: var(--text-muted);\n  background: var(--border-color);\n}\n.modern-badges .badge-card .badge-rarity.rarity-rare {\n  color: #3b82f6;\n  background: rgba(59, 130, 246, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-epic {\n  color: #9333ea;\n  background: rgba(147, 51, 234, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-legendary {\n  color: #d97706;\n  background: rgba(217, 119, 6, 0.1333333333);\n}\n.modern-badges .leaderboard-section {\n  margin-top: 24px;\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 32px;\n  box-shadow: var(--shadow);\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-section {\n    padding: 20px;\n  }\n}\n.modern-badges .leaderboard-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.modern-badges .leaderboard-item {\n  display: flex;\n  align-items: center;\n  padding: 16px 24px;\n  background: var(--bg-page);\n  border-radius: 16px;\n  transition: transform 0.2s;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item {\n    padding: 12px;\n    gap: 12px;\n  }\n}\n.modern-badges .leaderboard-item:hover {\n  transform: translateX(4px);\n  background: var(--border-color);\n}\n.modern-badges .leaderboard-item.current-user-item {\n  margin-top: 12px;\n  background: var(--primary-color);\n  border: 1px solid var(--border-color);\n  box-shadow: var(--shadow);\n}\n.modern-badges .leaderboard-item.current-user-item .user-name {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .stat {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .stat.text-dark {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-val {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-lbl {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .rank-badge {\n  width: 40px;\n  height: 40px;\n  border-radius: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-weight: 800;\n  font-size: 1.1rem;\n  margin-right: 20px;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item .rank-badge {\n    width: 32px;\n    height: 32px;\n    margin-right: 0;\n  }\n}\n.modern-badges .leaderboard-item .rank-badge.rank-1 {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n  color: white;\n  box-shadow: 0 4px 10px rgba(234, 179, 8, 0.3);\n}\n.modern-badges .leaderboard-item .rank-badge.rank-2 {\n  background: linear-gradient(135deg, #e2e8f0, #94a3b8);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-3 {\n  background: linear-gradient(135deg, #fed7aa, #c2410c);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-4, .modern-badges .leaderboard-item .rank-badge.rank-5 {\n  background: var(--border-color);\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-avatar {\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  overflow: hidden;\n  margin-right: 16px;\n  border: 2px solid var(--bg-card);\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .leaderboard-item .user-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.modern-badges .leaderboard-item .user-info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.modern-badges .leaderboard-item .user-info .user-name {\n  font-weight: 700;\n  font-size: 1.05rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-info .user-stats {\n  display: flex;\n  gap: 16px;\n}\n.modern-badges .leaderboard-item .user-info .user-stats .stat {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-xp {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n.modern-badges .leaderboard-item .user-xp .xp-val {\n  font-weight: 800;\n  font-size: 1.1rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-xp .xp-lbl {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n}\n.modern-badges .contests-section {\n  margin-top: 32px;\n  margin-bottom: 40px;\n}\n.modern-badges .contests-section .live-pill {\n  background: #22c55e;\n  color: white;\n  font-size: 0.7rem;\n  font-weight: 800;\n  padding: 4px 10px;\n  border-radius: 8px;\n  letter-spacing: 0.05em;\n  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);\n}\n.modern-badges .contest-banner-card {\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 32px;\n  box-shadow: var(--shadow);\n  border: 1px solid var(--border-color);\n  position: relative;\n  overflow: hidden;\n}\n.modern-badges .contest-banner-card::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n  background: linear-gradient(90deg, #facc15, #f472b6, #fb923c);\n}\n.modern-badges .contest-banner-card .contest-content {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 40px;\n}\n@media (max-width: 900px) {\n  .modern-badges .contest-banner-card .contest-content {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: 24px;\n  }\n}\n.modern-badges .contest-banner-card .contest-info-main {\n  display: flex;\n  gap: 24px;\n  flex: 1;\n}\n@media (max-width: 600px) {\n  .modern-badges .contest-banner-card .contest-info-main {\n    flex-direction: column;\n    gap: 16px;\n  }\n}\n.modern-badges .contest-banner-card .contest-info-main .contest-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 20px;\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  box-shadow: 0 8px 20px rgba(234, 179, 8, 0.2);\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details h3 {\n  font-size: 1.5rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0 0 8px 0;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details p {\n  font-size: 1rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n  margin: 0 0 16px 0;\n  max-width: 500px;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta {\n  display: flex;\n  gap: 20px;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta .meta-item {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.9rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta .meta-item svg {\n  color: var(--primary-action);\n}\n.modern-badges .contest-banner-card .contest-action-area {\n  width: 300px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n@media (max-width: 900px) {\n  .modern-badges .contest-banner-card .contest-action-area {\n    width: 100%;\n  }\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-labels {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 8px;\n  font-size: 0.85rem;\n  font-weight: 700;\n  color: var(--text-muted);\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-bar {\n  height: 10px;\n  background: var(--bg-page);\n  border-radius: 5px;\n  overflow: hidden;\n  border: 1px solid var(--border-color);\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-bar .progress-fill {\n  height: 100%;\n  background: linear-gradient(90deg, var(--primary-action), #f472b6);\n  border-radius: 5px;\n  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn {\n  background: var(--text-main);\n  color: var(--bg-card);\n  border: none;\n  padding: 14px;\n  border-radius: 16px;\n  font-weight: 700;\n  font-size: 1rem;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);\n  opacity: 0.9;\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn:active {\n  transform: scale(0.98);\n}\n.modern-badges .contest-modal-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 1100;\n}\n.modern-badges .contest-modal-overlay .contest-modal-bg {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(8px);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content {\n  position: relative;\n  width: 95%;\n  max-width: 500px;\n  background: var(--bg-card);\n  border-radius: 24px;\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);\n  border: 1px solid var(--border-color);\n  overflow: hidden;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header {\n  padding: 24px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid var(--border-color);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header h2 {\n  font-size: 1.25rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header button {\n  background: transparent;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  transition: color 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header button:hover {\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body {\n  padding: 24px;\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .contest-brief {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 12px 16px;\n  background: var(--bg-page);\n  border-radius: 12px;\n  border: 1px solid var(--border-color);\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area {\n  aspect-ratio: 4/3;\n  background: var(--bg-page);\n  border: 2px dashed var(--border-color);\n  border-radius: 16px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.2s;\n  overflow: hidden;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area:hover {\n  border-color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb), 0.05);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  gap: 12px;\n  color: var(--text-muted);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder p {\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder span {\n  font-size: 0.8rem;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .preview-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area label {\n  font-weight: 700;\n  font-size: 0.9rem;\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area textarea {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 12px;\n  color: var(--text-main);\n  font-family: inherit;\n  resize: none;\n  height: 100px;\n  transition: border-color 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area textarea:focus {\n  outline: none;\n  border-color: var(--primary-action);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer {\n  display: flex;\n  gap: 12px;\n  margin-top: 10px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer button {\n  flex: 1;\n  padding: 14px;\n  border-radius: 12px;\n  font-weight: 700;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .cancel-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .cancel-btn:hover {\n  background: var(--border-color);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn {\n  background: var(--primary-action);\n  border: none;\n  color: white;\n  box-shadow: 0 4px 12px rgba(233, 30, 140, 0.3);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n  box-shadow: none;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn.loading {\n  opacity: 0.8;\n  cursor: wait;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8776,7 +11636,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pawtastic-feed {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.feed-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 32px 40px;\n  max-width: calc(100vw - 260px);\n}\n@media (max-width: 768px) {\n  .feed-main {\n    margin-left: 0;\n    padding: 20px;\n  }\n}\n\n.feed-page-header {\n  max-width: 1100px;\n  margin: 0 auto 28px;\n}\n.feed-page-header__title {\n  font-size: 1.75rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0 0 4px;\n}\n.feed-page-header__sub {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.feed-layout {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr) 300px;\n  gap: 32px;\n  align-items: start;\n  max-width: 1100px;\n  margin: 0 auto;\n}\n@media (max-width: 1024px) {\n  .feed-layout {\n    grid-template-columns: 1fr;\n  }\n}\n\n.feed-center {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n  min-width: 0;\n}\n\n.feed-card {\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n}\n\n.feed-stories-container {\n  padding: 24px;\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n}\n\n.feed-stories {\n  display: flex;\n  gap: 20px;\n  overflow-x: auto;\n  scrollbar-width: none;\n}\n.feed-stories::-webkit-scrollbar {\n  display: none;\n}\n\n.feed-story-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n\n.feed-story {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n  cursor: pointer;\n  width: 76px;\n}\n.feed-story__ring {\n  position: relative;\n  width: 76px;\n  height: 76px;\n  border-radius: 50%;\n  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.feed-story__ring--add {\n  background: linear-gradient(135deg, #c4c5d6, #a8a9be);\n}\n.feed-story__ring > * {\n  z-index: 2;\n  position: relative;\n}\n.feed-story__img-box {\n  width: 72px;\n  height: 72px;\n  border-radius: 50%;\n  overflow: hidden;\n  background: var(--bg-page);\n  border: 3px solid var(--bg-card);\n}\n.feed-story__img-box img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.feed-story__plus {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  background: var(--primary-action);\n  color: white;\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  border: 2.5px solid var(--bg-card);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 11px;\n  z-index: 3;\n  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);\n}\n.feed-story__label {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-align: center;\n  margin-top: 4px;\n}\n.feed-story__menu {\n  position: absolute;\n  top: 90px;\n  left: 0;\n  background: var(--bg-card);\n  border-radius: 12px;\n  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);\n  width: 170px;\n  padding: 8px;\n  z-index: 1000;\n  border: 1px solid var(--border-color);\n}\n.feed-story__menu button {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  width: 100%;\n  padding: 10px;\n  border: none;\n  background: none;\n  border-radius: 8px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  cursor: pointer;\n  color: var(--text-main);\n}\n.feed-story__menu button:hover {\n  background: var(--bg-page);\n  color: var(--primary-action);\n}\n.feed-story__menu button.cancel {\n  color: var(--danger);\n}\n.feed-story__menu .divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 4px 0;\n}\n\n.feed-post-v2 {\n  display: flex;\n  flex-direction: column;\n}\n.feed-post-v2__header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-post-v2__header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-post-v2__header .user .meta .meta-top {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.feed-post-v2__header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.feed-post-v2__header .user .meta .meta-top .time {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.feed-post-v2__header .user .meta .meta-bottom {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  color: var(--text-muted);\n  font-size: 0.8rem;\n}\n.feed-post-v2__header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.feed-post-v2__header .user .meta .meta-bottom .location {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n.feed-post-v2__header .actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .actions .icon-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  transition: color 0.2s;\n}\n.feed-post-v2__header .actions .icon-btn:hover {\n  color: var(--text-main);\n}\n.feed-post-v2__body {\n  padding: 0;\n}\n.feed-post-v2__body .post-text {\n  padding: 0 20px;\n  color: var(--text-main);\n  line-height: 1.5;\n  font-size: 0.95rem;\n  margin-bottom: 8px;\n}\n.feed-post-v2__body .post-text .text-more {\n  color: var(--text-muted);\n  cursor: pointer;\n  margin-left: 4px;\n}\n.feed-post-v2__body .hashtags {\n  padding: 0 20px;\n  display: flex;\n  gap: 8px;\n  margin-bottom: 16px;\n  flex-wrap: wrap;\n}\n.feed-post-v2__body .hashtags span {\n  color: var(--text-muted);\n  font-size: 0.85rem;\n}\n.feed-post-v2__body .main-img {\n  width: 100%;\n  display: block;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 0;\n}\n.feed-post-v2__body .main-video {\n  width: 100%;\n  display: block;\n  border-radius: 0;\n  max-height: 540px;\n  background: #000;\n}\n.feed-post-v2__footer {\n  padding: 12px 20px;\n  border-top: 1px solid var(--border-color);\n  display: flex;\n  gap: 24px;\n}\n.feed-post-v2__footer .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: 0.2s;\n  padding: 6px 12px;\n  border-radius: 8px;\n}\n.feed-post-v2__footer .action-btn span {\n  font-weight: 700;\n  font-size: 0.9rem;\n}\n.feed-post-v2__footer .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-post-v2__footer .action-btn.active {\n  color: var(--danger);\n}\n\n.feed-right-col {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n\n.sidebar-card {\n  padding: 20px;\n}\n.sidebar-card__title {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  margin-bottom: 20px;\n  color: var(--text-main);\n  font-weight: 800;\n  font-size: 0.9rem;\n}\n.sidebar-card__title--between {\n  justify-content: space-between;\n  gap: 8px;\n}\n\n.tag-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n\n.tag-row {\n  display: flex;\n  justify-content: space-between;\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.tag-row .count {\n  color: var(--text-muted);\n}\n\n.title-left {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n}\n\n.see-all-btn {\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.live-contest {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.live-contest__top {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 10px;\n}\n\n.contest-name {\n  font-weight: 800;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n\n.contest-sub {\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  margin-top: 4px;\n}\n\n.live-pill {\n  background: rgba(var(--success-rgb), 0.15);\n  color: var(--success);\n  font-size: 0.65rem;\n  font-weight: 800;\n  padding: 2px 8px;\n  border-radius: 999px;\n}\n\n.contest-progress {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 999px;\n  overflow: hidden;\n}\n\n.contest-progress__bar {\n  width: 74%;\n  height: 100%;\n  background: linear-gradient(90deg, var(--primary-action), var(--text-muted));\n}\n\n.contest-btn {\n  width: 100%;\n}\n\n.suggested-users {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n\n.user-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.user-row .info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.user-row .info .name {\n  font-weight: 700;\n  font-size: 0.85rem;\n  color: var(--text-main);\n}\n.user-row .info .sub {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.user-row .follow-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--primary-action);\n  font-weight: 600;\n  font-size: 0.75rem;\n  line-height: 1;\n  padding: 7px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n  min-width: 58px;\n  transition: all 0.18s ease;\n}\n.user-row .follow-btn:hover {\n  background: var(--bg-card);\n  border-color: var(--primary-action);\n}\n\n.story-viewer-v2 {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.92);\n  backdrop-filter: blur(20px);\n}\n.story-viewer-v2__main {\n  position: relative;\n  width: 100%;\n  max-width: 440px;\n  height: 100%;\n  max-height: 90vh;\n  background: #000;\n  border-radius: 16px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);\n}\n@media (max-width: 480px) {\n  .story-viewer-v2__main {\n    max-height: 100vh;\n    border-radius: 0;\n  }\n}\n.story-viewer-v2__progress-bars {\n  position: absolute;\n  top: 12px;\n  left: 10px;\n  right: 10px;\n  display: flex;\n  gap: 4px;\n  z-index: 100;\n}\n.story-viewer-v2__progress-bars .story-progress-bg {\n  flex: 1;\n  height: 2px;\n  background: rgba(255, 255, 255, 0.3);\n  border-radius: 99px;\n  overflow: hidden;\n}\n.story-viewer-v2__progress-bars .story-progress-fill {\n  height: 100%;\n  background: #fff;\n  transition: width 0.1s linear;\n}\n.story-viewer-v2__header {\n  padding: 24px 16px 32px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);\n  z-index: 10;\n  position: absolute;\n  top: 0;\n  width: 100%;\n}\n.story-viewer-v2__user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.story-viewer-v2__user .user-info {\n  display: flex;\n  flex-direction: column;\n}\n.story-viewer-v2__user .user-info .name {\n  color: #fff;\n  font-weight: 700;\n  font-size: 0.95rem;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n}\n.story-viewer-v2__user .user-info .time {\n  color: rgba(255, 255, 255, 0.7);\n  font-size: 0.75rem;\n  font-weight: 500;\n}\n.story-viewer-v2__actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.story-viewer-v2__actions .dots-btn, .story-viewer-v2__actions .close-btn {\n  background: transparent;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  padding: 8px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: background 0.2s;\n}\n.story-viewer-v2__actions .dots-btn:hover, .story-viewer-v2__actions .close-btn:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.story-viewer-v2 .story-options-trigger {\n  position: relative;\n}\n.story-viewer-v2 .story-menu {\n  position: absolute;\n  top: calc(100% + 12px);\n  right: 0;\n  background: rgba(30, 30, 35, 0.95);\n  backdrop-filter: blur(12px);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 14px;\n  min-width: 220px;\n  padding: 6px;\n  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);\n  z-index: 200;\n}\n.story-viewer-v2 .story-menu button {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px;\n  border: none;\n  background: transparent;\n  color: #fff;\n  font-size: 0.9rem;\n  font-weight: 500;\n  cursor: pointer;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.story-viewer-v2 .story-menu button:hover {\n  background: rgba(255, 255, 255, 0.08);\n}\n.story-viewer-v2 .story-menu button svg {\n  opacity: 0.8;\n  color: rgba(255, 255, 255, 0.9);\n}\n.story-viewer-v2 .story-menu button.delete {\n  color: #ff4d4d;\n}\n.story-viewer-v2 .story-menu button.delete svg {\n  color: #ff4d4d;\n}\n.story-viewer-v2 .story-menu button.delete:hover {\n  background: rgba(255, 77, 77, 0.1);\n}\n.story-viewer-v2 .story-menu button.has-submenu {\n  justify-content: space-between;\n}\n.story-viewer-v2 .story-menu button.has-submenu span {\n  flex: 1;\n  text-align: left;\n  margin-left: 12px;\n}\n.story-viewer-v2 .story-menu button.has-submenu svg:last-child {\n  opacity: 0.5;\n}\n.story-viewer-v2 .story-menu button.active {\n  background: rgba(255, 255, 255, 0.1);\n  color: #fff;\n  font-weight: 700;\n}\n.story-viewer-v2 .story-menu button.active svg {\n  opacity: 1;\n}\n.story-viewer-v2 .story-menu .visibility-submenu .submenu-header {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 0;\n  margin-bottom: 4px;\n  padding-bottom: 10px;\n  font-weight: 700;\n  color: rgba(255, 255, 255, 0.6);\n}\n.story-viewer-v2__body {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #000;\n}\n.story-viewer-v2__body img, .story-viewer-v2__body video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n\n.feed-btn--primary {\n  background: #898AA6;\n  color: white;\n  border: none;\n  padding: 8px 24px;\n  border-radius: 99px;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.feed-avatar {\n  position: relative;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n}\n.feed-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 50%;\n}\n.feed-avatar--sm {\n  width: 32px;\n  height: 32px;\n  min-width: 32px;\n}\n.feed-avatar--md {\n  width: 44px;\n  height: 44px;\n  min-width: 44px;\n}\n.feed-avatar.online .feed-avatar__dot {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 12px;\n  height: 12px;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n  border-radius: 50%;\n}\n\n.post-menu {\n  position: relative;\n}\n.post-menu__trigger {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  transition: all 0.2s;\n}\n.post-menu__trigger:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.post-menu__trigger:active {\n  transform: scale(0.95);\n}\n.post-menu__dropdown {\n  position: absolute;\n  top: calc(100% + 6px);\n  right: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);\n  z-index: 100;\n  min-width: 200px;\n  padding: 6px;\n  transform-origin: top right;\n}\n.post-menu {\n  height: 1px;\n  background: var(--border-color);\n  margin: 6px 4px;\n}\n.post-menu__item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  padding: 10px 12px;\n  border: none;\n  border-radius: 8px;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n}\n.post-menu__item:hover {\n  background: var(--bg-page, #f8f9fa);\n}\n.post-menu__item svg {\n  color: var(--text-muted, #64748b);\n  flex-shrink: 0;\n}\n.post-menu__item .item-text {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-menu__item .item-text .label {\n  font-size: 0.9rem;\n  color: var(--text-main, #1e293b);\n  font-weight: 500;\n}\n.post-menu__item .item-text .sub {\n  font-size: 0.75rem;\n  color: var(--text-muted, #94a3b8);\n}\n.post-menu__item.danger svg {\n  color: #e11d48;\n}\n.post-menu__item.danger .label {\n  color: #e11d48;\n}\n\n.post-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.post-modal-bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.65);\n  backdrop-filter: blur(8px);\n}\n\n.post-modal-content {\n  position: relative;\n  display: flex;\n  background: var(--bg-card);\n  border-radius: 20px;\n  overflow: hidden;\n  max-height: 90vh;\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n.post-modal-content.has-image {\n  width: 1000px;\n  max-width: 95vw;\n  height: 800px;\n}\n.post-modal-content.has-image .post-modal-media {\n  flex: 1.5;\n  background: #000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.post-modal-content.has-image .post-modal-media img, .post-modal-content.has-image .post-modal-media video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.post-modal-content.has-image .post-modal-sidebar {\n  width: 400px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  border-left: 1px solid var(--border-color);\n}\n.post-modal-content.text-only {\n  width: 600px;\n  max-width: 95vw;\n}\n.post-modal-content.text-only .post-modal-sidebar {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.post-modal-header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid var(--border-color);\n}\n.post-modal-header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-modal-header .user .meta .meta-top {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.post-modal-header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.post-modal-header .user .meta .meta-top .time {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.post-modal-header .user .meta .meta-bottom {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  color: #94a3b8;\n  font-size: 0.8rem;\n}\n.post-modal-header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.post-modal-header .user .meta .meta-bottom .location {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n.post-modal-header .close-btn {\n  background: none;\n  border: none;\n  color: #94a3b8;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  border-radius: 50%;\n  transition: 0.2s;\n}\n.post-modal-header .close-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n\n.post-modal-scrollable {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.post-modal-scrollable::-webkit-scrollbar {\n  width: 6px;\n}\n.post-modal-scrollable::-webkit-scrollbar-track {\n  background: transparent;\n}\n.post-modal-scrollable::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n\n.post-modal-caption {\n  display: flex;\n  gap: 12px;\n}\n.post-modal-caption .caption-content {\n  flex: 1;\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n}\n.post-modal-caption .caption-content .author-name {\n  font-weight: 700;\n  color: var(--text-main);\n  margin-right: 6px;\n}\n.post-modal-caption .caption-content .hashtags {\n  display: flex;\n  gap: 8px;\n  margin-top: 8px;\n  flex-wrap: wrap;\n}\n.post-modal-caption .caption-content .hashtags span {\n  color: var(--primary-action);\n  font-size: 0.85rem;\n  font-weight: 500;\n}\n\n.post-modal-comments {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n}\n.post-modal-comments .empty-state {\n  margin: auto;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  padding: 40px 0;\n}\n.post-modal-comments .empty-state span:first-child {\n  font-weight: 600;\n  color: var(--text-main);\n}\n\n.post-modal-footer {\n  border-top: 1px solid var(--border-color);\n  padding: 16px 20px;\n}\n.post-modal-footer .actions {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 12px;\n}\n.post-modal-footer .actions .actions-left {\n  display: flex;\n  gap: 16px;\n}\n.post-modal-footer .actions .action-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 0;\n  transition: 0.2s;\n}\n.post-modal-footer .actions .action-btn:hover {\n  color: var(--text-main);\n  transform: scale(1.05);\n}\n.post-modal-footer .actions .action-btn.active {\n  color: var(--danger);\n}\n.post-modal-footer .likes-count {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n  margin-bottom: 16px;\n}\n.post-modal-footer .add-comment {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-footer .add-comment input {\n  flex: 1;\n  border: none;\n  outline: none;\n  background: transparent;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.post-modal-footer .add-comment input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment input::placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment .post-btn {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 700;\n  font-size: 0.95rem;\n  cursor: pointer;\n}\n.post-modal-footer .add-comment .post-btn:hover {\n  color: var(--primary-action);\n  opacity: 0.8;\n}\n\n.feed-composer {\n  padding: 16px 20px;\n  display: flex;\n  flex-direction: column;\n}\n.feed-composer__main {\n  display: flex;\n  gap: 12px;\n  align-items: flex-start;\n}\n.feed-composer__input-wrapper {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  min-width: 0;\n}\n.feed-composer__trigger {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 12px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  cursor: text;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  transition: all 0.2s;\n  box-sizing: border-box;\n  min-height: 44px;\n}\n.feed-composer__trigger:hover {\n  background: var(--bg-card);\n}\n.feed-composer__trigger-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 8px 0;\n  cursor: pointer;\n}\n.feed-composer__trigger-text {\n  flex: 1;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  padding: 10px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  transition: background 0.2s;\n}\n.feed-composer__trigger-text:hover {\n  background: var(--bg-card);\n}\n.feed-composer__header-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-bottom: 12px;\n}\n.feed-composer__user-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-composer__username {\n  font-weight: 700;\n  font-size: 0.95rem;\n  color: var(--text-main, #1e293b);\n}\n.feed-composer__privacy-wrapper {\n  position: relative;\n  display: inline-block;\n}\n.feed-composer__privacy {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  background: var(--bg-page);\n  padding: 3px 8px;\n  border-radius: 4px;\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  width: -moz-fit-content;\n  width: fit-content;\n  border: none;\n  cursor: pointer;\n  font-family: inherit;\n  transition: background 0.15s;\n}\n.feed-composer__privacy:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu {\n  position: absolute;\n  top: calc(100% + 4px);\n  left: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 8px;\n  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);\n  z-index: 100;\n  min-width: 180px;\n  padding: 4px;\n}\n.feed-composer .privacy-menu .privacy-option {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 8px 10px;\n  border-radius: 6px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  width: 100%;\n  text-align: left;\n  transition: background 0.15s;\n}\n.feed-composer .privacy-menu .privacy-option:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu .privacy-option.active {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer .privacy-menu .privacy-option svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .desc {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.feed-composer__textarea {\n  background: transparent;\n  border: none;\n  padding: 0;\n  color: var(--text-main);\n  font-size: 1rem;\n  width: 100%;\n  resize: none;\n  outline: none;\n  font-family: inherit;\n  line-height: 1.5;\n}\n.feed-composer__textarea::-moz-placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__textarea::placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__media-preview {\n  position: relative;\n  margin: 12px 0;\n  border-radius: 12px;\n  overflow: hidden;\n  background: var(--bg-page);\n  height: 220px;\n}\n.feed-composer__media-preview img, .feed-composer__media-preview video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  display: block;\n}\n.feed-composer__media-clear {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.5);\n  color: #fff;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  backdrop-filter: blur(4px);\n  transition: background 0.15s;\n}\n.feed-composer__media-clear:hover {\n  background: rgba(0, 0, 0, 0.7);\n}\n.feed-composer__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 16px 0;\n  width: 100%;\n}\n.feed-composer__actions {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-composer__actions .group {\n  display: flex;\n  gap: 16px;\n}\n.feed-composer__actions .group-right {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n}\n.feed-composer__actions .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  font-size: 0.85rem;\n  font-weight: 600;\n  cursor: pointer;\n  padding: 6px 8px;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.feed-composer__actions .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-composer__actions .action-btn.active {\n  color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer__actions .action-btn.loading {\n  opacity: 0.7;\n  cursor: wait;\n}\n.feed-composer__actions .action-btn:disabled {\n  opacity: 0.6;\n  cursor: not-allowed;\n}\n.feed-composer__actions .char-count {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  font-weight: 600;\n}\n.feed-composer__actions .post-submit-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: var(--border-color);\n  color: var(--text-muted);\n  border: none;\n  padding: 8px 16px;\n  border-radius: 20px;\n  font-weight: 700;\n  font-size: 0.9rem;\n  cursor: not-allowed;\n  transition: all 0.2s;\n}\n.feed-composer__actions .post-submit-btn.active {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.feed-composer__actions .post-submit-btn.active:hover {\n  opacity: 0.9;\n  transform: translateY(-1px);\n}\n\n.location-picker-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(4px);\n  z-index: 1000;\n  display: flex;\n  align-items: flex-end;\n  justify-content: center;\n}\n@media (min-width: 768px) {\n  .location-picker-overlay {\n    align-items: center;\n  }\n}\n\n.location-picker {\n  background: var(--bg-card);\n  width: 100%;\n  max-width: 480px;\n  max-height: 85vh;\n  border-radius: 20px 20px 0 0;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);\n}\n@media (min-width: 768px) {\n  .location-picker {\n    border-radius: 16px;\n    max-height: 600px;\n  }\n}\n.location-picker__header {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__header .back-btn {\n  background: none;\n  border: none;\n  color: var(--text-main);\n  cursor: pointer;\n  padding: 8px;\n  margin: -8px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: background 0.2s;\n}\n.location-picker__header .back-btn:hover {\n  background: var(--bg-page);\n}\n.location-picker__header h3 {\n  font-size: 1.1rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0;\n  flex: 1;\n  text-align: center;\n  margin-right: 40px;\n}\n.location-picker__search {\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__search .search-input-wrapper {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 24px;\n  padding: 12px 16px;\n  transition: border-color 0.2s, box-shadow 0.2s;\n}\n.location-picker__search .search-input-wrapper:focus-within {\n  border-color: var(--primary-action);\n  box-shadow: 0 0 0 3px rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.location-picker__search .search-input-wrapper svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.location-picker__search .search-input-wrapper input {\n  flex: 1;\n  border: none;\n  background: transparent;\n  outline: none;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.location-picker__search .search-input-wrapper input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper input::placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper .clear-search {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: color 0.2s, background 0.2s;\n}\n.location-picker__search .search-input-wrapper .clear-search:hover {\n  color: var(--text-main);\n  background: var(--border-color);\n}\n.location-picker__content {\n  flex: 1;\n  overflow-y: auto;\n  padding: 12px 0;\n}\n.location-picker__content .suggested-title {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0 20px 12px;\n  text-transform: uppercase;\n  letter-spacing: 0.5px;\n}\n.location-picker__content .loading-locations {\n  padding: 40px 20px;\n  text-align: center;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n}\n.location-picker__content .locations-list {\n  display: flex;\n  flex-direction: column;\n}\n.location-picker__content .location-item {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px 20px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n  width: 100%;\n}\n.location-picker__content .location-item:hover {\n  background: var(--bg-page);\n}\n.location-picker__content .location-item:active {\n  background: var(--border-color);\n}\n.location-picker__content .location-item .location-icon {\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  font-size: 1.2rem;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.location-picker__content .location-item .location-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n}\n.location-picker__content .location-item .location-info .location-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.location-picker__content .location-item .location-info .location-sub {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n\n.tag-picker-modal .tag-picker__search-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 24px;\n  padding: 10px 16px;\n  transition: border-color 0.2s, box-shadow 0.2s;\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper:focus-within {\n  border-color: var(--primary-action);\n  box-shadow: 0 0 0 3px rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper input {\n  flex: 1;\n  border: none;\n  background: transparent;\n  outline: none;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper input::placeholder {\n  color: var(--text-muted);\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper .clear-search {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.tag-picker-modal .tag-picker__search-row .search-input-wrapper .clear-search:hover {\n  color: var(--text-main);\n}\n.tag-picker-modal .tag-picker__search-row .tag-picker__done {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 600;\n  font-size: 1rem;\n  cursor: pointer;\n  padding: 8px 0;\n  transition: opacity 0.2s;\n}\n.tag-picker-modal .tag-picker__search-row .tag-picker__done:hover {\n  opacity: 0.8;\n}\n.tag-picker-modal .tag-item .tag-avatar {\n  border: none;\n  background: none;\n  padding: 0;\n  width: auto;\n  height: auto;\n}\n.tag-picker-modal .tag-item:hover {\n  background: var(--bg-page);\n}\n.tag-picker-modal .tag-item .tag-checkbox {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.tag-picker-modal .tag-item .tag-checkbox .checkbox-circle {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  border: 2px solid var(--border-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: all 0.2s;\n}\n.tag-picker-modal .tag-item .tag-checkbox .checkbox-circle.checked {\n  border-color: var(--primary-action);\n  background: var(--primary-action);\n}\n.tag-picker-modal .tag-item .tag-checkbox .checkbox-circle.checked .checkbox-inner {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: white;\n}\n.tag-picker-modal .no-results {\n  padding: 40px 20px;\n  text-align: center;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".pawtastic-feed {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.feed-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 32px 40px;\n  max-width: calc(100vw - 260px);\n}\n@media (max-width: 768px) {\n  .feed-main {\n    margin-left: 0;\n    padding: 20px;\n  }\n}\n\n.feed-page-header {\n  max-width: 1100px;\n  margin: 0 auto 28px;\n}\n.feed-page-header__title {\n  font-size: 1.75rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0 0 4px;\n}\n.feed-page-header__sub {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.feed-layout {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr) 300px;\n  gap: 32px;\n  align-items: start;\n  max-width: 1100px;\n  margin: 0 auto;\n}\n@media (max-width: 1024px) {\n  .feed-layout {\n    grid-template-columns: 1fr;\n  }\n}\n\n.feed-center {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n  min-width: 0;\n}\n\n.feed-card {\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n}\n\n.feed-stories-container {\n  padding: 24px;\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n}\n\n.feed-stories {\n  display: flex;\n  gap: 20px;\n  overflow-x: auto;\n  scrollbar-width: none;\n}\n.feed-stories::-webkit-scrollbar {\n  display: none;\n}\n\n.feed-story-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n\n.feed-story {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n  cursor: pointer;\n  width: 76px;\n}\n.feed-story__ring {\n  position: relative;\n  width: 76px;\n  height: 76px;\n  border-radius: 50%;\n  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.feed-story__ring--add {\n  background: linear-gradient(135deg, #c4c5d6, #a8a9be);\n}\n.feed-story__ring > * {\n  z-index: 2;\n  position: relative;\n}\n.feed-story__img-box {\n  width: 72px;\n  height: 72px;\n  border-radius: 50%;\n  overflow: hidden;\n  background: var(--bg-page);\n  border: 3px solid var(--bg-card);\n}\n.feed-story__img-box img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.feed-story__plus {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  background: var(--primary-action);\n  color: white;\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  border: 2.5px solid var(--bg-card);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 11px;\n  z-index: 3;\n  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);\n}\n.feed-story__label {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-align: center;\n  margin-top: 4px;\n}\n.feed-story__menu {\n  position: absolute;\n  top: 90px;\n  left: 0;\n  background: var(--bg-card);\n  border-radius: 12px;\n  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);\n  width: 170px;\n  padding: 8px;\n  z-index: 1000;\n  border: 1px solid var(--border-color);\n}\n.feed-story__menu button {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  width: 100%;\n  padding: 10px;\n  border: none;\n  background: none;\n  border-radius: 8px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  cursor: pointer;\n  color: var(--text-main);\n}\n.feed-story__menu button:hover {\n  background: var(--bg-page);\n  color: var(--primary-action);\n}\n.feed-story__menu button.cancel {\n  color: var(--danger);\n}\n.feed-story__menu .divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 4px 0;\n}\n\n.feed-post-v2 {\n  display: flex;\n  flex-direction: column;\n}\n.feed-post-v2__header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-post-v2__header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-post-v2__header .user .meta .meta-top {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.feed-post-v2__header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.feed-post-v2__header .user .meta .meta-top .time {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.feed-post-v2__header .user .meta .meta-bottom {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  color: var(--text-muted);\n  font-size: 0.8rem;\n}\n.feed-post-v2__header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.feed-post-v2__header .user .meta .meta-bottom .location {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n.feed-post-v2__header .actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .actions .icon-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  transition: color 0.2s;\n}\n.feed-post-v2__header .actions .icon-btn:hover {\n  color: var(--text-main);\n}\n.feed-post-v2__body {\n  padding: 0;\n}\n.feed-post-v2__body .post-text {\n  padding: 0 20px;\n  color: var(--text-main);\n  line-height: 1.5;\n  font-size: 0.95rem;\n  margin-bottom: 8px;\n}\n.feed-post-v2__body .post-text .text-more {\n  color: var(--text-muted);\n  cursor: pointer;\n  margin-left: 4px;\n}\n.feed-post-v2__body .hashtags {\n  padding: 0 20px;\n  display: flex;\n  gap: 8px;\n  margin-bottom: 16px;\n  flex-wrap: wrap;\n}\n.feed-post-v2__body .hashtags span {\n  color: var(--text-muted);\n  font-size: 0.85rem;\n}\n.feed-post-v2__body .main-img {\n  width: 100%;\n  display: block;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 0;\n}\n.feed-post-v2__body .main-video {\n  width: 100%;\n  display: block;\n  border-radius: 0;\n  max-height: 540px;\n  background: #000;\n}\n.feed-post-v2__footer {\n  padding: 12px 20px;\n  border-top: 1px solid var(--border-color);\n  display: flex;\n  gap: 24px;\n}\n.feed-post-v2__footer .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: 0.2s;\n  padding: 6px 12px;\n  border-radius: 8px;\n}\n.feed-post-v2__footer .action-btn span {\n  font-weight: 700;\n  font-size: 0.9rem;\n}\n.feed-post-v2__footer .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-post-v2__footer .action-btn.active {\n  color: var(--danger);\n}\n\n.feed-right-col {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n\n.sidebar-card {\n  padding: 20px;\n}\n.sidebar-card__title {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  margin-bottom: 20px;\n  color: var(--text-main);\n  font-weight: 800;\n  font-size: 0.9rem;\n}\n.sidebar-card__title--between {\n  justify-content: space-between;\n  gap: 8px;\n}\n\n.tag-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n\n.tag-row {\n  display: flex;\n  justify-content: space-between;\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.tag-row .count {\n  color: var(--text-muted);\n}\n\n.title-left {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n}\n\n.see-all-btn {\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.live-contest {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.live-contest__top {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 10px;\n}\n\n.contest-name {\n  font-weight: 800;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n\n.contest-sub {\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  margin-top: 4px;\n}\n\n.live-pill {\n  background: rgba(var(--success-rgb), 0.15);\n  color: var(--success);\n  font-size: 0.65rem;\n  font-weight: 800;\n  padding: 2px 8px;\n  border-radius: 999px;\n}\n\n.contest-progress {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 999px;\n  overflow: hidden;\n}\n\n.contest-progress__bar {\n  width: 74%;\n  height: 100%;\n  background: linear-gradient(90deg, var(--primary-action), var(--text-muted));\n}\n\n.contest-btn {\n  width: 100%;\n}\n\n.suggested-users {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n\n.user-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.user-row .info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.user-row .info .name {\n  font-weight: 700;\n  font-size: 0.85rem;\n  color: var(--text-main);\n}\n.user-row .info .sub {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.user-row .follow-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--primary-action);\n  font-weight: 600;\n  font-size: 0.75rem;\n  line-height: 1;\n  padding: 7px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n  min-width: 58px;\n  transition: all 0.18s ease;\n}\n.user-row .follow-btn:hover {\n  background: var(--bg-card);\n  border-color: var(--primary-action);\n}\n\n.story-viewer-v2 {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.92);\n  backdrop-filter: blur(20px);\n}\n.story-viewer-v2__main {\n  position: relative;\n  width: 100%;\n  max-width: 440px;\n  height: 100%;\n  max-height: 90vh;\n  background: #000;\n  border-radius: 16px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);\n}\n@media (max-width: 480px) {\n  .story-viewer-v2__main {\n    max-height: 100vh;\n    border-radius: 0;\n  }\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars {\n  position: absolute;\n  top: 12px;\n  left: 10px;\n  right: 10px;\n  display: flex;\n  gap: 4px;\n  z-index: 100;\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars .story-progress-bg {\n  flex: 1;\n  height: 2px;\n  background: rgba(255, 255, 255, 0.3);\n  border-radius: 99px;\n  overflow: hidden;\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars .story-progress-fill {\n  height: 100%;\n  background: #fff;\n  transition: width 0.1s linear;\n}\n.story-viewer-v2__main .story-viewer-v2__header {\n  padding: 32px 16px 40px;\n  display: flex;\n  align-items: center;\n  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);\n  z-index: 10;\n  position: absolute;\n  top: 0;\n  width: 100%;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info {\n  display: flex;\n  flex-direction: column;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line .name {\n  color: #fff;\n  font-weight: 700;\n  font-size: 0.95rem;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n  line-height: 1.1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line .time {\n  color: rgba(255, 255, 255, 0.8);\n  font-size: 0.85rem;\n  font-weight: 500;\n  line-height: 1.1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .visibility-icon {\n  color: rgba(255, 255, 255, 0.9);\n  margin-top: 4px;\n  display: flex;\n  align-items: center;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions {\n  position: absolute;\n  top: 28px;\n  right: 32px;\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  z-index: 20;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn {\n  background: rgba(0, 0, 0, 0.45);\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  width: 38px;\n  height: 38px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n  backdrop-filter: blur(10px);\n  box-sizing: border-box;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn:hover, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn:hover {\n  background: rgba(0, 0, 0, 0.7);\n  transform: scale(1.08);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn svg, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn svg {\n  display: block;\n  width: 22px;\n  height: 22px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn svg {\n  width: 26px;\n  height: 26px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu {\n  position: absolute;\n  top: calc(100% + 12px);\n  right: 0;\n  background: rgba(30, 30, 35, 0.95);\n  backdrop-filter: blur(12px);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 14px;\n  min-width: 220px;\n  padding: 6px;\n  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);\n  z-index: 200;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  padding: 10px 12px;\n  border: none;\n  background: transparent;\n  color: #fff;\n  font-size: 0.9rem;\n  font-weight: 500;\n  cursor: pointer;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button:hover {\n  background: rgba(255, 255, 255, 0.08);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button svg {\n  width: 20px;\n  height: 20px;\n  opacity: 0.8;\n  color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button span {\n  margin-left: 12px;\n  flex: 1;\n  text-align: left;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete {\n  color: #ff5c5c;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete svg {\n  color: #ff5c5c;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete:hover {\n  background: rgba(255, 92, 92, 0.1);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.has-submenu svg:last-child {\n  opacity: 0.5;\n  margin-left: 8px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.active {\n  background: rgba(255, 255, 255, 0.1);\n  color: #fff;\n  font-weight: 700;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.active svg {\n  opacity: 1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu .visibility-submenu .submenu-header {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 0;\n  margin-bottom: 4px;\n  padding-bottom: 10px;\n  font-weight: 700;\n  color: rgba(255, 255, 255, 0.6);\n}\n.story-viewer-v2__main .story-viewer-v2__footer {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  padding: 24px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);\n  z-index: 10;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 4px;\n  color: #fff;\n  cursor: pointer;\n  transition: opacity 0.2s;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item:hover {\n  opacity: 0.8;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item .icon-circle {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: rgba(255, 255, 255, 0.15);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  backdrop-filter: blur(10px);\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item span {\n  font-size: 0.75rem;\n  font-weight: 600;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n}\n.story-viewer-v2__main .story-viewer-v2__body {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #000;\n}\n.story-viewer-v2__main .story-viewer-v2__body img, .story-viewer-v2__main .story-viewer-v2__body video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n\n.nav-arrow {\n  position: fixed;\n  top: 50%;\n  transform: translateY(-50%);\n  background: rgba(255, 255, 255, 0.15);\n  border: none;\n  color: #fff;\n  width: 52px;\n  height: 52px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  z-index: 1000;\n  transition: all 0.2s;\n  backdrop-filter: blur(10px);\n}\n.nav-arrow:hover {\n  background: rgba(255, 255, 255, 0.3);\n  transform: translateY(-50%) scale(1.1);\n}\n.nav-arrow.prev {\n  left: 20px;\n}\n.nav-arrow.next {\n  right: 20px;\n}\n\n.feed-btn--primary {\n  background: #898AA6;\n  color: white;\n  border: none;\n  padding: 8px 24px;\n  border-radius: 99px;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.feed-avatar {\n  position: relative;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n}\n.feed-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 50%;\n}\n.feed-avatar--sm {\n  width: 32px;\n  height: 32px;\n  min-width: 32px;\n}\n.feed-avatar--md {\n  width: 44px;\n  height: 44px;\n  min-width: 44px;\n}\n.feed-avatar.online .feed-avatar__dot {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 12px;\n  height: 12px;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n  border-radius: 50%;\n}\n\n.post-menu {\n  position: relative;\n}\n.post-menu__trigger {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  transition: all 0.2s;\n}\n.post-menu__trigger:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.post-menu__trigger:active {\n  transform: scale(0.95);\n}\n.post-menu__dropdown {\n  position: absolute;\n  top: calc(100% + 6px);\n  right: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);\n  z-index: 100;\n  min-width: 200px;\n  padding: 6px;\n  transform-origin: top right;\n}\n.post-menu {\n  height: 1px;\n  background: var(--border-color);\n  margin: 6px 4px;\n}\n.post-menu__item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  padding: 10px 12px;\n  border: none;\n  border-radius: 8px;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n}\n.post-menu__item:hover {\n  background: var(--bg-page, #f8f9fa);\n}\n.post-menu__item svg {\n  color: var(--text-muted, #64748b);\n  flex-shrink: 0;\n}\n.post-menu__item .item-text {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-menu__item .item-text .label {\n  font-size: 0.9rem;\n  color: var(--text-main, #1e293b);\n  font-weight: 500;\n}\n.post-menu__item .item-text .sub {\n  font-size: 0.75rem;\n  color: var(--text-muted, #94a3b8);\n}\n.post-menu__item.danger svg {\n  color: #e11d48;\n}\n.post-menu__item.danger .label {\n  color: #e11d48;\n}\n\n.post-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.post-modal-bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.65);\n  backdrop-filter: blur(8px);\n}\n\n.post-modal-content {\n  position: relative;\n  display: flex;\n  background: var(--bg-card);\n  border-radius: 20px;\n  overflow: hidden;\n  max-height: 90vh;\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n.post-modal-content.has-image {\n  width: 1000px;\n  max-width: 95vw;\n  height: 800px;\n}\n.post-modal-content.has-image .post-modal-media {\n  flex: 1.5;\n  background: #000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.post-modal-content.has-image .post-modal-media img, .post-modal-content.has-image .post-modal-media video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.post-modal-content.has-image .post-modal-sidebar {\n  width: 400px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  border-left: 1px solid var(--border-color);\n}\n.post-modal-content.text-only {\n  width: 600px;\n  max-width: 95vw;\n}\n.post-modal-content.text-only .post-modal-sidebar {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.post-modal-header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid var(--border-color);\n}\n.post-modal-header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-modal-header .user .meta .meta-top {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.post-modal-header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.post-modal-header .user .meta .meta-top .time {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.post-modal-header .user .meta .meta-bottom {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  color: #94a3b8;\n  font-size: 0.8rem;\n}\n.post-modal-header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.post-modal-header .user .meta .meta-bottom .location {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n.post-modal-header .close-btn {\n  background: none;\n  border: none;\n  color: #94a3b8;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  border-radius: 50%;\n  transition: 0.2s;\n}\n.post-modal-header .close-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n\n.post-modal-scrollable {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.post-modal-scrollable::-webkit-scrollbar {\n  width: 6px;\n}\n.post-modal-scrollable::-webkit-scrollbar-track {\n  background: transparent;\n}\n.post-modal-scrollable::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n\n.post-modal-caption {\n  display: flex;\n  gap: 12px;\n}\n.post-modal-caption .caption-content {\n  flex: 1;\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n}\n.post-modal-caption .caption-content .author-name {\n  font-weight: 700;\n  color: var(--text-main);\n  margin-right: 6px;\n}\n.post-modal-caption .caption-content .hashtags {\n  display: flex;\n  gap: 8px;\n  margin-top: 8px;\n  flex-wrap: wrap;\n}\n.post-modal-caption .caption-content .hashtags span {\n  color: var(--primary-action);\n  font-size: 0.85rem;\n  font-weight: 500;\n}\n\n.post-modal-comments {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n}\n.post-modal-comments .empty-state {\n  margin: auto;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  padding: 40px 0;\n}\n.post-modal-comments .empty-state span:first-child {\n  font-weight: 600;\n  color: var(--text-main);\n}\n\n.post-modal-footer {\n  border-top: 1px solid var(--border-color);\n  padding: 16px 20px;\n}\n.post-modal-footer .actions {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 12px;\n}\n.post-modal-footer .actions .actions-left {\n  display: flex;\n  gap: 16px;\n}\n.post-modal-footer .actions .action-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 0;\n  transition: 0.2s;\n}\n.post-modal-footer .actions .action-btn:hover {\n  color: var(--text-main);\n  transform: scale(1.05);\n}\n.post-modal-footer .actions .action-btn.active {\n  color: var(--danger);\n}\n.post-modal-footer .likes-count {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n  margin-bottom: 16px;\n}\n.post-modal-footer .add-comment {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-footer .add-comment input {\n  flex: 1;\n  border: none;\n  outline: none;\n  background: transparent;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.post-modal-footer .add-comment input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment input::placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment .post-btn {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 700;\n  font-size: 0.95rem;\n  cursor: pointer;\n}\n.post-modal-footer .add-comment .post-btn:hover {\n  color: var(--primary-action);\n  opacity: 0.8;\n}\n\n.feed-composer {\n  padding: 16px 20px;\n  display: flex;\n  flex-direction: column;\n}\n.feed-composer__main {\n  display: flex;\n  gap: 12px;\n  align-items: flex-start;\n}\n.feed-composer__input-wrapper {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  min-width: 0;\n}\n.feed-composer__trigger {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 12px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  cursor: text;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  transition: all 0.2s;\n  box-sizing: border-box;\n  min-height: 44px;\n}\n.feed-composer__trigger:hover {\n  background: var(--bg-card);\n}\n.feed-composer__trigger-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 8px 0;\n  cursor: pointer;\n}\n.feed-composer__trigger-text {\n  flex: 1;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  padding: 10px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  transition: background 0.2s;\n}\n.feed-composer__trigger-text:hover {\n  background: var(--bg-card);\n}\n.feed-composer__header-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-bottom: 12px;\n}\n.feed-composer__user-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-composer__username {\n  font-weight: 700;\n  font-size: 0.95rem;\n  color: var(--text-main, #1e293b);\n}\n.feed-composer__privacy-wrapper {\n  position: relative;\n  display: inline-block;\n}\n.feed-composer__privacy {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  background: var(--bg-page);\n  padding: 3px 8px;\n  border-radius: 4px;\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  width: -moz-fit-content;\n  width: fit-content;\n  border: none;\n  cursor: pointer;\n  font-family: inherit;\n  transition: background 0.15s;\n}\n.feed-composer__privacy:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu {\n  position: absolute;\n  top: calc(100% + 4px);\n  left: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 8px;\n  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);\n  z-index: 100;\n  min-width: 180px;\n  padding: 4px;\n}\n.feed-composer .privacy-menu .privacy-option {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 8px 10px;\n  border-radius: 6px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  width: 100%;\n  text-align: left;\n  transition: background 0.15s;\n}\n.feed-composer .privacy-menu .privacy-option:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu .privacy-option.active {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer .privacy-menu .privacy-option svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .desc {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.feed-composer__textarea {\n  background: transparent;\n  border: none;\n  padding: 0;\n  color: var(--text-main);\n  font-size: 1rem;\n  width: 100%;\n  resize: none;\n  outline: none;\n  font-family: inherit;\n  line-height: 1.5;\n}\n.feed-composer__textarea::-moz-placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__textarea::placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__media-preview {\n  position: relative;\n  margin: 12px 0;\n  border-radius: 12px;\n  overflow: hidden;\n  background: var(--bg-page);\n  height: 220px;\n}\n.feed-composer__media-preview img, .feed-composer__media-preview video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  display: block;\n}\n.feed-composer__media-clear {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.5);\n  color: #fff;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  backdrop-filter: blur(4px);\n  transition: background 0.15s;\n}\n.feed-composer__media-clear:hover {\n  background: rgba(0, 0, 0, 0.7);\n}\n.feed-composer__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 16px 0;\n  width: 100%;\n}\n.feed-composer__actions {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-composer__actions .group {\n  display: flex;\n  gap: 16px;\n}\n.feed-composer__actions .group-right {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n}\n.feed-composer__actions .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  font-size: 0.85rem;\n  font-weight: 600;\n  cursor: pointer;\n  padding: 6px 8px;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.feed-composer__actions .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-composer__actions .action-btn.active {\n  color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer__actions .action-btn.loading {\n  opacity: 0.7;\n  cursor: wait;\n}\n.feed-composer__actions .action-btn:disabled {\n  opacity: 0.6;\n  cursor: not-allowed;\n}\n.feed-composer__actions .char-count {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  font-weight: 600;\n}\n.feed-composer__actions .post-submit-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: var(--border-color);\n  color: var(--text-muted);\n  border: none;\n  padding: 8px 16px;\n  border-radius: 20px;\n  font-weight: 700;\n  font-size: 0.9rem;\n  cursor: not-allowed;\n  transition: all 0.2s;\n}\n.feed-composer__actions .post-submit-btn.active {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.feed-composer__actions .post-submit-btn.active:hover {\n  opacity: 0.9;\n  transform: translateY(-1px);\n}\n\n.location-picker-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(4px);\n  z-index: 1000;\n  display: flex;\n  align-items: flex-end;\n  justify-content: center;\n}\n@media (min-width: 768px) {\n  .location-picker-overlay {\n    align-items: center;\n  }\n}\n\n.location-picker {\n  background: var(--bg-card);\n  width: 100%;\n  max-width: 480px;\n  max-height: 85vh;\n  border-radius: 20px 20px 0 0;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);\n}\n@media (min-width: 768px) {\n  .location-picker {\n    border-radius: 16px;\n    max-height: 600px;\n  }\n}\n.location-picker__header {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__header .back-btn {\n  background: none;\n  border: none;\n  color: var(--text-main);\n  cursor: pointer;\n  padding: 8px;\n  margin: -8px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: background 0.2s;\n}\n.location-picker__header .back-btn:hover {\n  background: var(--bg-page);\n}\n.location-picker__header h3 {\n  font-size: 1.1rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0;\n  flex: 1;\n  text-align: center;\n}\n.location-picker__header .done-btn {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 700;\n  font-size: 0.95rem;\n  cursor: pointer;\n  padding: 4px 8px;\n  border-radius: 4px;\n}\n.location-picker__header .done-btn:hover {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.location-picker__search {\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__search .search-input-wrapper {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 24px;\n  padding: 12px 16px;\n  transition: border-color 0.2s, box-shadow 0.2s;\n}\n.location-picker__search .search-input-wrapper:focus-within {\n  border-color: var(--primary-action);\n  box-shadow: 0 0 0 3px rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.location-picker__search .search-input-wrapper svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.location-picker__search .search-input-wrapper input {\n  flex: 1;\n  border: none;\n  background: transparent;\n  outline: none;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.location-picker__search .search-input-wrapper input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper input::placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper .clear-search {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: color 0.2s, background 0.2s;\n}\n.location-picker__search .search-input-wrapper .clear-search:hover {\n  color: var(--text-main);\n  background: var(--border-color);\n}\n.location-picker__content {\n  flex: 1;\n  overflow-y: auto;\n  padding: 12px 0;\n}\n.location-picker__content .suggested-title {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0 20px 12px;\n  text-transform: uppercase;\n  letter-spacing: 0.5px;\n}\n.location-picker__content .loading-locations {\n  padding: 40px 20px;\n  text-align: center;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n}\n.location-picker__content .locations-list {\n  display: flex;\n  flex-direction: column;\n}\n.location-picker__content .location-item {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px 20px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n  width: 100%;\n}\n.location-picker__content .location-item:hover {\n  background: var(--bg-page);\n}\n.location-picker__content .location-item:active {\n  background: var(--border-color);\n}\n.location-picker__content .location-item.selected {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.05);\n}\n.location-picker__content .location-item .location-icon {\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  font-size: 1.2rem;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.location-picker__content .location-item .location-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n}\n.location-picker__content .location-item .location-info .location-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.location-picker__content .location-item .location-info .location-sub {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.location-picker__content .location-item .selection-indicator {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -59291,6 +62151,32 @@ const s = r;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/At.es.js"
+/*!**************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/At.es.js ***!
+  \**************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   At: () => (/* binding */ n),
+/* harmony export */   AtIcon: () => (/* binding */ t)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_At_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/At.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/At.es.js");
+
+
+
+const t = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((e, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...e, weights: _defs_At_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+t.displayName = "AtIcon";
+const n = t;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/Bell.es.js"
 /*!****************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/Bell.es.js ***!
@@ -59338,6 +62224,32 @@ __webpack_require__.r(__webpack_exports__);
 const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((a, l) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: l, ...a, weights: _defs_BellSlash_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
 o.displayName = "BellSlashIcon";
 const c = o;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/Bookmark.es.js"
+/*!********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/Bookmark.es.js ***!
+  \********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Bookmark: () => (/* binding */ k),
+/* harmony export */   BookmarkIcon: () => (/* binding */ r)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_Bookmark_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/Bookmark.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/Bookmark.es.js");
+
+
+
+const r = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((a, m) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: m, ...a, weights: _defs_Bookmark_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+r.displayName = "BookmarkIcon";
+const k = r;
 
 
 
@@ -59416,6 +62328,58 @@ __webpack_require__.r(__webpack_exports__);
 const e = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((o, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...o, weights: _defs_Camera_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
 e.displayName = "CameraIcon";
 const n = e;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/CaretDown.es.js"
+/*!*********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/CaretDown.es.js ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CaretDown: () => (/* binding */ s),
+/* harmony export */   CaretDownIcon: () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_CaretDown_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/CaretDown.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/CaretDown.es.js");
+
+
+
+const e = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_CaretDown_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+e.displayName = "CaretDownIcon";
+const s = e;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/CaretLeft.es.js"
+/*!*********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/CaretLeft.es.js ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CaretLeft: () => (/* binding */ s),
+/* harmony export */   CaretLeftIcon: () => (/* binding */ t)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_CaretLeft_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/CaretLeft.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/CaretLeft.es.js");
+
+
+
+const t = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((o, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...o, weights: _defs_CaretLeft_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+t.displayName = "CaretLeftIcon";
+const s = t;
 
 
 
@@ -59525,6 +62489,32 @@ const s = c;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/CloudArrowUp.es.js"
+/*!************************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/CloudArrowUp.es.js ***!
+  \************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CloudArrowUp: () => (/* binding */ s),
+/* harmony export */   CloudArrowUpIcon: () => (/* binding */ r)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_CloudArrowUp_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/CloudArrowUp.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/CloudArrowUp.es.js");
+
+
+
+const r = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((e, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...e, weights: _defs_CloudArrowUp_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+r.displayName = "CloudArrowUpIcon";
+const s = r;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/Crown.es.js"
 /*!*****************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/Crown.es.js ***!
@@ -59603,6 +62593,32 @@ const n = o;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/Download.es.js"
+/*!********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/Download.es.js ***!
+  \********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Download: () => (/* binding */ s),
+/* harmony export */   DownloadIcon: () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_Download_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/Download.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/Download.es.js");
+
+
+
+const a = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((e, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...e, weights: _defs_Download_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+a.displayName = "DownloadIcon";
+const s = a;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/Envelope.es.js"
 /*!********************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/Envelope.es.js ***!
@@ -59624,6 +62640,32 @@ __webpack_require__.r(__webpack_exports__);
 const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_Envelope_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
 o.displayName = "EnvelopeIcon";
 const c = o;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/EyeSlash.es.js"
+/*!********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/EyeSlash.es.js ***!
+  \********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EyeSlash: () => (/* binding */ n),
+/* harmony export */   EyeSlashIcon: () => (/* binding */ o)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_EyeSlash_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/EyeSlash.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/EyeSlash.es.js");
+
+
+
+const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((a, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...a, weights: _defs_EyeSlash_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+o.displayName = "EyeSlashIcon";
+const n = o;
 
 
 
@@ -59655,6 +62697,32 @@ const s = o;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/FlagBanner.es.js"
+/*!**********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/FlagBanner.es.js ***!
+  \**********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FlagBanner: () => (/* binding */ s),
+/* harmony export */   FlagBannerIcon: () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_FlagBanner_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/FlagBanner.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/FlagBanner.es.js");
+
+
+
+const e = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((o, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...o, weights: _defs_FlagBanner_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+e.displayName = "FlagBannerIcon";
+const s = e;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/Gear.es.js"
 /*!****************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/Gear.es.js ***!
@@ -59676,6 +62744,32 @@ __webpack_require__.r(__webpack_exports__);
 const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, a) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: a, ...r, weights: _defs_Gear_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
 o.displayName = "GearIcon";
 const n = o;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/Globe.es.js"
+/*!*****************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/Globe.es.js ***!
+  \*****************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Globe: () => (/* binding */ n),
+/* harmony export */   GlobeIcon: () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_Globe_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/Globe.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/Globe.es.js");
+
+
+
+const e = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_Globe_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+e.displayName = "GlobeIcon";
+const n = e;
 
 
 
@@ -59780,6 +62874,32 @@ __webpack_require__.r(__webpack_exports__);
 const e = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, s) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: s, ...r, weights: _defs_House_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
 e.displayName = "HouseIcon";
 const n = e;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/Image.es.js"
+/*!*****************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/Image.es.js ***!
+  \*****************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Image: () => (/* binding */ I),
+/* harmony export */   ImageIcon: () => (/* binding */ o)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_Image_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/Image.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/Image.es.js");
+
+
+
+const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((a, m) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: m, ...a, weights: _defs_Image_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+o.displayName = "ImageIcon";
+const I = o;
 
 
 
@@ -59993,6 +63113,32 @@ const m = r;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/PaperPlaneRight.es.js"
+/*!***************************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/PaperPlaneRight.es.js ***!
+  \***************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PaperPlaneRight: () => (/* binding */ p),
+/* harmony export */   PaperPlaneRightIcon: () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_PaperPlaneRight_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/PaperPlaneRight.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/PaperPlaneRight.es.js");
+
+
+
+const a = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((o, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...o, weights: _defs_PaperPlaneRight_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+a.displayName = "PaperPlaneRightIcon";
+const p = a;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/PaperPlaneTilt.es.js"
 /*!**************************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/PaperPlaneTilt.es.js ***!
@@ -60201,6 +63347,32 @@ const n = e;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/ShareNetwork.es.js"
+/*!************************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/ShareNetwork.es.js ***!
+  \************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ShareNetwork: () => (/* binding */ n),
+/* harmony export */   ShareNetworkIcon: () => (/* binding */ o)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_ShareNetwork_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/ShareNetwork.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/ShareNetwork.es.js");
+
+
+
+const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_ShareNetwork_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+o.displayName = "ShareNetworkIcon";
+const n = o;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/Shield.es.js"
 /*!******************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/Shield.es.js ***!
@@ -60222,6 +63394,32 @@ __webpack_require__.r(__webpack_exports__);
 const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_Shield_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
 o.displayName = "ShieldIcon";
 const s = o;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/ShieldCheck.es.js"
+/*!***********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/ShieldCheck.es.js ***!
+  \***********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ShieldCheck: () => (/* binding */ h),
+/* harmony export */   ShieldCheckIcon: () => (/* binding */ o)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_ShieldCheck_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/ShieldCheck.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/ShieldCheck.es.js");
+
+
+
+const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((c, r) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: r, ...c, weights: _defs_ShieldCheck_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+o.displayName = "ShieldCheckIcon";
+const h = o;
 
 
 
@@ -60409,6 +63607,32 @@ const n = r;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/TrendUp.es.js"
+/*!*******************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/TrendUp.es.js ***!
+  \*******************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TrendUp: () => (/* binding */ c),
+/* harmony export */   TrendUpIcon: () => (/* binding */ o)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_TrendUp_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/TrendUp.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/TrendUp.es.js");
+
+
+
+const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_TrendUp_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+o.displayName = "TrendUpIcon";
+const c = o;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js"
 /*!******************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js ***!
@@ -60508,6 +63732,32 @@ __webpack_require__.r(__webpack_exports__);
 const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, s) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: s, ...r, weights: _defs_Users_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
 o.displayName = "UsersIcon";
 const n = o;
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/Video.es.js"
+/*!*****************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/Video.es.js ***!
+  \*****************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Video: () => (/* binding */ s),
+/* harmony export */   VideoIcon: () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_Video_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/Video.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/Video.es.js");
+
+
+
+const e = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_Video_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+e.displayName = "VideoIcon";
+const s = e;
 
 
 
@@ -60635,6 +63885,50 @@ const a = /* @__PURE__ */ new Map([
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/At.es.js"
+/*!***************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/At.es.js ***!
+  \***************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,20a108,108,0,0,0,0,216c22.27,0,45.69-6.73,62.64-18a12,12,0,1,0-13.29-20c-13,8.63-31.89,14-49.35,14a84,84,0,1,1,84-84c0,9.29-1.67,17.08-4.69,21.95-2.64,4.24-6,6.05-11.31,6.05s-8.67-1.81-11.31-6.05c-3-4.87-4.69-12.66-4.69-21.95V88a12,12,0,0,0-23.49-3.46,52,52,0,1,0,8.86,79.57C172.3,174.3,182.81,180,196,180c24.67,0,40-19.92,40-52A108.12,108.12,0,0,0,128,20Zm0,136a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,24a104,104,0,0,0,0,208c21.51,0,44.1-6.48,60.43-17.33a8,8,0,0,0-8.86-13.33C166,210.38,146.21,216,128,216a88,88,0,1,1,88-88c0,26.45-10.88,32-20,32s-20-5.55-20-32V88a8,8,0,0,0-16,0v4.26a48,48,0,1,0,5.93,65.1c6,12,16.35,18.64,30.07,18.64,22.54,0,36-17.94,36-48A104.11,104.11,0,0,0,128,24Zm0,136a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M232,128c0,.51,0,1,0,1.52-.34,14.26-5.63,30.48-28,30.48-23.14,0-28-17.4-28-32V88a8,8,0,0,0-8.53-8A8.17,8.17,0,0,0,160,88.27v4a48,48,0,1,0,6.73,64.05,40.19,40.19,0,0,0,3.38,5C175.48,168,185.71,176,204,176a54.81,54.81,0,0,0,9.22-.75,4,4,0,0,1,4.09,6A104.05,104.05,0,0,1,125.91,232C71.13,230.9,26.2,186.86,24.08,132.11A104,104,0,1,1,232,128ZM96,128a32,32,0,1,0,32-32A32,32,0,0,0,96,128Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,26a102,102,0,0,0,0,204c21.13,0,43.31-6.35,59.32-17a6,6,0,0,0-6.65-10c-13.9,9.25-34.09,15-52.67,15a90,90,0,1,1,90-90c0,29.58-13.78,34-22,34s-22-4.42-22-34V88a6,6,0,0,0-12,0v9a46,46,0,1,0,4.34,56.32C171.76,166.6,182,174,196,174c21.29,0,34-17.2,34-46A102.12,102.12,0,0,0,128,26Zm0,136a34,34,0,1,1,34-34A34,34,0,0,1,128,162Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,24a104,104,0,0,0,0,208c21.51,0,44.1-6.48,60.43-17.33a8,8,0,0,0-8.86-13.33C166,210.38,146.21,216,128,216a88,88,0,1,1,88-88c0,26.45-10.88,32-20,32s-20-5.55-20-32V88a8,8,0,0,0-16,0v4.26a48,48,0,1,0,5.93,65.1c6,12,16.35,18.64,30.07,18.64,22.54,0,36-17.94,36-48A104.11,104.11,0,0,0,128,24Zm0,136a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,28a100,100,0,0,0,0,200c20.76,0,42.52-6.23,58.21-16.66a4,4,0,1,0-4.43-6.67C167.35,214.27,147.24,220,128,220a92,92,0,1,1,92-92c0,31.32-15,36-24,36s-24-4.68-24-36V88a4,4,0,0,0-8,0v14.75a44,44,0,1,0,2.82,45.94C171.46,163.58,181.66,172,196,172c20,0,32-16.45,32-44A100.11,100.11,0,0,0,128,28Zm0,136a36,36,0,1,1,36-36A36,36,0,0,1,128,164Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/defs/Bell.es.js"
 /*!*****************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/defs/Bell.es.js ***!
@@ -60728,6 +64022,50 @@ const e = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M51,37.31A4,4,0,0,0,45,42.69L63.8,63.32A75.52,75.52,0,0,0,52,104c0,36.13-8.58,64-14.36,73.95A12,12,0,0,0,48,196H92.23a36,36,0,0,0,71.54,0h20.64L205,218.69a4,4,0,1,0,5.92-5.38ZM128,220a28,28,0,0,1-27.71-24h55.42A28,28,0,0,1,128,220ZM48,188a3.89,3.89,0,0,1-3.43-2,4,4,0,0,1,0-4C52,169.17,60,139.32,60,104a67.58,67.58,0,0,1,9.4-34.51L177.14,188Zm164.55-12.48a3.94,3.94,0,0,1-1.46.28,4,4,0,0,1-3.72-2.54C200.24,155.17,196,129.28,196,104A68,68,0,0,0,94.46,44.83a4,4,0,1,1-4-6.95A76,76,0,0,1,204,104c0,36.05,8.26,59.89,10.79,66.34A4,4,0,0,1,212.53,175.52Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/Bookmark.es.js"
+/*!*********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/Bookmark.es.js ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const a = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M184,28H72A20,20,0,0,0,52,48V224a12,12,0,0,0,18.36,10.18l57.63-36,57.65,36A12,12,0,0,0,204,224V48A20,20,0,0,0,184,28Zm-4,24V154.35l-45.65-28.53a12,12,0,0,0-12.72,0L76,154.35V52ZM134.35,173.82a12,12,0,0,0-12.72,0L76,202.35v-19.7l52-32.5,52,32.5v19.7Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M192,176v48l-64-40L64,224V176l64-40Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Zm0,16V161.57l-51.77-32.35a8,8,0,0,0-8.48,0L72,161.56V48ZM132.23,177.22a8,8,0,0,0-8.48,0L72,209.57V180.43l56-35,56,35v29.14Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32ZM132.23,177.22a8,8,0,0,0-8.48,0L72,209.57V180.43l56-35,56,35v29.14Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M184,34H72A14,14,0,0,0,58,48V224a6,6,0,0,0,9.18,5.09l60.81-38,60.83,38A6,6,0,0,0,198,224V48A14,14,0,0,0,184,34ZM72,46H184a2,2,0,0,1,2,2V165.18l-54.83-34.27a6,6,0,0,0-6.36,0L70,165.17V48A2,2,0,0,1,72,46Zm59.17,132.91a6,6,0,0,0-6.36,0L70,213.17V179.33l58-36.25,58,36.25v33.84Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Zm0,16V161.57l-51.77-32.35a8,8,0,0,0-8.48,0L72,161.56V48ZM132.23,177.22a8,8,0,0,0-8.48,0L72,209.57V180.43l56-35,56,35v29.14Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M184,36H72A12,12,0,0,0,60,48V224a4,4,0,0,0,6.12,3.39L128,188.72l61.89,38.67A4,4,0,0,0,192,228a4.06,4.06,0,0,0,1.94-.5A4,4,0,0,0,196,224V48A12,12,0,0,0,184,36ZM72,44H184a4,4,0,0,1,4,4V168.78l-57.89-36.17a4,4,0,0,0-4.24,0L68,168.78V48A4,4,0,0,1,72,44Zm58.11,136.61a4,4,0,0,0-4.24,0L68,216.78V178.22l60-37.5,60,37.5v38.56Z" }))
   ]
 ]);
 
@@ -60878,6 +64216,94 @@ const e = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,60H178.13L163.32,37.78A4,4,0,0,0,160,36H96a4,4,0,0,0-3.32,1.78L77.85,60H48A20,20,0,0,0,28,80V192a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V80A20,20,0,0,0,208,60Zm12,132a12,12,0,0,1-12,12H48a12,12,0,0,1-12-12V80A12,12,0,0,1,48,68H80a4,4,0,0,0,3.33-1.78L98.13,44h59.72l14.82,22.22A4,4,0,0,0,176,68h32a12,12,0,0,1,12,12ZM128,92a40,40,0,1,0,40,40A40,40,0,0,0,128,92Zm0,72a32,32,0,1,1,32-32A32,32,0,0,1,128,164Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/CaretDown.es.js"
+/*!**********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/CaretDown.es.js ***!
+  \**********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ t)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const t = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,96l-80,80L48,96Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M215.39,92.94A8,8,0,0,0,208,88H48a8,8,0,0,0-5.66,13.66l80,80a8,8,0,0,0,11.32,0l80-80A8,8,0,0,0,215.39,92.94ZM128,164.69,67.31,104H188.69Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,48,88H208a8,8,0,0,1,5.66,13.66Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M212.24,100.24l-80,80a6,6,0,0,1-8.48,0l-80-80a6,6,0,0,1,8.48-8.48L128,167.51l75.76-75.75a6,6,0,0,1,8.48,8.48Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M210.83,98.83l-80,80a4,4,0,0,1-5.66,0l-80-80a4,4,0,0,1,5.66-5.66L128,170.34l77.17-77.17a4,4,0,1,1,5.66,5.66Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/CaretLeft.es.js"
+/*!**********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/CaretLeft.es.js ***!
+  \**********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const a = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M160,48V208L80,128Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M163.06,40.61a8,8,0,0,0-8.72,1.73l-80,80a8,8,0,0,0,0,11.32l80,80A8,8,0,0,0,168,208V48A8,8,0,0,0,163.06,40.61ZM152,188.69,91.31,128,152,67.31Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M168,48V208a8,8,0,0,1-13.66,5.66l-80-80a8,8,0,0,1,0-11.32l80-80A8,8,0,0,1,168,48Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M164.24,203.76a6,6,0,1,1-8.48,8.48l-80-80a6,6,0,0,1,0-8.48l80-80a6,6,0,0,1,8.48,8.48L88.49,128Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M162.83,205.17a4,4,0,0,1-5.66,5.66l-80-80a4,4,0,0,1,0-5.66l80-80a4,4,0,1,1,5.66,5.66L85.66,128Z" }))
   ]
 ]);
 
@@ -61073,6 +64499,56 @@ const a = /* @__PURE__ */ new Map([
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/CloudArrowUp.es.js"
+/*!*************************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/CloudArrowUp.es.js ***!
+  \*************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M196.49,151.51a12,12,0,0,1-17,17L168,157v51a12,12,0,0,1-24,0V157l-11.51,11.52a12,12,0,1,1-17-17l32-32a12,12,0,0,1,17,0ZM160,36A92.08,92.08,0,0,0,79,84.37,68,68,0,1,0,72,220h28a12,12,0,0,0,0-24H72a44,44,0,0,1-1.81-87.95A91.7,91.7,0,0,0,68,128a12,12,0,0,0,24,0,68,68,0,1,1,132.6,21.29,12,12,0,1,0,22.8,7.51A92.06,92.06,0,0,0,160,36Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M240,128a80,80,0,0,1-80,80H72A56,56,0,1,1,85.92,97.74l0,.1A80,80,0,0,1,240,128Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M178.34,165.66,160,147.31V208a8,8,0,0,1-16,0V147.31l-18.34,18.35a8,8,0,0,1-11.32-11.32l32-32a8,8,0,0,1,11.32,0l32,32a8,8,0,0,1-11.32,11.32ZM160,40A88.08,88.08,0,0,0,81.29,88.68,64,64,0,1,0,72,216h40a8,8,0,0,0,0-16H72a48,48,0,0,1,0-96c1.1,0,2.2,0,3.29.12A88,88,0,0,0,72,128a8,8,0,0,0,16,0,72,72,0,1,1,100.8,66,8,8,0,0,0,3.2,15.34,7.9,7.9,0,0,0,3.2-.68A88,88,0,0,0,160,40Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M247.93,124.52C246.11,77.54,207.07,40,160.06,40A88.1,88.1,0,0,0,81.29,88.67h0A87.48,87.48,0,0,0,72,127.73,8.18,8.18,0,0,1,64.57,136,8,8,0,0,1,56,128a103.66,103.66,0,0,1,5.34-32.92,4,4,0,0,0-4.75-5.18A64.09,64.09,0,0,0,8,152c0,35.19,29.75,64,65,64H160A88.09,88.09,0,0,0,247.93,124.52Zm-50.27,9.14a8,8,0,0,1-11.32,0L168,115.31V176a8,8,0,0,1-16,0V115.31l-18.34,18.35a8,8,0,0,1-11.32-11.32l32-32a8,8,0,0,1,11.32,0l32,32A8,8,0,0,1,197.66,133.66Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M188.24,164.24a6,6,0,0,1-8.48,0L158,142.49V208a6,6,0,0,1-12,0V142.49l-21.76,21.75a6,6,0,0,1-8.48-8.48l32-32a6,6,0,0,1,8.48,0l32,32A6,6,0,0,1,188.24,164.24ZM160,42A86.1,86.1,0,0,0,82.43,90.88,62,62,0,1,0,72,214h40a6,6,0,0,0,0-12H72a50,50,0,0,1,0-100,50.68,50.68,0,0,1,5.91.36A85.54,85.54,0,0,0,74,128a6,6,0,0,0,12,0,74,74,0,1,1,103.6,67.85,6,6,0,0,0,4.8,11A86,86,0,0,0,160,42Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M178.34,165.66,160,147.31V208a8,8,0,0,1-16,0V147.31l-18.34,18.35a8,8,0,0,1-11.32-11.32l32-32a8,8,0,0,1,11.32,0l32,32a8,8,0,0,1-11.32,11.32ZM160,40A88.08,88.08,0,0,0,81.29,88.68,64,64,0,1,0,72,216h40a8,8,0,0,0,0-16H72a48,48,0,0,1,0-96c1.1,0,2.2,0,3.29.12A88,88,0,0,0,72,128a8,8,0,0,0,16,0,72,72,0,1,1,100.8,66,8,8,0,0,0,3.2,15.34,7.9,7.9,0,0,0,3.2-.68A88,88,0,0,0,160,40Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M186.83,162.83a4,4,0,0,1-5.66,0L156,137.66V208a4,4,0,0,1-8,0V137.66l-25.17,25.17a4,4,0,0,1-5.66-5.66l32-32a4,4,0,0,1,5.66,0l32,32A4,4,0,0,1,186.83,162.83ZM160,44A84.09,84.09,0,0,0,83.61,93.13,60,60,0,1,0,72,212h40a4,4,0,0,0,0-8H72a52,52,0,1,1,8.57-103.27A83.45,83.45,0,0,0,76,128a4,4,0,0,0,8,0,76,76,0,1,1,106.4,69.68,4,4,0,0,0,1.6,7.66,3.92,3.92,0,0,0,1.6-.33A84,84,0,0,0,160,44Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/defs/Crown.es.js"
 /*!******************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/defs/Crown.es.js ***!
@@ -61223,6 +64699,56 @@ const a = /* @__PURE__ */ new Map([
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/Download.es.js"
+/*!*********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/Download.es.js ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M71.51,88.49a12,12,0,0,1,17-17L116,99V24a12,12,0,0,1,24,0V99l27.51-27.52a12,12,0,0,1,17,17l-48,48a12,12,0,0,1-17,0ZM224,116H188a12,12,0,0,0,0,24h32v56H36V140H68a12,12,0,0,0,0-24H32a20,20,0,0,0-20,20v64a20,20,0,0,0,20,20H224a20,20,0,0,0,20-20V136A20,20,0,0,0,224,116Zm-20,52a16,16,0,1,0-16,16A16,16,0,0,0,204,168Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M232,136v64a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V136a8,8,0,0,1,8-8H224A8,8,0,0,1,232,136Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H72a8,8,0,0,1,0,16H32v64H224V136H184a8,8,0,0,1,0-16h40A16,16,0,0,1,240,136Zm-117.66-2.34a8,8,0,0,0,11.32,0l48-48a8,8,0,0,0-11.32-11.32L136,108.69V24a8,8,0,0,0-16,0v84.69L85.66,74.34A8,8,0,0,0,74.34,85.66ZM200,168a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M74.34,85.66A8,8,0,0,1,85.66,74.34L120,108.69V24a8,8,0,0,1,16,0v84.69l34.34-34.35a8,8,0,0,1,11.32,11.32l-48,48a8,8,0,0,1-11.32,0ZM240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H84.4a4,4,0,0,1,2.83,1.17L111,145A24,24,0,0,0,145,145l23.8-23.8A4,4,0,0,1,171.6,120H224A16,16,0,0,1,240,136Zm-40,32a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M238,136v64a14,14,0,0,1-14,14H32a14,14,0,0,1-14-14V136a14,14,0,0,1,14-14H72a6,6,0,0,1,0,12H32a2,2,0,0,0-2,2v64a2,2,0,0,0,2,2H224a2,2,0,0,0,2-2V136a2,2,0,0,0-2-2H184a6,6,0,0,1,0-12h40A14,14,0,0,1,238,136Zm-114.24-3.76a6,6,0,0,0,8.48,0l48-48a6,6,0,0,0-8.48-8.48L134,113.51V24a6,6,0,0,0-12,0v89.51L84.24,75.76a6,6,0,0,0-8.48,8.48ZM198,168a10,10,0,1,0-10,10A10,10,0,0,0,198,168Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H72a8,8,0,0,1,0,16H32v64H224V136H184a8,8,0,0,1,0-16h40A16,16,0,0,1,240,136Zm-117.66-2.34a8,8,0,0,0,11.32,0l48-48a8,8,0,0,0-11.32-11.32L136,108.69V24a8,8,0,0,0-16,0v84.69L85.66,74.34A8,8,0,0,0,74.34,85.66ZM200,168a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M236,136v64a12,12,0,0,1-12,12H32a12,12,0,0,1-12-12V136a12,12,0,0,1,12-12H72a4,4,0,0,1,0,8H32a4,4,0,0,0-4,4v64a4,4,0,0,0,4,4H224a4,4,0,0,0,4-4V136a4,4,0,0,0-4-4H184a4,4,0,0,1,0-8h40A12,12,0,0,1,236,136Zm-110.83-5.17a4,4,0,0,0,5.66,0l48-48a4,4,0,1,0-5.66-5.66L132,118.34V24a4,4,0,0,0-8,0v94.34L82.83,77.17a4,4,0,0,0-5.66,5.66ZM196,168a8,8,0,1,0-8,8A8,8,0,0,0,196,168Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/defs/Envelope.es.js"
 /*!*********************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/defs/Envelope.es.js ***!
@@ -61260,6 +64786,56 @@ const a = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M224,52H32a4,4,0,0,0-4,4V192a12,12,0,0,0,12,12H216a12,12,0,0,0,12-12V56A4,4,0,0,0,224,52Zm-96,86.57L42.28,60H213.72ZM104.63,128,36,190.91V65.09Zm5.92,5.43L125.3,147a4,4,0,0,0,5.4,0l14.75-13.52L213.72,196H42.28ZM151.37,128,220,65.09V190.91Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/EyeSlash.es.js"
+/*!*********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/EyeSlash.es.js ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M56.88,31.93A12,12,0,1,0,39.12,48.07l16,17.65C20.67,88.66,5.72,121.58,5,123.13a12.08,12.08,0,0,0,0,9.75c.37.82,9.13,20.26,28.49,39.61C59.37,198.34,92,212,128,212a131.34,131.34,0,0,0,51-10l20.09,22.1a12,12,0,0,0,17.76-16.14ZM128,188c-29.59,0-55.47-10.73-76.91-31.88A130.69,130.69,0,0,1,29.52,128c5.27-9.31,18.79-29.9,42-44.29l90.09,99.11A109.33,109.33,0,0,1,128,188Zm123-55.12c-.36.81-9,20-28,39.16a12,12,0,1,1-17-16.9A130.48,130.48,0,0,0,226.48,128a130.36,130.36,0,0,0-21.57-28.12C183.46,78.73,157.59,68,128,68c-3.35,0-6.7.14-10,.42a12,12,0,1,1-2-23.91c3.93-.34,8-.51,12-.51,36,0,68.63,13.67,94.49,39.52,19.35,19.35,28.11,38.8,28.48,39.61A12.08,12.08,0,0,1,251,132.88Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M128,56C48,56,16,128,16,128s32,72,112,72,112-72,112-72S208,56,128,56Zm0,112a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M53.92,34.62A8,8,0,1,0,42.08,45.38L61.32,66.55C25,88.84,9.38,123.2,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208a127.11,127.11,0,0,0,52.07-10.83l22,24.21a8,8,0,1,0,11.84-10.76Zm47.33,75.84,41.67,45.85a32,32,0,0,1-41.67-45.85ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.16,133.16,0,0,1,25,128c4.69-8.79,19.66-33.39,47.35-49.38l18,19.75a48,48,0,0,0,63.66,70l14.73,16.2A112,112,0,0,1,128,192Zm6-95.43a8,8,0,0,1,3-15.72,48.16,48.16,0,0,1,38.77,42.64,8,8,0,0,1-7.22,8.71,6.39,6.39,0,0,1-.75,0,8,8,0,0,1-8-7.26A32.09,32.09,0,0,0,134,96.57Zm113.28,34.69c-.42.94-10.55,23.37-33.36,43.8a8,8,0,1,1-10.67-11.92A132.77,132.77,0,0,0,231.05,128a133.15,133.15,0,0,0-23.12-30.77C185.67,75.19,158.78,64,128,64a118.37,118.37,0,0,0-19.36,1.57A8,8,0,1,1,106,49.79,134,134,0,0,1,128,48c34.88,0,66.57,13.26,91.66,38.35,18.83,18.83,27.3,37.62,27.65,38.41A8,8,0,0,1,247.31,131.26Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M96.68,57.87a4,4,0,0,1,2.08-6.6A130.13,130.13,0,0,1,128,48c34.88,0,66.57,13.26,91.66,38.35,18.83,18.83,27.3,37.62,27.65,38.41a8,8,0,0,1,0,6.5c-.35.79-8.82,19.57-27.65,38.4q-4.28,4.26-8.79,8.07a4,4,0,0,1-5.55-.36ZM213.92,210.62a8,8,0,1,1-11.84,10.76L180,197.13A127.21,127.21,0,0,1,128,208c-34.88,0-66.57-13.26-91.66-38.34C17.51,150.83,9,132.05,8.69,131.26a8,8,0,0,1,0-6.5C9,124,17.51,105.18,36.34,86.35a135,135,0,0,1,25-19.78L42.08,45.38A8,8,0,1,1,53.92,34.62Zm-65.49-48.25-52.69-58a40,40,0,0,0,52.69,58Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M52.44,36A6,6,0,0,0,43.56,44L64.44,67c-37.28,21.9-53.23,57-53.92,58.57a6,6,0,0,0,0,4.88c.34.77,8.66,19.22,27.24,37.8C55,185.47,84.62,206,128,206a124.91,124.91,0,0,0,52.57-11.25l23,25.29a6,6,0,0,0,8.88-8.08Zm48.62,71.32,45,49.52a34,34,0,0,1-45-49.52ZM128,194c-31.38,0-58.78-11.42-81.45-33.93A134.57,134.57,0,0,1,22.69,128c4.29-8.2,20.1-35.18,50-51.91L92.89,98.3a46,46,0,0,0,61.35,67.48l17.81,19.6A113.47,113.47,0,0,1,128,194Zm6.4-99.4a6,6,0,0,1,2.25-11.79,46.17,46.17,0,0,1,37.15,40.87,6,6,0,0,1-5.42,6.53l-.56,0a6,6,0,0,1-6-5.45A34.1,34.1,0,0,0,134.4,94.6Zm111.08,35.85c-.41.92-10.37,23-32.86,43.12a6,6,0,1,1-8-8.94A134.07,134.07,0,0,0,233.31,128a134.67,134.67,0,0,0-23.86-32.07C186.78,73.42,159.38,62,128,62a120.19,120.19,0,0,0-19.69,1.6,6,6,0,1,1-2-11.83A131.12,131.12,0,0,1,128,50c43.38,0,73,20.54,90.24,37.76,18.58,18.58,26.9,37,27.24,37.81A6,6,0,0,1,245.48,130.45Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M53.92,34.62A8,8,0,1,0,42.08,45.38L61.32,66.55C25,88.84,9.38,123.2,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208a127.11,127.11,0,0,0,52.07-10.83l22,24.21a8,8,0,1,0,11.84-10.76Zm47.33,75.84,41.67,45.85a32,32,0,0,1-41.67-45.85ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.16,133.16,0,0,1,25,128c4.69-8.79,19.66-33.39,47.35-49.38l18,19.75a48,48,0,0,0,63.66,70l14.73,16.2A112,112,0,0,1,128,192Zm6-95.43a8,8,0,0,1,3-15.72,48.16,48.16,0,0,1,38.77,42.64,8,8,0,0,1-7.22,8.71,6.39,6.39,0,0,1-.75,0,8,8,0,0,1-8-7.26A32.09,32.09,0,0,0,134,96.57Zm113.28,34.69c-.42.94-10.55,23.37-33.36,43.8a8,8,0,1,1-10.67-11.92A132.77,132.77,0,0,0,231.05,128a133.15,133.15,0,0,0-23.12-30.77C185.67,75.19,158.78,64,128,64a118.37,118.37,0,0,0-19.36,1.57A8,8,0,1,1,106,49.79,134,134,0,0,1,128,48c34.88,0,66.57,13.26,91.66,38.35,18.83,18.83,27.3,37.62,27.65,38.41A8,8,0,0,1,247.31,131.26Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M51,37.31A4,4,0,0,0,45,42.69L67.59,67.5C29.34,89,13,124.81,12.34,126.38a4.08,4.08,0,0,0,0,3.25c.34.77,8.52,18.89,26.83,37.2,17,17,46.14,37.17,88.83,37.17a122.59,122.59,0,0,0,53.06-11.69l24,26.38a4,4,0,1,0,5.92-5.38ZM149.1,157.16A36,36,0,0,1,101,104.22ZM128,196c-32,0-59.89-11.65-83-34.62A135.81,135.81,0,0,1,20.44,128c3.65-7.23,20.09-36.81,52.68-54.43l22.45,24.7a44,44,0,0,0,59,64.83l20.89,23A114.94,114.94,0,0,1,128,196Zm6.78-103.36a4,4,0,0,1,1.49-7.86,44.15,44.15,0,0,1,35.54,39.09,4,4,0,0,1-3.61,4.35l-.38,0a4,4,0,0,1-4-3.63A36.1,36.1,0,0,0,134.78,92.64Zm108.88,37c-.41.91-10.2,22.58-32.38,42.45a4,4,0,0,1-2.67,1,4,4,0,0,1-2.67-7A136.71,136.71,0,0,0,235.56,128,136.07,136.07,0,0,0,211,94.62C187.89,71.65,160,60,128,60a122,122,0,0,0-20,1.63,4,4,0,0,1-1.32-7.89A129.3,129.3,0,0,1,128,52c42.7,0,71.87,20.22,88.83,37.18,18.31,18.31,26.49,36.44,26.83,37.2A4.08,4.08,0,0,1,243.66,129.63Z" }))
   ]
 ]);
 
@@ -61317,6 +64893,50 @@ const e = /* @__PURE__ */ new Map([
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/FlagBanner.es.js"
+/*!***********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/FlagBanner.es.js ***!
+  \***********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const a = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M242.15,49.59A12,12,0,0,0,232,44H40a12,12,0,0,0-8.48,20.49L71,104,31.52,143.51A12,12,0,0,0,40,164H167.28l-26.11,54.84a12,12,0,1,0,21.66,10.32l80-168A12,12,0,0,0,242.15,49.59ZM178.71,140H69l27.52-27.52a12,12,0,0,0,0-17L69,68H213Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M232,56l-45.71,96H40l48-48L40,56Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M238.76,51.73A8,8,0,0,0,232,48H40a8,8,0,0,0-5.66,13.66L76.69,104,34.34,146.34A8,8,0,0,0,40,160H173.62l-28.84,60.56a8,8,0,1,0,14.44,6.88l80-168A8,8,0,0,0,238.76,51.73ZM181.23,144H59.31l34.35-34.34a8,8,0,0,0,0-11.32L59.31,64h160Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M239.22,59.44l-45.63,95.82a3.54,3.54,0,0,1-.16.34l-34.21,71.84a8,8,0,1,1-14.44-6.88L173.62,160H40a8,8,0,0,1-5.66-13.66L76.69,104,34.34,61.66A8,8,0,0,1,40,48H232a8,8,0,0,1,7.22,11.44Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M237.07,52.8A6,6,0,0,0,232,50H40a6,6,0,0,0-4.24,10.24L79.51,104,35.76,147.76A6,6,0,0,0,40,158H176.78l-30.2,63.42a6,6,0,0,0,10.84,5.16l80-168A6,6,0,0,0,237.07,52.8ZM182.5,146h-128l37.75-37.76a6,6,0,0,0,0-8.48L54.49,62h168Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M238.76,51.73A8,8,0,0,0,232,48H40a8,8,0,0,0-5.66,13.66L76.69,104,34.34,146.34A8,8,0,0,0,40,160H173.62l-28.84,60.56a8,8,0,1,0,14.44,6.88l80-168A8,8,0,0,0,238.76,51.73ZM181.23,144H59.31l34.35-34.34a8,8,0,0,0,0-11.32L59.31,64h160Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M235.38,53.86A4,4,0,0,0,232,52H40a4,4,0,0,0-2.83,6.83L82.34,104,37.17,149.17A4,4,0,0,0,40,156H180l-31.56,66.28a4,4,0,0,0,1.89,5.33A3.92,3.92,0,0,0,152,228a4,4,0,0,0,3.61-2.28l80-168A4,4,0,0,0,235.38,53.86ZM183.76,148H49.66l41.17-41.17a4,4,0,0,0,0-5.66L49.66,60h176Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/defs/Gear.es.js"
 /*!*****************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/defs/Gear.es.js ***!
@@ -61360,6 +64980,50 @@ const l = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,84a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,84Zm0,80a36,36,0,1,1,36-36A36,36,0,0,1,128,164Zm83.93-32.49q.13-3.51,0-7l15.83-19.79a4,4,0,0,0,.75-3.53A103.64,103.64,0,0,0,218,75.9a4,4,0,0,0-3-2l-25.19-2.8c-1.58-1.71-3.24-3.37-4.95-4.95L182.07,41a4,4,0,0,0-2-3A104,104,0,0,0,154.82,27.5a4,4,0,0,0-3.53.74L131.51,44.07q-3.51-.14-7,0L104.7,28.24a4,4,0,0,0-3.53-.75A103.64,103.64,0,0,0,75.9,38a4,4,0,0,0-2,3l-2.8,25.19c-1.71,1.58-3.37,3.24-4.95,4.95L41,73.93a4,4,0,0,0-3,2A104,104,0,0,0,27.5,101.18a4,4,0,0,0,.74,3.53l15.83,19.78q-.14,3.51,0,7L28.24,151.3a4,4,0,0,0-.75,3.53A103.64,103.64,0,0,0,38,180.1a4,4,0,0,0,3,2l25.19,2.8c1.58,1.71,3.24,3.37,4.95,4.95l2.8,25.2a4,4,0,0,0,2,3,104,104,0,0,0,25.28,10.46,4,4,0,0,0,3.53-.74l19.78-15.83q3.51.13,7,0l19.79,15.83a4,4,0,0,0,2.5.88,4,4,0,0,0,1-.13A103.64,103.64,0,0,0,180.1,218a4,4,0,0,0,2-3l2.8-25.19c1.71-1.58,3.37-3.24,4.95-4.95l25.2-2.8a4,4,0,0,0,3-2,104,104,0,0,0,10.46-25.28,4,4,0,0,0-.74-3.53Zm.17,42.83-24.67,2.74a4,4,0,0,0-2.55,1.32,76.2,76.2,0,0,1-6.48,6.48,4,4,0,0,0-1.32,2.55l-2.74,24.66a95.45,95.45,0,0,1-19.64,8.15l-19.38-15.51a4,4,0,0,0-2.5-.87h-.24a73.67,73.67,0,0,1-9.16,0,4,4,0,0,0-2.74.87l-19.37,15.5a95.33,95.33,0,0,1-19.65-8.13l-2.74-24.67a4,4,0,0,0-1.32-2.55,76.2,76.2,0,0,1-6.48-6.48,4,4,0,0,0-2.55-1.32l-24.66-2.74a95.45,95.45,0,0,1-8.15-19.64l15.51-19.38a4,4,0,0,0,.87-2.74,77.76,77.76,0,0,1,0-9.16,4,4,0,0,0-.87-2.74l-15.5-19.37A95.33,95.33,0,0,1,43.9,81.66l24.67-2.74a4,4,0,0,0,2.55-1.32,76.2,76.2,0,0,1,6.48-6.48,4,4,0,0,0,1.32-2.55l2.74-24.66a95.45,95.45,0,0,1,19.64-8.15l19.38,15.51a4,4,0,0,0,2.74.87,73.67,73.67,0,0,1,9.16,0,4,4,0,0,0,2.74-.87l19.37-15.5a95.33,95.33,0,0,1,19.65,8.13l2.74,24.67a4,4,0,0,0,1.32,2.55,76.2,76.2,0,0,1,6.48,6.48,4,4,0,0,0,2.55,1.32l24.66,2.74a95.45,95.45,0,0,1,8.15,19.64l-15.51,19.38a4,4,0,0,0-.87,2.74,77.76,77.76,0,0,1,0,9.16,4,4,0,0,0,.87,2.74l15.5,19.37A95.33,95.33,0,0,1,212.1,174.34Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/Globe.es.js"
+/*!******************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/Globe.es.js ***!
+  \******************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,187a113.4,113.4,0,0,1-20.39-35h40.82a116.94,116.94,0,0,1-10,20.77A108.61,108.61,0,0,1,128,207Zm-26.49-59a135.42,135.42,0,0,1,0-40h53a135.42,135.42,0,0,1,0,40ZM44,128a83.49,83.49,0,0,1,2.43-20H77.25a160.63,160.63,0,0,0,0,40H46.43A83.49,83.49,0,0,1,44,128Zm84-79a113.4,113.4,0,0,1,20.39,35H107.59a116.94,116.94,0,0,1,10-20.77A108.61,108.61,0,0,1,128,49Zm50.73,59h30.82a83.52,83.52,0,0,1,0,40H178.75a160.63,160.63,0,0,0,0-40Zm20.77-24H173.71a140.82,140.82,0,0,0-15.5-34.36A84.51,84.51,0,0,1,199.52,84ZM97.79,49.64A140.82,140.82,0,0,0,82.29,84H56.48A84.51,84.51,0,0,1,97.79,49.64ZM56.48,172H82.29a140.82,140.82,0,0,0,15.5,34.36A84.51,84.51,0,0,1,56.48,172Zm101.73,34.36A140.82,140.82,0,0,0,173.71,172h25.81A84.51,84.51,0,0,1,158.21,206.36Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm88,104a87.61,87.61,0,0,1-3.33,24H174.16a157.44,157.44,0,0,0,0-48h38.51A87.61,87.61,0,0,1,216,128ZM102,168H154a115.11,115.11,0,0,1-26,45A115.27,115.27,0,0,1,102,168Zm-3.9-16a140.84,140.84,0,0,1,0-48h59.88a140.84,140.84,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.84a157.44,157.44,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154,88H102a115.11,115.11,0,0,1,26-45A115.27,115.27,0,0,1,154,88Zm52.33,0H170.71a135.28,135.28,0,0,0-22.3-45.6A88.29,88.29,0,0,1,206.37,88ZM107.59,42.4A135.28,135.28,0,0,0,85.29,88H49.63A88.29,88.29,0,0,1,107.59,42.4ZM49.63,168H85.29a135.28,135.28,0,0,0,22.3,45.6A88.29,88.29,0,0,1,49.63,168Zm98.78,45.6a135.28,135.28,0,0,0,22.3-45.6h35.66A88.29,88.29,0,0,1,148.41,213.6Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm78.36,64H170.71a135.28,135.28,0,0,0-22.3-45.6A88.29,88.29,0,0,1,206.37,88ZM216,128a87.61,87.61,0,0,1-3.33,24H174.16a157.44,157.44,0,0,0,0-48h38.51A87.61,87.61,0,0,1,216,128ZM128,43a115.27,115.27,0,0,1,26,45H102A115.11,115.11,0,0,1,128,43ZM102,168H154a115.11,115.11,0,0,1-26,45A115.27,115.27,0,0,1,102,168Zm-3.9-16a140.84,140.84,0,0,1,0-48h59.88a140.84,140.84,0,0,1,0,48Zm50.35,61.6a135.28,135.28,0,0,0,22.3-45.6h35.66A88.29,88.29,0,0,1,148.41,213.6Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm81.57,64H169.19a132.58,132.58,0,0,0-25.73-50.67A90.29,90.29,0,0,1,209.57,90ZM218,128a89.7,89.7,0,0,1-3.83,26H171.81a155.43,155.43,0,0,0,0-52h42.36A89.7,89.7,0,0,1,218,128Zm-90,87.83a110,110,0,0,1-15.19-19.45A124.24,124.24,0,0,1,99.35,166h57.3a124.24,124.24,0,0,1-13.46,30.38A110,110,0,0,1,128,215.83ZM96.45,154a139.18,139.18,0,0,1,0-52h63.1a139.18,139.18,0,0,1,0,52ZM38,128a89.7,89.7,0,0,1,3.83-26H84.19a155.43,155.43,0,0,0,0,52H41.83A89.7,89.7,0,0,1,38,128Zm90-87.83a110,110,0,0,1,15.19,19.45A124.24,124.24,0,0,1,156.65,90H99.35a124.24,124.24,0,0,1,13.46-30.38A110,110,0,0,1,128,40.17Zm-15.46-.84A132.58,132.58,0,0,0,86.81,90H46.43A90.29,90.29,0,0,1,112.54,39.33ZM46.43,166H86.81a132.58,132.58,0,0,0,25.73,50.67A90.29,90.29,0,0,1,46.43,166Zm97,50.67A132.58,132.58,0,0,0,169.19,166h40.38A90.29,90.29,0,0,1,143.46,216.67Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm88,104a87.61,87.61,0,0,1-3.33,24H174.16a157.44,157.44,0,0,0,0-48h38.51A87.61,87.61,0,0,1,216,128ZM102,168H154a115.11,115.11,0,0,1-26,45A115.27,115.27,0,0,1,102,168Zm-3.9-16a140.84,140.84,0,0,1,0-48h59.88a140.84,140.84,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.84a157.44,157.44,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154,88H102a115.11,115.11,0,0,1,26-45A115.27,115.27,0,0,1,154,88Zm52.33,0H170.71a135.28,135.28,0,0,0-22.3-45.6A88.29,88.29,0,0,1,206.37,88ZM107.59,42.4A135.28,135.28,0,0,0,85.29,88H49.63A88.29,88.29,0,0,1,107.59,42.4ZM49.63,168H85.29a135.28,135.28,0,0,0,22.3,45.6A88.29,88.29,0,0,1,49.63,168Zm98.78,45.6a135.28,135.28,0,0,0,22.3-45.6h35.66A88.29,88.29,0,0,1,148.41,213.6Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M128,28h0A100,100,0,1,0,228,128,100.11,100.11,0,0,0,128,28Zm0,190.61c-6.33-6.09-23-24.41-31.27-54.61h62.54C151,194.2,134.33,212.52,128,218.61ZM94.82,156a140.42,140.42,0,0,1,0-56h66.36a140.42,140.42,0,0,1,0,56ZM128,37.39c6.33,6.09,23,24.41,31.27,54.61H96.73C105,61.8,121.67,43.48,128,37.39ZM169.41,100h46.23a92.09,92.09,0,0,1,0,56H169.41a152.65,152.65,0,0,0,0-56Zm43.25-8h-45a129.39,129.39,0,0,0-29.19-55.4A92.25,92.25,0,0,1,212.66,92ZM117.54,36.6A129.39,129.39,0,0,0,88.35,92h-45A92.25,92.25,0,0,1,117.54,36.6ZM40.36,100H86.59a152.65,152.65,0,0,0,0,56H40.36a92.09,92.09,0,0,1,0-56Zm3,64h45a129.39,129.39,0,0,0,29.19,55.4A92.25,92.25,0,0,1,43.34,164Zm95.12,55.4A129.39,129.39,0,0,0,167.65,164h45A92.25,92.25,0,0,1,138.46,219.4Z" }))
   ]
 ]);
 
@@ -61554,6 +65218,56 @@ const e = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216.49,111.51l-80-80a12,12,0,0,0-17,0l-80,80A12,12,0,0,0,36,120v96a4,4,0,0,0,4,4h64a4,4,0,0,0,4-4V156h40v60a4,4,0,0,0,4,4h64a4,4,0,0,0,4-4V120A12,12,0,0,0,216.49,111.51ZM212,212H156V152a4,4,0,0,0-4-4H104a4,4,0,0,0-4,4v60H44V120a4,4,0,0,1,1.17-2.83l80-80a4,4,0,0,1,5.66,0l80,80A4,4,0,0,1,212,120Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/Image.es.js"
+/*!******************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/Image.es.js ***!
+  \******************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M144,96a16,16,0,1,1,16,16A16,16,0,0,1,144,96Zm92-40V200a20,20,0,0,1-20,20H40a20,20,0,0,1-20-20V56A20,20,0,0,1,40,36H216A20,20,0,0,1,236,56ZM44,60v79.72l33.86-33.86a20,20,0,0,1,28.28,0L147.31,147l17.18-17.17a20,20,0,0,1,28.28,0L212,149.09V60Zm0,136H162.34L92,125.66l-48,48Zm168,0V183l-33.37-33.37L164.28,164l32,32Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M224,56V178.06l-39.72-39.72a8,8,0,0,0-11.31,0L147.31,164,97.66,114.34a8,8,0,0,0-11.32,0L32,168.69V56a8,8,0,0,1,8-8H216A8,8,0,0,1,224,56Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM156,88a12,12,0,1,1-12,12A12,12,0,0,1,156,88Zm60,112H40V160.69l46.34-46.35a8,8,0,0,1,11.32,0h0L165,181.66a8,8,0,0,0,11.32-11.32l-17.66-17.65L173,138.34a8,8,0,0,1,11.31,0L216,170.07V200Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216,42H40A14,14,0,0,0,26,56V200a14,14,0,0,0,14,14H216a14,14,0,0,0,14-14V56A14,14,0,0,0,216,42ZM40,54H216a2,2,0,0,1,2,2V163.57L188.53,134.1a14,14,0,0,0-19.8,0l-21.42,21.42L101.9,110.1a14,14,0,0,0-19.8,0L38,154.2V56A2,2,0,0,1,40,54ZM38,200V171.17l52.58-52.58a2,2,0,0,1,2.84,0L176.83,202H40A2,2,0,0,1,38,200Zm178,2H193.8l-38-38,21.41-21.42a2,2,0,0,1,2.83,0l38,38V200A2,2,0,0,1,216,202ZM146,100a10,10,0,1,1,10,10A10,10,0,0,1,146,100Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216,44H40A12,12,0,0,0,28,56V200a12,12,0,0,0,12,12H216a12,12,0,0,0,12-12V56A12,12,0,0,0,216,44ZM40,52H216a4,4,0,0,1,4,4V168.4l-32.89-32.89a12,12,0,0,0-17,0l-22.83,22.83-46.82-46.83a12,12,0,0,0-17,0L36,159V56A4,4,0,0,1,40,52ZM36,200V170.34l53.17-53.17a4,4,0,0,1,5.66,0L181.66,204H40A4,4,0,0,1,36,200Zm180,4H193l-40-40,22.83-22.83a4,4,0,0,1,5.66,0L220,179.71V200A4,4,0,0,1,216,204ZM148,100a8,8,0,1,1,8,8A8,8,0,0,1,148,100Z" }))
   ]
 ]);
 
@@ -61936,6 +65650,56 @@ const a = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M224,28c-20.29,0-43.16,11.24-68,33.4-18.47,16.49-34.39,35.83-45,49.93A56,56,0,0,0,36,164c0,33.22-21.26,48-22.22,48.68A4,4,0,0,0,16,220H92a56,56,0,0,0,52.67-75c14.11-10.63,33.44-26.55,49.93-45C216.76,75.16,228,52.29,228,32A4,4,0,0,0,224,28ZM92,212H26.35C33.91,203.69,44,188.08,44,164a48,48,0,1,1,48,48Zm26.52-97.31c4.13-5.44,9.32-12,15.29-18.9a80.08,80.08,0,0,1,26.4,26.4c-6.94,6-13.46,11.16-18.9,15.29A56.32,56.32,0,0,0,118.52,114.69Zm47.77,2.14a88.17,88.17,0,0,0-27.12-27.12C161,65.43,191.26,38.63,219.82,36.18,217.37,64.74,190.57,95,166.29,116.83Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/PaperPlaneRight.es.js"
+/*!****************************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/PaperPlaneRight.es.js ***!
+  \****************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const a = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M233.86,110.48,65.8,14.58A20,20,0,0,0,37.15,38.64L67.33,128,37.15,217.36A20,20,0,0,0,56,244a20.1,20.1,0,0,0,9.81-2.58l.09-.06,168-96.07a20,20,0,0,0,0-34.81ZM63.19,215.26,88.61,140H144a12,12,0,0,0,0-24H88.61L63.18,40.72l152.76,87.17Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M227.91,134.86,59.93,231a8,8,0,0,1-11.44-9.67L80,128,48.49,34.72a8,8,0,0,1,11.44-9.67l168,95.85A8,8,0,0,1,227.91,134.86Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M231.87,114l-168-95.89A16,16,0,0,0,40.92,37.34L71.55,128,40.92,218.67A16,16,0,0,0,56,240a16.15,16.15,0,0,0,7.93-2.1l167.92-96.05a16,16,0,0,0,.05-27.89ZM56,224a.56.56,0,0,0,0-.12L85.74,136H144a8,8,0,0,0,0-16H85.74L56.06,32.16A.46.46,0,0,0,56,32l168,95.83Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M240,127.89a16,16,0,0,1-8.18,14L63.9,237.9A16.15,16.15,0,0,1,56,240a16,16,0,0,1-15-21.33l27-79.95A4,4,0,0,1,71.72,136H144a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47h-72a4,4,0,0,1-3.79-2.72l-27-79.94A16,16,0,0,1,63.84,18.07l168,95.89A16,16,0,0,1,240,127.89Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M230.88,115.69l-168-95.88a14,14,0,0,0-20,16.87L73.66,128,42.81,219.33A14,14,0,0,0,56,238a14.15,14.15,0,0,0,6.93-1.83L230.84,140.1a14,14,0,0,0,0-24.41Zm-5.95,14L57,225.73a2,2,0,0,1-2.86-2.42.42.42,0,0,0,0-.1L84.3,134H144a6,6,0,0,0,0-12H84.3L54.17,32.8a.3.3,0,0,0,0-.1,1.87,1.87,0,0,1,.6-2.2A1.85,1.85,0,0,1,57,30.25l168,95.89a1.93,1.93,0,0,1,1,1.74A2,2,0,0,1,224.93,129.66Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M231.87,114l-168-95.89A16,16,0,0,0,40.92,37.34L71.55,128,40.92,218.67A16,16,0,0,0,56,240a16.15,16.15,0,0,0,7.93-2.1l167.92-96.05a16,16,0,0,0,.05-27.89ZM56,224a.56.56,0,0,0,0-.12L85.74,136H144a8,8,0,0,0,0-16H85.74L56.06,32.16A.46.46,0,0,0,56,32l168,95.83Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M229.89,117.43l-168-95.88A12,12,0,0,0,44.7,36l31.08,92L44.71,220A12,12,0,0,0,56,236a12.13,12.13,0,0,0,5.93-1.57l167.94-96.08a12,12,0,0,0,0-20.92Zm-4,14L58,227.47a4,4,0,0,1-5.72-4.83l0-.07L82.87,132H144a4,4,0,0,0,0-8H82.87L52.26,33.37A3.89,3.89,0,0,1,53.44,29,4.13,4.13,0,0,1,56,28a3.88,3.88,0,0,1,1.93.54l168,95.87a4,4,0,0,1,0,7Z" }))
   ]
 ]);
 
@@ -62337,6 +66101,56 @@ const a = /* @__PURE__ */ new Map([
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/ShareNetwork.es.js"
+/*!*************************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/ShareNetwork.es.js ***!
+  \*************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M176,156a43.78,43.78,0,0,0-29.09,11L106.1,140.8a44.07,44.07,0,0,0,0-25.6L146.91,89a43.83,43.83,0,1,0-13-20.17L93.09,95a44,44,0,1,0,0,65.94L133.9,187.2A44,44,0,1,0,176,156Zm0-120a20,20,0,1,1-20,20A20,20,0,0,1,176,36ZM64,148a20,20,0,1,1,20-20A20,20,0,0,1,64,148Zm112,72a20,20,0,1,1,20-20A20,20,0,0,1,176,220Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M208,200a32,32,0,1,1-32-32A32,32,0,0,1,208,200ZM176,88a32,32,0,1,0-32-32A32,32,0,0,0,176,88Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M212,200a36,36,0,1,1-69.85-12.25l-53-34.05a36,36,0,1,1,0-51.4l53-34a36.09,36.09,0,1,1,8.67,13.45l-53,34.05a36,36,0,0,1,0,24.5l53,34.05A36,36,0,0,1,212,200Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M176,162a37.91,37.91,0,0,0-28.3,12.67L98.8,143.24a37.89,37.89,0,0,0,0-30.48l48.9-31.43a38,38,0,1,0-6.5-10.09L92.3,102.67a38,38,0,1,0,0,50.66l48.9,31.43A38,38,0,1,0,176,162Zm0-132a26,26,0,1,1-26,26A26,26,0,0,1,176,30ZM64,154a26,26,0,1,1,26-26A26,26,0,0,1,64,154Zm112,72a26,26,0,1,1,26-26A26,26,0,0,1,176,226Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M176,164a36,36,0,0,0-27.92,13.3L96.25,144a35.92,35.92,0,0,0,0-32L148.08,78.7A35.93,35.93,0,1,0,143.75,72L91.92,105.3a36,36,0,1,0,0,45.4L143.75,184A36,36,0,1,0,176,164Zm0-136a28,28,0,1,1-28,28A28,28,0,0,1,176,28ZM64,156a28,28,0,1,1,28-28A28,28,0,0,1,64,156Zm112,72a28,28,0,1,1,28-28A28,28,0,0,1,176,228Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/defs/Shield.es.js"
 /*!*******************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/defs/Shield.es.js ***!
@@ -62380,6 +66194,56 @@ const a = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,44H48A12,12,0,0,0,36,56v56c0,51.16,24.73,82.12,45.47,99.1,22.4,18.32,44.55,24.5,45.48,24.76a4,4,0,0,0,2.1,0c.93-.26,23.08-6.44,45.48-24.76,20.74-17,45.47-47.94,45.47-99.1V56A12,12,0,0,0,208,44Zm4,68c0,38.44-14.23,69.63-42.29,92.71A132.45,132.45,0,0,1,128,227.82a132.23,132.23,0,0,1-41.71-23.11C58.23,181.63,44,150.44,44,112V56a4,4,0,0,1,4-4H208a4,4,0,0,1,4,4Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/ShieldCheck.es.js"
+/*!************************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/ShieldCheck.es.js ***!
+  \************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,36H48A20,20,0,0,0,28,56v56c0,54.29,26.32,87.22,48.4,105.29,23.71,19.39,47.44,26,48.44,26.29a12.1,12.1,0,0,0,6.32,0c1-.28,24.73-6.9,48.44-26.29,22.08-18.07,48.4-51,48.4-105.29V56A20,20,0,0,0,208,36Zm-4,76c0,35.71-13.09,64.69-38.91,86.15A126.28,126.28,0,0,1,128,219.38a126.14,126.14,0,0,1-37.09-21.23C65.09,176.69,52,147.71,52,112V60H204ZM79.51,144.49a12,12,0,1,1,17-17L112,143l47.51-47.52a12,12,0,0,1,17,17l-56,56a12,12,0,0,1-17,0Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M216,56v56c0,96-88,120-88,120S40,208,40,112V56a8,8,0,0,1,8-8H208A8,8,0,0,1,216,56Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm-34.32,69.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,42H48A14,14,0,0,0,34,56v56c0,51.94,25.12,83.4,46.2,100.64,22.73,18.6,45.27,24.89,46.22,25.15a6,6,0,0,0,3.16,0c.95-.26,23.49-6.55,46.22-25.15C196.88,195.4,222,163.94,222,112V56A14,14,0,0,0,208,42Zm2,70c0,37.76-13.94,68.39-41.44,91.06A131.17,131.17,0,0,1,128,225.72a130.94,130.94,0,0,1-40.56-22.66C59.94,180.39,46,149.76,46,112V56a2,2,0,0,1,2-2H208a2,2,0,0,1,2,2ZM172.24,99.76a6,6,0,0,1,0,8.48l-56,56a6,6,0,0,1-8.48,0l-24-24a6,6,0,0,1,8.48-8.48L112,151.51l51.76-51.75A6,6,0,0,1,172.24,99.76Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,44H48A12,12,0,0,0,36,56v56c0,51.16,24.73,82.12,45.47,99.1,22.4,18.32,44.55,24.5,45.48,24.76a4,4,0,0,0,2.1,0c.93-.26,23.08-6.44,45.48-24.76,20.74-17,45.47-47.94,45.47-99.1V56A12,12,0,0,0,208,44Zm4,68c0,38.44-14.23,69.63-42.29,92.71A132.45,132.45,0,0,1,128,227.82a132.23,132.23,0,0,1-41.71-23.11C58.23,181.63,44,150.44,44,112V56a4,4,0,0,1,4-4H208a4,4,0,0,1,4,4Zm-41.17-10.83a4,4,0,0,1,0,5.66l-56,56a4,4,0,0,1-5.66,0l-24-24a4,4,0,0,1,5.66-5.66L112,154.34l53.17-53.17A4,4,0,0,1,170.83,101.17Z" }))
   ]
 ]);
 
@@ -62719,6 +66583,50 @@ const e = /* @__PURE__ */ new Map([
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/TrendUp.es.js"
+/*!********************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/TrendUp.es.js ***!
+  \********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const a = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M244,56v64a12,12,0,0,1-24,0V85l-75.51,75.52a12,12,0,0,1-17,0L96,129,32.49,192.49a12,12,0,0,1-17-17l72-72a12,12,0,0,1,17,0L136,135l67-67H168a12,12,0,0,1,0-24h64A12,12,0,0,1,244,56Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M232,56v64L168,56Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M232,48H168a8,8,0,0,0-5.66,13.66L188.69,88,136,140.69l-34.34-34.35a8,8,0,0,0-11.32,0l-72,72a8,8,0,0,0,11.32,11.32L96,123.31l34.34,34.35a8,8,0,0,0,11.32,0L200,99.31l26.34,26.35A8,8,0,0,0,240,120V56A8,8,0,0,0,232,48Zm-8,52.69L187.31,64H224Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M240,56v64a8,8,0,0,1-13.66,5.66L200,99.31l-58.34,58.35a8,8,0,0,1-11.32,0L96,123.31,29.66,189.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0L136,140.69,188.69,88,162.34,61.66A8,8,0,0,1,168,48h64A8,8,0,0,1,240,56Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M238,56v64a6,6,0,0,1-12,0V70.48l-85.76,85.76a6,6,0,0,1-8.48,0L96,120.49,28.24,188.24a6,6,0,0,1-8.48-8.48l72-72a6,6,0,0,1,8.48,0L136,143.51,217.52,62H168a6,6,0,0,1,0-12h64A6,6,0,0,1,238,56Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M240,56v64a8,8,0,0,1-16,0V75.31l-82.34,82.35a8,8,0,0,1-11.32,0L96,123.31,29.66,189.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0L136,140.69,212.69,64H168a8,8,0,0,1,0-16h64A8,8,0,0,1,240,56Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M236,56v64a4,4,0,0,1-8,0V65.66l-89.17,89.17a4,4,0,0,1-5.66,0L96,117.66,26.83,186.83a4,4,0,0,1-5.66-5.66l72-72a4,4,0,0,1,5.66,0L136,146.34,222.34,60H168a4,4,0,0,1,0-8h64A4,4,0,0,1,236,56Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/defs/Trophy.es.js"
 /*!*******************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/defs/Trophy.es.js ***!
@@ -62894,6 +66802,56 @@ const a = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M107.19,159a56,56,0,1,0-46.38,0A91.83,91.83,0,0,0,6.88,197.81a4,4,0,1,0,6.7,4.37,84,84,0,0,1,140.84,0,4,4,0,1,0,6.7-4.37A91.83,91.83,0,0,0,107.19,159ZM36,108a48,48,0,1,1,48,48A48.05,48.05,0,0,1,36,108Zm212,95.35a4,4,0,0,1-5.53-1.17A83.81,83.81,0,0,0,172,164a4,4,0,0,1,0-8,48,48,0,1,0-17.82-92.58,4,4,0,1,1-3-7.43,56,56,0,0,1,44,103,91.83,91.83,0,0,1,53.93,38.86A4,4,0,0,1,248,203.35Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/Video.es.js"
+/*!******************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/Video.es.js ***!
+  \******************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ e)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const e = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216,36H40A20,20,0,0,0,20,56V160a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V56A20,20,0,0,0,216,36Zm-4,120H44V60H212Zm24,52a12,12,0,0,1-12,12H32a12,12,0,0,1,0-24H224A12,12,0,0,1,236,208ZM104,128V88a12,12,0,0,1,18.36-10.18l32,20a12,12,0,0,1,0,20.36l-32,20A12,12,0,0,1,104,128Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "path",
+      {
+        d: "M216,48H40a8,8,0,0,0-8,8V168a8,8,0,0,0,8,8H216a8,8,0,0,0,8-8V56A8,8,0,0,0,216,48ZM112,144V80l48,32Z",
+        opacity: "0.2"
+      }
+    ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M164.44,105.34l-48-32A8,8,0,0,0,104,80v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,129.05V95l25.58,17ZM216,40H40A16,16,0,0,0,24,56V168a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,128H40V56H216V168Zm16,40a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16H224A8,8,0,0,1,232,208Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16H224A8,8,0,0,1,232,208Zm0-152V168a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Zm-68,56a8,8,0,0,0-3.41-6.55l-40-28A8,8,0,0,0,108,84v56a8,8,0,0,0,12.59,6.55l40-28A8,8,0,0,0,164,112Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M163.33,107l-48-32A6,6,0,0,0,106,80v64a6,6,0,0,0,9.33,5l48-32a6,6,0,0,0,0-10ZM118,132.79V91.21L149.18,112ZM216,42H40A14,14,0,0,0,26,56V168a14,14,0,0,0,14,14H216a14,14,0,0,0,14-14V56A14,14,0,0,0,216,42Zm2,126a2,2,0,0,1-2,2H40a2,2,0,0,1-2-2V56a2,2,0,0,1,2-2H216a2,2,0,0,1,2,2Zm12,40a6,6,0,0,1-6,6H32a6,6,0,0,1,0-12H224A6,6,0,0,1,230,208Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M164.44,105.34l-48-32A8,8,0,0,0,104,80v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,129.05V95l25.58,17ZM216,40H40A16,16,0,0,0,24,56V168a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,128H40V56H216V168Zm16,40a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16H224A8,8,0,0,1,232,208Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M162.22,108.67l-48-32A4,4,0,0,0,108,80v64a4,4,0,0,0,2.11,3.53,4,4,0,0,0,4.11-.2l48-32a4,4,0,0,0,0-6.66ZM116,136.53V87.47L152.79,112ZM216,44H40A12,12,0,0,0,28,56V168a12,12,0,0,0,12,12H216a12,12,0,0,0,12-12V56A12,12,0,0,0,216,44Zm4,124a4,4,0,0,1-4,4H40a4,4,0,0,1-4-4V56a4,4,0,0,1,4-4H216a4,4,0,0,1,4,4Zm8,40a4,4,0,0,1-4,4H32a4,4,0,0,1,0-8H224A4,4,0,0,1,228,208Z" }))
   ]
 ]);
 
