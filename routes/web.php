@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Home redirect
     Route::get('/home', function() {
-        return redirect('/');
+        return redirect('/homefeed');
     })->name('home');
 
     // SPA Catch-all (Protected)

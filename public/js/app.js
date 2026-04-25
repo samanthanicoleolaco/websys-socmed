@@ -2129,6 +2129,15 @@ if (container) {
     if (path === '/settings') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_Settings__WEBPACK_IMPORTED_MODULE_9__["default"], {});
     if (path === '/profile' || path.startsWith('/profile/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Profile__WEBPACK_IMPORTED_MODULE_10__["default"], {});
     if (path === '/notifications') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Notifications__WEBPACK_IMPORTED_MODULE_11__["default"], {});
+    if (path === '/homefeed') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
+
+    // If at root, redirect to /homefeed
+    if (path === '/') {
+      window.history.replaceState(null, '', '/homefeed');
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
+    }
+
+    // Catch-all for other protected paths
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
   };
   root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_context_UserContext__WEBPACK_IMPORTED_MODULE_12__.UserProvider, {
@@ -10007,7 +10016,7 @@ var Sidebar = function Sidebar(_ref) {
       size: 22
     }),
     label: "Home",
-    route: "/"
+    route: "/homefeed"
   }, {
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
       size: 22
