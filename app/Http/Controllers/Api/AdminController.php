@@ -22,13 +22,17 @@ class AdminController extends Controller
      */
     public function stats()
     {
+        $safeCount = function ($builder) {
+            try { return $builder->count(); } catch (\Throwable $e) { report($e); return 0; }
+        };
+
         return response()->json([
-            'total_users'       => User::count(),
-            'total_pets'        => Pet::count(),
-            'total_posts'       => Post::count(),
-            'total_comments'    => Comment::count(),
-            'active_adoptions'  => AdoptionListing::where('status', 'available')->count(),
-            'active_contests'   => Contest::count(),
+            'total_users'      => $safeCount(User::query()),
+            'total_pets'       => $safeCount(Pet::query()),
+            'total_posts'      => $safeCount(Post::query()),
+            'total_comments'   => $safeCount(Comment::query()),
+            'active_adoptions' => $safeCount(AdoptionListing::where('is_available', true)),
+            'active_contests'  => $safeCount(Contest::where('end_at', '>=', now())->where('is_active', true)),
         ]);
     }
 
@@ -196,5 +200,59 @@ class AdminController extends Controller
         \Artisan::call('route:clear');
         \Artisan::call('config:clear');
         return response()->json(['message' => 'All caches purged successfully.']);
+    }
+
+    /**
+     * GET /api/admin/reports
+     * List reported posts.
+     */
+    public function reports(Request $request)
+    {
+        $query = \App\Models\PostReport::with(['reporter', 'post.pet']);
+
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        return response()->json($query->latest()->paginate(20));
+    }
+
+    /**
+     * GET /api/admin/analytics/signups
+     * Signup counts per day for the last 30 days.
+     */
+    public function signupsAnalytics()
+    {
+        $data = User::where('created_at', '>=', now()->subDays(30))
+            ->selectRaw("DATE(created_at) as date, COUNT(*) as count")
+            ->groupByRaw('DATE(created_at)')
+            ->orderBy('date')
+            ->get();
+
+        return response()->json($data);
+    }
+
+    /**
+     * PATCH /api/admin/posts/{post}/hide
+     * Toggle post visibility.
+     */
+    public function togglePostHide(Request $request, Post $post)
+    {
+        $post->update(['is_hidden' => !$post->is_hidden]);
+        return response()->json([
+            'message' => $post->is_hidden ? 'Post hidden.' : 'Post unhidden.',
+            'is_hidden' => $post->is_hidden,
+        ]);
+    }
+
+    /**
+     * POST /api/admin/toggle-registration
+     * Toggle user registration on/off.
+     */
+    public function toggleRegistration(Request $request)
+    {
+        $enabled = (bool) $request->boolean('enabled');
+        \App\Models\SystemSetting::set('registration_enabled', $enabled);
+        return response()->json(['enabled' => $enabled]);
     }
 }

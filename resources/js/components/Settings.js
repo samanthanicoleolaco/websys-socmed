@@ -254,6 +254,34 @@ const Settings = () => {
         }
     };
 
+    const handleDeactivate = async () => {
+        if (!window.confirm('Hide your profile and posts from the community?')) return;
+        try {
+            await window.axios.post('/api/user/deactivate');
+            alert('Account deactivated.');
+            window.location.href = '/login';
+        } catch (err) { alert('Failed to deactivate.'); }
+    };
+
+    const handleLogoutAll = async () => {
+        if (!window.confirm('Sign out from every device?')) return;
+        try {
+            await window.axios.post('/api/auth/logout-all');
+            localStorage.removeItem('auth_token');
+            window.location.href = '/login';
+        } catch (err) { alert('Failed to logout all.'); }
+    };
+
+    const handleDeleteAccount = async () => {
+        const phrase = window.prompt('Type DELETE to permanently delete your account.');
+        if (phrase !== 'DELETE') return;
+        try {
+            await window.axios.delete('/api/user');
+            localStorage.clear();
+            window.location.href = '/register';
+        } catch (err) { alert('Failed to delete account.'); }
+    };
+
     const tabs = [
         { id: 'account', label: 'Account', icon: <User size={18} /> },
         { id: 'privacy', label: 'Privacy', icon: <Lock size={18} /> },
@@ -705,7 +733,7 @@ const Settings = () => {
                         <h4>Deactivate Account</h4>
                         <p>Temporarily hide your profile and posts from the community.</p>
                     </div>
-                    <Button variant="danger-light">Deactivate</Button>
+                    <Button variant="danger-light" onClick={handleDeactivate}>Deactivate</Button>
                 </div>
                 <div className="danger-action-divider" />
                 <div className="danger-action-item">
@@ -716,7 +744,7 @@ const Settings = () => {
                         <h4>Log Out of All Devices</h4>
                         <p>Sign out from every device where you're currently logged in.</p>
                     </div>
-                    <Button variant="warning-light">Log Out All</Button>
+                    <Button variant="warning-light" onClick={handleLogoutAll}>Log Out All</Button>
                 </div>
                 <div className="danger-action-divider" />
                 <div className="danger-action-item">
@@ -727,7 +755,7 @@ const Settings = () => {
                         <h4>Delete Account</h4>
                         <p>Permanently delete your account and all associated data.</p>
                     </div>
-                    <Button variant="danger">Delete Account</Button>
+                    <Button variant="danger" onClick={handleDeleteAccount}>Delete Account</Button>
                 </div>
             </Card>
         </motion.div>

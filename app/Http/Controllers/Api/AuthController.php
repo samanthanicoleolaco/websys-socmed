@@ -270,4 +270,43 @@ class AuthController extends Controller
             'pet' => $pet,
         ]);
     }
+
+    /**
+     * POST /api/auth/logout-all
+     * Revoke all tokens and logout.
+     */
+    public function logoutAll(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        Auth::logout();
+
+        return response()->json(['message' => 'Logged out from all devices.']);
+    }
+
+    /**
+     * POST /api/user/deactivate
+     * Mark account as deactivated.
+     */
+    public function deactivate(Request $request)
+    {
+        $request->user()->update(['is_deactivated' => true]);
+        $request->user()->tokens()->delete();
+        Auth::logout();
+
+        return response()->json(['message' => 'Account deactivated.']);
+    }
+
+    /**
+     * DELETE /api/user
+     * Permanently delete the user account.
+     */
+    public function destroy(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+        Auth::logout();
+        $user->delete();
+
+        return response()->json(['message' => 'Account permanently deleted.']);
+    }
 }

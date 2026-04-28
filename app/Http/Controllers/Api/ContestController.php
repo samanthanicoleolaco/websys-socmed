@@ -157,4 +157,24 @@ class ContestController extends Controller
 
         return response()->json(['message' => 'Contest deleted successfully']);
     }
+
+    /**
+     * GET /api/contests/live
+     * Returns the nearest active contest (or null).
+     */
+    public function live()
+    {
+        $contest = Contest::where('is_active', true)
+            ->where(function ($query) {
+                $query->whereNull('start_at')->orWhere('start_at', '<=', now());
+            })
+            ->where(function ($query) {
+                $query->whereNull('end_at')->orWhere('end_at', '>=', now());
+            })
+            ->withCount('entries')
+            ->orderBy('end_at')
+            ->first();
+
+        return response()->json($contest);
+    }
 }

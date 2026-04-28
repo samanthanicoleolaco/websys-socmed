@@ -456,6 +456,8 @@ const Feed = () => {
     const [isSeeAllPetsOpen, setIsSeeAllPetsOpen] = useState(false);
     const [contestEntryCount, setContestEntryCount] = useState(0);
     const [likersFor, setLikersFor] = useState(null);
+    const [trendingTags, setTrendingTags] = useState([]);
+    const [liveContest, setLiveContest] = useState(null);
 
     const privacyMenuRef = useRef(null);
     const storyMenuRef = useRef(null);
@@ -525,10 +527,21 @@ const Feed = () => {
                 const storiesRes = await window.axios.get("/api/stories");
                 setStories(storiesRes.data);
                 fetchPosts(filterTag);
-                
-                // Fetch contest entry count
-                const contestRes = await window.axios.get("/api/posts?hashtag=springcutest");
-                setContestEntryCount(contestRes.data?.total || 0);
+
+                // Fetch trending tags
+                window.axios.get("/api/trending-tags")
+                    .then(res => setTrendingTags(res.data || []))
+                    .catch(() => setTrendingTags([]));
+
+                // Fetch live contest
+                window.axios.get("/api/contests/live")
+                    .then(res => {
+                        if (res.data) {
+                            setLiveContest(res.data);
+                            setContestEntryCount(res.data.entries_count || 0);
+                        }
+                    })
+                    .catch(() => setLiveContest(null));
             } catch (err) { console.error(err); }
         };
         fetchInitialData();
@@ -1432,24 +1445,17 @@ const Feed = () => {
                         <Card className="sidebar-card">
                             <div className="sidebar-card__title"><TrendUp /> <span>Trending Tags</span></div>
                             <div className="tag-list">
-                                <div className="tag-row clickable" onClick={() => setFilterTag("springcutest")}>
-                                    <span>1&nbsp;&nbsp;#springcutest</span> <span className="count">NEW</span>
-                                </div>
-                                <div className="tag-row clickable" onClick={() => setFilterTag("goldenretriever")}>
-                                    <span>2&nbsp;&nbsp;#goldenretriever</span> <span className="count">2.4k</span>
-                                </div>
-                                <div className="tag-row clickable" onClick={() => setFilterTag("catstagram")}>
-                                    <span>3&nbsp;&nbsp;#catstagram</span> <span className="count">1.8k</span>
-                                </div>
-                                <div className="tag-row clickable" onClick={() => setFilterTag("zoomies")}>
-                                    <span>4&nbsp;&nbsp;#zoomies</span> <span className="count">980</span>
-                                </div>
-                                <div className="tag-row clickable" onClick={() => setFilterTag("petlife")}>
-                                    <span>5&nbsp;&nbsp;#petlife</span> <span className="count">5.6k</span>
-                                </div>
+                                {trendingTags.length === 0 && <div className="tag-row muted">No trending tags yet — start posting!</div>}
+                                {trendingTags.map((t, i) => (
+                                    <div key={t.tag} className="tag-row clickable" onClick={() => setFilterTag(t.tag)}>
+                                        <span>{i + 1}&nbsp;&nbsp;#{t.tag}</span>
+                                        <span className="count">{t.live_contest ? 'LIVE' : t.posts}</span>
+                                    </div>
+                                ))}
                             </div>
                         </Card>
 
+                        {liveContest && (
                         <Card className="sidebar-card">
                             <div className="sidebar-card__title"><Trophy /> <span>Live Contest</span></div>
                             <div 
@@ -1459,17 +1465,18 @@ const Feed = () => {
                             >
                                 <div className="live-contest__top">
                                     <div>
-                                        <div className="contest-name">Spring Cutest Pet</div>
-                                        <div className="contest-sub">Ends in 2 days · {contestEntryCount} entries</div>
+                                        <div className="contest-name">{liveContest.title}</div>
+                                        <div className="contest-sub">{liveContest.hashtag} · {contestEntryCount} entries</div>
                                     </div>
                                     <span className="live-pill">LIVE</span>
                                 </div>
                                 <div className="contest-progress">
                                     <div className="contest-progress__bar" />
                                 </div>
-                                <Button variant="primary" className="contest-btn">Enter Contest</Button>
+                                <Button variant="primary" className="contest-btn" onClick={(e) => { e.stopPropagation(); window.location.href = '/badges?enterContest=true'; }}>Enter Contest</Button>
                             </div>
                         </Card>
+                        )}
 
                         <Card className="sidebar-card">
                             <div className="sidebar-card__title sidebar-card__title--between">

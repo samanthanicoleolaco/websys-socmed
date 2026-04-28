@@ -109,16 +109,60 @@ class MessageController extends Controller
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
             'content' => 'required|string|max:5000',
+            'media' => 'nullable|file|mimetypes:image/jpeg,image/png,image/gif,image/webp,video/mp4,video/quicktime,video/webm|max:51200',
         ]);
+
+        $mediaPath = null;
+        $mediaType = null;
+        if ($request->hasFile('media')) {
+            $mime = $request->file('media')->getMimeType();
+            $mediaPath = $request->file('media')->store('messages/media', 'public');
+            $mediaType = str_starts_with($mime, 'video/') ? 'video' : 'image';
+        }
 
         $message = Message::create([
             'sender_id' => Auth::id(),
             'receiver_id' => $request->receiver_id,
             'content' => $request->content,
             'is_read' => false,
+            'media_path' => $mediaPath,
+            'media_type' => $mediaType,
         ]);
 
         return response()->json($message->load('sender.pet', 'receiver.pet'), 201);
+    }
+
+    /**
+     * POST /api/conversations
+     * Create a group conversation by sending an initial message to multiple members.
+     */
+    public function createConversation(Request $request)
+    {
+        $request->validate([
+            'member_ids'   => 'required|array|min:1',
+            'member_ids.*' => 'required|exists:users,id',
+            'name'         => 'nullable|string|max:255',
+            'content'      => 'nullable|string|max:5000',
+        ]);
+
+        $senderId = Auth::id();
+        $content = $request->input('content', $request->input('name', 'Group chat created'));
+        $messages = [];
+
+        foreach ($request->member_ids as $memberId) {
+            if ((int) $memberId === $senderId) continue;
+            $messages[] = Message::create([
+                'sender_id'   => $senderId,
+                'receiver_id' => $memberId,
+                'content'     => $content,
+                'is_read'     => false,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Conversation created',
+            'messages_count' => count($messages),
+        ], 201);
     }
 
     public function markAsRead(Request $request, $messageId)

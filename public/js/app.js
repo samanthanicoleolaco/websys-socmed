@@ -3872,26 +3872,57 @@ var AdoptionBoard = function AdoptionBoard() {
       });
     });
   };
-  var handleAdoptSubmit = function handleAdoptSubmit(e) {
-    e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(function () {
-      setAdoptFormPet(null);
-      setFormSubmitted(false);
-      setSelectedPet(null);
-    }, 2000);
-  };
-  var handlePutSubmit = /*#__PURE__*/function () {
+  var handleAdoptSubmit = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(e) {
-      var form, fd, _err$response, _t2;
+      var _form$querySelector, _form$elements$, _form$querySelector2, _form$elements$2, _form$querySelector3, _form$elements$3, _form$querySelector4;
+      var form, data, _err$response, _t2;
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.p = _context2.n) {
           case 0:
             e.preventDefault();
             form = e.target;
-            fd = new FormData(form);
+            data = {
+              name: ((_form$querySelector = form.querySelector('[placeholder="Your full name"]')) === null || _form$querySelector === void 0 ? void 0 : _form$querySelector.value) || ((_form$elements$ = form.elements[0]) === null || _form$elements$ === void 0 ? void 0 : _form$elements$.value) || '',
+              email: ((_form$querySelector2 = form.querySelector('[type="email"]')) === null || _form$querySelector2 === void 0 ? void 0 : _form$querySelector2.value) || ((_form$elements$2 = form.elements[1]) === null || _form$elements$2 === void 0 ? void 0 : _form$elements$2.value) || '',
+              phone: ((_form$querySelector3 = form.querySelector('[type="tel"]')) === null || _form$querySelector3 === void 0 ? void 0 : _form$querySelector3.value) || ((_form$elements$3 = form.elements[2]) === null || _form$elements$3 === void 0 ? void 0 : _form$elements$3.value) || '',
+              message: ((_form$querySelector4 = form.querySelector('textarea')) === null || _form$querySelector4 === void 0 ? void 0 : _form$querySelector4.value) || ''
+            };
             _context2.p = 1;
             _context2.n = 2;
+            return window.axios.post("/api/adoption-listings/".concat(adoptFormPet.id, "/apply"), data);
+          case 2:
+            setFormSubmitted(true);
+            setTimeout(function () {
+              setAdoptFormPet(null);
+              setFormSubmitted(false);
+              setSelectedPet(null);
+            }, 2000);
+            _context2.n = 4;
+            break;
+          case 3:
+            _context2.p = 3;
+            _t2 = _context2.v;
+            alert(((_err$response = _t2.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Failed to submit application.');
+          case 4:
+            return _context2.a(2);
+        }
+      }, _callee2, null, [[1, 3]]);
+    }));
+    return function handleAdoptSubmit(_x) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+  var handlePutSubmit = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(e) {
+      var form, fd, _err$response2, _t3;
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.p = _context3.n) {
+          case 0:
+            e.preventDefault();
+            form = e.target;
+            fd = new FormData(form);
+            _context3.p = 1;
+            _context3.n = 2;
             return window.axios.post('/api/adoption-listings', fd, {
               headers: {
                 'Content-Type': 'multipart/form-data'
@@ -3899,27 +3930,27 @@ var AdoptionBoard = function AdoptionBoard() {
             });
           case 2:
             setPutFormSubmitted(true);
-            _context2.n = 3;
+            _context3.n = 3;
             return fetchListings();
           case 3:
             setTimeout(function () {
               setPutForAdoptionOpen(false);
               setPutFormSubmitted(false);
             }, 1500);
-            _context2.n = 5;
+            _context3.n = 5;
             break;
           case 4:
-            _context2.p = 4;
-            _t2 = _context2.v;
-            console.error(_t2);
-            alert(((_err$response = _t2.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Failed to publish listing.');
+            _context3.p = 4;
+            _t3 = _context3.v;
+            console.error(_t3);
+            alert(((_err$response2 = _t3.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.message) || 'Failed to publish listing.');
           case 5:
-            return _context2.a(2);
+            return _context3.a(2);
         }
-      }, _callee2, null, [[1, 4]]);
+      }, _callee3, null, [[1, 4]]);
     }));
-    return function handlePutSubmit(_x) {
-      return _ref5.apply(this, arguments);
+    return function handlePutSubmit(_x2) {
+      return _ref6.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
@@ -5880,6 +5911,106 @@ var Settings = function Settings() {
       return _ref9.apply(this, arguments);
     };
   }();
+  var handleDeactivate = /*#__PURE__*/function () {
+    var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+      var _t5;
+      return _regenerator().w(function (_context5) {
+        while (1) switch (_context5.p = _context5.n) {
+          case 0:
+            if (window.confirm('Hide your profile and posts from the community?')) {
+              _context5.n = 1;
+              break;
+            }
+            return _context5.a(2);
+          case 1:
+            _context5.p = 1;
+            _context5.n = 2;
+            return window.axios.post('/api/user/deactivate');
+          case 2:
+            alert('Account deactivated.');
+            window.location.href = '/login';
+            _context5.n = 4;
+            break;
+          case 3:
+            _context5.p = 3;
+            _t5 = _context5.v;
+            alert('Failed to deactivate.');
+          case 4:
+            return _context5.a(2);
+        }
+      }, _callee5, null, [[1, 3]]);
+    }));
+    return function handleDeactivate() {
+      return _ref0.apply(this, arguments);
+    };
+  }();
+  var handleLogoutAll = /*#__PURE__*/function () {
+    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+      var _t6;
+      return _regenerator().w(function (_context6) {
+        while (1) switch (_context6.p = _context6.n) {
+          case 0:
+            if (window.confirm('Sign out from every device?')) {
+              _context6.n = 1;
+              break;
+            }
+            return _context6.a(2);
+          case 1:
+            _context6.p = 1;
+            _context6.n = 2;
+            return window.axios.post('/api/auth/logout-all');
+          case 2:
+            localStorage.removeItem('auth_token');
+            window.location.href = '/login';
+            _context6.n = 4;
+            break;
+          case 3:
+            _context6.p = 3;
+            _t6 = _context6.v;
+            alert('Failed to logout all.');
+          case 4:
+            return _context6.a(2);
+        }
+      }, _callee6, null, [[1, 3]]);
+    }));
+    return function handleLogoutAll() {
+      return _ref1.apply(this, arguments);
+    };
+  }();
+  var handleDeleteAccount = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
+      var phrase, _t7;
+      return _regenerator().w(function (_context7) {
+        while (1) switch (_context7.p = _context7.n) {
+          case 0:
+            phrase = window.prompt('Type DELETE to permanently delete your account.');
+            if (!(phrase !== 'DELETE')) {
+              _context7.n = 1;
+              break;
+            }
+            return _context7.a(2);
+          case 1:
+            _context7.p = 1;
+            _context7.n = 2;
+            return window.axios["delete"]('/api/user');
+          case 2:
+            localStorage.clear();
+            window.location.href = '/register';
+            _context7.n = 4;
+            break;
+          case 3:
+            _context7.p = 3;
+            _t7 = _context7.v;
+            alert('Failed to delete account.');
+          case 4:
+            return _context7.a(2);
+        }
+      }, _callee7, null, [[1, 3]]);
+    }));
+    return function handleDeleteAccount() {
+      return _ref10.apply(this, arguments);
+    };
+  }();
   var tabs = [{
     id: 'account',
     label: 'Account',
@@ -6719,6 +6850,7 @@ var Settings = function Settings() {
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
             variant: "danger-light",
+            onClick: handleDeactivate,
             children: "Deactivate"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
@@ -6739,6 +6871,7 @@ var Settings = function Settings() {
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
             variant: "warning-light",
+            onClick: handleLogoutAll,
             children: "Log Out All"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
@@ -6759,6 +6892,7 @@ var Settings = function Settings() {
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
             variant: "danger",
+            onClick: handleDeleteAccount,
             children: "Delete Account"
           })]
         })]
@@ -7209,15 +7343,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Lightning.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/LockKey.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Medal.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Smiley.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Sparkle.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Star.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Users.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
-/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
-/* harmony import */ var _sass_pages_badges_scss__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../../sass/pages/badges.scss */ "./resources/sass/pages/badges.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Smiley.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Sparkle.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Star.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/TrendUp.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Users.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
+/* harmony import */ var _sass_pages_badges_scss__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../../sass/pages/badges.scss */ "./resources/sass/pages/badges.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -7234,157 +7370,20 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-// ── Mock Data ────────────────────────────────────────────────────────
-
-var BADGES_DATA = [{
-  id: 1,
-  name: "Top Poster",
-  description: "Posted 50+ times",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Star,
-  gradient: "bg-gradient-orange",
-  rarity: "Common",
-  status: "earned"
-}, {
-  id: 2,
-  name: "Social Butterfly",
-  description: "Made 20+ friends",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Heart,
-  gradient: "bg-gradient-pink",
-  rarity: "Rare",
-  status: "earned"
-}, {
-  id: 3,
-  name: "Contest Winner",
-  description: "Won a pet contest",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trophy,
-  gradient: "bg-gradient-yellow",
-  rarity: "Epic",
-  status: "earned"
-}, {
-  id: 4,
-  name: "Adoption Hero",
-  description: "Helped 3 pets get adopted",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Heart,
-  gradient: "bg-gradient-green",
-  rarity: "Rare",
-  status: "earned"
-}, {
-  id: 5,
-  name: "Champion",
-  description: "Reach top 10 leaderboard",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Crown,
-  gradient: "bg-gradient-gold",
-  rarity: "Legendary",
-  status: "in-progress",
-  progress: 7,
-  total: 10
-}, {
-  id: 6,
-  name: "Energizer",
-  description: "Active 30 days in a row",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.Lightning,
-  gradient: "bg-gradient-blue",
-  rarity: "Epic",
-  status: "in-progress",
-  progress: 18,
-  total: 30
-}, {
-  id: 7,
-  name: "Community Star",
-  description: "Received 500+ likes",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Medal,
-  gradient: "bg-gradient-purple",
-  rarity: "Rare",
-  status: "in-progress",
-  progress: 312,
-  total: 500
-}, {
-  id: 8,
-  name: "Happy Vibes",
-  description: "Spread joy to 100 users",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Smiley,
-  gradient: "bg-gradient-teal",
-  rarity: "Common",
-  status: "in-progress",
-  progress: 64,
-  total: 100
-}, {
-  id: 9,
-  name: "Shutterbug",
-  description: "Shared 25 pet photos",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Camera,
-  gradient: "bg-gradient-orange",
-  rarity: "Common",
-  status: "locked",
-  progress: 17,
-  total: 25
-}, {
-  id: 10,
-  name: "Viral Moment",
-  description: "Post reached 1000 views",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire,
-  gradient: "bg-gradient-red",
-  rarity: "Epic",
-  status: "locked",
-  progress: 0,
-  total: 1
-}, {
-  id: 11,
-  name: "Super Fan",
-  description: "Follow 50 pet profiles",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Users,
-  gradient: "bg-gradient-blue",
-  rarity: "Common",
-  status: "locked",
-  progress: 31,
-  total: 50
-}, {
-  id: 12,
-  name: "Legendary Pet",
-  description: "All badges earned",
-  icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Sparkle,
-  gradient: "bg-gradient-magenta",
-  rarity: "Legendary",
-  status: "locked",
-  progress: 4,
-  total: 12
-}];
-var LEADERBOARD_DATA = [{
-  rank: 1,
-  name: "Sarah & Mochi",
-  badges: 8,
-  streak: "14d",
-  xp: "4,820 XP",
-  avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png"
-}, {
-  rank: 2,
-  name: "Luna's Mom",
-  badges: 6,
-  streak: "9d",
-  xp: "4,310 XP",
-  avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_4.png"
-}, {
-  rank: 3,
-  name: "Buddy's Dad",
-  badges: 5,
-  streak: "21d",
-  xp: "3,990 XP",
-  avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_3.png"
-}, {
-  rank: 4,
-  name: "Whiskers Fan",
-  badges: 4,
-  streak: "6d",
-  xp: "3,450 XP",
-  avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_2.png"
-}, {
-  rank: 5,
-  name: "Max's Owner",
-  badges: 3,
-  streak: "3d",
-  xp: "3,100 XP",
-  avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_1.png"
-}];
+var iconMap = {
+  Star: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Star,
+  Heart: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Heart,
+  Trophy: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.Trophy,
+  PawPrint: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.PawPrint,
+  Crown: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Crown,
+  Lightning: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.Lightning,
+  Medal: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Medal,
+  Smiley: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Smiley,
+  Camera: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Camera,
+  Fire: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire,
+  Users: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_18__.Users,
+  Sparkle: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Sparkle
+};
 var ContestEntryModal = function ContestEntryModal(_ref) {
   var isOpen = _ref.isOpen,
     onClose = _ref.onClose;
@@ -7466,10 +7465,10 @@ var ContestEntryModal = function ContestEntryModal(_ref) {
     };
   }();
   if (!isOpen) return null;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
       className: "contest-modal-overlay",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
         className: "contest-modal-bg",
         initial: {
           opacity: 0
@@ -7481,7 +7480,7 @@ var ContestEntryModal = function ContestEntryModal(_ref) {
           opacity: 0
         },
         onClick: onClose
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
         className: "contest-modal-content",
         initial: {
           opacity: 0,
@@ -7498,72 +7497,72 @@ var ContestEntryModal = function ContestEntryModal(_ref) {
           scale: 0.9,
           y: 20
         },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
           className: "modal-header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h2", {
             children: "Enter Contest"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
             onClick: onClose,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.X, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__.X, {
               size: 24,
               weight: "bold"
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
           className: "modal-body",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
             className: "contest-brief",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trophy, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.Trophy, {
               size: 24,
               weight: "fill",
               color: "#eab308"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
               children: "Spring Cutest Pet"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
             className: "image-upload-area",
             onClick: function onClick() {
               return document.getElementById('contest-photo').click();
             },
-            children: [selectedImage ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("img", {
+            children: [selectedImage ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("img", {
               src: selectedImage,
               alt: "Preview",
               className: "preview-img"
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
               className: "upload-placeholder",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.CloudArrowUp, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.CloudArrowUp, {
                 size: 48,
                 weight: "duotone"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("p", {
                 children: "Click to upload your pet's spring photo"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                 children: "Supports JPG, PNG (Max 5MB)"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("input", {
               type: "file",
               id: "contest-photo",
               hidden: true,
               accept: "image/*",
               onChange: handleFileChange
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
             className: "caption-area",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("label", {
               children: "Tell us about this photo"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("textarea", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("textarea", {
               placeholder: "E.g. Mochi enjoying the cherry blossoms...",
               value: caption,
               onChange: function onChange(e) {
                 return setCaption(e.target.value);
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
             className: "modal-footer",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
               className: "cancel-btn",
               onClick: onClose,
               children: "Cancel"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
               className: "submit-btn ".concat(isSubmitting ? 'loading' : ''),
               disabled: !selectedImage || isSubmitting,
               onClick: handleSubmit,
@@ -7592,20 +7591,36 @@ var BadgesContests = function BadgesContests() {
     _useState12 = _slicedToArray(_useState11, 2),
     entryCount = _useState12[0],
     setEntryCount = _useState12[1];
-  var fetchEntryCount = /*#__PURE__*/function () {
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState14 = _slicedToArray(_useState13, 2),
+    badges = _useState14[0],
+    setBadges = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    leaderboard = _useState16[0],
+    setLeaderboard = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState18 = _slicedToArray(_useState17, 2),
+    earnedCount = _useState18[0],
+    setEarnedCount = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState20 = _slicedToArray(_useState19, 2),
+    totalCount = _useState20[0],
+    setTotalCount = _useState20[1];
+  var fetchBadges = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-      var _res$data, res, total, _t2;
+      var res, _t2;
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.p = _context2.n) {
           case 0:
             _context2.p = 0;
             _context2.n = 1;
-            return window.axios.get("/api/posts?hashtag=springcutest");
+            return window.axios.get('/api/badges');
           case 1:
             res = _context2.v;
-            // The API returns paginated data, but the 'total' field has the count
-            total = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.total) || 0;
-            setEntryCount(total);
+            setBadges(res.data.badges || []);
+            setEarnedCount(res.data.earned_count || 0);
+            setTotalCount(res.data.total_count || 0);
             _context2.n = 3;
             break;
           case 2:
@@ -7617,51 +7632,114 @@ var BadgesContests = function BadgesContests() {
         }
       }, _callee2, null, [[0, 2]]);
     }));
-    return function fetchEntryCount() {
+    return function fetchBadges() {
       return _ref3.apply(this, arguments);
     };
   }();
+  var fetchLeaderboard = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+      var period,
+        res,
+        _args3 = arguments,
+        _t3;
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.p = _context3.n) {
+          case 0:
+            period = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : 'week';
+            _context3.p = 1;
+            _context3.n = 2;
+            return window.axios.get("/api/badges/leaderboard?period=".concat(period));
+          case 2:
+            res = _context3.v;
+            setLeaderboard(res.data || []);
+            _context3.n = 4;
+            break;
+          case 3:
+            _context3.p = 3;
+            _t3 = _context3.v;
+            console.error(_t3);
+          case 4:
+            return _context3.a(2);
+        }
+      }, _callee3, null, [[1, 3]]);
+    }));
+    return function fetchLeaderboard() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  var fetchEntryCount = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+      var _res$data, res, total, _t4;
+      return _regenerator().w(function (_context4) {
+        while (1) switch (_context4.p = _context4.n) {
+          case 0:
+            _context4.p = 0;
+            _context4.n = 1;
+            return window.axios.get("/api/posts?hashtag=springcutest");
+          case 1:
+            res = _context4.v;
+            total = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.total) || 0;
+            setEntryCount(total);
+            _context4.n = 3;
+            break;
+          case 2:
+            _context4.p = 2;
+            _t4 = _context4.v;
+            console.error(_t4);
+          case 3:
+            return _context4.a(2);
+        }
+      }, _callee4, null, [[0, 2]]);
+    }));
+    return function fetchEntryCount() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    fetchBadges();
+    fetchLeaderboard(leaderboardFilter);
     fetchEntryCount();
     var params = new URLSearchParams(window.location.search);
     if (params.get('enterContest') === 'true') {
       setShowContestModal(true);
-      // Optional: clean up URL without reload
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
-  var filteredBadges = BADGES_DATA.filter(function (badge) {
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    fetchLeaderboard(leaderboardFilter);
+  }, [leaderboardFilter]);
+  var filteredBadges = badges.filter(function (badge) {
     if (badgeFilter === "All") return true;
     if (badgeFilter === "Earned") return badge.status === "earned";
     if (badgeFilter === "In Progress") return badge.status === "in-progress";
-    if (badgeFilter === "Locked") return badge.status === "locked";
+    if (badgeFilter === "Locked") return badge.status === "in-progress" || badge.status === "locked";
     return true;
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
     className: "pawtastic-feed modern-badges",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_18__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("main", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_20__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("main", {
       className: "feed-main",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("header", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("header", {
         className: "page-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h1", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h1", {
           children: "Badges & Contests"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("p", {
           children: "Earn achievements, track pet milestones, and climb the leaderboard!"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("section", {
         className: "badges-section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
           className: "section-top",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h2", {
             children: "Your Badges"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
             className: "badges-count",
             children: "4 / 12 earned"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
           className: "filters-row",
           children: ["All", "Earned", "In Progress", "Locked"].map(function (f) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
               className: "filter-btn ".concat(badgeFilter === f ? "active" : ""),
               onClick: function onClick() {
                 return setBadgeFilter(f);
@@ -7669,11 +7747,11 @@ var BadgesContests = function BadgesContests() {
               children: f
             }, f);
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
           className: "badges-grid",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
             children: filteredBadges.map(function (badge) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
                 layout: true,
                 initial: {
                   opacity: 0,
@@ -7691,45 +7769,45 @@ var BadgesContests = function BadgesContests() {
                   duration: 0.2
                 },
                 className: "badge-card ".concat(badge.status, " border-").concat(badge.rarity.toLowerCase()),
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                   className: "badge-card__top-icon",
-                  children: [badge.status === "earned" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.CheckCircle, {
+                  children: [badge.status === "earned" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.CheckCircle, {
                     className: "status-icon earned-icon",
                     weight: "fill"
-                  }), (badge.status === "in-progress" || badge.status === "locked") && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.LockKey, {
+                  }), (badge.status === "in-progress" || badge.status === "locked") && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.LockKey, {
                     className: "status-icon locked-icon",
                     weight: "bold"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
-                  className: "badge-icon-wrap ".concat(badge.gradient),
-                  children: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(badge.icon, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+                  className: "badge-icon-wrap ".concat(badge.gradient || 'bg-gradient-orange'),
+                  children: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(iconMap[badge.icon] || _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Star, {
                     size: 24,
                     weight: "fill",
                     color: "#fff"
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h4", {
                   className: "badge-name",
                   children: badge.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("p", {
                   className: "badge-desc",
                   children: badge.description
-                }), badge.progress !== undefined ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                }), badge.progress !== undefined && badge.total !== undefined ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                   className: "badge-progress",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                     className: "progress-bar",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                       className: "progress-fill fill-".concat(badge.rarity.toLowerCase()),
                       style: {
                         width: "".concat(badge.progress / badge.total * 100, "%")
                       }
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("span", {
                     className: "progress-text",
                     children: [badge.progress, "/", badge.total]
                   })]
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                   className: "badge-spacer"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                   className: "badge-rarity rarity-".concat(badge.rarity.toLowerCase()),
                   children: badge.rarity
                 })]
@@ -7737,16 +7815,16 @@ var BadgesContests = function BadgesContests() {
             })
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("section", {
         className: "leaderboard-section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
           className: "section-top",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h2", {
             children: "Leaderboard"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
             className: "filters-row small-filters",
             children: ["Week", "Month", "All Time"].map(function (f) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
                 className: "filter-btn ".concat(leaderboardFilter === f ? "active" : ""),
                 onClick: function onClick() {
                   return setLeaderboardFilter(f);
@@ -7755,158 +7833,152 @@ var BadgesContests = function BadgesContests() {
               }, f);
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
           className: "leaderboard-list",
-          children: [LEADERBOARD_DATA.map(function (user, index) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: [leaderboard.map(function (user, index) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
               className: "leaderboard-item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                 className: "rank-badge rank-".concat(user.rank),
-                children: user.rank === 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Crown, {
+                children: user.rank === 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Crown, {
                   size: 20,
                   weight: "fill",
                   color: "#fff"
                 }) : user.rank
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                 className: "user-avatar",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("img", {
-                  src: user.avatar,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("img", {
+                  src: user.avatar || "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name) + "&background=898AA6&color=fff",
                   alt: user.name
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                 className: "user-info",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                   className: "user-name",
                   children: user.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                   className: "user-stats",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("span", {
                     className: "stat",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Medal, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.TrendUp, {
                       size: 14,
                       weight: "fill"
-                    }), " ", user.badges, " badges"]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
+                    }), " ", user.score, " posts"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("span", {
                     className: "stat",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_18__.Users, {
                       size: 14,
                       weight: "fill"
-                    }), " ", user.streak, " streak"]
+                    }), " ", user.followers, " followers"]
                   })]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
-                className: "user-xp",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
-                  className: "xp-val",
-                  children: user.xp.split(" ")[0]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
-                  className: "xp-lbl",
-                  children: "XP"
                 })]
               })]
             }, user.rank);
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), leaderboard.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+            className: "leaderboard-empty",
+            children: "No leaderboard data yet"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
             className: "leaderboard-item current-user-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
               className: "rank-badge rank-3",
               children: "3"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
               className: "user-avatar",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("img", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("img", {
                 src: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
                 alt: "You"
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
               className: "user-info",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                 className: "user-name",
                 children: "You (Sarah & Mochi)"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                 className: "user-stats",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                   className: "stat text-dark",
                   children: "Top 5% this week \uD83D\uDE80"
                 })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
               className: "user-xp",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                 className: "xp-val",
                 children: "3,990"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                 className: "xp-lbl",
                 children: "XP"
               })]
             })]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("section", {
         className: "contests-section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
           className: "section-top",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h2", {
             children: "Live Contest"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
             className: "live-pill",
             children: "LIVE"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
           className: "contest-banner-card",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
             className: "contest-content",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
               className: "contest-info-main",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                 className: "contest-icon",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trophy, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.Trophy, {
                   size: 40,
                   weight: "fill",
                   color: "#fff"
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                 className: "text-details",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h3", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h3", {
                   children: "Spring Cutest Pet"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("p", {
                   children: "Share your pet's best spring-themed photo and win an Epic Badge + 1000 XP!"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                   className: "contest-meta",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("span", {
                     className: "meta-item",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Fire, {
                       size: 16,
                       weight: "bold"
                     }), " 2 days left"]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("span", {
                     className: "meta-item",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Users, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_18__.Users, {
                       size: 16,
                       weight: "bold"
                     }), " ", entryCount, " entries"]
                   })]
                 })]
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
               className: "contest-action-area",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                 className: "contest-progress-wrap",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                   className: "progress-labels",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                     children: "Current Progress"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
                     children: "75%"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                   className: "progress-bar",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                     className: "progress-fill",
                     style: {
                       width: '75%'
                     }
                   })
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
                 className: "enter-contest-btn",
                 onClick: function onClick() {
                   return setShowContestModal(true);
@@ -7917,7 +7989,7 @@ var BadgesContests = function BadgesContests() {
           })
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(ContestEntryModal, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(ContestEntryModal, {
       isOpen: showContestModal,
       onClose: function onClose() {
         return setShowContestModal(false);
@@ -8888,6 +8960,14 @@ var Feed = function Feed() {
     _useState70 = _slicedToArray(_useState69, 2),
     likersFor = _useState70[0],
     setLikersFor = _useState70[1];
+  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState72 = _slicedToArray(_useState71, 2),
+    trendingTags = _useState72[0],
+    setTrendingTags = _useState72[1];
+  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState74 = _slicedToArray(_useState73, 2),
+    liveContest = _useState74[0],
+    setLiveContest = _useState74[1];
   var privacyMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var storyMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var searchDebounceRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
@@ -8896,22 +8976,22 @@ var Feed = function Feed() {
   var videoInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var addMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var createCardRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState72 = _slicedToArray(_useState71, 2),
-    postImage = _useState72[0],
-    setPostImage = _useState72[1];
-  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState74 = _slicedToArray(_useState73, 2),
-    postVideo = _useState74[0],
-    setPostVideo = _useState74[1];
   var _useState75 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState76 = _slicedToArray(_useState75, 2),
-    imagePreview = _useState76[0],
-    setImagePreview = _useState76[1];
+    postImage = _useState76[0],
+    setPostImage = _useState76[1];
   var _useState77 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState78 = _slicedToArray(_useState77, 2),
-    videoPreview = _useState78[0],
-    setVideoPreview = _useState78[1];
+    postVideo = _useState78[0],
+    setPostVideo = _useState78[1];
+  var _useState79 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState80 = _slicedToArray(_useState79, 2),
+    imagePreview = _useState80[0],
+    setImagePreview = _useState80[1];
+  var _useState81 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState82 = _slicedToArray(_useState81, 2),
+    videoPreview = _useState82[0],
+    setVideoPreview = _useState82[1];
 
   // Reset submenu when story menu closes
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -8994,7 +9074,7 @@ var Feed = function Feed() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var fetchInitialData = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
-        var _contestRes$data, storiesRes, contestRes, _t4;
+        var storiesRes, _t4;
         return _regenerator().w(function (_context4) {
           while (1) switch (_context4.p = _context4.n) {
             case 0:
@@ -9006,22 +9086,32 @@ var Feed = function Feed() {
               setStories(storiesRes.data);
               fetchPosts(filterTag);
 
-              // Fetch contest entry count
-              _context4.n = 2;
-              return window.axios.get("/api/posts?hashtag=springcutest");
-            case 2:
-              contestRes = _context4.v;
-              setContestEntryCount(((_contestRes$data = contestRes.data) === null || _contestRes$data === void 0 ? void 0 : _contestRes$data.total) || 0);
-              _context4.n = 4;
+              // Fetch trending tags
+              window.axios.get("/api/trending-tags").then(function (res) {
+                return setTrendingTags(res.data || []);
+              })["catch"](function () {
+                return setTrendingTags([]);
+              });
+
+              // Fetch live contest
+              window.axios.get("/api/contests/live").then(function (res) {
+                if (res.data) {
+                  setLiveContest(res.data);
+                  setContestEntryCount(res.data.entries_count || 0);
+                }
+              })["catch"](function () {
+                return setLiveContest(null);
+              });
+              _context4.n = 3;
               break;
-            case 3:
-              _context4.p = 3;
+            case 2:
+              _context4.p = 2;
               _t4 = _context4.v;
               console.error(_t4);
-            case 4:
+            case 3:
               return _context4.a(2);
           }
-        }, _callee4, null, [[0, 3]]);
+        }, _callee4, null, [[0, 2]]);
       }));
       return function fetchInitialData() {
         return _ref0.apply(this, arguments);
@@ -10767,64 +10857,25 @@ var Feed = function Feed() {
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
               className: "tag-list",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
-                className: "tag-row clickable",
-                onClick: function onClick() {
-                  return setFilterTag("springcutest");
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  children: "1\xA0\xA0#springcutest"
-                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  className: "count",
-                  children: "NEW"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
-                className: "tag-row clickable",
-                onClick: function onClick() {
-                  return setFilterTag("goldenretriever");
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  children: "2\xA0\xA0#goldenretriever"
-                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  className: "count",
-                  children: "2.4k"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
-                className: "tag-row clickable",
-                onClick: function onClick() {
-                  return setFilterTag("catstagram");
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  children: "3\xA0\xA0#catstagram"
-                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  className: "count",
-                  children: "1.8k"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
-                className: "tag-row clickable",
-                onClick: function onClick() {
-                  return setFilterTag("zoomies");
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  children: "4\xA0\xA0#zoomies"
-                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  className: "count",
-                  children: "980"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
-                className: "tag-row clickable",
-                onClick: function onClick() {
-                  return setFilterTag("petlife");
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  children: "5\xA0\xA0#petlife"
-                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                  className: "count",
-                  children: "5.6k"
-                })]
+              children: [trendingTags.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("div", {
+                className: "tag-row muted",
+                children: "No trending tags yet \u2014 start posting!"
+              }), trendingTags.map(function (t, i) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                  className: "tag-row clickable",
+                  onClick: function onClick() {
+                    return setFilterTag(t.tag);
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("span", {
+                    children: [i + 1, "\xA0\xA0#", t.tag]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
+                    className: "count",
+                    children: t.live_contest ? 'LIVE' : t.posts
+                  })]
+                }, t.tag);
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)(Card, {
+          }), liveContest && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)(Card, {
             className: "sidebar-card",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
               className: "sidebar-card__title",
@@ -10844,10 +10895,10 @@ var Feed = function Feed() {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("div", {
                     className: "contest-name",
-                    children: "Spring Cutest Pet"
+                    children: liveContest.title
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
                     className: "contest-sub",
-                    children: ["Ends in 2 days \xB7 ", contestEntryCount, " entries"]
+                    children: [liveContest.hashtag, " \xB7 ", contestEntryCount, " entries"]
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
                   className: "live-pill",
@@ -10861,6 +10912,10 @@ var Feed = function Feed() {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)(Button, {
                 variant: "primary",
                 className: "contest-btn",
+                onClick: function onClick(e) {
+                  e.stopPropagation();
+                  window.location.href = '/badges?enterContest=true';
+                },
                 children: "Enter Contest"
               })]
             })]

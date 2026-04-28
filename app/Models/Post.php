@@ -20,10 +20,13 @@ class Post extends Model
         'location_place_id',
         'views',
         'tagged_pets',
+        'privacy',
+        'is_hidden',
     ];
 
     protected $casts = [
         'tagged_pets' => 'array',
+        'is_hidden' => 'boolean',
     ];
 
     public function pet()

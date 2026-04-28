@@ -207,4 +207,52 @@ class PostController extends Controller
 
         return response()->json($report, 201);
     }
+
+    /**
+     * GET /api/trending-tags
+     * Top 5 hashtags by post count + total likes in the last 7 days.
+     * Live contest hashtag is pinned first.
+     */
+    public function trendingTags()
+    {
+        $since = now()->subDays(7);
+
+        $tagCounts = [];
+        Post::where('created_at', '>=', $since)
+            ->withCount('likes')
+            ->get(['caption'])
+            ->each(function ($post) use (&$tagCounts) {
+                preg_match_all('/#(\w+)/u', (string) $post->caption, $m);
+                foreach ($m[1] as $tag) {
+                    $tag = mb_strtolower($tag);
+                    if (!isset($tagCounts[$tag])) {
+                        $tagCounts[$tag] = ['tag' => $tag, 'posts' => 0, 'likes' => 0];
+                    }
+                    $tagCounts[$tag]['posts']++;
+                    $tagCounts[$tag]['likes'] += $post->likes_count;
+                }
+            });
+
+        $sorted = collect($tagCounts)
+            ->sortByDesc(fn($t) => $t['posts'] * 5 + $t['likes'])
+            ->values();
+
+        // Pin live contest hashtag at index 0
+        $liveContest = \App\Models\Contest::where('end_at', '>=', now())
+            ->where('is_active', true)
+            ->orderBy('end_at')
+            ->first();
+        if ($liveContest && $liveContest->hashtag) {
+            $hashtag = ltrim(mb_strtolower($liveContest->hashtag), '#');
+            $existing = $sorted->firstWhere('tag', $hashtag);
+            $sorted = $sorted->reject(fn($t) => $t['tag'] === $hashtag)->prepend([
+                'tag'   => $hashtag,
+                'posts' => $existing['posts'] ?? 0,
+                'likes' => $existing['likes'] ?? 0,
+                'live_contest' => true,
+            ]);
+        }
+
+        return response()->json($sorted->take(5)->values());
+    }
 }

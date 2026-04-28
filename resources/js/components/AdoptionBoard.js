@@ -148,14 +148,26 @@ const AdoptionBoard = () => {
         );
     };
 
-    const handleAdoptSubmit = (e) => {
+    const handleAdoptSubmit = async (e) => {
         e.preventDefault();
-        setFormSubmitted(true);
-        setTimeout(() => {
-            setAdoptFormPet(null);
-            setFormSubmitted(false);
-            setSelectedPet(null);
-        }, 2000);
+        const form = e.target;
+        const data = {
+            name: form.querySelector('[placeholder="Your full name"]')?.value || form.elements[0]?.value || '',
+            email: form.querySelector('[type="email"]')?.value || form.elements[1]?.value || '',
+            phone: form.querySelector('[type="tel"]')?.value || form.elements[2]?.value || '',
+            message: form.querySelector('textarea')?.value || '',
+        };
+        try {
+            await window.axios.post(`/api/adoption-listings/${adoptFormPet.id}/apply`, data);
+            setFormSubmitted(true);
+            setTimeout(() => {
+                setAdoptFormPet(null);
+                setFormSubmitted(false);
+                setSelectedPet(null);
+            }, 2000);
+        } catch (err) {
+            alert(err.response?.data?.message || 'Failed to submit application.');
+        }
     };
 
     const handlePutSubmit = async (e) => {

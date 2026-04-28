@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdoptionListing;
+use App\Models\AdoptionApplication;
 use App\Models\Pet;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -18,8 +20,8 @@ class AdoptionListingController extends Controller
 
     public function index(Request $request)
     {
-        $query = AdoptionListing::with('pet:id,name,breed,age,photo,location,bio')
-            ->where('status', 'available')
+        $query = AdoptionListing::with('user')
+            ->where('is_available', true)
             ->orderBy('created_at', 'desc');
 
         if ($request->has('search')) {
@@ -35,8 +37,8 @@ class AdoptionListingController extends Controller
 
     public function available()
     {
-        $listings = AdoptionListing::with('pet:id,name,breed,age,photo,location,bio')
-            ->where('status', 'available')
+        $listings = AdoptionListing::with('user')
+            ->where('is_available', true)
             ->latest()
             ->take(12)
             ->get();
@@ -66,17 +68,19 @@ class AdoptionListingController extends Controller
         }
 
         $listing = AdoptionListing::create([
-            'pet_id' => $request->pet_id,
             'user_id' => Auth::id(),
+            'pet_name' => $request->pet_name ?? 'Pet',
+            'breed' => $request->breed ?? '',
+            'age' => $request->age ?? 0,
             'description' => $request->description,
             'location' => $request->location,
             'image' => $imagePath,
-            'requirements' => $request->requirements,
-            'contact_info' => $request->contact_info,
-            'status' => 'available',
+            'contact_email' => $request->contact_email ?? '',
+            'contact_phone' => $request->contact_phone ?? '',
+            'is_available' => true,
         ]);
 
-        return response()->json($listing->load('pet'), 201);
+        return response()->json($listing, 201);
     }
 
     public function show(AdoptionListing $adoptionListing)
@@ -92,12 +96,12 @@ class AdoptionListingController extends Controller
         }
 
         $request->validate([
-            'status' => 'sometimes|required|in:available,adopted,withdrawn',
+            'is_available' => 'sometimes|boolean',
             'description' => 'sometimes|required|string|max:2000',
         ]);
 
-        $adoptionListing->update($request->only(['status', 'description']));
-        return response()->json($adoptionListing->load('pet'));
+        $adoptionListing->update($request->only(['is_available', 'description']));
+        return response()->json($adoptionListing);
     }
 
     public function destroy(AdoptionListing $adoptionListing)
@@ -112,5 +116,33 @@ class AdoptionListingController extends Controller
 
         $adoptionListing->delete();
         return response()->json(['message' => 'Listing deleted successfully']);
+    }
+
+    /**
+     * POST /api/adoption-listings/{adoptionListing}/apply
+     * Submit an adoption application.
+     */
+    public function apply(Request $request, AdoptionListing $adoptionListing)
+    {
+        $data = $request->validate([
+            'name'    => 'required|string|max:120',
+            'email'   => 'required|email',
+            'phone'   => 'required|string|max:30',
+            'message' => 'required|string|max:1000',
+        ]);
+        $data['adoption_listing_id'] = $adoptionListing->id;
+        $data['user_id'] = Auth::id();
+        AdoptionApplication::create($data);
+
+        Notification::createNotification(
+            $adoptionListing->user_id,
+            'adoption_application',
+            'Adoption application received',
+            "Someone wants to adopt {$adoptionListing->pet_name}.",
+            $adoptionListing,
+            ['listing_id' => $adoptionListing->id]
+        );
+
+        return response()->json(['message' => 'Application submitted!']);
     }
 }

@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\AdoptionReportController;
 use App\Http\Controllers\Api\BlockController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\SavedPostController;
+use App\Http\Controllers\Api\BadgeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/update', [AuthController::class, 'updateProfile']);
     Route::post('/pet-info', [AuthController::class, 'savePetInfo']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::post('/auth/logout-all', [AuthController::class, 'logoutAll']);
+    Route::post('/user/deactivate', [AuthController::class, 'deactivate']);
+    Route::delete('/user', [AuthController::class, 'destroy']);
     
     // Pet routes
     Route::apiResource('pets', PetController::class);
@@ -93,10 +97,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/saved-posts', [SavedPostController::class, 'index']);
     Route::post('/saved-posts', [SavedPostController::class, 'store']);
     Route::delete('/saved-posts/{post}', [SavedPostController::class, 'destroy']);
+
+    // Badge routes
+    Route::get('/badges', [BadgeController::class, 'index']);
+    Route::get('/badges/leaderboard', [BadgeController::class, 'leaderboard']);
     
     // Message routes
     Route::apiResource('messages', MessageController::class);
     Route::get('/conversations', [MessageController::class, 'conversations']);
+    Route::post('/conversations', [MessageController::class, 'createConversation']);
     Route::get('/conversations/{petId}', [MessageController::class, 'conversation']);
     Route::post('/messages/{message}/read', [MessageController::class, 'markAsRead']);
     
@@ -117,6 +126,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // /{adoptionListing} binds 'available' as an id and 404s.
     Route::get('/adoption-listings/available', [AdoptionListingController::class, 'available']);
     Route::apiResource('adoption-listings', AdoptionListingController::class);
+    Route::post('/adoption-listings/{adoptionListing}/apply', [AdoptionListingController::class, 'apply']);
     
     // Notification routes
     Route::apiResource('notifications', NotificationController::class)->except(['store']);
@@ -135,6 +145,8 @@ Route::get('/pets', [PetController::class, 'index']);
 Route::get('/pets/{pet}', [PetController::class, 'show']);
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('/trending-tags', [PostController::class, 'trendingTags']);
+Route::get('/contests/live', [ContestController::class, 'live']);
 Route::get('/adoption-listings', [AdoptionListingController::class, 'index']);
 Route::get('/adoption-listings/available', [AdoptionListingController::class, 'available']);
 Route::get('/adoption-listings/{adoptionListing}', [AdoptionListingController::class, 'show']);
@@ -155,6 +167,11 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     // Post management
     Route::get('/posts', [AdminController::class, 'posts']);
     Route::delete('/posts/{post}', [AdminController::class, 'deletePost']);
+    Route::patch('/posts/{post}/hide', [AdminController::class, 'togglePostHide']);
+
+    // Reports & Analytics
+    Route::get('/reports', [AdminController::class, 'reports']);
+    Route::get('/analytics/signups', [AdminController::class, 'signupsAnalytics']);
 
     // Recent login activity
     Route::get('/recent-logins', [AdminController::class, 'recentLogins']);
@@ -166,6 +183,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     // System settings
     Route::post('/maintenance', [AdminController::class, 'toggleMaintenance']);
     Route::post('/cache/purge', [AdminController::class, 'purgeCache']);
+    Route::post('/toggle-registration', [AdminController::class, 'toggleRegistration']);
 });
 
 

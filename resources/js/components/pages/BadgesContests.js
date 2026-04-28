@@ -24,30 +24,9 @@ import {
 import Sidebar from './Sidebar';
 import "../../../sass/pages/badges.scss";
 
-// ── Mock Data ────────────────────────────────────────────────────────
-
-const BADGES_DATA = [
-    { id: 1, name: "Top Poster", description: "Posted 50+ times", icon: Star, gradient: "bg-gradient-orange", rarity: "Common", status: "earned" },
-    { id: 2, name: "Social Butterfly", description: "Made 20+ friends", icon: Heart, gradient: "bg-gradient-pink", rarity: "Rare", status: "earned" },
-    { id: 3, name: "Contest Winner", description: "Won a pet contest", icon: Trophy, gradient: "bg-gradient-yellow", rarity: "Epic", status: "earned" },
-    { id: 4, name: "Adoption Hero", description: "Helped 3 pets get adopted", icon: Heart, gradient: "bg-gradient-green", rarity: "Rare", status: "earned" },
-    { id: 5, name: "Champion", description: "Reach top 10 leaderboard", icon: Crown, gradient: "bg-gradient-gold", rarity: "Legendary", status: "in-progress", progress: 7, total: 10 },
-    { id: 6, name: "Energizer", description: "Active 30 days in a row", icon: Lightning, gradient: "bg-gradient-blue", rarity: "Epic", status: "in-progress", progress: 18, total: 30 },
-    { id: 7, name: "Community Star", description: "Received 500+ likes", icon: Medal, gradient: "bg-gradient-purple", rarity: "Rare", status: "in-progress", progress: 312, total: 500 },
-    { id: 8, name: "Happy Vibes", description: "Spread joy to 100 users", icon: Smiley, gradient: "bg-gradient-teal", rarity: "Common", status: "in-progress", progress: 64, total: 100 },
-    { id: 9, name: "Shutterbug", description: "Shared 25 pet photos", icon: Camera, gradient: "bg-gradient-orange", rarity: "Common", status: "locked", progress: 17, total: 25 },
-    { id: 10, name: "Viral Moment", description: "Post reached 1000 views", icon: Fire, gradient: "bg-gradient-red", rarity: "Epic", status: "locked", progress: 0, total: 1 },
-    { id: 11, name: "Super Fan", description: "Follow 50 pet profiles", icon: Users, gradient: "bg-gradient-blue", rarity: "Common", status: "locked", progress: 31, total: 50 },
-    { id: 12, name: "Legendary Pet", description: "All badges earned", icon: Sparkle, gradient: "bg-gradient-magenta", rarity: "Legendary", status: "locked", progress: 4, total: 12 }
-];
-
-const LEADERBOARD_DATA = [
-    { rank: 1, name: "Sarah & Mochi", badges: 8, streak: "14d", xp: "4,820 XP", avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png" },
-    { rank: 2, name: "Luna's Mom", badges: 6, streak: "9d", xp: "4,310 XP", avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_4.png" },
-    { rank: 3, name: "Buddy's Dad", badges: 5, streak: "21d", xp: "3,990 XP", avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_3.png" },
-    { rank: 4, name: "Whiskers Fan", badges: 4, streak: "6d", xp: "3,450 XP", avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_2.png" },
-    { rank: 5, name: "Max's Owner", badges: 3, streak: "3d", xp: "3,100 XP", avatar: "https://c.animaapp.com/mnucpod10UwxJn/img/ai_1.png" },
-];
+const iconMap = {
+    Star, Heart, Trophy, PawPrint, Crown, Lightning, Medal, Smiley, Camera, Fire, Users, Sparkle,
+};
 
 const ContestEntryModal = ({ isOpen, onClose }) => {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -175,33 +154,57 @@ const BadgesContests = () => {
     const [leaderboardFilter, setLeaderboardFilter] = useState("Week");
     const [showContestModal, setShowContestModal] = useState(false);
     const [entryCount, setEntryCount] = useState(0);
+    const [badges, setBadges] = useState([]);
+    const [leaderboard, setLeaderboard] = useState([]);
+    const [earnedCount, setEarnedCount] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+
+    const fetchBadges = async () => {
+        try {
+            const res = await window.axios.get('/api/badges');
+            setBadges(res.data.badges || []);
+            setEarnedCount(res.data.earned_count || 0);
+            setTotalCount(res.data.total_count || 0);
+        } catch (err) { console.error(err); }
+    };
+
+    const fetchLeaderboard = async (period = 'week') => {
+        try {
+            const res = await window.axios.get(`/api/badges/leaderboard?period=${period}`);
+            setLeaderboard(res.data || []);
+        } catch (err) { console.error(err); }
+    };
 
     const fetchEntryCount = async () => {
         try {
             const res = await window.axios.get("/api/posts?hashtag=springcutest");
-            // The API returns paginated data, but the 'total' field has the count
             const total = res.data?.total || 0;
             setEntryCount(total);
         } catch (err) {
             console.error(err);
         }
     };
-    
+
     React.useEffect(() => {
+        fetchBadges();
+        fetchLeaderboard(leaderboardFilter);
         fetchEntryCount();
         const params = new URLSearchParams(window.location.search);
         if (params.get('enterContest') === 'true') {
             setShowContestModal(true);
-            // Optional: clean up URL without reload
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     }, []);
 
-    const filteredBadges = BADGES_DATA.filter(badge => {
+    React.useEffect(() => {
+        fetchLeaderboard(leaderboardFilter);
+    }, [leaderboardFilter]);
+
+    const filteredBadges = badges.filter(badge => {
         if (badgeFilter === "All") return true;
         if (badgeFilter === "Earned") return badge.status === "earned";
         if (badgeFilter === "In Progress") return badge.status === "in-progress";
-        if (badgeFilter === "Locked") return badge.status === "locked";
+        if (badgeFilter === "Locked") return badge.status === "in-progress" || badge.status === "locked";
         return true;
     });
 
@@ -249,13 +252,13 @@ const BadgesContests = () => {
                                         {badge.status === "earned" && <CheckCircle className="status-icon earned-icon" weight="fill" />}
                                         {(badge.status === "in-progress" || badge.status === "locked") && <LockKey className="status-icon locked-icon" weight="bold" />}
                                     </div>
-                                    <div className={`badge-icon-wrap ${badge.gradient}`}>
-                                        {React.createElement(badge.icon, { size: 24, weight: "fill", color: "#fff" })}
+                                    <div className={`badge-icon-wrap ${badge.gradient || 'bg-gradient-orange'}`}>
+                                        {React.createElement(iconMap[badge.icon] || Star, { size: 24, weight: "fill", color: "#fff" })}
                                     </div>
                                     <h4 className="badge-name">{badge.name}</h4>
                                     <p className="badge-desc">{badge.description}</p>
-                                    
-                                    {badge.progress !== undefined ? (
+
+                                    {badge.progress !== undefined && badge.total !== undefined ? (
                                         <div className="badge-progress">
                                             <div className="progress-bar">
                                                 <div 
@@ -293,27 +296,25 @@ const BadgesContests = () => {
                     </div>
 
                     <div className="leaderboard-list">
-                        {LEADERBOARD_DATA.map((user, index) => (
+                        {leaderboard.map((user, index) => (
                             <div key={user.rank} className="leaderboard-item">
                                 <div className={`rank-badge rank-${user.rank}`}>
                                     {user.rank === 1 ? <Crown size={20} weight="fill" color="#fff" /> : user.rank}
                                 </div>
                                 <div className="user-avatar">
-                                    <img src={user.avatar} alt={user.name} />
+                                    <img src={user.avatar || "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name) + "&background=898AA6&color=fff"} alt={user.name} />
                                 </div>
                                 <div className="user-info">
                                     <span className="user-name">{user.name}</span>
                                     <div className="user-stats">
-                                        <span className="stat"><Medal size={14} weight="fill"/> {user.badges} badges</span>
-                                        <span className="stat"><Fire size={14} weight="fill"/> {user.streak} streak</span>
+                                        <span className="stat"><TrendUp size={14} weight="fill"/> {user.score} posts</span>
+                                        <span className="stat"><Users size={14} weight="fill"/> {user.followers} followers</span>
                                     </div>
-                                </div>
-                                <div className="user-xp">
-                                    <span className="xp-val">{user.xp.split(" ")[0]}</span>
-                                    <span className="xp-lbl">XP</span>
                                 </div>
                             </div>
                         ))}
+
+                        {leaderboard.length === 0 && <div className="leaderboard-empty">No leaderboard data yet</div>}
 
                         {/* Current User Row */}
                         <div className="leaderboard-item current-user-item">
