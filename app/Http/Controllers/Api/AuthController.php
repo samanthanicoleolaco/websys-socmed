@@ -44,18 +44,28 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $validated = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+        $request->merge([
+            'email' => trim((string) $request->input('email', '')),
         ]);
 
-        if (!Auth::attempt($validated)) {
+        $validated = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required|string',
+            'remember' => 'sometimes|boolean',
+        ]);
+
+        if (!Auth::attempt(
+            ['email' => $validated['email'], 'password' => $validated['password']],
+            (bool) ($validated['remember'] ?? false)
+        )) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        $user = $request->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();   // <-- use the web-guard user, not $request->user()
+
         if (!$user->hasVerifiedEmail()) {
             Auth::logout();
             throw ValidationException::withMessages([
@@ -63,11 +73,21 @@ class AuthController extends Controller
             ]);
         }
 
+        if (!empty($user->is_banned)) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => ['This account has been suspended. Contact support.'],
+            ]);
+        }
+
+        // Token for SPA Bearer flow + session for cookie flow (works either way).
+        $user->tokens()->where('name', 'pawtastic-token')->delete();
         $token = $user->createToken('pawtastic-token')->plainTextToken;
 
         return response()->json([
-            'user' => $user,
+            'user'  => $user->loadMissing('pet'),
             'token' => $token,
+            'redirect' => $user->is_admin ? '/admin' : '/homefeed',
         ]);
     }
 

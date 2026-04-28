@@ -126,6 +126,7 @@ const Sidebar = ({ brandText = "Petverse" }) => {
             route: "/profile"       
         },
         { icon: <Gear size={22} />,        label: "Settings",      route: "/settings"      },
+        ...(user?.is_admin ? [{ icon: <Gear size={22} />, label: "Admin Console", route: "/admin" }] : []),
         { icon: <SignOut size={22} />,     label: "Logout",        route: "#",             isLogout: true },
     ];
 

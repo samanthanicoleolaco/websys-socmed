@@ -166,4 +166,35 @@ class AdminController extends Controller
             ->paginate(15);
         return response()->json($listings);
     }
+
+    /**
+     * POST /api/admin/maintenance
+     * Toggle Laravel maintenance mode.
+     */
+    public function toggleMaintenance(Request $request)
+    {
+        $enable = (bool) $request->boolean('enable');
+        if ($enable) {
+            \Artisan::call('down', ['--render' => 'errors::503']);
+        } else {
+            \Artisan::call('up');
+        }
+        return response()->json([
+            'message' => $enable ? 'Maintenance mode enabled.' : 'Maintenance mode disabled.',
+            'enabled' => $enable,
+        ]);
+    }
+
+    /**
+     * POST /api/admin/cache/purge
+     * Clear application + view + route + config caches.
+     */
+    public function purgeCache()
+    {
+        \Artisan::call('cache:clear');
+        \Artisan::call('view:clear');
+        \Artisan::call('route:clear');
+        \Artisan::call('config:clear');
+        return response()->json(['message' => 'All caches purged successfully.']);
+    }
 }

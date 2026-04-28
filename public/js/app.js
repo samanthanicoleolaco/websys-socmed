@@ -2155,7 +2155,21 @@ if (container) {
       window.location.href = '/pet-info';
       return null;
     }
-    if (path.startsWith('/admin')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_AdminDashboard__WEBPACK_IMPORTED_MODULE_4__["default"], {});
+
+    // RBAC: regular users cannot render /admin pages even by typing the URL.
+    if (path.startsWith('/admin')) {
+      if (!user.is_admin) {
+        window.location.replace('/homefeed');
+        return null;
+      }
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_AdminDashboard__WEBPACK_IMPORTED_MODULE_4__["default"], {});
+    }
+
+    // Admins landing on a regular user page get bumped to the admin console.
+    if (user.is_admin && (path === '/' || path === '/homefeed')) {
+      window.location.replace('/admin');
+      return null;
+    }
     if (path === '/messages') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Messages__WEBPACK_IMPORTED_MODULE_9__["default"], {});
     if (path === '/badges') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_BadgesContests__WEBPACK_IMPORTED_MODULE_10__["default"], {});
     if (path === '/adoption' || path.startsWith('/adoption/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_AdoptionBoard__WEBPACK_IMPORTED_MODULE_11__["default"], {});
@@ -2163,15 +2177,11 @@ if (container) {
     if (path === '/profile' || path.startsWith('/profile/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Profile__WEBPACK_IMPORTED_MODULE_13__["default"], {});
     if (path === '/notifications') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Notifications__WEBPACK_IMPORTED_MODULE_14__["default"], {});
     if (path === '/homefeed') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
-
-    // If at root, redirect to /homefeed
     if (path === '/') {
-      window.history.replaceState(null, '', '/homefeed');
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
+      window.location.replace(user.is_admin ? '/admin' : '/homefeed');
+      return null;
     }
-
-    // Catch-all for other protected paths
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
+    return user.is_admin ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_AdminDashboard__WEBPACK_IMPORTED_MODULE_4__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
   };
   root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_context_UserContext__WEBPACK_IMPORTED_MODULE_15__.UserProvider, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(AppContent, {})
@@ -2273,36 +2283,40 @@ var AdminDashboard = function AdminDashboard() {
     _useState4 = _slicedToArray(_useState3, 2),
     searchActive = _useState4[0],
     setSearchActive = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    maintenanceOn = _useState6[0],
+    setMaintenanceOn = _useState6[1];
 
   // Admin Data States
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('dashboard'),
-    _useState6 = _slicedToArray(_useState5, 2),
-    activeTab = _useState6[0],
-    setActiveTab = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('dashboard'),
+    _useState8 = _slicedToArray(_useState7, 2),
+    activeTab = _useState8[0],
+    setActiveTab = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       total_users: 0,
       total_pets: 0,
       total_posts: 0
     }),
-    _useState8 = _slicedToArray(_useState7, 2),
-    stats = _useState8[0],
-    setStats = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    users = _useState0[0],
-    setUsers = _useState0[1];
+    stats = _useState0[0],
+    setStats = _useState0[1];
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    posts = _useState10[0],
-    setPosts = _useState10[1];
+    users = _useState10[0],
+    setUsers = _useState10[1];
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState12 = _slicedToArray(_useState11, 2),
-    logins = _useState12[0],
-    setLogins = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    posts = _useState12[0],
+    setPosts = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState14 = _slicedToArray(_useState13, 2),
-    editingUser = _useState14[0],
-    setEditingUser = _useState14[1];
+    logins = _useState14[0],
+    setLogins = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState16 = _slicedToArray(_useState15, 2),
+    editingUser = _useState16[0],
+    setEditingUser = _useState16[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (activeTab === 'dashboard') {
       fetchStats();
@@ -2517,6 +2531,76 @@ var AdminDashboard = function AdminDashboard() {
       return _ref7.apply(this, arguments);
     };
   }();
+  var toggleMaintenance = /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8() {
+      var next, _t8;
+      return _regenerator().w(function (_context8) {
+        while (1) switch (_context8.p = _context8.n) {
+          case 0:
+            next = !maintenanceOn;
+            if (window.confirm(next ? 'Enable maintenance mode? Public users will see a 503 page.' : 'Disable maintenance mode?')) {
+              _context8.n = 1;
+              break;
+            }
+            return _context8.a(2);
+          case 1:
+            _context8.p = 1;
+            _context8.n = 2;
+            return window.axios.post('/api/admin/maintenance', {
+              enable: next
+            });
+          case 2:
+            setMaintenanceOn(next);
+            window.alert(next ? 'Maintenance mode is ON.' : 'Maintenance mode is OFF.');
+            _context8.n = 4;
+            break;
+          case 3:
+            _context8.p = 3;
+            _t8 = _context8.v;
+            console.error(_t8);
+            window.alert('Failed to toggle maintenance mode.');
+          case 4:
+            return _context8.a(2);
+        }
+      }, _callee8, null, [[1, 3]]);
+    }));
+    return function toggleMaintenance() {
+      return _ref8.apply(this, arguments);
+    };
+  }();
+  var purgeCache = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9() {
+      var _t9;
+      return _regenerator().w(function (_context9) {
+        while (1) switch (_context9.p = _context9.n) {
+          case 0:
+            if (window.confirm('Purge all caches now?')) {
+              _context9.n = 1;
+              break;
+            }
+            return _context9.a(2);
+          case 1:
+            _context9.p = 1;
+            _context9.n = 2;
+            return window.axios.post('/api/admin/cache/purge');
+          case 2:
+            window.alert('All caches purged.');
+            _context9.n = 4;
+            break;
+          case 3:
+            _context9.p = 3;
+            _t9 = _context9.v;
+            console.error(_t9);
+            window.alert('Failed to purge caches.');
+          case 4:
+            return _context9.a(2);
+        }
+      }, _callee9, null, [[1, 3]]);
+    }));
+    return function purgeCache() {
+      return _ref9.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "admin-shell",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_AdminSidebar__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -2632,7 +2716,12 @@ var AdminDashboard = function AdminDashboard() {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
                 children: "Account Status"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("select", {
-                defaultValue: "active",
+                value: editingUser.is_banned ? 'suspended' : 'active',
+                onChange: function onChange(e) {
+                  return setEditingUser(_objectSpread(_objectSpread({}, editingUser), {}, {
+                    is_banned: e.target.value === 'suspended'
+                  }));
+                },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("option", {
                   value: "active",
                   children: "Active"
@@ -2809,7 +2898,10 @@ var AdminDashboard = function AdminDashboard() {
                 })]
               })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tbody", {
-              children: [users.map(function (user) {
+              children: [users.filter(function (u) {
+                var _u$name, _u$email;
+                return !searchQuery || ((_u$name = u.name) === null || _u$name === void 0 ? void 0 : _u$name.toLowerCase().includes(searchQuery.toLowerCase())) || ((_u$email = u.email) === null || _u$email === void 0 ? void 0 : _u$email.toLowerCase().includes(searchQuery.toLowerCase()));
+              }).map(function (user) {
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
                     style: {
@@ -3051,7 +3143,10 @@ var AdminDashboard = function AdminDashboard() {
               })]
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tbody", {
-            children: [posts.map(function (post) {
+            children: [posts.filter(function (p) {
+              var _p$pet, _p$content;
+              return !searchQuery || ((_p$pet = p.pet) === null || _p$pet === void 0 || (_p$pet = _p$pet.name) === null || _p$pet === void 0 ? void 0 : _p$pet.toLowerCase().includes(searchQuery.toLowerCase())) || ((_p$content = p.content) === null || _p$content === void 0 ? void 0 : _p$content.toLowerCase().includes(searchQuery.toLowerCase()));
+            }).map(function (post) {
               var _post$pet;
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
@@ -3195,6 +3290,7 @@ var AdminDashboard = function AdminDashboard() {
               },
               children: "Temporarily disable public access. Useful for deployments or critical fixes."
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              onClick: toggleMaintenance,
               style: {
                 background: '#F8FAFC',
                 color: '#334155',
@@ -3205,7 +3301,7 @@ var AdminDashboard = function AdminDashboard() {
                 cursor: 'pointer',
                 transition: 'all 0.2s'
               },
-              children: "Activate Maintenance"
+              children: maintenanceOn ? 'Deactivate Maintenance' : 'Activate Maintenance'
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "post-card",
@@ -3251,6 +3347,7 @@ var AdminDashboard = function AdminDashboard() {
               },
               children: "Refresh application cache to ensure all users see the latest content updates."
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              onClick: purgeCache,
               style: {
                 background: '#ffc26d',
                 color: '#fff',
@@ -6784,7 +6881,7 @@ var Login = function Login() {
     setResetEmail = _useState14[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
-      var payload, _yield$window$axios$p, data, redirectUrl, _t;
+      var payload, _yield$window$axios$p, data, _data$user, _err$response, _data$errors, _data$errors2, _data, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -6812,13 +6909,10 @@ var Login = function Login() {
             return _context.a(2);
           case 3:
             if (data.token) {
-              // Store the token for API requests
               localStorage.setItem('auth_token', data.token);
-              // Store user data
               localStorage.setItem('auth_user', JSON.stringify(data.user));
-              // Redirect based on role
-              redirectUrl = data.user.is_admin ? '/admin' : '/homefeed';
-              window.location.href = redirectUrl;
+              window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(data.token);
+              window.location.href = data.redirect || ((_data$user = data.user) !== null && _data$user !== void 0 && _data$user.is_admin ? '/admin' : '/homefeed');
             } else {
               setError("Login failed");
             }
@@ -6827,7 +6921,16 @@ var Login = function Login() {
           case 4:
             _context.p = 4;
             _t = _context.v;
-            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t));
+            _data = (_err$response = _t.response) === null || _err$response === void 0 ? void 0 : _err$response.data;
+            if (_data !== null && _data !== void 0 && (_data$errors = _data.errors) !== null && _data$errors !== void 0 && _data$errors.email) {
+              setError(_data.errors.email[0]);
+            } else if (_data !== null && _data !== void 0 && (_data$errors2 = _data.errors) !== null && _data$errors2 !== void 0 && _data$errors2.password) {
+              setError(_data.errors.password[0]);
+            } else if (_data !== null && _data !== void 0 && _data.message) {
+              setError(_data.message);
+            } else {
+              setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t) || 'Login failed.');
+            }
           case 5:
             _context.p = 5;
             setLoading(false);
@@ -6843,7 +6946,7 @@ var Login = function Login() {
   }();
   var handleCheckEmail = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(e) {
-      var _yield$window$axios$p2, data, _t2;
+      var _yield$window$axios$p2, data, _err$response2, _data2$errors, _data2, _t2;
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.p = _context2.n) {
           case 0:
@@ -6872,7 +6975,14 @@ var Login = function Login() {
           case 3:
             _context2.p = 3;
             _t2 = _context2.v;
-            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t2) || "Unable to send reset email.");
+            _data2 = (_err$response2 = _t2.response) === null || _err$response2 === void 0 ? void 0 : _err$response2.data;
+            if (_data2 !== null && _data2 !== void 0 && (_data2$errors = _data2.errors) !== null && _data2$errors !== void 0 && _data2$errors.email) {
+              setError(_data2.errors.email[0]);
+            } else if (_data2 !== null && _data2 !== void 0 && _data2.message) {
+              setError(_data2.message);
+            } else {
+              setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t2) || 'Unable to send reset email.');
+            }
           case 4:
             _context2.p = 4;
             setLoading(false);
@@ -13044,6 +13154,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../context/UserContext */ "./resources/js/context/UserContext.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -13330,14 +13444,20 @@ var Sidebar = function Sidebar(_ref) {
     }),
     label: "Settings",
     route: "/settings"
-  }, {
+  }].concat(_toConsumableArray(user !== null && user !== void 0 && user.is_admin ? [{
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Gear, {
+      size: 22
+    }),
+    label: "Admin Console",
+    route: "/admin"
+  }] : []), [{
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.SignOut, {
       size: 22
     }),
     label: "Logout",
     route: "#",
     isLogout: true
-  }];
+  }]);
   var handleLogout = function handleLogout(e) {
     var _document$querySelect;
     e.preventDefault();

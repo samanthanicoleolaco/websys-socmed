@@ -78,7 +78,21 @@ if (container) {
             return null;
         }
 
-        if (path.startsWith('/admin')) return <AdminDashboard />;
+        // RBAC: regular users cannot render /admin pages even by typing the URL.
+        if (path.startsWith('/admin')) {
+            if (!user.is_admin) {
+                window.location.replace('/homefeed');
+                return null;
+            }
+            return <AdminDashboard />;
+        }
+
+        // Admins landing on a regular user page get bumped to the admin console.
+        if (user.is_admin && (path === '/' || path === '/homefeed')) {
+            window.location.replace('/admin');
+            return null;
+        }
+
         if (path === '/messages') return <Messages />;
         if (path === '/badges') return <BadgesContests />;
         if (path === '/adoption' || path.startsWith('/adoption/')) return <AdoptionBoard />;
@@ -87,14 +101,12 @@ if (container) {
         if (path === '/notifications') return <Notifications />;
         if (path === '/homefeed') return <Feed />;
 
-        // If at root, redirect to /homefeed
         if (path === '/') {
-            window.history.replaceState(null, '', '/homefeed');
-            return <Feed />;
+            window.location.replace(user.is_admin ? '/admin' : '/homefeed');
+            return null;
         }
 
-        // Catch-all for other protected paths
-        return <Feed />;
+        return user.is_admin ? <AdminDashboard /> : <Feed />;
     };
 
     root.render(

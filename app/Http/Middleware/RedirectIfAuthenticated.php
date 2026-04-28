@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
                 // SPA posts JSON to /login and /register; a 302 + redirect follow returns HTML and breaks axios (shows "Login failed").
                 if ($request->expectsJson() || $request->ajax() || $request->wantsJson()) {
                     $user = Auth::guard($guard)->user();
-                    $to = ($user && $user->is_admin) ? '/admin' : '/';
+                    $to = ($user && $user->is_admin) ? '/admin' : '/homefeed';
 
                     return response()->json(['success' => true, 'redirect' => $to]);
                 }

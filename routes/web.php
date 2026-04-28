@@ -36,13 +36,12 @@ Route::post('/password/reset', [App\Http\Controllers\LoginController::class, 're
 
 // Protected routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Admin route - only accessible to admins
-    Route::get('/admin', function () {
-        if (!auth()->user()->is_admin) {
-            return redirect('/homefeed');
-        }
-        return view('welcome');
-    })->name('admin');
+    // Admin SPA — only admins may load any HTML under /admin/*
+    Route::middleware(['admin.web'])->group(function () {
+        Route::get('/admin/{any?}', function () {
+            return view('welcome');
+        })->where('any', '.*')->name('admin');
+    });
 
     Route::get('/', function () {
         return view('welcome');

@@ -33,18 +33,24 @@ const Login = () => {
             }
 
             if (data.token) {
-                // Store the token for API requests
                 localStorage.setItem('auth_token', data.token);
-                // Store user data
                 localStorage.setItem('auth_user', JSON.stringify(data.user));
-                // Redirect based on role
-                const redirectUrl = data.user.is_admin ? '/admin' : '/homefeed';
-                window.location.href = redirectUrl;
+                window.axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+                window.location.href = data.redirect || (data.user?.is_admin ? '/admin' : '/homefeed');
             } else {
                 setError("Login failed");
             }
         } catch (err) {
-            setError(messageFromAxiosError(err));
+            const data = err.response?.data;
+            if (data?.errors?.email) {
+                setError(data.errors.email[0]);
+            } else if (data?.errors?.password) {
+                setError(data.errors.password[0]);
+            } else if (data?.message) {
+                setError(data.message);
+            } else {
+                setError(messageFromAxiosError(err) || 'Login failed.');
+            }
         } finally {
             setLoading(false);
         }
@@ -66,7 +72,14 @@ const Login = () => {
                 setPassword("");
             }
         } catch (err) {
-            setError(messageFromAxiosError(err) || "Unable to send reset email.");
+            const data = err.response?.data;
+            if (data?.errors?.email) {
+                setError(data.errors.email[0]);
+            } else if (data?.message) {
+                setError(data.message);
+            } else {
+                setError(messageFromAxiosError(err) || 'Unable to send reset email.');
+            }
         } finally {
             setLoading(false);
         }

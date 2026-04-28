@@ -162,6 +162,10 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     // Adoption listings overview
     Route::get('/adoption-listings', [AdminController::class, 'adoptionListings']);
+
+    // System settings
+    Route::post('/maintenance', [AdminController::class, 'toggleMaintenance']);
+    Route::post('/cache/purge', [AdminController::class, 'purgeCache']);
 });
 
 

@@ -16,6 +16,7 @@ const AdminDashboard = () => {
     // Layout UI States
     const [searchQuery, setSearchQuery] = useState('');
     const [searchActive, setSearchActive] = useState(false);
+    const [maintenanceOn, setMaintenanceOn] = useState(false);
     
     // Admin Data States
     const [activeTab, setActiveTab] = useState('dashboard');
@@ -93,6 +94,30 @@ const AdminDashboard = () => {
         } catch (err) { console.error(err); }
     };
 
+    const toggleMaintenance = async () => {
+        const next = !maintenanceOn;
+        if (!window.confirm(next ? 'Enable maintenance mode? Public users will see a 503 page.' : 'Disable maintenance mode?')) return;
+        try {
+            await window.axios.post('/api/admin/maintenance', { enable: next });
+            setMaintenanceOn(next);
+            window.alert(next ? 'Maintenance mode is ON.' : 'Maintenance mode is OFF.');
+        } catch (err) {
+            console.error(err);
+            window.alert('Failed to toggle maintenance mode.');
+        }
+    };
+
+    const purgeCache = async () => {
+        if (!window.confirm('Purge all caches now?')) return;
+        try {
+            await window.axios.post('/api/admin/cache/purge');
+            window.alert('All caches purged.');
+        } catch (err) {
+            console.error(err);
+            window.alert('Failed to purge caches.');
+        }
+    };
+
     return (
         <div className="admin-shell">
             <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
@@ -133,7 +158,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="form-group">
                                     <label>Account Status</label>
-                                    <select defaultValue="active">
+                                    <select value={editingUser.is_banned ? 'suspended' : 'active'} onChange={e => setEditingUser({...editingUser, is_banned: e.target.value === 'suspended'})}>
                                         <option value="active">Active</option>
                                         <option value="suspended">Suspended</option>
                                         <option value="pending">Pending Verification</option>
@@ -183,7 +208,9 @@ const AdminDashboard = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {users.map(user => (
+                                            {users
+    .filter(u => !searchQuery || u.name?.toLowerCase().includes(searchQuery.toLowerCase()) || u.email?.toLowerCase().includes(searchQuery.toLowerCase()))
+    .map(user => (
                                                 <tr key={user.id}>
                                                     <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', fontWeight: '500', color: 'var(--text-main)' }}>{user.name} {user.is_admin ? <span style={{ color: 'var(--success)', fontSize: '10px', fontWeight: 'bold' }}>[ADMIN]</span> : ''}</td>
                                                     <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>{user.email}</td>
@@ -246,7 +273,9 @@ const AdminDashboard = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {posts.map(post => (
+                                        {posts
+    .filter(p => !searchQuery || p.pet?.name?.toLowerCase().includes(searchQuery.toLowerCase()) || p.content?.toLowerCase().includes(searchQuery.toLowerCase()))
+    .map(post => (
                                             <tr key={post.id}>
                                                 <td style={{ padding: '15px 10px', borderBottom: '1px solid #f5f5f5', color: '#666' }}>#{post.id}</td>
                                                 <td style={{ padding: '15px 10px', borderBottom: '1px solid var(--border-color)', fontWeight: '600', color: 'var(--primary-action)' }}>{post.pet?.name || 'Unknown'}</td>
@@ -282,8 +311,8 @@ const AdminDashboard = () => {
                                         <p style={{ color: '#64748B', fontSize: '0.9rem', marginBottom: '20px', lineHeight: '1.5' }}>
                                             Temporarily disable public access. Useful for deployments or critical fixes.
                                         </p>
-                                        <button style={{ background: '#F8FAFC', color: '#334155', border: '1.5px solid #E2E8F0', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s' }}>
-                                            Activate Maintenance
+                                        <button onClick={toggleMaintenance} style={{ background: '#F8FAFC', color: '#334155', border: '1.5px solid #E2E8F0', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s' }}>
+                                            {maintenanceOn ? 'Deactivate Maintenance' : 'Activate Maintenance'}
                                         </button>
                                     </div>
 
@@ -297,7 +326,7 @@ const AdminDashboard = () => {
                                         <p style={{ color: '#64748B', fontSize: '0.9rem', marginBottom: '20px', lineHeight: '1.5' }}>
                                             Refresh application cache to ensure all users see the latest content updates.
                                         </p>
-                                        <button style={{ background: '#ffc26d', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(255, 194, 109, 0.2)' }}>
+                                        <button onClick={purgeCache} style={{ background: '#ffc26d', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(255, 194, 109, 0.2)' }}>
                                             Purge All Cache
                                         </button>
                                     </div>
