@@ -15,6 +15,9 @@ class AdminUserSeeder extends Seeder
         $admin->username = 'admin_owner';
         $admin->password = Hash::make('password');
         $admin->is_admin = true;
+        $admin->email_verified_at = now();
+        $admin->email_verification_code_hash = null;
+        $admin->email_verification_expires_at = null;
         $admin->save();
     }
 }

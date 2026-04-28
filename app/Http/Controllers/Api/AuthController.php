@@ -194,28 +194,55 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        $validated = $request->validate([
-            'petName' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:32', 'regex:/^[a-z0-9_]+$/i', Rule::unique('users', 'username')->ignore($user->id)],
-            'age' => ['required', 'integer', 'min:0', 'max:50'],
-            'gender' => ['required', 'in:male,female,unknown,other'],
+        $hasPet = $user->pet()->exists();
+        $rules = [
+            'petName' => [$hasPet ? 'sometimes' : 'required', 'string', 'max:255'],
+            'username' => [$hasPet ? 'sometimes' : 'required', 'string', 'max:32', 'regex:/^[a-z0-9_]+$/i', Rule::unique('users', 'username')->ignore($user->id)],
+            'age' => [$hasPet ? 'sometimes' : 'required', 'integer', 'min:0', 'max:50'],
+            'gender' => [$hasPet ? 'sometimes' : 'required', 'in:male,female,unknown,other'],
             'birthday' => ['nullable', 'date'],
-            'species' => ['required', 'string', 'max:64'],
-            'breed' => ['required', 'string', 'max:255'],
-        ]);
+            'species' => [$hasPet ? 'sometimes' : 'required', 'string', 'max:64'],
+            'breed' => [$hasPet ? 'sometimes' : 'required', 'string', 'max:255'],
+            'is_private' => ['sometimes', 'boolean'],
+        ];
 
-        $user->forceFill([
-            'username' => $validated['username'],
-        ])->save();
+        $validated = $request->validate($rules);
 
-        $pet = $user->pets()->create([
-            'name' => $validated['petName'],
-            'age' => $validated['age'],
-            'gender' => $validated['gender'] === 'other' ? 'unknown' : $validated['gender'],
-            'birthday' => $validated['birthday'] ?? null,
-            'species' => $validated['species'],
-            'breed' => $validated['breed'],
-        ]);
+        if (array_key_exists('username', $validated)) {
+            $user->forceFill([
+                'username' => $validated['username'],
+            ])->save();
+        }
+
+        $petData = [];
+        if (array_key_exists('petName', $validated)) {
+            $petData['name'] = $validated['petName'];
+        }
+        if (array_key_exists('age', $validated)) {
+            $petData['age'] = $validated['age'];
+        }
+        if (array_key_exists('gender', $validated)) {
+            $petData['gender'] = $validated['gender'] === 'other' ? 'unknown' : $validated['gender'];
+        }
+        if (array_key_exists('birthday', $validated)) {
+            $petData['birthday'] = $validated['birthday'] ?? null;
+        }
+        if (array_key_exists('species', $validated)) {
+            $petData['species'] = $validated['species'];
+        }
+        if (array_key_exists('breed', $validated)) {
+            $petData['breed'] = $validated['breed'];
+        }
+        if (array_key_exists('is_private', $validated)) {
+            $petData['is_private'] = (bool) $validated['is_private'];
+        }
+
+        if ($hasPet) {
+            $pet = $user->pet;
+            $pet->update($petData);
+        } else {
+            $pet = $user->pets()->create($petData);
+        }
 
         return response()->json([
             'message' => 'Pet profile saved successfully',

@@ -110,7 +110,8 @@ const Settings = () => {
         messagesFromAnyone: false,
         showOnline: true,
         storyReplies: true,
-        analytics: true
+        analytics: true,
+        privateAccount: false
     });
     const [isUploading, setIsUploading] = useState(false);
 
@@ -140,9 +141,25 @@ const Settings = () => {
             setPrivacy({
                 ...privacy,
                 ...(userSettings.privacy || {}),
+                privateAccount: authUser.pet?.is_private || false,
             });
         }
     }, [authUser]);
+    const handleSavePrivacy = async () => {
+        try {
+            await window.axios.post('/api/pet-info', {
+                is_private: !!privacy.privateAccount,
+            }, {
+                headers: jsonRequestHeaders(),
+                withCredentials: true,
+            });
+            alert('Privacy settings updated successfully!');
+            refreshUser();
+        } catch (error) {
+            console.error('Error saving privacy settings:', error);
+            alert('Failed to save privacy settings.');
+        }
+    };
 
     const fetchUser = async () => {
         try {
@@ -252,14 +269,13 @@ const Settings = () => {
             exit={{ opacity: 0, y: -10 }}
             className="settings-section"
         >
+            {/* Owner Account Card */}
             <Card className="account-card">
-                {/* Top Row: Title + Save Changes */}
                 <div className="account-card-header">
-                    <h2>Account</h2>
+                    <h2>Owner Account</h2>
                     <button className="save-btn" onClick={handleSaveChanges}>Save Changes</button>
                 </div>
 
-                {/* Profile Header */}
                 <div className="account-profile-header">
                     <input 
                         type="file" 
@@ -285,22 +301,58 @@ const Settings = () => {
                     </div>
                     <div className="profile-info">
                         <h3>{user.displayName}</h3>
-                        <p className="username">{user.username}</p>
+                        <p className="username">{user.email}</p>
                     </div>
                 </div>
 
-                {/* Account Form */}
                 <div className="account-form">
-                    {/* Row 1: Display Name | Username */}
+                    <div className="form-group full-width">
+                        <label className="form-label">Email</label>
+                        <div className="input-with-icon">
+                            <Envelope size={18} />
+                            <input 
+                                type="email" 
+                                className="form-input" 
+                                value={user.email}
+                                onChange={(e) => setUser({...user, email: e.target.value})}
+                                placeholder="email@example.com"
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group full-width">
+                        <label className="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            className="form-input" 
+                            placeholder="••••••••"
+                        />
+                    </div>
+                    <div className="form-group full-width">
+                        <label className="form-label">Two-factor</label>
+                        <select className="form-input">
+                            <option>Disabled</option>
+                            <option>Enabled</option>
+                        </select>
+                    </div>
+                </div>
+            </Card>
+
+            {/* Pet Profile Card */}
+            <Card className="account-card">
+                <div className="account-card-header">
+                    <h2>Pet Profile</h2>
+                </div>
+                
+                <div className="account-form">
                     <div className="form-row two-col">
                         <div className="form-group">
-                            <label className="form-label">Display Name</label>
+                            <label className="form-label">Pet Name</label>
                             <input 
                                 type="text" 
                                 className="form-input" 
-                                value={user.displayName}
-                                onChange={(e) => setUser({...user, displayName: e.target.value})}
-                                placeholder="Your full name"
+                                value={user.petName}
+                                onChange={(e) => setUser({...user, petName: e.target.value})}
+                                placeholder="Mochi"
                             />
                         </div>
                         <div className="form-group">
@@ -315,189 +367,76 @@ const Settings = () => {
                         </div>
                     </div>
 
-                    {/* Row 2: Email (Full Width) */}
-                    <div className="form-row">
-                        <div className="form-group full-width">
-                            <label className="form-label">Email Address</label>
-                            <div className="input-with-icon">
-                                <Envelope size={18} />
-                                <input 
-                                    type="email" 
-                                    className="form-input" 
-                                    value={user.email}
-                                    onChange={(e) => setUser({...user, email: e.target.value})}
-                                    placeholder="email@example.com"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Row 3: Location | Website */}
                     <div className="form-row two-col">
                         <div className="form-group">
-                            <label className="form-label">Location</label>
+                            <label className="form-label">Age</label>
                             <input 
-                                type="text" 
+                                type="number" 
                                 className="form-input" 
-                                value={user.location}
-                                onChange={(e) => setUser({...user, location: e.target.value})}
-                                placeholder="City, Country"
+                                value={user.age}
+                                onChange={(e) => setUser({...user, age: e.target.value})}
+                                placeholder="2"
                             />
                         </div>
                         <div className="form-group">
-                            <label className="form-label">Website</label>
-                            <input 
-                                type="text" 
-                                className="form-input" 
-                                value={user.website}
-                                onChange={(e) => setUser({...user, website: e.target.value})}
-                                placeholder="https://yourwebsite.com"
-                            />
+                            <label className="form-label">Gender</label>
+                            <select 
+                                className="form-input"
+                                value={user.petGender}
+                                onChange={(e) => setUser({...user, petGender: e.target.value})}
+                            >
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
                         </div>
                     </div>
 
-                    {/* Row 4: Bio (Full Width) */}
-                    <div className="form-row">
-                        <div className="form-group full-width">
-                            <label className="form-label">Bio</label>
-                            <textarea 
-                                className="form-textarea" 
-                                rows={3}
-                                value={user.bio}
-                                onChange={(e) => setUser({...user, bio: e.target.value})}
-                                placeholder="Living life one tail wag at a time. 🐾"
-                            />
-                        </div>
+                    <div className="form-group full-width">
+                        <label className="form-label">Birthday</label>
+                        <input 
+                            type="date" 
+                            className="form-input" 
+                            value={user.petBirthday}
+                            onChange={(e) => setUser({...user, petBirthday: e.target.value})}
+                        />
                     </div>
-                </div>
 
-                {/* Pet Info Section */}
-                <div className="pet-profile-section">
-                    <div className="section-title">
-                        <PawPrint size={18} weight="fill" />
-                        <span>Pet Info</span>
+                    <div className="form-group full-width">
+                        <label className="form-label">Species</label>
+                        <select 
+                            className="form-input"
+                            value={user.petSpecies}
+                            onChange={(e) => setUser({...user, petSpecies: e.target.value})}
+                        >
+                            <option value="">Select species</option>
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="bird">Bird</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
-                    <div className="section-divider" />
-                    
-                    <div className="account-form">
-                        <div className="form-row two-col">
-                            <div className="form-group">
-                                <label className="form-label">Pet Name</label>
-                                <input 
-                                    type="text" 
-                                    className="form-input" 
-                                    value={user.petName}
-                                    onChange={(e) => setUser({...user, petName: e.target.value})}
-                                    placeholder="Mochi"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Breed</label>
-                                <input 
-                                    type="text" 
-                                    className="form-input" 
-                                    value={user.breed}
-                                    onChange={(e) => setUser({...user, breed: e.target.value})}
-                                    placeholder="Golden Retriever"
-                                />
-                            </div>
-                        </div>
 
-                        <div className="form-row two-col">
-                            <div className="form-group">
-                                <label className="form-label">Age</label>
-                                <input 
-                                    type="text" 
-                                    className="form-input" 
-                                    value={user.age}
-                                    onChange={(e) => setUser({...user, age: e.target.value})}
-                                    placeholder="2 years"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Pet Bio</label>
-                                <input 
-                                    type="text" 
-                                    className="form-input" 
-                                    value={user.petBio}
-                                    onChange={(e) => setUser({...user, petBio: e.target.value})}
-                                    placeholder="The goodest boy..."
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-row two-col">
-                            <div className="form-group">
-                                <label className="form-label">Species</label>
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    value={user.petSpecies}
-                                    onChange={(e) => setUser({...user, petSpecies: e.target.value})}
-                                    placeholder="Dog"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Birthday</label>
-                                <input
-                                    type="date"
-                                    className="form-input"
-                                    value={user.petBirthday || ''}
-                                    onChange={(e) => setUser({...user, petBirthday: e.target.value})}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <div className="form-group full-width">
-                                <label className="form-label">Gender</label>
-                                <select
-                                    className="form-input"
-                                    value={user.petGender}
-                                    onChange={(e) => setUser({...user, petGender: e.target.value})}
-                                >
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="unknown">Other</option>
-                                </select>
-                            </div>
-                        </div>
+                    <div className="form-group full-width">
+                        <label className="form-label">Breed</label>
+                        <input 
+                            type="text" 
+                            className="form-input" 
+                            value={user.breed}
+                            onChange={(e) => setUser({...user, breed: e.target.value})}
+                            placeholder="Golden Retriever"
+                        />
                     </div>
-                </div>
 
-                {/* Password & Security Section */}
-                <div className="password-section">
-                    <div className="section-title">
-                        <Shield size={18} weight="fill" />
-                        <span>Password & Security</span>
-                    </div>
-                    <div className="section-divider" />
-                    
-                    <div className="account-form">
-                        <div className="form-row two-col">
-                            <div className="form-group">
-                                <label className="form-label">Current Password</label>
-                                <input 
-                                    type="password" 
-                                    className="form-input" 
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">New Password</label>
-                                <input 
-                                    type="password" 
-                                    className="form-input" 
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                        </div>
-
-                        {/* 2FA Success Box */}
-                        <div className="two-factor-success">
-                            <CheckCircle size={18} weight="fill" />
-                            <span>Two-factor authentication is <strong>enabled</strong> on your account.</span>
-                        </div>
+                    <div className="form-group full-width">
+                        <label className="form-label">Bio</label>
+                        <textarea 
+                            className="form-textarea" 
+                            rows={3}
+                            value={user.petBio}
+                            onChange={(e) => setUser({...user, petBio: e.target.value})}
+                            placeholder="Living life one tail wag at a time. 🐾"
+                        />
                     </div>
                 </div>
             </Card>
@@ -515,10 +454,17 @@ const Settings = () => {
             <Card className="settings-card">
                 <div className="settings-content-header" style={{ marginBottom: '24px' }}>
                     <h2>Privacy</h2>
-                    <Button variant="primary" onClick={() => alert('Privacy settings saved!')}>Save Changes</Button>
+                    <Button variant="primary" onClick={handleSavePrivacy}>Save Changes</Button>
                 </div>
                 
                 <div className="privacy-list">
+                    <div className="privacy-item">
+                        <div className="privacy-text">
+                            <h4>Private account</h4>
+                            <p>Only approved followers can see your pet profile</p>
+                        </div>
+                        <Switch checked={privacy.privateAccount} onCheckedChange={(v) => setPrivacy({ ...privacy, privateAccount: v })} />
+                    </div>
                     <div className="privacy-item">
                         <div className="privacy-text">
                             <h4>Public pet info</h4>

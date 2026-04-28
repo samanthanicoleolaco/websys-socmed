@@ -27,11 +27,11 @@ import {
     Trash,
     Download,
     Lock,
+    PencilSimple,
     ShieldCheck,
     CaretRight,
 } from "@phosphor-icons/react";
 import Sidebar from "./Sidebar";
-import axios from "axios";
 import { useUser } from "../../context/UserContext";
 import "../../../sass/pages/feed.scss";
 
@@ -63,22 +63,57 @@ const REACTIONS = [
     { key: "paw",   emoji: "🐾", label: "Paw it!",  color: "#898AA6" },
 ];
 
-const MENU_ITEMS = [
-    { icon: Bookmark,   label: "Save this post",       sub: "Add to your saved posts collection.",  color: "var(--text-main)" },
-    { icon: UserPlus,   label: "Follow this pet",      sub: "See more from this pet in your feed.", color: "var(--text-main)" },
-    { divider: true },
-    { icon: EyeSlash,   label: "Hide from my feed",    sub: "See fewer posts like this.",           color: "#e11d48" },
-    { icon: FlagBanner, label: "Report to Petverse",   sub: "Help us keep the community safe.",     color: "#e11d48" },
-];
+const getMenuItems = (post, currentUserId) => {
+    const isOwner = post?.pet?.user?.id === currentUserId;
+    if (isOwner) {
+        return [
+            { key: "edit", icon: PencilSimple, label: "Edit caption", sub: "Update your post text.", color: "var(--text-main)", action: "edit" },
+            { key: "privacy", icon: Lock, label: "Change privacy", sub: "Public, friends, or followers.", color: "var(--text-main)", action: "privacy" },
+            { divider: true },
+            { key: "delete", icon: Trash, label: "Delete post", sub: "Remove this post permanently.", color: "#e11d48", action: "delete" },
+        ];
+    }
 
-const PostMenu = ({ postId }) => {
+    return [
+        { key: "save", icon: Bookmark, label: "Save this post", sub: "Add to your saved posts collection.", color: "var(--text-main)", action: "save" },
+        { key: "follow", icon: UserPlus, label: "Follow this pet", sub: "See more from this pet in your feed.", color: "var(--text-main)", action: "follow" },
+        { divider: true },
+        { key: "hide", icon: EyeSlash, label: "Hide from my feed", sub: "See fewer posts like this.", color: "#e11d48", action: "hide" },
+        { key: "report", icon: FlagBanner, label: "Report to Petverse", sub: "Help us keep the community safe.", color: "#e11d48", action: "report" },
+    ];
+};
+
+const PostMenu = ({ post, currentUserId, onSave, onFollow, onHide, onReport, onEditCaption, onChangePrivacy, onDelete }) => {
     const [open, setOpen] = useState(false);
+    const [showPrivacySubmenu, setShowPrivacySubmenu] = useState(false);
     const ref = useRef(null);
     useEffect(() => {
         const h = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
         if (open) document.addEventListener("mousedown", h);
         return () => document.removeEventListener("mousedown", h);
     }, [open]);
+    const items = getMenuItems(post, currentUserId);
+
+    const handleAction = (action) => {
+        if (action === "privacy") {
+            setShowPrivacySubmenu(true);
+            return;
+        }
+
+        setOpen(false);
+        if (action === "save") onSave?.(post);
+        if (action === "follow") onFollow?.(post);
+        if (action === "hide") onHide?.(post);
+        if (action === "report") onReport?.(post);
+        if (action === "edit") onEditCaption?.(post);
+        if (action === "delete") onDelete?.(post);
+    };
+
+    const handlePrivacyChange = (privacy) => {
+        onChangePrivacy?.(post, privacy);
+        setShowPrivacySubmenu(false);
+        setOpen(false);
+    };
     return (
         <div className="post-menu" ref={ref}>
             <button className="post-menu__trigger" onClick={() => setOpen(!open)} aria-label="More options">
@@ -93,11 +128,11 @@ const PostMenu = ({ postId }) => {
                         exit={{ opacity: 0, scale: 0.95, y: -8 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
                     >
-                        {MENU_ITEMS.map((item, i) => item.divider ? <div key={i} className="post-menu__divider" /> : (
+                        {!showPrivacySubmenu && items.map((item, i) => item.divider ? <div key={i} className="post-menu__divider" /> : (
                             <button 
-                                key={i} 
+                                key={item.key || i}
                                 className={`post-menu__item ${item.color === '#e11d48' ? 'danger' : ''}`} 
-                                onClick={() => setOpen(false)}
+                                onClick={() => handleAction(item.action)}
                             >
                                 <item.icon size={18} weight="duotone" />
                                 <div className="item-text">
@@ -106,6 +141,34 @@ const PostMenu = ({ postId }) => {
                                 </div>
                             </button>
                         ))}
+                        {showPrivacySubmenu && (
+                            <div className="post-menu__submenu">
+                                <button className="post-menu__back" onClick={() => setShowPrivacySubmenu(false)}>
+                                    <CaretLeft size={16} weight="bold" /> <span>Back</span>
+                                </button>
+                                <button className="post-menu__item" onClick={() => handlePrivacyChange("public")}>
+                                    <Globe size={18} weight="duotone" />
+                                    <div className="item-text">
+                                        <span className="label">Public</span>
+                                        <span className="sub">Anyone can see your post.</span>
+                                    </div>
+                                </button>
+                                <button className="post-menu__item" onClick={() => handlePrivacyChange("friends")}>
+                                    <Users size={18} weight="duotone" />
+                                    <div className="item-text">
+                                        <span className="label">Friends</span>
+                                        <span className="sub">Only friends can see it.</span>
+                                    </div>
+                                </button>
+                                <button className="post-menu__item" onClick={() => handlePrivacyChange("followers")}>
+                                    <User size={18} weight="duotone" />
+                                    <div className="item-text">
+                                        <span className="label">Followers</span>
+                                        <span className="sub">Only followers can see it.</span>
+                                    </div>
+                                </button>
+                            </div>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -115,7 +178,50 @@ const PostMenu = ({ postId }) => {
 
 // ── Feed Component ─────────────────────────────────────────────────────
 
-const PostModal = ({ post, onClose, onLike }) => {
+const PostModal = ({ post, onClose, onLike, onOpenLikers, onCommentAdded }) => {
+    const { user } = useUser();
+    const [comments, setComments] = useState([]);
+    const [commentText, setCommentText] = useState("");
+    const [isPostingComment, setIsPostingComment] = useState(false);
+
+    useEffect(() => {
+        if (!post) return;
+        let isActive = true;
+        window.axios.get(`/api/posts/${post.id}/comments`)
+            .then((res) => {
+                const data = res.data?.data || res.data || [];
+                if (isActive) setComments(data);
+            })
+            .catch((err) => console.error(err));
+        return () => { isActive = false; };
+    }, [post?.id]);
+
+    const submitComment = async () => {
+        if (!commentText.trim() || !post) return;
+        const petId = user?.pet?.id;
+        if (!petId) {
+            alert("Set up your pet info first.");
+            return;
+        }
+
+        setIsPostingComment(true);
+        try {
+            const res = await window.axios.post("/api/comments", {
+                post_id: post.id,
+                pet_id: petId,
+                content: commentText.trim(),
+            });
+            const created = res.data;
+            setComments((prev) => [created, ...prev]);
+            setCommentText("");
+            onCommentAdded?.(post.id, created);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsPostingComment(false);
+        }
+    };
+
     if (!post) return null;
     return (
         <div className="post-modal-overlay">
@@ -174,10 +280,20 @@ const PostModal = ({ post, onClose, onLike }) => {
                             </div>
                         </div>
                         <div className="post-modal-comments">
-                            <div className="empty-state">
-                                <span>No comments yet.</span>
-                                <span>Start the conversation.</span>
-                            </div>
+                            {comments.length === 0 ? (
+                                <div className="empty-state">
+                                    <span>No comments yet.</span>
+                                    <span>Start the conversation.</span>
+                                </div>
+                            ) : comments.map((comment) => (
+                                <div className="post-modal-comment" key={comment.id}>
+                                    <Avatar src={comment.pet?.image_url} size="sm" />
+                                    <div className="comment-body">
+                                        <span className="comment-author">{comment.pet?.name}</span>
+                                        <span className="comment-text">{comment.content}</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
 
@@ -198,12 +314,102 @@ const PostModal = ({ post, onClose, onLike }) => {
                                 <Bookmark size={24} />
                             </button>
                         </div>
-                        <div className="likes-count">{post.likes} likes</div>
+                        <button className="likes-count-btn" onClick={() => onOpenLikers?.(post)}>
+                            {post.likes} likes
+                        </button>
                         <div className="add-comment">
-                            <input type="text" placeholder="Add a comment..." />
-                            <button className="post-btn">Post</button>
+                            <input
+                                type="text"
+                                placeholder="Add a comment..."
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)}
+                            />
+                            <button className="post-btn" onClick={submitComment} disabled={isPostingComment}>
+                                {isPostingComment ? "Posting..." : "Post"}
+                            </button>
                         </div>
                     </div>
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
+const LikersModal = ({ post, onClose }) => {
+    const { user } = useUser();
+    const [likes, setLikes] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!post) return;
+        let isActive = true;
+        setIsLoading(true);
+        window.axios.get(`/api/posts/${post.id}/likes`)
+            .then((res) => {
+                const data = res.data?.data || res.data || [];
+                if (isActive) setLikes(data);
+            })
+            .catch((err) => console.error(err))
+            .finally(() => {
+                if (isActive) setIsLoading(false);
+            });
+        return () => { isActive = false; };
+    }, [post?.id]);
+
+    const handleFollowPet = async (petId) => {
+        const currentPetId = user?.pet?.id;
+        if (!currentPetId) {
+            alert("Set up your pet info first.");
+            return;
+        }
+        try {
+            await window.axios.post("/api/follow", {
+                follower_pet_id: currentPetId,
+                following_pet_id: petId,
+            });
+            setLikes((prev) => prev.map((like) => like.pet?.id === petId ? { ...like, is_following: true } : like));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    if (!post) return null;
+    return (
+        <div className="likers-modal-overlay">
+            <div className="likers-modal-bg" onClick={onClose} />
+            <motion.div
+                className="likers-modal"
+                initial={{ opacity: 0, scale: 0.96, y: 16 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, y: 16 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+                <div className="likers-modal__header">
+                    <h3>Liked by</h3>
+                    <button className="close-btn" onClick={onClose}><X size={18} weight="bold" /></button>
+                </div>
+                <div className="likers-modal__body">
+                    {isLoading && <div className="likers-modal__loading">Loading likes...</div>}
+                    {!isLoading && likes.length === 0 && (
+                        <div className="likers-modal__empty">No likes yet.</div>
+                    )}
+                    {!isLoading && likes.map((like) => (
+                        <div className="liker-row" key={like.id}>
+                            <Avatar src={like.pet?.image_url} size="sm" />
+                            <div className="liker-info">
+                                <span className="name">{like.pet?.name || "Pet"}</span>
+                                <span className="emoji">{like.emoji || "❤️"}</span>
+                            </div>
+                            {like.pet?.id !== user?.pet?.id && (
+                                <button
+                                    className={`follow-btn ${like.is_following ? "following" : ""}`}
+                                    onClick={() => handleFollowPet(like.pet?.id)}
+                                >
+                                    {like.is_following ? "Following" : "Follow"}
+                                </button>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </motion.div>
         </div>
@@ -213,6 +419,14 @@ const PostModal = ({ post, onClose, onLike }) => {
 const Feed = () => {
     const { user } = useUser();
     const [posts, setPosts] = useState([]);
+    const [hiddenPostIds, setHiddenPostIds] = useState(() => {
+        try {
+            const raw = localStorage.getItem("hiddenPosts");
+            return raw ? JSON.parse(raw) : [];
+        } catch {
+            return [];
+        }
+    });
     const [dynamicStories, setStories]    = useState([]);
     const [hiddenStoryUsers, setHiddenStoryUsers] = useState([]);
     const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
@@ -241,6 +455,7 @@ const Feed = () => {
     const [filterTag, setFilterTag] = useState(null);
     const [isSeeAllPetsOpen, setIsSeeAllPetsOpen] = useState(false);
     const [contestEntryCount, setContestEntryCount] = useState(0);
+    const [likersFor, setLikersFor] = useState(null);
 
     const privacyMenuRef = useRef(null);
     const storyMenuRef = useRef(null);
@@ -283,17 +498,21 @@ const Feed = () => {
                 author: p.pet?.name || p.user?.name || "Petverse User",
                 breed: p.pet?.breed || "Pet",
                 location: p.location || "",
+                location_lat: p.location_lat || null,
+                location_lon: p.location_lon || null,
                 avatar: p.pet?.image_url || p.user?.avatar_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
                 time: p.created_at ? new Date(p.created_at).toLocaleDateString() : "just now",
                 content: p.caption || p.content || "",
                 hashtags: (p.caption?.match(/#\w+/g) || []),
                 image: p.image_url || p.media_url || null,
                 video: p.video_url || null,
-                likes: Array.isArray(p.likes) ? p.likes.length : (p.likes_count || p.like_count || 0),
-                comments: Array.isArray(p.comments) ? p.comments.length : (p.comments_count || p.comment_count || 0),
-                isLiked: false,
+                likes: p.likes_count ?? 0,
+                comments: p.comments_count ?? 0,
+                isLiked: !!p.liked_by_me,
                 privacy: p.privacy || 'public',
-                tagged_pets: p.tagged_pets || []
+                tagged_pets: p.tagged_pets || [],
+                pet: p.pet || null,
+                user: p.pet?.user || p.user || null,
             }));
             setPosts(mappedPosts);
         } catch (err) { console.error(err); }
@@ -358,19 +577,23 @@ const Feed = () => {
             async (position) => {
                 const { latitude, longitude } = position.coords;
                 try {
-                    const reverseRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`);
-                    const reverseData = await reverseRes.json();
-                    const addr = reverseData.address || {};
-                    let cityName = addr.city || addr.town || addr.village || addr.county || "Current Location";
-                    let stateName = addr.state || addr.region || "";
-                    let countryName = addr.country || "";
-                    let roadName = addr.road || addr.pedestrian || addr.street || "";
-                    let currentSub = stateName ? `${cityName}, ${stateName}` : (countryName || "Nearby");
-                    
-                    const nearby = [
-                        { id: 1, name: roadName || "Current Location", sub: currentSub, type: "pin", lat: latitude, lon: longitude },
-                        { id: 2, name: "My Location", sub: `${cityName}, ${countryName || ""}`, type: "pin", lat: latitude, lon: longitude },
-                    ];
+                    const viewbox = `${longitude - 0.05},${latitude - 0.05},${longitude + 0.05},${latitude + 0.05}`;
+                    const searchRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&lat=${latitude}&lon=${longitude}&bounded=1&limit=6&viewbox=${encodeURIComponent(viewbox)}`);
+                    const searchData = await searchRes.json();
+                    const nearby = searchData.map((item, index) => {
+                        const parts = item.display_name.split(",");
+                        const name = parts.slice(0, 1).join(",");
+                        const sub = parts.slice(1, 3).join(",").trim();
+                        return {
+                            id: item.place_id || index + 1,
+                            name: sub ? `${name} (${sub})` : name,
+                            sub: item.display_name,
+                            type: "pin",
+                            lat: item.lat,
+                            lon: item.lon,
+                            googleMapsUrl: `https://maps.google.com/?q=${item.lat},${item.lon}`
+                        };
+                    });
                     setSuggestedLocations(nearby);
                 } catch {
                     setSuggestedLocations([
@@ -398,7 +621,12 @@ const Feed = () => {
             const data = await res.json();
             const results = data.map((item, index) => ({
                 id: item.place_id || index + 1,
-                name: item.display_name.split(",").slice(0, 2).join(", "),
+                name: (() => {
+                    const parts = item.display_name.split(",");
+                    const namePart = parts.slice(0, 1).join(",");
+                    const subPart = parts.slice(1, 3).join(",").trim();
+                    return subPart ? `${namePart} (${subPart})` : namePart;
+                })(),
                 sub: item.display_name,
                 type: "pin",
                 lat: item.lat,
@@ -601,8 +829,87 @@ const Feed = () => {
         return () => document.removeEventListener("mousedown", h);
     }, [postText, imagePreview, videoPreview]);
 
-    const toggleLike = (id) => {
-        setPosts(posts.map(p => p.id === id ? { ...p, isLiked: !p.isLiked, likes: p.isLiked ? p.likes - 1 : p.likes + 1 } : p));
+    const toggleLike = async (postId) => {
+        const post = posts.find((p) => p.id === postId);
+        const petId = user?.pet?.id;
+        if (!petId) return alert("Set up your pet info first.");
+        try {
+            if (post?.isLiked) {
+                await window.axios.delete(`/api/likes/posts/${postId}/pets/${petId}`);
+            } else {
+                await window.axios.post("/api/likes", { post_id: postId, pet_id: petId, emoji: "❤️" });
+            }
+            setPosts((ps) => ps.map((p) => p.id === postId
+                ? { ...p, isLiked: !p.isLiked, likes: p.likes + (p.isLiked ? -1 : 1) }
+                : p));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const updateHiddenPosts = (postId) => {
+        setHiddenPostIds((prev) => {
+            const next = [...new Set([...prev, postId])];
+            localStorage.setItem("hiddenPosts", JSON.stringify(next));
+            return next;
+        });
+    };
+
+    const handleSavePost = async (post) => {
+        try {
+            await window.axios.post("/api/saved-posts", { post_id: post.id });
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleReportPost = async (post) => {
+        const reason = window.prompt("Why are you reporting this post?", "Inappropriate content");
+        if (!reason) return;
+        try {
+            await window.axios.post(`/api/posts/${post.id}/report`, { reason });
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleEditCaption = async (post) => {
+        const nextCaption = window.prompt("Edit caption", post.content);
+        if (nextCaption === null) return;
+        try {
+            const res = await window.axios.put(`/api/posts/${post.id}`, { caption: nextCaption });
+            const updated = res.data;
+            setPosts((prev) => prev.map((p) => p.id === post.id ? { ...p, content: updated.caption } : p));
+            setActivePost((prev) => prev?.id === post.id ? { ...prev, content: updated.caption } : prev);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleChangePrivacy = async (post, privacy) => {
+        try {
+            const res = await window.axios.put(`/api/posts/${post.id}`, { privacy });
+            const updated = res.data;
+            setPosts((prev) => prev.map((p) => p.id === post.id ? { ...p, privacy: updated.privacy } : p));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleDeletePost = async (post) => {
+        if (!window.confirm("Delete this post?")) return;
+        try {
+            await window.axios.delete(`/api/posts/${post.id}`);
+            setPosts((prev) => prev.filter((p) => p.id !== post.id));
+            setActivePost((prev) => (prev?.id === post.id ? null : prev));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleCommentAdded = (postId) => {
+        setPosts((prev) => prev.map((p) => p.id === postId ? { ...p, comments: p.comments + 1 } : p));
+        setActivePost((prev) => prev?.id === postId ? { ...prev, comments: prev.comments + 1 } : prev);
     };
 
     const isValidMediaUrl = (url) => {
@@ -646,6 +953,8 @@ const Feed = () => {
                 author: createdPost.pet?.name || user?.name || "You",
                 breed: createdPost.pet?.breed || "Pet",
                 location: createdPost.location || "",
+                location_lat: createdPost.location_lat || null,
+                location_lon: createdPost.location_lon || null,
                 avatar: createdPost.pet?.image_url || user?.avatar_url || "https://c.animaapp.com/mnucpod10UwxJn/img/ai_5.png",
                 time: "just now",
                 content: createdPost.caption || trimmed,
@@ -655,7 +964,9 @@ const Feed = () => {
                 likes: 0,
                 comments: 0,
                 isLiked: false,
-                tagged_pets: createdPost.tagged_pets || []
+                tagged_pets: createdPost.tagged_pets || [],
+                pet: createdPost.pet || null,
+                user: createdPost.pet?.user || createdPost.user || null,
             };
 
             setPosts((prev) => [mapped, ...prev]);
@@ -997,7 +1308,7 @@ const Feed = () => {
 
                         {/* Posts List */}
                         <div className="feed-post-list">
-                            {posts.map(post => {
+                            {posts.filter((post) => !hiddenPostIds.includes(post.id)).map(post => {
                                 const isTruncated = post.content.length > 150;
                                 return (
                                 <Card key={post.id} className="feed-post-v2">
@@ -1008,26 +1319,47 @@ const Feed = () => {
                                                 <div className="meta-top">
                                                     <span className="name">{post.author}</span>
                                                     {post.tagged_pets && post.tagged_pets.length > 0 && (
-                                                        <span className="tagged-info" style={{fontSize: '13px', color: 'var(--text-muted)', marginLeft: '4px'}}>
-                                                            {" with "}
-                                                            <strong style={{color: 'var(--text-main)'}}>{post.tagged_pets[0].name || "a friend"}</strong>
-                                                            {post.tagged_pets.length > 1 && ` and ${post.tagged_pets.length - 1} others`}
+                                                        <span className="tag-with">
+                                                            with <b>{post.tagged_pets[0].name || "a friend"}</b>
+                                                            {post.tagged_pets.length > 1 && ` +${post.tagged_pets.length - 1}`}
                                                         </span>
                                                     )}
-                                                    <span className="time">{post.time}</span>
                                                 </div>
                                                 <div className="meta-bottom">
                                                     <span className="breed">{post.breed}</span>
+                                                </div>
+                                                <div className="meta-row">
+                                                    <span className="time">{post.time}</span>
                                                     {post.location && (
-                                                        <span className="location">
-                                                            <MapPin size={12} weight="fill" /> {post.location}
-                                                        </span>
+                                                        <>
+                                                            <span className="dot">·</span>
+                                                            <span className="location">
+                                                                <MapPin size={12} weight="fill" />
+                                                                {post.location_lat && post.location_lon ? (
+                                                                    <a href={`https://maps.google.com/?q=${post.location_lat},${post.location_lon}`} target="_blank" rel="noopener">
+                                                                        {post.location}
+                                                                    </a>
+                                                                ) : (
+                                                                    <span>{post.location}</span>
+                                                                )}
+                                                            </span>
+                                                        </>
                                                     )}
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="actions">
-                                            <PostMenu postId={post.id} />
+                                            <PostMenu
+                                                post={post}
+                                                currentUserId={user?.id}
+                                                onSave={handleSavePost}
+                                                onFollow={(p) => handleFollow(p.pet?.id)}
+                                                onHide={(p) => updateHiddenPosts(p.id)}
+                                                onReport={handleReportPost}
+                                                onEditCaption={handleEditCaption}
+                                                onChangePrivacy={handleChangePrivacy}
+                                                onDelete={handleDeletePost}
+                                            />
                                         </div>
                                     </div>
                                     <div className="feed-post-v2__body" onClick={() => setActivePost(post)} style={{cursor: 'pointer'}}>
@@ -1061,9 +1393,11 @@ const Feed = () => {
                                     <div className="feed-post-v2__footer">
                                         <button className={`action-btn ${post.isLiked ? 'active' : ''}`} onClick={() => toggleLike(post.id)}>
                                             <Heart size={20} weight={post.isLiked ? "fill" : "bold"} />
+                                        </button>
+                                        <button className="action-btn likes-count-btn" onClick={() => setLikersFor(post)}>
                                             <span>{post.likes}</span>
                                         </button>
-                                        <button className="action-btn">
+                                        <button className="action-btn" onClick={() => setActivePost(post)}>
                                             <ChatCircle size={20} weight="bold" />
                                             <span>{post.comments}</span>
                                         </button>
@@ -1149,7 +1483,19 @@ const Feed = () => {
 
             <AnimatePresence>
                 {activePost && (
-                    <PostModal post={activePost} onClose={() => setActivePost(null)} onLike={toggleLike} />
+                    <PostModal
+                        post={activePost}
+                        onClose={() => setActivePost(null)}
+                        onLike={toggleLike}
+                        onOpenLikers={(post) => setLikersFor(post)}
+                        onCommentAdded={handleCommentAdded}
+                    />
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {likersFor && (
+                    <LikersModal post={likersFor} onClose={() => setLikersFor(null)} />
                 )}
             </AnimatePresence>
 

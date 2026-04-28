@@ -17,6 +17,7 @@ const typeMeta = {
     like:    { icon: Heart,       color: "#ef4444", label: "liked your post" },
     comment: { icon: ChatCircle,  color: "#3b82f6", label: "commented on your post" },
     follow:  { icon: UserPlus,    color: "#22c55e", label: "started following you" },
+    follow_request: { icon: UserPlus, color: "#f59e0b", label: "requested to follow you" },
     contest: { icon: Trophy,      color: "#f59e0b", label: "contest update" },
     message: { icon: ChatCircle,  color: "#898AA6", label: "sent you a message" },
     default: { icon: Bell,        color: "#898AA6", label: "notification" },
@@ -67,6 +68,17 @@ const Notifications = () => {
         try {
             await window.axios.delete(`/api/notifications/${id}`);
             setNotifications((prev) => prev.filter((n) => n.id !== id));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleFollowRequest = async (notification, status) => {
+        const requestId = notification?.data?.request_id;
+        if (!requestId) return;
+        try {
+            await window.axios.patch(`/api/follow-requests/${requestId}`, { status });
+            await fetchNotifications();
         } catch (err) {
             console.error(err);
         }
@@ -158,6 +170,24 @@ const Notifications = () => {
                                             </span>
                                         </div>
                                         <div className="notification-actions">
+                                            {n.type === "follow_request" && n.data?.request_id && (
+                                                <div className="action-group">
+                                                    <button
+                                                        className="icon-btn accept-btn"
+                                                        onClick={() => handleFollowRequest(n, "accepted")}
+                                                        title="Approve"
+                                                    >
+                                                        <Check size={16} weight="bold" />
+                                                    </button>
+                                                    <button
+                                                        className="icon-btn reject-btn"
+                                                        onClick={() => handleFollowRequest(n, "rejected")}
+                                                        title="Reject"
+                                                    >
+                                                        <Trash size={16} />
+                                                    </button>
+                                                </div>
+                                            )}
                                             {!n.is_read && (
                                                 <button
                                                     className="icon-btn read-btn"

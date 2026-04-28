@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Follower;
+use App\Models\FollowRequest;
 use App\Models\Pet;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,7 @@ class FollowerController extends Controller
 
         // Check if user owns the follower pet
         $followerPet = Pet::findOrFail($validated['follower_pet_id']);
+        $followingPet = Pet::findOrFail($validated['following_pet_id']);
         if ($followerPet->user_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -45,6 +47,37 @@ class FollowerController extends Controller
 
         if ($existing) {
             return response()->json(['message' => 'Already following'], 422);
+        }
+
+        if ($followingPet->is_private && !$followingPet->user->is(Auth::user())) {
+            $existingRequest = FollowRequest::where([
+                'requester_pet_id' => $followerPet->id,
+                'target_pet_id' => $followingPet->id,
+                'status' => 'pending',
+            ])->first();
+
+            if ($existingRequest) {
+                return response()->json(['status' => 'requested'], 201);
+            }
+
+            $followRequest = FollowRequest::create([
+                'requester_pet_id' => $followerPet->id,
+                'target_pet_id' => $followingPet->id,
+                'status' => 'pending',
+            ]);
+
+            if ($followingPet->user_id !== Auth::id()) {
+                Notification::createNotification(
+                    $followingPet->user_id,
+                    'follow_request',
+                    'New follow request',
+                    $followerPet->name . ' requested to follow your pet.',
+                    $followRequest,
+                    ['request_id' => $followRequest->id, 'follower_pet_id' => $followerPet->id, 'following_pet_id' => $followingPet->id]
+                );
+            }
+
+            return response()->json(['status' => 'requested'], 201);
         }
 
         $follower = Follower::create($validated);

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\FollowerController;
+use App\Http\Controllers\Api\FollowRequestController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ContestController;
 use App\Http\Controllers\Api\NotificationController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\AdoptionListingController;
 use App\Http\Controllers\Api\ShelterRegistrationController;
 use App\Http\Controllers\Api\AdoptionReportController;
+use App\Http\Controllers\Api\BlockController;
+use App\Http\Controllers\Api\SavedPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Post routes
     Route::apiResource('posts', PostController::class);
     Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
+    Route::post('/posts/{post}/report', [PostController::class, 'report']);
     Route::get('/posts/{post}/likes', [LikeController::class, 'index']);
     
     // Comment routes
@@ -69,6 +73,18 @@ Route::middleware('auth:sanctum')->group(function () {
     // Follow/Unfollow routes
     Route::post('/follow', [FollowerController::class, 'store']);
     Route::delete('/follow/{followingPet}', [FollowerController::class, 'destroy']);
+    Route::get('/follow-requests', [FollowRequestController::class, 'index']);
+    Route::patch('/follow-requests/{followRequest}', [FollowRequestController::class, 'update']);
+
+    // Blocks
+    Route::get('/blocks', [BlockController::class, 'index']);
+    Route::post('/blocks', [BlockController::class, 'store']);
+    Route::delete('/blocks/{block}', [BlockController::class, 'destroy']);
+    
+    // Saved posts
+    Route::get('/saved-posts', [SavedPostController::class, 'index']);
+    Route::post('/saved-posts', [SavedPostController::class, 'store']);
+    Route::delete('/saved-posts/{post}', [SavedPostController::class, 'destroy']);
     
     // Message routes
     Route::apiResource('messages', MessageController::class);
@@ -110,6 +126,7 @@ Route::get('/pets/{pet}', [PetController::class, 'show']);
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::get('/adoption-listings', [AdoptionListingController::class, 'index']);
+Route::get('/adoption-listings/available', [AdoptionListingController::class, 'available']);
 Route::get('/adoption-listings/{adoptionListing}', [AdoptionListingController::class, 'show']);
 
 // Admin-only routes
@@ -120,8 +137,10 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     // User management
     Route::get('/users', [AdminController::class, 'users']);
+    Route::put('/users/{user}', [AdminController::class, 'updateUser']);
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser']);
     Route::patch('/users/{user}/toggle-admin', [AdminController::class, 'toggleAdmin']);
+    Route::patch('/users/{user}/toggle-ban', [AdminController::class, 'toggleBan']);
 
     // Post management
     Route::get('/posts', [AdminController::class, 'posts']);
@@ -129,6 +148,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     // Recent login activity
     Route::get('/recent-logins', [AdminController::class, 'recentLogins']);
+    Route::get('/login-audits', [AdminController::class, 'loginAudits']);
 
     // Adoption listings overview
     Route::get('/adoption-listings', [AdminController::class, 'adoptionListings']);
@@ -140,7 +160,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/my-conversations', [\App\Http\Controllers\MessageController::class, 'getConversations']);
     Route::get('/my-conversations/buddies', [\App\Http\Controllers\MessageController::class, 'getBuddies']);
     Route::get('/my-conversations/{buddy_id}/messages', [\App\Http\Controllers\MessageController::class, 'getMessages']);
+    Route::post('/my-conversations/{buddy_id}/archive', [\App\Http\Controllers\MessageController::class, 'archive']);
+    Route::post('/my-conversations/{buddy_id}/unarchive', [\App\Http\Controllers\MessageController::class, 'unarchive']);
     Route::post('/my-messages', [\App\Http\Controllers\MessageController::class, 'store']);
+    Route::post('/messages/{message}/read', [\App\Http\Controllers\MessageController::class, 'markAsRead']);
     Route::delete('/my-conversations/{buddy_id}', [\App\Http\Controllers\MessageController::class, 'clearChat']);
     Route::delete('/my-messages/{message_id}', [\App\Http\Controllers\MessageController::class, 'unsend']);
 });

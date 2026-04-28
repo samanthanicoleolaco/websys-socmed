@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, MapPin, PawPrint, Plus, X } from "@phosphor-icons/react";
 import Sidebar from "./pages/Sidebar";
@@ -106,12 +106,41 @@ const adoptablePets = [
 // ── Component ──────────────────────────────────────────────────────────
 
 const AdoptionBoard = () => {
-    const [pets, setPets] = useState(adoptablePets);
+    const [pets, setPets] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [selectedPet, setSelectedPet] = useState(null);
     const [adoptFormPet, setAdoptFormPet] = useState(null);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [putForAdoptionOpen, setPutForAdoptionOpen] = useState(false);
     const [putFormSubmitted, setPutFormSubmitted] = useState(false);
+
+    const fetchListings = async () => {
+        try {
+            const res = await window.axios.get('/api/adoption-listings/available');
+            const data = res.data || [];
+            const formattedPets = data.map(listing => ({
+                id: listing.id,
+                name: listing.pet?.name || 'Unknown',
+                breed: listing.pet?.breed || 'Unknown',
+                age: listing.pet?.age_label || listing.pet?.age || 'Unknown',
+                description: listing.description || listing.pet?.bio || '',
+                location: listing.location || listing.pet?.location || 'Unknown',
+                image: listing.image ? `storage/${listing.image}` : (listing.pet?.photo ? `storage/${listing.pet.photo}` : null),
+                imageAlt: `${listing.pet?.name || 'Pet'} for adoption`,
+                tags: [],
+                saved: false,
+            }));
+            setPets(formattedPets);
+        } catch (err) {
+            console.error('Failed to fetch adoption listings:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchListings();
+    }, []);
 
     const toggleSave = (id) => {
         setPets((prev) =>

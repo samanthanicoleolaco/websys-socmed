@@ -25,25 +25,27 @@
 // ── Header ────────────────────────────────────────────────────────────
 
 .adoption-header {
-    margin-bottom: 8px;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
 
     &__text {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 4px;
     }
 
     &__title {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         font-size: 2rem;
         font-weight: 800;
         color: var(--text-main);
         margin: 0;
+        line-height: 1.15;
     }
 
     &__icon {
@@ -51,9 +53,11 @@
     }
 
     &__subtitle {
-        font-size: 1rem;
+        font-size: 0.95rem;
         color: var(--text-muted);
         margin: 0;
+        line-height: 1.4;
+        padding-left: 0;
     }
 }
 

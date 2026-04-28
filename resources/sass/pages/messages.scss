@@ -133,6 +133,8 @@
     padding: 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     z-index: 50;
+    max-height: 60vh;
+    overflow-y: auto;
 
     &__label {
         font-size: 0.68rem;
@@ -171,6 +173,71 @@
             text-decoration: underline;
         }
     }
+}
+
+.msg-block-modal {
+    background: var(--bg-card);
+    border-radius: 16px;
+    width: min(420px, 92vw);
+    max-height: 60vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--border-color);
+
+        h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+    }
+
+    &__body {
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__empty {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+}
+
+.msg-block-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+
+    .name {
+        font-weight: 600;
+        color: var(--text-main);
+    }
+}
+
+.msg-unblock-btn {
+    border: 1px solid var(--border-color);
+    background: var(--bg-page);
+    color: var(--text-main);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
 }
 
 // ── Toggle Switch ────────────────────────────────────────────────────────
@@ -690,7 +757,7 @@
     border-radius: 20px;
     width: 100%;
     max-width: 460px;
-    max-height: 80vh;
+    max-height: 60vh;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     display: flex;

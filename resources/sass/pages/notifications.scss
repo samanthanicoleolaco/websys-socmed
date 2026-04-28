@@ -160,6 +160,11 @@
     display: flex;
     gap: 6px;
 
+    .action-group {
+        display: flex;
+        gap: 6px;
+    }
+
     .icon-btn {
         width: 32px;
         height: 32px;
@@ -186,6 +191,16 @@
         &.read-btn:hover {
             background: #f0fdf4;
             color: #22c55e;
+        }
+
+        &.accept-btn:hover {
+            background: #f0fdf4;
+            color: #22c55e;
+        }
+
+        &.reject-btn:hover {
+            background: #fef2f2;
+            color: #ef4444;
         }
     }
 }

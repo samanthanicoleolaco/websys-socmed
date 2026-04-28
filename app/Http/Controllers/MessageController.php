@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\Pet;
+use App\Models\ConversationState;
+use App\Models\BlockedUser;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -18,6 +20,13 @@ class MessageController extends Controller
         if (!$pet) return response()->json([]);
 
         // Get unique conversations based on sent/received messages
+        $blockedUserIds = BlockedUser::where('user_id', $user->id)
+            ->pluck('blocked_user_id')
+            ->toArray();
+        $blockedByUserIds = BlockedUser::where('blocked_user_id', $user->id)
+            ->pluck('user_id')
+            ->toArray();
+
         $messages = Message::where('sender_pet_id', $pet->id)
             ->orWhere('receiver_pet_id', $pet->id)
             ->latest()
@@ -29,15 +38,30 @@ class MessageController extends Controller
             $otherId = $msg->sender_pet_id == $pet->id ? $msg->receiver_pet_id : $msg->sender_pet_id;
             if (!in_array($otherId, $added)) {
                 $otherPet = Pet::find($otherId);
-                if ($otherPet) {
+                if ($otherPet
+                    && !in_array($otherPet->user_id, $blockedUserIds, true)
+                    && !in_array($otherPet->user_id, $blockedByUserIds, true)
+                ) {
+                    $state = ConversationState::where('user_id', $user->id)
+                        ->where('buddy_id', $otherPet->user_id)
+                        ->first();
+                    $unreadCount = Message::where('sender_pet_id', $otherPet->id)
+                        ->where('receiver_pet_id', $pet->id)
+                        ->where('is_read', false)
+                        ->count();
+
                     $chats[] = [
                         'id' => $otherPet->id,
+                        'user_id' => $otherPet->id,
+                        'buddy_user_id' => $otherPet->user_id,
                         'name' => $otherPet->name,
                         'preview' => $msg->content,
                         'time' => $msg->created_at->diffForHumans(),
-                        'unread' => 0,
+                        'unread' => $unreadCount,
                         'bg' => '#F5A623',
-                        'initial' => substr($otherPet->name, 0, 1)
+                        'initial' => substr($otherPet->name, 0, 1),
+                        'last_message_at' => $msg->created_at,
+                        'archived_at' => $state?->archived_at,
                     ];
                     $added[] = $otherId;
                 }
@@ -85,7 +109,8 @@ class MessageController extends Controller
                 'id' => $msg->id,
                 'text' => $msg->content,
                 'isSelf' => $msg->sender_pet_id == $myPet->id,
-                'time' => $msg->created_at->format('g:i A')
+                'time' => $msg->created_at->format('g:i A'),
+                'is_read' => (bool) $msg->is_read,
             ];
         });
 
@@ -148,6 +173,38 @@ class MessageController extends Controller
         })->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function archive(Request $request, $buddy_id)
+    {
+        $user = Auth::user();
+        if (!$user) return response()->json(['error' => 'Unauthorized'], 401);
+
+        $buddyPet = Pet::find($buddy_id);
+        if (!$buddyPet) return response()->json(['error' => 'Buddy not found'], 404);
+
+        $state = ConversationState::updateOrCreate(
+            ['user_id' => $user->id, 'buddy_id' => $buddyPet->user_id],
+            ['archived_at' => now()]
+        );
+
+        return response()->json(['archived_at' => $state->archived_at]);
+    }
+
+    public function unarchive(Request $request, $buddy_id)
+    {
+        $user = Auth::user();
+        if (!$user) return response()->json(['error' => 'Unauthorized'], 401);
+
+        $buddyPet = Pet::find($buddy_id);
+        if (!$buddyPet) return response()->json(['error' => 'Buddy not found'], 404);
+
+        $state = ConversationState::updateOrCreate(
+            ['user_id' => $user->id, 'buddy_id' => $buddyPet->user_id],
+            ['archived_at' => null]
+        );
+
+        return response()->json(['archived_at' => $state->archived_at]);
     }
 
     public function unsend(Request $request, $message_id) 

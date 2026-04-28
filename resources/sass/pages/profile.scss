@@ -87,29 +87,29 @@
 
 .profile-avatar {
     flex-shrink: 0;
+    margin-top: -64px;
+    z-index: 5;
 
     img {
-        width: 150px;
-        height: 150px;
+        width: 128px;
+        height: 128px;
         border-radius: 50%;
         object-fit: cover;
         border: 4px solid var(--bg-card);
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.2);
         display: block;
 
         @media (max-width: 768px) {
-            width: 90px;
-            height: 90px;
+            width: 96px;
+            height: 96px;
+            margin-top: -48px;
         }
     }
 }
 
-.profile-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+.profile-header {
     padding-top: 0;
+    align-items: flex-start;
 }
 
 .profile-name {
@@ -161,8 +161,8 @@
 
 .btn-edit-profile {
     margin-left: auto;
-    align-self: flex-start;
-    margin-top: 0;
+    align-self: center;
+    margin-top: 8px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -254,20 +254,17 @@
 
 // Highlights
 .highlight-circle {
-    width: 60px;
-    height: 60px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
-    background: var(--primary-action);
-    color: white;
+    border: 3px solid transparent;
+    background:
+        linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+        linear-gradient(135deg, #f7a821, #e91e8c) border-box;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s;
-
-    &:hover {
-        background: #7a7b97;
-    }
 }
 
 // Pet Info List

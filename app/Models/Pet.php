@@ -22,10 +22,12 @@ class Pet extends Model
         'location',
         'cover_photo',
         'is_verified',
+        'is_private',
     ];
 
     protected $casts = [
         'birthday' => 'date',
+        'is_private' => 'boolean',
     ];
 
     public function user()
@@ -63,7 +65,7 @@ class Pet extends Model
         return $this->hasMany(ContestEntry::class);
     }
 
-    protected $appends = ['image_url', 'cover_photo_url'];
+    protected $appends = ['image_url', 'cover_photo_url', 'age_label'];
 
     public function getCoverPhotoUrlAttribute()
     {
@@ -75,5 +77,11 @@ class Pet extends Model
     {
         if (!$this->photo) return null;
         return url('storage/' . $this->photo);
+    }
+
+    public function getAgeLabelAttribute(): string
+    {
+        if ($this->age === null) return '';
+        return $this->age . ' year' . ($this->age == 1 ? '' : 's') . ' old';
     }
 }

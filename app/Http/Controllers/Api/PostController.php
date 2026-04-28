@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Pet;
 use App\Models\Notification;
+use App\Models\PostReport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,11 +36,18 @@ class PostController extends Controller
 
         $posts = $query->latest()->paginate(20);
 
+        $petIds = Auth::check() ? Auth::user()->pets->pluck('id') : collect();
+
         // Transform tagged_pets IDs into Pet objects
-        $posts->getCollection()->transform(function ($post) {
+        $posts->getCollection()->transform(function ($post) use ($petIds) {
             if ($post->tagged_pets && is_array($post->tagged_pets)) {
                 $post->tagged_pets = Pet::whereIn('id', $post->tagged_pets)->get();
             }
+            $post->liked_by_me = $petIds->isNotEmpty()
+                ? $post->likes->pluck('pet_id')->intersect($petIds)->isNotEmpty()
+                : false;
+            $post->likes_count = $post->likes->count();
+            $post->comments_count = $post->comments->count();
             return $post;
         });
 
@@ -126,7 +134,15 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return response()->json($post->load(['pet.user', 'likes', 'comments.pet']));
+        $post->load(['pet.user', 'likes', 'comments.pet']);
+        $petIds = Auth::check() ? Auth::user()->pets->pluck('id') : collect();
+        $post->liked_by_me = $petIds->isNotEmpty()
+            ? $post->likes->pluck('pet_id')->intersect($petIds)->isNotEmpty()
+            : false;
+        $post->likes_count = $post->likes->count();
+        $post->comments_count = $post->comments->count();
+
+        return response()->json($post);
     }
 
     public function update(Request $request, Post $post)
@@ -137,9 +153,10 @@ class PostController extends Controller
 
         $request->validate([
             'caption' => 'sometimes|required|string|max:2000',
+            'privacy' => 'sometimes|required|string|in:public,friends,followers',
         ]);
 
-        $post->update($request->only('caption'));
+        $post->update($request->only(['caption', 'privacy']));
         return response()->json($post->load(['pet.user', 'likes', 'comments']));
     }
 
@@ -154,5 +171,30 @@ class PostController extends Controller
 
         $post->delete();
         return response()->json(['message' => 'Post deleted successfully']);
+    }
+
+    public function report(Request $request, Post $post)
+    {
+        $request->validate([
+            'reason' => 'required|string|max:1000',
+        ]);
+
+        $existingReport = PostReport::where([
+            'reporter_id' => Auth::id(),
+            'post_id' => $post->id,
+        ])->first();
+
+        if ($existingReport) {
+            return response()->json(['message' => 'You have already reported this post'], 422);
+        }
+
+        $report = PostReport::create([
+            'reporter_id' => Auth::id(),
+            'post_id' => $post->id,
+            'reason' => $request->reason,
+            'status' => 'pending',
+        ]);
+
+        return response()->json($report, 201);
     }
 }

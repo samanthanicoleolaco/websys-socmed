@@ -250,7 +250,7 @@ const BadgesContests = () => {
                                         {(badge.status === "in-progress" || badge.status === "locked") && <LockKey className="status-icon locked-icon" weight="bold" />}
                                     </div>
                                     <div className={`badge-icon-wrap ${badge.gradient}`}>
-                                        {React.createElement(badge.icon, { size: 32, weight: "fill", color: "#fff" })}
+                                        {React.createElement(badge.icon, { size: 24, weight: "fill", color: "#fff" })}
                                     </div>
                                     <h4 className="badge-name">{badge.name}</h4>
                                     <p className="badge-desc">{badge.description}</p>
