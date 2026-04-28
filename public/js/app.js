@@ -2199,6 +2199,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Accept'] = 'application/json';
 window.axios.defaults.withCredentials = true;
 
+// Add Authorization header with token from localStorage
+var token = localStorage.getItem('auth_token');
+if (token) {
+  window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
+}
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -6778,7 +6784,7 @@ var Login = function Login() {
     setResetEmail = _useState14[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
-      var payload, _yield$window$axios$p, data, _t;
+      var payload, _yield$window$axios$p, data, redirectUrl, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -6788,11 +6794,10 @@ var Login = function Login() {
             _context.p = 1;
             payload = {
               email: email.trim(),
-              password: password,
-              remember: remember
+              password: password
             };
             _context.n = 2;
-            return window.axios.post("/login", payload, {
+            return window.axios.post("/api/auth/login", payload, {
               headers: (0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.jsonRequestHeaders)(),
               withCredentials: true
             });
@@ -6806,10 +6811,16 @@ var Login = function Login() {
             setError("The server did not return JSON (often a redirect or cached old JS). Hard-refresh (Ctrl+Shift+R) or clear cookies for this site, then try again.");
             return _context.a(2);
           case 3:
-            if (data.success) {
-              window.location.href = data.redirect || "/";
+            if (data.token) {
+              // Store the token for API requests
+              localStorage.setItem('auth_token', data.token);
+              // Store user data
+              localStorage.setItem('auth_user', JSON.stringify(data.user));
+              // Redirect based on role
+              redirectUrl = data.user.is_admin ? '/admin' : '/homefeed';
+              window.location.href = redirectUrl;
             } else {
-              setError(data.message || "Login failed");
+              setError("Login failed");
             }
             _context.n = 5;
             break;
@@ -13655,35 +13666,55 @@ var UserProvider = function UserProvider(_ref) {
     setLoading = _useState4[1];
   var fetchUser = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var _response$data, response, _t;
+      var publicPaths, isPublicPath, _response$data, response, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
-            _context.p = 0;
-            console.log("UserProvider: Fetching user...");
-            _context.n = 1;
-            return window.axios.get('/api/user');
+            // Don't fetch user on login/register pages to prevent 401 loop
+            publicPaths = ['/login', '/register', '/password/reset', '/email/verify'];
+            isPublicPath = publicPaths.some(function (path) {
+              return window.location.pathname.includes(path);
+            });
+            if (!isPublicPath) {
+              _context.n = 1;
+              break;
+            }
+            setLoading(false);
+            return _context.a(2);
           case 1:
+            _context.p = 1;
+            console.log("UserProvider: Fetching user...");
+            _context.n = 2;
+            return window.axios.get('/api/user');
+          case 2:
             response = _context.v;
             console.log("UserProvider: User fetched successfully", response.data);
             setUser(response.data);
             window.authUser = response.data;
             window.userSettings = ((_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.user_settings) || {};
-            _context.n = 3;
+            _context.n = 4;
             break;
-          case 2:
-            _context.p = 2;
+          case 3:
+            _context.p = 3;
             _t = _context.v;
             console.error("UserProvider: Error fetching user:", _t);
             setUser(null);
-          case 3:
-            _context.p = 3;
-            setLoading(false);
-            return _context.f(3);
+            // Clear token on 401 and redirect to login
+            if (_t.response && _t.response.status === 401) {
+              localStorage.removeItem('auth_token');
+              localStorage.removeItem('auth_user');
+              if (!window.location.pathname.includes('/login')) {
+                window.location.href = '/login';
+              }
+            }
           case 4:
+            _context.p = 4;
+            setLoading(false);
+            return _context.f(4);
+          case 5:
             return _context.a(2);
         }
-      }, _callee, null, [[0, 2, 3, 4]]);
+      }, _callee, null, [[1, 3, 4, 5]]);
     }));
     return function fetchUser() {
       return _ref2.apply(this, arguments);

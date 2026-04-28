@@ -7,6 +7,15 @@ export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const fetchUser = async () => {
+        // Don't fetch user on login/register pages to prevent 401 loop
+        const publicPaths = ['/login', '/register', '/password/reset', '/email/verify'];
+        const isPublicPath = publicPaths.some(path => window.location.pathname.includes(path));
+        
+        if (isPublicPath) {
+            setLoading(false);
+            return;
+        }
+
         try {
             console.log("UserProvider: Fetching user...");
             const response = await window.axios.get('/api/user');
@@ -17,6 +26,14 @@ export const UserProvider = ({ children }) => {
         } catch (error) {
             console.error("UserProvider: Error fetching user:", error);
             setUser(null);
+            // Clear token on 401 and redirect to login
+            if (error.response && error.response.status === 401) {
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('auth_user');
+                if (!window.location.pathname.includes('/login')) {
+                    window.location.href = '/login';
+                }
+            }
         } finally {
             setLoading(false);
         }

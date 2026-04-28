@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\SavedPostController;
 // Public routes
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/sanctum/token', [AuthController::class, 'sanctumToken']);
 Route::post('/password/email', [App\Http\Controllers\LoginController::class, 'sendResetLinkEmail'])->middleware('throttle:5,1');
 Route::post('/password/reset', [App\Http\Controllers\LoginController::class, 'resetPassword']);
 

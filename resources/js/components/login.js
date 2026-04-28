@@ -19,8 +19,8 @@ const Login = () => {
         setLoading(true);
         setError("");
         try {
-            const payload = { email: email.trim(), password, remember };
-            const { data } = await window.axios.post("/login", payload, {
+            const payload = { email: email.trim(), password };
+            const { data } = await window.axios.post("/api/auth/login", payload, {
                 headers: jsonRequestHeaders(),
                 withCredentials: true,
             });
@@ -32,10 +32,16 @@ const Login = () => {
                 return;
             }
 
-            if (data.success) {
-                window.location.href = data.redirect || "/";
+            if (data.token) {
+                // Store the token for API requests
+                localStorage.setItem('auth_token', data.token);
+                // Store user data
+                localStorage.setItem('auth_user', JSON.stringify(data.user));
+                // Redirect based on role
+                const redirectUrl = data.user.is_admin ? '/admin' : '/homefeed';
+                window.location.href = redirectUrl;
             } else {
-                setError(data.message || "Login failed");
+                setError("Login failed");
             }
         } catch (err) {
             setError(messageFromAxiosError(err));

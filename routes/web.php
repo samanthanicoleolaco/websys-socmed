@@ -36,6 +36,14 @@ Route::post('/password/reset', [App\Http\Controllers\LoginController::class, 're
 
 // Protected routes
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Admin route - only accessible to admins
+    Route::get('/admin', function () {
+        if (!auth()->user()->is_admin) {
+            return redirect('/homefeed');
+        }
+        return view('welcome');
+    })->name('admin');
+
     Route::get('/', function () {
         return view('welcome');
     });
