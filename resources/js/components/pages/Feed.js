@@ -459,6 +459,7 @@ const Feed = () => {
 
     const privacyMenuRef = useRef(null);
     const storyMenuRef = useRef(null);
+    const searchDebounceRef = useRef(null);
     
     const fileInputRef = useRef(null);
     const imageInputRef = useRef(null);
@@ -577,15 +578,16 @@ const Feed = () => {
             async (position) => {
                 const { latitude, longitude } = position.coords;
                 try {
-                    const viewbox = `${longitude - 0.05},${latitude - 0.05},${longitude + 0.05},${latitude + 0.05}`;
-                    const searchRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&lat=${latitude}&lon=${longitude}&bounded=1&limit=6&viewbox=${encodeURIComponent(viewbox)}`);
-                    const searchData = await searchRes.json();
+                    const searchRes = await window.axios.get('/api/locations/nearby', {
+                        params: { lat: latitude, lon: longitude }
+                    });
+                    const searchData = searchRes.data;
                     const nearby = searchData.map((item, index) => {
-                        const parts = item.display_name.split(",");
+                        const parts = (item.display_name || '').split(",");
                         const name = parts.slice(0, 1).join(",");
                         const sub = parts.slice(1, 3).join(",").trim();
                         return {
-                            id: item.place_id || index + 1,
+                            id: item.id || index + 1,
                             name: sub ? `${name} (${sub})` : name,
                             sub: item.display_name,
                             type: "pin",
@@ -613,27 +615,43 @@ const Feed = () => {
         );
     };
 
-    const searchLocations = async (query) => {
-        if (!query.trim()) { fetchNearbyLocations(); return; }
+    const searchLocations = (query) => {
+        const trimmed = query.trim();
+        if (searchDebounceRef.current) {
+            clearTimeout(searchDebounceRef.current);
+        }
+        if (!trimmed) {
+            fetchNearbyLocations();
+            return;
+        }
+        if (trimmed.length < 3) {
+            // Don't hit the network for "F" or "FA" — Nominatim policy.
+            return;
+        }
         setIsLocating(true);
-        try {
-            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=8&addressdetails=1`);
-            const data = await res.json();
-            const results = data.map((item, index) => ({
-                id: item.place_id || index + 1,
-                name: (() => {
-                    const parts = item.display_name.split(",");
-                    const namePart = parts.slice(0, 1).join(",");
-                    const subPart = parts.slice(1, 3).join(",").trim();
-                    return subPart ? `${namePart} (${subPart})` : namePart;
-                })(),
-                sub: item.display_name,
-                type: "pin",
-                lat: item.lat,
-                lon: item.lon
-            }));
-            setSuggestedLocations(results);
-        } catch (err) { console.error(err); } finally { setIsLocating(false); }
+        searchDebounceRef.current = setTimeout(async () => {
+            try {
+                const res = await window.axios.get('/api/locations/search', { params: { q: trimmed } });
+                const results = (res.data || []).map((item, index) => {
+                    const parts = (item.display_name || '').split(',');
+                    const namePart = parts.slice(0, 1).join(',');
+                    const subPart = parts.slice(1, 3).join(',').trim();
+                    return {
+                        id: item.id || index + 1,
+                        name: subPart ? `${namePart} (${subPart})` : namePart,
+                        sub: item.display_name,
+                        type: 'pin',
+                        lat: item.lat,
+                        lon: item.lon,
+                    };
+                });
+                setSuggestedLocations(results);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLocating(false);
+            }
+        }, 350); // 350ms debounce
     };
 
     const fetchSuggestedPets = async (isSeeAll = false) => {

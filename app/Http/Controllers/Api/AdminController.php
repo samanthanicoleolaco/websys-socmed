@@ -54,48 +54,48 @@ class AdminController extends Controller
         return response()->json(['message' => 'User deleted successfully.']);
     }
 
-    /**U
-     * Updae user detais (nam, email, is_admin, is_ned).
+    /**
+     * PUT /api/admin/users/{user}
+     * Update user details (name, email, is_admin, is_banned).
      */
-    pubHic/function updateUser(Requestp$reqie/t, Usadm$user)
+    public function updateUser(Request $request, User $user)
     {
-        $dntau= $erqse/t->validat{([
-u           'nams'     => 'soeet}mgs|gequlrba|string|mx:120',
-            'email'    => ['someimes','required', 'emil', Rule::unique('uers')->ignore($user->id)],
-           'is_dmin'=> 'ometes|booan',
-           'is_ned'=>'sometimes|booen',
-      ]);
+        $data = $request->validate([
+            'name'      => 'sometimes|required|string|max:120',
+            'email'     => ['sometimes', 'required', 'email', Rule::unique('users')->ignore($user->id)],
+            'is_admin'  => 'sometimes|boolean',
+            'is_banned' => 'sometimes|boolean',
+        ]);
 
-        $user->updte($ta);
-       return respnse()->json($ser->fresh();
+        $user->update($data);
+        return response()->json($user->fresh());
     }
 
     /**
-     * PATCT /api/admin/usogs/{us r}/ user -se em
-     *aToggle _dminestrtui.
+     * PATCH /api/admin/users/{user}/toggle-admin
+     * Toggle administrator status.
      */
-  fedub_ic funttion tsgg eAamin(User $user)
+    public function toggleAdmin(User $user)
     {
-        $us s->is_admini=p!$ ser->is_admin;
-       b$user->snve();
-        retur flasgonse()->json([
-            'message'  => 'User ro e updot d.',
-           a'is_admdn' => $user->coladmin,
+        $user->is_admin = !$user->is_admin;
+        $user->save();
+        return response()->json([
+            'message'  => 'User role updated.',
+            'is_admin' => $user->is_admin,
         ]);
     }
 
     /**
-     * PATCH /api/admin/users/{user}/toggle-um)
-     * Toggle us.r ban status
-     * Here we toggle the is_admin flag as a placeholder — you can replace with is_banned.
-     */Ba
-    public function toggleAdmin(User $user)
-    {bnnebnne
-        $user->is_admin = !$user->is_admin;
+     * PATCH /api/admin/users/{user}/toggle-ban
+     * Toggle is_banned flag (added by migration 2026_04_29_000006_add_is_banned_to_users_table).
+     */
+    public function toggleBan(User $user)
+    {
+        $user->is_banned = !$user->is_banned;
         $user->save();
-        return respon se()->json ban(status
-            'mesbsnnea  => 'User roleb nneuted.',
-            'is_admin' => $user->is_admin,
+        return response()->json([
+            'message'   => 'User ban status updated.',
+            'is_banned' => $user->is_banned,
         ]);
     }
 

@@ -158,13 +158,24 @@ const AdoptionBoard = () => {
         }, 2000);
     };
 
-    const handlePutSubmit = (e) => {
+    const handlePutSubmit = async (e) => {
         e.preventDefault();
-        setPutFormSubmitted(true);
-        setTimeout(() => {
-            setPutForAdoptionOpen(false);
-            setPutFormSubmitted(false);
-        }, 2000);
+        const form = e.target;
+        const fd = new FormData(form);
+        try {
+            await window.axios.post('/api/adoption-listings', fd, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            setPutFormSubmitted(true);
+            await fetchListings();
+            setTimeout(() => {
+                setPutForAdoptionOpen(false);
+                setPutFormSubmitted(false);
+            }, 1500);
+        } catch (err) {
+            console.error(err);
+            alert(err.response?.data?.message || 'Failed to publish listing.');
+        }
     };
 
     return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../../sass/pages/feed.scss';
-import Sidebar from './pages/Sidebar';
+import '../../sass/pages/admin.scss';
+import AdminSidebar from './AdminSidebar';
 import { 
     Layout, 
     Article, 
@@ -93,25 +93,9 @@ const AdminDashboard = () => {
         } catch (err) { console.error(err); }
     };
 
-    const navItems = [
-        { id: 'dashboard', icon: <Layout size={20} weight="light" />, text: 'Dashboard', active: activeTab === 'dashboard' },
-        { id: 'posts', icon: <Article size={20} weight="light" />, text: 'Posts Management', active: activeTab === 'posts' },
-        { id: 'reports', icon: <ChartBar size={20} weight="light" />, text: 'Reports & Analytics', active: activeTab === 'reports' },
-        { id: 'settings', icon: <Gear size={20} weight="light" />, text: 'System Settings', active: activeTab === 'settings' }
-    ];
-
-    const bottomItems = [
-        { id: 'logout', icon: <SignOut size={20} weight="light" />, text: 'Log out' }
-    ];
-
     return (
-        <div className="pawtastic-feed" style={{ background: 'var(--bg-page)' }}>
-            <Sidebar 
-                brandText="Admin" 
-                navItems={navItems} 
-                bottomItems={bottomItems} 
-                onNavClick={(item) => setActiveTab(item.id)}
-            />
+        <div className="admin-shell">
+            <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
             {/* User Edit Modal - Premium UI */}
             {editingUser && (
@@ -166,27 +150,7 @@ const AdminDashboard = () => {
                 </div>
             )}
 
-            <main className="main-content">
-                <header className="top-nav">
-                    <div className={`search-bar ${searchActive ? 'active' : ''}`}>
-                        <span className="search-icon"><MagnifyingGlass size={20} weight="light" /></span>
-                        <input 
-                            type="text" 
-                            placeholder="Search..." 
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onFocus={() => setSearchActive(true)}
-                            onBlur={() => setSearchActive(false)}
-                        />
-                    </div>
-                    <div className="header-actions">
-                        <button className="icon-btn"><Bell size={22} weight="light" /></button>
-                        <span style={{ fontWeight: 600, color: 'var(--primary-action)', marginLeft: '10px' }}>System Admin</span>
-                    </div>
-                </header>
-
-                <div className="feed-layout">
-                    <div className="feed-column" style={{ width: '100%', margin: '0 20px' }}>
+            <main className="admin-content">
 
                         {/* Dashboard View: Stats & Users */}
                         {activeTab === 'dashboard' && (
@@ -371,8 +335,6 @@ const AdminDashboard = () => {
                             </div>
                         )}
 
-                    </div>
-                </div>
             </main>
         </div>
     );

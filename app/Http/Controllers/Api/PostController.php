@@ -108,12 +108,16 @@ class PostController extends Controller
             'privacy' => $request->input('privacy', 'public'),
         ]);
 
-        if ($post->tagged_pets && is_array($post->tagged_pets)) {
-            $post->tagged_pets = Pet::whereIn('id', $post->tagged_pets)->get();
-        }
+        // Resolve tagged pets ONCE into a Collection of Eloquent models. Iterate as
+        // objects for notifications and only attach to the response at the end.
+        // Reassigning $post->tagged_pets here would round-trip through the array
+        // cast and yield arrays of arrays — which causes
+        // "Attempt to read property 'user_id' on array".
+        $taggedPetModels = collect();
+        if (is_array($taggedPets) && count($taggedPets) > 0) {
+            $taggedPetModels = Pet::whereIn('id', $taggedPets)->get();
 
-        if ($post->tagged_pets && is_array($post->tagged_pets)) {
-            foreach ($post->tagged_pets as $taggedPet) {
+            foreach ($taggedPetModels as $taggedPet) {
                 if ((int) $taggedPet->user_id === (int) $user->id) {
                     continue;
                 }
@@ -129,7 +133,13 @@ class PostController extends Controller
             }
         }
 
-        return response()->json($post->load(['pet.user', 'likes', 'comments']), 201);
+        $response = $post->load(['pet.user', 'likes', 'comments']);
+        if ($taggedPetModels->isNotEmpty()) {
+            // Use setAttribute so we override the cast for the JSON response only.
+            $response->setAttribute('tagged_pets', $taggedPetModels);
+        }
+
+        return response()->json($response, 201);
     }
 
     public function show(Post $post)

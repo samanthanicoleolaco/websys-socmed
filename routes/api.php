@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\AdoptionListingController;
 use App\Http\Controllers\Api\ShelterRegistrationController;
 use App\Http\Controllers\Api\AdoptionReportController;
 use App\Http\Controllers\Api\BlockController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\SavedPostController;
 
 /*
@@ -36,6 +37,12 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/password/email', [App\Http\Controllers\LoginController::class, 'sendResetLinkEmail'])->middleware('throttle:5,1');
 Route::post('/password/reset', [App\Http\Controllers\LoginController::class, 'resetPassword']);
+
+// Location proxy routes (public, throttled to prevent Nominatim abuse)
+Route::middleware('throttle:30,1')->group(function () {
+    Route::get('/locations/search', [LocationController::class, 'search']);
+    Route::get('/locations/nearby', [LocationController::class, 'nearby']);
+});
 
 Route::middleware('throttle:12,1')->group(function () {
     Route::post('/shelter-registration', [ShelterRegistrationController::class, 'store']);
@@ -105,8 +112,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     
     // Adoption listing routes
-    Route::apiResource('adoption-listings', AdoptionListingController::class);
+    // IMPORTANT: '/available' MUST come before apiResource, otherwise
+    // /{adoptionListing} binds 'available' as an id and 404s.
     Route::get('/adoption-listings/available', [AdoptionListingController::class, 'available']);
+    Route::apiResource('adoption-listings', AdoptionListingController::class);
     
     // Notification routes
     Route::apiResource('notifications', NotificationController::class)->except(['store']);

@@ -6584,6 +6584,131 @@ body {
     background-position: -200% 0;
   }
 }
+.admin-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.admin-sidebar {
+  background: #111827;
+  border-right: 1px solid rgba(148, 163, 184, 0.12);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+}
+.admin-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 24px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  margin-bottom: 16px;
+}
+.admin-sidebar__brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+}
+.admin-sidebar__brand-name {
+  display: block;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+.admin-sidebar__brand-role {
+  display: block;
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.admin-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.admin-sidebar__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+.admin-sidebar__logout {
+  background: transparent;
+  border: 0;
+  color: #fca5a5;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.admin-sidebar__logout:hover {
+  background: rgba(248, 113, 113, 0.08);
+}
+.admin-sidebar__theme {
+  background: transparent;
+  border: 0;
+  color: #94a3b8;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.admin-sidebar__theme:hover {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.admin-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 0;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+.admin-nav-item__bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: rgba(99, 102, 241, 0.18);
+}
+.admin-nav-item__icon, .admin-nav-item__label {
+  position: relative;
+  z-index: 1;
+}
+.admin-nav-item__label {
+  font-weight: 500;
+}
+.admin-nav-item:hover {
+  color: #f1f5f9;
+  background: rgba(148, 163, 184, 0.06);
+}
+.admin-nav-item.active {
+  color: #fff;
+}
+
+.admin-content {
+  padding: 32px 40px;
+  max-width: 1280px;
+}
+
 .bottom-nav {
   display: none;
   position: fixed;
