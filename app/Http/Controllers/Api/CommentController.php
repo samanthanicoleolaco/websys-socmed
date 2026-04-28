@@ -22,7 +22,11 @@ class CommentController extends Controller
      */
     public function index(Request $request, Post $post)
     {
-        $comments = $post->comments()->with('pet.user')->latest()->paginate(20);
+        $comments = $post->comments()
+            ->whereNull('parent_id')
+            ->with(['pet.user', 'replies.pet.user'])
+            ->latest()
+            ->paginate(20);
         return response()->json($comments);
     }
 
@@ -35,6 +39,7 @@ class CommentController extends Controller
             'post_id' => 'required|exists:posts,id',
             'pet_id' => 'required|exists:pets,id',
             'content' => 'required|string|max:1000',
+            'parent_id' => 'nullable|exists:comments,id',
         ]);
 
         // Check if user owns the pet

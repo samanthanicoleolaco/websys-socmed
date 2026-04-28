@@ -1,4 +1,5 @@
 // resources/sass/pages/feed.scss
+@use '../modal' as *;
 
 .pawtastic-feed {
     display: flex;
@@ -34,12 +35,43 @@
 
 .feed-center { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 
+.feed-filter-indicator {
+    .filter-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 20px;
+        margin-bottom: 20px;
+        background: rgba(233, 30, 140, 0.1);
+        border: 1px solid rgba(233, 30, 140, 0.25);
+    }
+
+    .filter-info {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    .clear-filter {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
 .feed-card {
     background: var(--bg-card);
     border-radius: 16px;
     border: 1px solid var(--border-color);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 // ── Stories ───────────────────────────────────────────────────────────
@@ -185,7 +217,37 @@
                     font-size: 0.8rem;
                     .breed { font-weight: 500; }
                     .dot { color: var(--text-muted); }
-                    .location { display: inline-flex; align-items: center; gap: 4px; a { color: inherit; text-decoration: none; &:hover { text-decoration: underline; } } }
+                    .location {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 4px;
+                        max-width: 300px;
+
+                        .location-text {
+                            color: var(--text-muted);
+                            font-weight: 600;
+                            text-decoration: none;
+                            display: inline-flex;
+                            align-items: center;
+                            max-width: 270px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+
+                            &:hover {
+                                text-decoration: underline;
+                                color: var(--text-main);
+                            }
+                        }
+                    }
+                }
+
+                .meta-row {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 0.8rem;
+                    color: var(--text-muted);
                 }
             }
         }
@@ -218,9 +280,11 @@
         }
         .main-img {
             width: 100%;
+            max-height: 540px;
             display: block;
             object-fit: cover;
             border-radius: 0;
+            background: var(--bg-page);
         }
 
         .main-video {
@@ -826,12 +890,8 @@
 
 // ── Post Modal ───────────────────────────────────────────────────────
 .post-modal-overlay {
-    position: fixed;
-    inset: 0;
+    @extend %app-modal-overlay;
     z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .post-modal-bg {
     position: absolute;
@@ -845,13 +905,12 @@
     background: var(--bg-card);
     border-radius: 20px;
     overflow: hidden;
-    max-height: 90vh;
+    max-height: min(640px, 88vh);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     
     &.has-image {
-        width: 1000px;
-        max-width: 95vw;
-        height: 800px;
+        width: min(1000px, 94vw);
+        height: auto;
         
         .post-modal-media {
             flex: 1.5;
@@ -972,18 +1031,91 @@
         span:first-child { font-weight: 600; color: var(--text-main); }
     }
 
+    .post-modal-comment-thread {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        
+        .comment-replies {
+            padding-left: 44px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 4px;
+        }
+    }
+
     .post-modal-comment {
         display: flex;
         align-items: flex-start;
         gap: 12px;
 
+        .comment-content-area {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background: var(--bg-page);
+            padding: 10px 14px;
+            border-radius: 12px;
+        }
+
+        &.reply .comment-content-area {
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+
         .comment-body {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
         .comment-author { font-weight: 700; color: var(--text-main); font-size: 0.9rem; }
-        .comment-text { color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; }
+        .comment-text { color: var(--text-main); font-size: 0.9rem; line-height: 1.4; }
+
+        .comment-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+
+            .reply-btn {
+                background: none;
+                border: none;
+                color: var(--text-muted);
+                font-weight: 700;
+                cursor: pointer;
+                padding: 0;
+                &:hover { color: var(--primary-action); }
+            }
+        }
+    }
+}
+
+.replying-to-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-page);
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    
+    strong { color: var(--text-main); }
+    
+    .cancel-reply {
+        background: none;
+        border: none;
+        color: var(--danger);
+        font-weight: 700;
+        cursor: pointer;
+        padding: 0;
+        &:hover { opacity: 0.8; }
     }
 }
 
@@ -1051,12 +1183,8 @@
 
 // ── Likers Modal ─────────────────────────────────────────────────────
 .likers-modal-overlay {
-    position: fixed;
-    inset: 0;
+    @extend %app-modal-overlay;
     z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .likers-modal-bg {
@@ -1068,13 +1196,8 @@
 
 .likers-modal {
     position: relative;
+    @extend %app-modal;
     width: min(480px, 92vw);
-    max-height: 80vh;
-    overflow-y: auto;
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -1471,10 +1594,11 @@
 .location-picker {
     background: var(--bg-card);
     width: 100%;
-    max-width: 480px;
+    max-width: 540px;
     max-height: 85vh;
     border-radius: 20px 20px 0 0;
     overflow: hidden;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
@@ -1591,7 +1715,10 @@
     &__content {
         flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
         padding: 12px 0;
+        scrollbar-width: none;
+        &::-webkit-scrollbar { display: none; }
 
         .suggested-title {
             font-size: 0.85rem;
@@ -1657,6 +1784,7 @@
                 flex-direction: column;
                 gap: 2px;
                 flex: 1;
+                min-width: 0; // Allow shrinking to prevent pushing the follow button out
 
                 .location-name {
                     font-size: 0.95rem;

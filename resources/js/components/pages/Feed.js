@@ -67,6 +67,8 @@ const getMenuItems = (post, currentUserId) => {
     const isOwner = post?.pet?.user?.id === currentUserId;
     if (isOwner) {
         return [
+            { key: "save", icon: Bookmark, label: "Save this post", sub: "Add to your saved posts collection.", color: "var(--text-main)", action: "save" },
+            { divider: true },
             { key: "edit", icon: PencilSimple, label: "Edit caption", sub: "Update your post text.", color: "var(--text-main)", action: "edit" },
             { key: "privacy", icon: Lock, label: "Change privacy", sub: "Public, friends, or followers.", color: "var(--text-main)", action: "privacy" },
             { divider: true },
@@ -178,11 +180,12 @@ const PostMenu = ({ post, currentUserId, onSave, onFollow, onHide, onReport, onE
 
 // ── Feed Component ─────────────────────────────────────────────────────
 
-const PostModal = ({ post, onClose, onLike, onOpenLikers, onCommentAdded }) => {
+export const PostModal = ({ post, onClose, onLike, onSave, onOpenLikers, onCommentAdded }) => {
     const { user } = useUser();
     const [comments, setComments] = useState([]);
     const [commentText, setCommentText] = useState("");
     const [isPostingComment, setIsPostingComment] = useState(false);
+    const [replyingTo, setReplyingTo] = useState(null);
 
     useEffect(() => {
         if (!post) return;
@@ -210,9 +213,19 @@ const PostModal = ({ post, onClose, onLike, onOpenLikers, onCommentAdded }) => {
                 post_id: post.id,
                 pet_id: petId,
                 content: commentText.trim(),
+                parent_id: replyingTo?.id || null,
             });
             const created = res.data;
-            setComments((prev) => [created, ...prev]);
+            
+            if (replyingTo) {
+                setComments((prev) => prev.map(c => 
+                    c.id === replyingTo.id ? { ...c, replies: [...(c.replies || []), created] } : c
+                ));
+                setReplyingTo(null);
+            } else {
+                setComments((prev) => [created, ...prev]);
+            }
+            
             setCommentText("");
             onCommentAdded?.(post.id, created);
         } catch (err) {
@@ -286,18 +299,51 @@ const PostModal = ({ post, onClose, onLike, onOpenLikers, onCommentAdded }) => {
                                     <span>Start the conversation.</span>
                                 </div>
                             ) : comments.map((comment) => (
-                                <div className="post-modal-comment" key={comment.id}>
-                                    <Avatar src={comment.pet?.image_url} size="sm" />
-                                    <div className="comment-body">
-                                        <span className="comment-author">{comment.pet?.name}</span>
-                                        <span className="comment-text">{comment.content}</span>
+                                <div className="post-modal-comment-thread" key={comment.id}>
+                                    <div className="post-modal-comment">
+                                        <Avatar src={comment.pet?.image_url} size="sm" />
+                                        <div className="comment-content-area">
+                                            <div className="comment-body">
+                                                <span className="comment-author">{comment.pet?.name}</span>
+                                                <span className="comment-text">{comment.content}</span>
+                                            </div>
+                                            <div className="comment-actions">
+                                                <span className="time">{comment.time_ago || "Just now"}</span>
+                                                <button className="reply-btn" onClick={() => setReplyingTo(comment)}>Reply</button>
+                                            </div>
+                                        </div>
                                     </div>
+                                    
+                                    {comment.replies && comment.replies.length > 0 && (
+                                        <div className="comment-replies">
+                                            {comment.replies.map(reply => (
+                                                <div className="post-modal-comment reply" key={reply.id}>
+                                                    <Avatar src={reply.pet?.image_url} size="sm" />
+                                                    <div className="comment-content-area">
+                                                        <div className="comment-body">
+                                                            <span className="comment-author">{reply.pet?.name}</span>
+                                                            <span className="comment-text">{reply.content}</span>
+                                                        </div>
+                                                        <div className="comment-actions">
+                                                            <span className="time">{reply.time_ago || "Just now"}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     <div className="post-modal-footer">
+                        {replyingTo && (
+                            <div className="replying-to-banner">
+                                <span>Replying to <strong>{replyingTo.pet?.name}</strong></span>
+                                <button className="cancel-reply" onClick={() => setReplyingTo(null)}>Cancel</button>
+                            </div>
+                        )}
                         <div className="actions">
                             <div className="actions-left">
                                 <button className={`action-btn ${post.isLiked ? 'active' : ''}`} onClick={() => onLike(post.id)}>
@@ -310,8 +356,8 @@ const PostModal = ({ post, onClose, onLike, onOpenLikers, onCommentAdded }) => {
                                     <ShareNetwork size={24} />
                                 </button>
                             </div>
-                            <button className="action-btn bookmark">
-                                <Bookmark size={24} />
+                            <button className="action-btn bookmark" onClick={() => onSave?.(post)}>
+                                <Bookmark size={24} weight={post.isSaved ? "fill" : "bold"} />
                             </button>
                         </div>
                         <button className="likes-count-btn" onClick={() => onOpenLikers?.(post)}>
@@ -512,6 +558,7 @@ const Feed = () => {
                 likes: p.likes_count ?? 0,
                 comments: p.comments_count ?? 0,
                 isLiked: !!p.liked_by_me,
+                isSaved: !!p.saved_by_me || !!p.is_saved,
                 privacy: p.privacy || 'public',
                 tagged_pets: p.tagged_pets || [],
                 pet: p.pet || null,
@@ -889,6 +936,8 @@ const Feed = () => {
     const handleSavePost = async (post) => {
         try {
             await window.axios.post("/api/saved-posts", { post_id: post.id });
+            setPosts((prev) => prev.map((p) => p.id === post.id ? { ...p, isSaved: true } : p));
+            setActivePost((prev) => prev?.id === post.id ? { ...prev, isSaved: true } : prev);
         } catch (err) {
             console.error(err);
         }
@@ -995,6 +1044,7 @@ const Feed = () => {
                 likes: 0,
                 comments: 0,
                 isLiked: false,
+                isSaved: false,
                 tagged_pets: createdPost.tagged_pets || [],
                 pet: createdPost.pet || null,
                 user: createdPost.pet?.user || createdPost.user || null,
@@ -1325,12 +1375,12 @@ const Feed = () => {
                         {/* Filter Indicator */}
                         {filterTag && (
                             <div className="feed-filter-indicator">
-                                <Card className="filter-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', marginBottom: '20px', background: 'rgba(233, 30, 140, 0.1)', border: '1px solid rgba(233, 30, 140, 0.2)' }}>
-                                    <div className="filter-info" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <Card className="filter-card">
+                                    <div className="filter-info">
                                         <TrendUp size={20} weight="fill" color="#e91e8c" />
                                         <span>Showing results for <strong>#{filterTag}</strong></span>
                                     </div>
-                                    <button className="clear-filter" onClick={() => setFilterTag(null)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                                    <button className="clear-filter" onClick={() => setFilterTag(null)}>
                                         <X size={18} />
                                     </button>
                                 </Card>
@@ -1367,11 +1417,11 @@ const Feed = () => {
                                                             <span className="location">
                                                                 <MapPin size={12} weight="fill" />
                                                                 {post.location_lat && post.location_lon ? (
-                                                                    <a href={`https://maps.google.com/?q=${post.location_lat},${post.location_lon}`} target="_blank" rel="noopener">
-                                                                        {post.location}
+                                                                    <a href={`https://maps.google.com/?q=${post.location_lat},${post.location_lon}`} target="_blank" rel="noopener" title={post.location} className="location-text">
+                                                                        <strong>{post.location}</strong>
                                                                     </a>
                                                                 ) : (
-                                                                    <span>{post.location}</span>
+                                                                    <span title={post.location} className="location-text"><strong>{post.location}</strong></span>
                                                                 )}
                                                             </span>
                                                         </>
@@ -1512,6 +1562,7 @@ const Feed = () => {
                         post={activePost}
                         onClose={() => setActivePost(null)}
                         onLike={toggleLike}
+                        onSave={handleSavePost}
                         onOpenLikers={(post) => setLikersFor(post)}
                         onCommentAdded={handleCommentAdded}
                     />

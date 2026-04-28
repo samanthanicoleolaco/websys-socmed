@@ -54,7 +54,7 @@ class Post extends Model
         return $this->comments()->count();
     }
 
-    protected $appends = ['image_url', 'video_url'];
+    protected $appends = ['image_url', 'video_url', 'time_ago', 'likes_count', 'comments_count'];
     
     public function getImageUrlAttribute()
     {
@@ -64,5 +64,20 @@ class Post extends Model
     public function getVideoUrlAttribute()
     {
         return $this->video ? asset('storage/' . $this->video) : null;
+    }
+
+    public function getTimeAgoAttribute()
+    {
+        return $this->created_at ? $this->created_at->diffForHumans() : null;
+    }
+
+    public function getLikesCountAttribute()
+    {
+        return $this->likes()->count();
+    }
+
+    public function getCommentsCountAttribute()
+    {
+        return $this->comments()->count();
     }
 }

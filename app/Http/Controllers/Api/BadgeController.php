@@ -38,6 +38,8 @@ class BadgeController extends Controller
                 'description' => $b->description,
                 'icon' => $b->icon,
                 'category' => $b->category,
+                'rarity' => $b->rarity ?: 'Common',
+                'gradient' => $b->gradient ?: 'bg-gradient-orange',
                 'status' => $earnedIds->contains($b->id) ? 'earned' : 'in-progress',
             ]),
             'earned_count' => $earnedIds->count(),

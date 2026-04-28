@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     Heart,
     Eye,
@@ -16,18 +17,55 @@ import {
     Medal,
     Calendar,
     Tag,
-    BookmarkSimple
+    BookmarkSimple,
+    X
 } from "@phosphor-icons/react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
+import { PostModal } from "./Feed";
 import "../../../sass/pages/profile.scss";
 
 const Profile = () => {
     const [pet, setPet] = useState(null);
-    const [userPets, setUserPets] = useState([]);
+    const [currentUserId, setCurrentUserId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("Posts");
     const [isFollowing, setIsFollowing] = useState(false);
+    const [taggedPosts, setTaggedPosts] = useState([]);
+    const [savedPosts, setSavedPosts] = useState([]);
+    const [activePost, setActivePost] = useState(null);
+    const [highlights, setHighlights] = useState([]);
+    const [showPetInfoModal, setShowPetInfoModal] = useState(false);
+    const [showBadgesModal, setShowBadgesModal] = useState(false);
+
+    // Map raw API post → PostModal format
+    const normalizePost = (p) => {
+        const image = p.image_url || (p.image ? (p.image.startsWith('http') ? p.image : `/storage/${p.image}`) : null);
+        const video = p.video_url || (p.video ? (p.video.startsWith('http') ? p.video : `/storage/${p.video}`) : null);
+        
+        return {
+            id: p.id,
+            author: p.pet?.name || "Unknown",
+            breed: p.pet?.breed || "",
+            location: p.location || "",
+            avatar: p.pet?.image_url || p.pet?.photo_url || null,
+            time: p.created_at ? new Date(p.created_at).toLocaleDateString() : "just now",
+            content: p.caption || "",
+            hashtags: (p.caption?.match(/#\w+/g) || []),
+            image: image,
+            video: video,
+            likes: p.likes_count ?? 0,
+            comments: p.comments_count ?? 0,
+            isLiked: !!p.liked_by_me,
+            isSaved: !!p.is_saved || !!p.saved_by_me,
+            privacy: p.privacy || "public",
+            tagged_pets: p.tagged_pets || [],
+            pet: p.pet || null,
+            user: p.pet?.user || null,
+        };
+    };
+    const [activeHighlight, setActiveHighlight] = useState(null);
+    const coverInputRef = useRef(null);
 
     const getPetId = () => {
         const parts = window.location.pathname.split("/");
@@ -43,12 +81,12 @@ const Profile = () => {
         try {
             setLoading(true);
             const id = getPetId();
-            
-            const myPetsRes = await axios.get("/api/pets");
-            const petsArray = myPetsRes.data?.data || myPetsRes.data || [];
-            setUserPets(Array.isArray(petsArray) ? petsArray : []);
-            
-            const targetId = id || (Array.isArray(petsArray) && petsArray.length > 0 ? petsArray[0].id : null);
+
+            const meRes = await axios.get('/api/user');
+            const me = meRes.data || {};
+            setCurrentUserId(me.id || null);
+
+            const targetId = id || me?.pet?.id || null;
             
             if (!targetId) {
                 setLoading(false);
@@ -58,10 +96,103 @@ const Profile = () => {
             const response = await axios.get(`/api/pets/${targetId}`);
             setPet(response.data);
             setIsFollowing(response.data.is_following);
+
+            // Fetch highlights
+            try {
+                const highlightsRes = await axios.get(`/api/pets/${targetId}/highlights`);
+                setHighlights(highlightsRes.data);
+            } catch (err) {
+                console.error("Error fetching highlights:", err);
+            }
+
+            // Fetch saved posts (own profile only)
+            const myPetId = me?.pet?.id;
+            if (!id || String(id) === String(myPetId)) {
+                try {
+                    const savedRes = await axios.get('/api/saved-posts');
+                    console.log("Profile: Saved Posts Data:", savedRes.data);
+                    const rawSaved = savedRes.data?.data || savedRes.data || [];
+                    setSavedPosts(rawSaved.map(sp => sp.post || sp));
+                } catch (err) {
+                    console.error("Error fetching saved posts:", err);
+                }
+            }
+
+            // Fetch tagged posts for this pet
+            try {
+                const taggedRes = await axios.get(`/api/pets/${targetId}/tagged-posts`);
+                console.log("Profile: Tagged Posts Data:", taggedRes.data);
+                setTaggedPosts(taggedRes.data || []);
+            } catch (err) {
+                console.error("Error fetching tagged posts:", err);
+            }
+
         } catch (error) {
             console.error("Error fetching profile data:", error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleAddHighlight = async () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*,video/*';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append('media', file);
+            formData.append('is_highlight', '1');
+            try {
+                const res = await axios.post('/api/stories', formData);
+                // Refresh highlights
+                const highlightsRes = await axios.get(`/api/pets/${pet.id}/highlights`);
+                setHighlights(highlightsRes.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        input.click();
+    };
+
+    const handleCoverUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("cover_photo", file);
+
+        try {
+            const res = await axios.post(`/api/pets/${pet.id}/cover`, formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+            // Update local pet state with new cover URL
+            setPet(prev => ({
+                ...prev,
+                cover_photo_url: res.data.cover_photo_url
+            }));
+        } catch (error) {
+            console.error("Error uploading cover photo:", error);
+            alert("Failed to upload cover photo.");
+        }
+    };
+
+    const handleSavePost = async (post) => {
+        try {
+            await axios.post("/api/saved-posts", { post_id: post.id });
+            const meRes = await axios.get('/api/user');
+            const me = meRes.data || {};
+            const id = getPetId();
+            const myPetId = me?.pet?.id;
+            if (!id || String(id) === String(myPetId)) {
+                const savedRes = await axios.get('/api/saved-posts');
+                const rawSaved = savedRes.data?.data || savedRes.data || [];
+                setSavedPosts(rawSaved.map(sp => sp.post || sp));
+            }
+            setActivePost((prev) => prev?.id === post.id ? { ...prev, isSaved: true } : prev);
+        } catch (err) {
+            console.error(err);
         }
     };
 
@@ -85,7 +216,7 @@ const Profile = () => {
         </div>
     );
 
-    const isOwnProfile = userPets.some(p => p.id === pet.id);
+    const isOwnProfile = currentUserId && pet?.user_id === currentUserId;
     const postsCount = pet.posts?.length || 0;
     const followersCount = pet.followers_count || 0;
     const followingCount = pet.following_count || 0;
@@ -119,10 +250,19 @@ const Profile = () => {
                         className="profile-cover__img" 
                     />
                     {isOwnProfile && (
-                        <button className="profile-cover__edit-btn">
-                            <Camera size={18} weight="bold" />
-                            Edit Cover
-                        </button>
+                        <>
+                            <button className="profile-cover__edit-btn" onClick={() => coverInputRef.current?.click()}>
+                                <Camera size={18} weight="bold" />
+                                Edit Cover
+                            </button>
+                            <input
+                                type="file"
+                                ref={coverInputRef}
+                                style={{ display: 'none' }}
+                                accept="image/*"
+                                onChange={handleCoverUpload}
+                            />
+                        </>
                     )}
                 </div>
 
@@ -131,8 +271,11 @@ const Profile = () => {
                     {/* Avatar */}
                     <div className="profile-avatar">
                         <img 
-                            src={pet.image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(pet.name || 'Pet')}&background=898AA6&color=fff`} 
+                            src={pet.image_url || pet.user?.profile_photo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(pet.name || 'Pet')}&background=898AA6&color=fff`} 
                             alt={pet.name} 
+                            onError={(e) => {
+                                e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(pet.name || 'Pet')}&background=898AA6&color=fff`;
+                            }}
                         />
                     </div>
 
@@ -166,8 +309,48 @@ const Profile = () => {
                         {/* Highlights */}
                         <div className="sidebar-card">
                             <h3>Highlights</h3>
-                            <div className="highlight-circle">
-                                <Plus size={32} weight="bold" />
+                            <div className="highlights-list" style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px' }}>
+                                {highlights.map(highlight => (
+                                    <div 
+                                        key={highlight.id} 
+                                        className="highlight-circle" 
+                                        onClick={() => setActiveHighlight(highlight)}
+                                        style={{ 
+                                            width: '60px', 
+                                            height: '60px', 
+                                            borderRadius: '50%', 
+                                            overflow: 'hidden', 
+                                            border: '2px solid var(--primary-action)',
+                                            cursor: 'pointer',
+                                            flexShrink: 0
+                                        }}
+                                    >
+                                        <img 
+                                            src={highlight.media_url || highlight.media_path} 
+                                            alt="Highlight" 
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                        />
+                                    </div>
+                                ))}
+                                {isOwnProfile && (
+                                    <div className="highlight-circle" 
+                                        onClick={handleAddHighlight}
+                                        style={{ 
+                                            width: '60px', 
+                                            height: '60px', 
+                                            borderRadius: '50%', 
+                                            border: '2px dashed var(--border-color)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            cursor: 'pointer',
+                                            flexShrink: 0,
+                                            color: 'var(--text-muted)'
+                                        }}
+                                    >
+                                        <Plus size={24} weight="bold" />
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -175,7 +358,7 @@ const Profile = () => {
                         <div className="sidebar-card">
                             <div className="sidebar-card-header">
                                 <h3>Pet's Info</h3>
-                                <button className="view-all-link" onClick={() => alert("View All Pet Info")}>View All</button>
+                                <button className="view-all-link" onClick={() => setShowPetInfoModal(true)}>View All</button>
                             </div>
                             <div className="pet-info-list">
                                 <div className="pet-info-item">
@@ -199,7 +382,7 @@ const Profile = () => {
                         <div className="sidebar-card">
                             <div className="sidebar-card-header">
                                 <h3>Earned Badges</h3>
-                                <button className="view-all-link" onClick={() => alert("View All Badges")}>View All</button>
+                                <button className="view-all-link" onClick={() => setShowBadgesModal(true)}>View All</button>
                             </div>
                             <div className="badges-list">
                                 {badges.map(badge => (
@@ -236,30 +419,200 @@ const Profile = () => {
 
                         {/* Gallery Grid */}
                         <div className="profile-gallery">
-                            {pet.posts?.map((post) => (
-                                <div key={post.id} className="gallery-item">
-                                    {post.video_url ? (
-                                        <>
-                                            <video src={post.video_url} muted />
-                                            <div className="video-icon"><Play size={20} weight="fill" /></div>
-                                        </>
-                                    ) : (
-                                        <img src={post.image_url} alt={post.caption} />
-                                    )}
-                                    <div className="gallery-overlay">
-                                        <span><Heart size={20} weight="fill" /> {post.likes_count || 0}</span>
+                            {(() => {
+                                let postsToDisplay = [];
+                                if (activeTab === "Posts") {
+                                    postsToDisplay = pet.posts || [];
+                                } else if (activeTab === "Tagged") {
+                                    postsToDisplay = taggedPosts;
+                                } else if (activeTab === "Saved") {
+                                    postsToDisplay = savedPosts;
+                                }
+                                
+                                if (postsToDisplay.length === 0) {
+                                    return (
+                                        <div className="gallery-empty-message">
+                                            <p>No {activeTab.toLowerCase()} yet</p>
+                                        </div>
+                                    );
+                                }
+                                
+                                return postsToDisplay.map((post) => (
+                                    <div key={post.id} className="gallery-item" onClick={() => setActivePost(normalizePost(post))}>
+                                        {post.video_url || post.video ? (
+                                            <>
+                                                <video src={post.video_url || (post.video?.startsWith('http') ? post.video : `/storage/${post.video}`)} muted />
+                                                <div className="video-icon"><Play size={20} weight="fill" /></div>
+                                            </>
+                                        ) : (
+                                            <img 
+                                                src={post.image_url || (post.image?.startsWith('http') ? post.image : `/storage/${post.image}`)} 
+                                                alt={post.caption || 'Post image'} 
+                                            />
+                                        )}
+                                        <div className="gallery-overlay">
+                                            <span><Heart size={20} weight="fill" /> {post.likes_count || 0}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                            {(!pet.posts || pet.posts.length === 0) && (
-                                <div className="gallery-empty-message">
-                                    <p>No posts yet</p>
-                                </div>
-                            )}
+                                ));
+                            })()}
                         </div>
                     </div>
                 </div>
             </main>
+
+            <AnimatePresence>
+                {activePost && (
+                    <PostModal 
+                        post={activePost} 
+                        onClose={() => setActivePost(null)}
+                        onSave={handleSavePost}
+                        onLike={async (postId) => {
+                            try {
+                                const response = await axios.post(`/api/posts/${postId}/like`);
+                                setPet(prev => {
+                                    if(!prev) return prev;
+                                    const updatedPosts = prev.posts.map(p => 
+                                        p.id === postId ? { 
+                                            ...p, 
+                                            isLiked: response.data.liked,
+                                            likes_count: response.data.likes_count
+                                        } : p
+                                    );
+                                    return { ...prev, posts: updatedPosts };
+                                });
+                                setActivePost(prev => ({
+                                    ...prev,
+                                    isLiked: response.data.liked,
+                                    likes_count: response.data.likes_count
+                                }));
+                            } catch (error) {
+                                console.error(error);
+                            }
+                        }}
+                        onCommentAdded={(postId, created) => {
+                            setPet(prev => {
+                                if(!prev) return prev;
+                                const updatedPosts = prev.posts.map(p => 
+                                    p.id === postId ? {
+                                        ...p,
+                                        comments_count: (p.comments_count || 0) + 1
+                                    } : p
+                                );
+                                return { ...prev, posts: updatedPosts };
+                            });
+                        }}
+                    />
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {activeHighlight && (
+                    <div className="post-modal-overlay" onClick={() => setActiveHighlight(null)}>
+                        <div className="post-modal-bg" />
+                        <div 
+                            className="highlight-viewer-content"
+                            style={{ position: 'relative', zIndex: 101, maxWidth: '400px', width: '100%', height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {activeHighlight.media_type === 'video' ? (
+                                <video src={activeHighlight.media_url || activeHighlight.media_path} controls autoPlay style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#000', borderRadius: '16px' }} />
+                            ) : (
+                                <img src={activeHighlight.media_url || activeHighlight.media_path} alt="Highlight" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#000', borderRadius: '16px' }} />
+                            )}
+                        </div>
+                    </div>
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {showPetInfoModal && (
+                    <div className="post-modal-overlay" onClick={() => setShowPetInfoModal(false)}>
+                        <div className="post-modal-bg" />
+                        <motion.div 
+                            className="sidebar-card"
+                            style={{ position: 'relative', zIndex: 101, maxWidth: '500px', width: '90%', maxHeight: '90vh', background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', display: 'flex', flexDirection: 'column' }}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="sidebar-card-header" style={{ marginBottom: '20px', flexShrink: 0 }}>
+                                <h3>Full Pet Information</h3>
+                                <button onClick={() => setShowPetInfoModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}><X size={24} /></button>
+                            </div>
+                            <div className="pet-info-list" style={{ gap: '16px', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                                <div className="pet-info-item">
+                                    <PawPrint size={20} weight="fill" />
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <small style={{ color: 'var(--text-muted)' }}>Species/Breed</small>
+                                        <span>{petType} ({pet.breed || 'Unknown'})</span>
+                                    </div>
+                                </div>
+                                <div className="pet-info-item">
+                                    <Calendar size={20} weight="fill" />
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <small style={{ color: 'var(--text-muted)' }}>Age</small>
+                                        <span>{petAge}</span>
+                                    </div>
+                                </div>
+                                <div className="pet-info-item">
+                                    <MapPin size={20} weight="fill" />
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <small style={{ color: 'var(--text-muted)' }}>Location</small>
+                                        <span>{pet.location || 'Not set'}</span>
+                                    </div>
+                                </div>
+                                <div className="pet-info-item">
+                                    <Tag size={20} weight="fill" />
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <small style={{ color: 'var(--text-muted)' }}>Username</small>
+                                        <span>@{username}</span>
+                                    </div>
+                                </div>
+                                <div className="pet-info-item">
+                                    <Star size={20} weight="fill" />
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <small style={{ color: 'var(--text-muted)' }}>Bio</small>
+                                        <span>{pet.bio || "No bio provided yet."}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {showBadgesModal && (
+                    <div className="post-modal-overlay" onClick={() => setShowBadgesModal(false)}>
+                        <div className="post-modal-bg" />
+                        <motion.div 
+                            className="sidebar-card"
+                            style={{ position: 'relative', zIndex: 101, maxWidth: '500px', width: '90%', maxHeight: '90vh', background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', display: 'flex', flexDirection: 'column' }}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="sidebar-card-header" style={{ marginBottom: '20px', flexShrink: 0 }}>
+                                <h3>All Earned Badges</h3>
+                                <button onClick={() => setShowBadgesModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}><X size={24} /></button>
+                            </div>
+                            <div className="badges-list" style={{ gap: '20px', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                                {badges.map(badge => (
+                                    <div key={badge.id} className="badge-list-item" style={{ marginBottom: '0' }}>
+                                        <div className="badge-icon" style={{ backgroundColor: badge.color, width: '48px', height: '48px' }}>
+                                            {React.cloneElement(badge.icon, { size: 24 })}
+                                        </div>
+                                        <div className="badge-text">
+                                            <h4 style={{ fontSize: '1.1rem' }}>{badge.name}</h4>
+                                            <p>{badge.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

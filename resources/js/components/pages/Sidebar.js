@@ -21,6 +21,7 @@ import {
 } from "@phosphor-icons/react";
 import BottomNav from "../BottomNav";
 import { useUser } from "../../context/UserContext";
+import { useTheme } from "../../hooks/useTheme";
 
 const typeMeta = {
     like:    { icon: Heart,       color: "#ef4444", label: "liked your post" },
@@ -35,20 +36,9 @@ const Sidebar = ({ brandText = "Petverse" }) => {
     const { user } = useUser();
     const currentPath = window.location.pathname;
 
-    // Read persisted preference on mount
-    const [isDarkMode, setIsDarkMode] = useState(() => {
-        const saved = localStorage.getItem("petverse_theme");
-        return saved === "dark";
-    });
-
-    // Apply theme to <html> on mount AND whenever it changes
-    useEffect(() => {
-        const theme = isDarkMode ? "dark" : "light";
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("petverse_theme", theme);
-    }, [isDarkMode]);
-
-    const toggleTheme = () => setIsDarkMode((prev) => !prev);
+    const [theme, setTheme] = useTheme();
+    const isDarkMode = theme === "dark";
+    const toggleTheme = () => setTheme(isDarkMode ? "light" : "dark");
 
     // Notification panel state
     const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -107,6 +97,14 @@ const Sidebar = ({ brandText = "Petverse" }) => {
             fetchNotifications();
         }
     };
+
+    useEffect(() => {
+        fetchNotifications();
+        const id = setInterval(() => {
+            fetchNotifications();
+        }, 8000);
+        return () => clearInterval(id);
+    }, []);
 
     const unreadCount = notifications.filter((n) => !n.is_read).length;
 

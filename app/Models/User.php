@@ -71,7 +71,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Notification::class);
     }
 
-    protected $appends = ['avatar_url'];
+    protected $appends = ['avatar_url', 'profile_photo_url'];
+
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->profile_photo ? url('storage/' . $this->profile_photo) : null;
+    }
 
     public function getAvatarUrlAttribute()
     {
@@ -82,5 +87,9 @@ class User extends Authenticatable implements MustVerifyEmail
             return url('storage/' . $this->pet->photo);
         }
         return null;
+    }
+    public function savedPosts()
+    {
+        return $this->hasMany(SavedPost::class);
     }
 }

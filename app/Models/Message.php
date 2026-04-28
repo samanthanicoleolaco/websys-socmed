@@ -12,6 +12,7 @@ class Message extends Model
     protected $fillable = [
         'sender_pet_id',
         'receiver_pet_id',
+        'conversation_id',
         'content',
         'image',
         'video',
@@ -24,6 +25,11 @@ class Message extends Model
     protected $casts = [
         'is_read' => 'boolean',
     ];
+
+    public function conversation()
+    {
+        return $this->belongsTo(Conversation::class);
+    }
 
     public function senderPet()
     {

@@ -2081,6 +2081,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./context/UserContext */ "./resources/js/context/UserContext.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+var savedTheme = localStorage.getItem('petverse_theme');
+if (savedTheme === 'dark' || savedTheme === 'light') {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+}
 
 
 
@@ -2253,6 +2257,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var phosphor_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! phosphor-react */ "./node_modules/phosphor-react/dist/icons/Lock.esm.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -2274,6 +2282,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 var AdminDashboard = function AdminDashboard() {
+  var _viewingPost$pet, _viewingPost$pet2;
   // Layout UI States
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
@@ -2313,10 +2322,26 @@ var AdminDashboard = function AdminDashboard() {
     _useState14 = _slicedToArray(_useState13, 2),
     logins = _useState14[0],
     setLogins = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState16 = _slicedToArray(_useState15, 2),
-    editingUser = _useState16[0],
-    setEditingUser = _useState16[1];
+    signupData = _useState16[0],
+    setSignupData = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState18 = _slicedToArray(_useState17, 2),
+    registrationEnabled = _useState18[0],
+    setRegistrationEnabled = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    emailVerification = _useState20[0],
+    setEmailVerification = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    editingUser = _useState22[0],
+    setEditingUser = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    viewingPost = _useState24[0],
+    setViewingPost = _useState24[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (activeTab === 'dashboard') {
       fetchStats();
@@ -2326,6 +2351,9 @@ var AdminDashboard = function AdminDashboard() {
     } else if (activeTab === 'reports') {
       fetchStats();
       fetchLogins();
+      fetchSignupAnalytics();
+    } else if (activeTab === 'settings') {
+      fetchSettings();
     }
   }, [activeTab]);
   var fetchStats = /*#__PURE__*/function () {
@@ -2436,109 +2464,99 @@ var AdminDashboard = function AdminDashboard() {
       return _ref4.apply(this, arguments);
     };
   }();
-  var handleDeleteUser = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(e, id) {
-      var _t5;
+  var fetchSignupAnalytics = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+      var res, _t5;
       return _regenerator().w(function (_context5) {
         while (1) switch (_context5.p = _context5.n) {
           case 0:
-            e.preventDefault();
-            if (window.confirm('Are you sure you want to delete this user?')) {
-              _context5.n = 1;
-              break;
-            }
-            return _context5.a(2);
+            _context5.p = 0;
+            _context5.n = 1;
+            return window.axios.get('/api/admin/analytics/signups');
           case 1:
-            _context5.p = 1;
-            _context5.n = 2;
-            return window.axios["delete"]("/api/admin/users/".concat(id));
-          case 2:
-            fetchUsers();
-            _context5.n = 4;
+            res = _context5.v;
+            setSignupData(res.data || []);
+            _context5.n = 3;
             break;
-          case 3:
-            _context5.p = 3;
+          case 2:
+            _context5.p = 2;
             _t5 = _context5.v;
             console.error(_t5);
-          case 4:
+          case 3:
             return _context5.a(2);
         }
-      }, _callee5, null, [[1, 3]]);
+      }, _callee5, null, [[0, 2]]);
     }));
-    return function handleDeleteUser(_x, _x2) {
+    return function fetchSignupAnalytics() {
       return _ref5.apply(this, arguments);
     };
   }();
-  var handleDeletePost = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(e, id) {
-      var _t6;
+  var fetchSettings = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+      var res, _t6;
       return _regenerator().w(function (_context6) {
         while (1) switch (_context6.p = _context6.n) {
           case 0:
-            e.preventDefault();
-            if (window.confirm('Delete this post permanently?')) {
-              _context6.n = 1;
-              break;
-            }
-            return _context6.a(2);
+            _context6.p = 0;
+            _context6.n = 1;
+            return window.axios.get('/api/admin/settings');
           case 1:
-            _context6.p = 1;
-            _context6.n = 2;
-            return window.axios["delete"]("/api/admin/posts/".concat(id));
-          case 2:
-            fetchPosts();
-            _context6.n = 4;
+            res = _context6.v;
+            setRegistrationEnabled(!!res.data.registration_enabled);
+            setEmailVerification(!!res.data.email_verification);
+            _context6.n = 3;
             break;
-          case 3:
-            _context6.p = 3;
+          case 2:
+            _context6.p = 2;
             _t6 = _context6.v;
             console.error(_t6);
-          case 4:
+          case 3:
             return _context6.a(2);
         }
-      }, _callee6, null, [[1, 3]]);
+      }, _callee6, null, [[0, 2]]);
     }));
-    return function handleDeletePost(_x3, _x4) {
+    return function fetchSettings() {
       return _ref6.apply(this, arguments);
     };
   }();
-  var handleUpdateUser = /*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(e) {
+  var handleSaveSettings = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
       var _t7;
       return _regenerator().w(function (_context7) {
         while (1) switch (_context7.p = _context7.n) {
           case 0:
-            e.preventDefault();
-            _context7.p = 1;
-            _context7.n = 2;
-            return window.axios.put("/api/admin/users/".concat(editingUser.id), editingUser);
-          case 2:
-            setEditingUser(null);
-            fetchUsers();
-            window.alert('User account synchronized successfully!');
-            _context7.n = 4;
+            _context7.p = 0;
+            _context7.n = 1;
+            return window.axios.post('/api/admin/settings', {
+              registration_enabled: registrationEnabled,
+              email_verification: emailVerification
+            });
+          case 1:
+            window.alert('Settings applied successfully!');
+            _context7.n = 3;
             break;
-          case 3:
-            _context7.p = 3;
+          case 2:
+            _context7.p = 2;
             _t7 = _context7.v;
             console.error(_t7);
-          case 4:
+            window.alert('Failed to save settings.');
+          case 3:
             return _context7.a(2);
         }
-      }, _callee7, null, [[1, 3]]);
+      }, _callee7, null, [[0, 2]]);
     }));
-    return function handleUpdateUser(_x5) {
+    return function handleSaveSettings() {
       return _ref7.apply(this, arguments);
     };
   }();
-  var toggleMaintenance = /*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8() {
-      var next, _t8;
+  var handleDeleteUser = /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(e, id) {
+      var _t8;
       return _regenerator().w(function (_context8) {
         while (1) switch (_context8.p = _context8.n) {
           case 0:
-            next = !maintenanceOn;
-            if (window.confirm(next ? 'Enable maintenance mode? Public users will see a 503 page.' : 'Disable maintenance mode?')) {
+            e.preventDefault();
+            if (window.confirm('Are you sure you want to delete this user?')) {
               _context8.n = 1;
               break;
             }
@@ -2546,35 +2564,32 @@ var AdminDashboard = function AdminDashboard() {
           case 1:
             _context8.p = 1;
             _context8.n = 2;
-            return window.axios.post('/api/admin/maintenance', {
-              enable: next
-            });
+            return window.axios["delete"]("/api/admin/users/".concat(id));
           case 2:
-            setMaintenanceOn(next);
-            window.alert(next ? 'Maintenance mode is ON.' : 'Maintenance mode is OFF.');
+            fetchUsers();
             _context8.n = 4;
             break;
           case 3:
             _context8.p = 3;
             _t8 = _context8.v;
             console.error(_t8);
-            window.alert('Failed to toggle maintenance mode.');
           case 4:
             return _context8.a(2);
         }
       }, _callee8, null, [[1, 3]]);
     }));
-    return function toggleMaintenance() {
+    return function handleDeleteUser(_x, _x2) {
       return _ref8.apply(this, arguments);
     };
   }();
-  var purgeCache = /*#__PURE__*/function () {
-    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9() {
+  var handleDeletePost = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(e, id) {
       var _t9;
       return _regenerator().w(function (_context9) {
         while (1) switch (_context9.p = _context9.n) {
           case 0:
-            if (window.confirm('Purge all caches now?')) {
+            e.preventDefault();
+            if (window.confirm('Delete this post permanently?')) {
               _context9.n = 1;
               break;
             }
@@ -2582,23 +2597,121 @@ var AdminDashboard = function AdminDashboard() {
           case 1:
             _context9.p = 1;
             _context9.n = 2;
-            return window.axios.post('/api/admin/cache/purge');
+            return window.axios["delete"]("/api/admin/posts/".concat(id));
           case 2:
-            window.alert('All caches purged.');
+            fetchPosts();
             _context9.n = 4;
             break;
           case 3:
             _context9.p = 3;
             _t9 = _context9.v;
             console.error(_t9);
-            window.alert('Failed to purge caches.');
           case 4:
             return _context9.a(2);
         }
       }, _callee9, null, [[1, 3]]);
     }));
-    return function purgeCache() {
+    return function handleDeletePost(_x3, _x4) {
       return _ref9.apply(this, arguments);
+    };
+  }();
+  var handleUpdateUser = /*#__PURE__*/function () {
+    var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(e) {
+      var _t0;
+      return _regenerator().w(function (_context0) {
+        while (1) switch (_context0.p = _context0.n) {
+          case 0:
+            e.preventDefault();
+            _context0.p = 1;
+            _context0.n = 2;
+            return window.axios.put("/api/admin/users/".concat(editingUser.id), editingUser);
+          case 2:
+            setEditingUser(null);
+            fetchUsers();
+            window.alert('User account synchronized successfully!');
+            _context0.n = 4;
+            break;
+          case 3:
+            _context0.p = 3;
+            _t0 = _context0.v;
+            console.error(_t0);
+          case 4:
+            return _context0.a(2);
+        }
+      }, _callee0, null, [[1, 3]]);
+    }));
+    return function handleUpdateUser(_x5) {
+      return _ref0.apply(this, arguments);
+    };
+  }();
+  var toggleMaintenance = /*#__PURE__*/function () {
+    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1() {
+      var next, _t1;
+      return _regenerator().w(function (_context1) {
+        while (1) switch (_context1.p = _context1.n) {
+          case 0:
+            next = !maintenanceOn;
+            if (window.confirm(next ? 'Enable maintenance mode? Public users will see a 503 page.' : 'Disable maintenance mode?')) {
+              _context1.n = 1;
+              break;
+            }
+            return _context1.a(2);
+          case 1:
+            _context1.p = 1;
+            _context1.n = 2;
+            return window.axios.post('/api/admin/maintenance', {
+              enable: next
+            });
+          case 2:
+            setMaintenanceOn(next);
+            window.alert(next ? 'Maintenance mode is ON.' : 'Maintenance mode is OFF.');
+            _context1.n = 4;
+            break;
+          case 3:
+            _context1.p = 3;
+            _t1 = _context1.v;
+            console.error(_t1);
+            window.alert('Failed to toggle maintenance mode.');
+          case 4:
+            return _context1.a(2);
+        }
+      }, _callee1, null, [[1, 3]]);
+    }));
+    return function toggleMaintenance() {
+      return _ref1.apply(this, arguments);
+    };
+  }();
+  var purgeCache = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10() {
+      var _t10;
+      return _regenerator().w(function (_context10) {
+        while (1) switch (_context10.p = _context10.n) {
+          case 0:
+            if (window.confirm('Purge all caches now?')) {
+              _context10.n = 1;
+              break;
+            }
+            return _context10.a(2);
+          case 1:
+            _context10.p = 1;
+            _context10.n = 2;
+            return window.axios.post('/api/admin/cache/purge');
+          case 2:
+            window.alert('All caches purged.');
+            _context10.n = 4;
+            break;
+          case 3:
+            _context10.p = 3;
+            _t10 = _context10.v;
+            console.error(_t10);
+            window.alert('Failed to purge caches.');
+          case 4:
+            return _context10.a(2);
+        }
+      }, _callee10, null, [[1, 3]]);
+    }));
+    return function purgeCache() {
+      return _ref10.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -2623,8 +2736,11 @@ var AdminDashboard = function AdminDashboard() {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
         className: "settings-content",
         style: {
-          width: '100%',
-          maxWidth: '800px',
+          background: 'var(--bg-card)',
+          padding: '32px',
+          borderRadius: '16px',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+          width: 'min(760px, 96vw)',
           minHeight: 'auto',
           maxHeight: '90vh',
           overflowY: 'auto'
@@ -2750,6 +2866,215 @@ var AdminDashboard = function AdminDashboard() {
             })]
           })]
         })
+      })
+    }), viewingPost && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      style: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(30, 41, 59, 0.4)',
+        backdropFilter: 'blur(8px)',
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "settings-content",
+        style: {
+          background: 'var(--bg-card)',
+          padding: '32px',
+          borderRadius: '16px',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+          width: 'min(700px, 96vw)',
+          minHeight: 'auto',
+          maxHeight: '90vh',
+          overflowY: 'auto'
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "settings-header",
+          style: {
+            marginBottom: '20px'
+          },
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+                children: "View Post"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+                children: ["Post by ", ((_viewingPost$pet = viewingPost.pet) === null || _viewingPost$pet === void 0 ? void 0 : _viewingPost$pet.name) || 'Unknown']
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              type: "button",
+              onClick: function onClick() {
+                return setViewingPost(null);
+              },
+              style: {
+                background: 'none',
+                border: 'none',
+                fontSize: '24px',
+                cursor: 'pointer',
+                color: 'var(--text-muted)'
+              },
+              children: "\xD7"
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          style: {
+            borderTop: '1px solid var(--border-color)',
+            paddingTop: '20px'
+          },
+          children: [viewingPost.image_url && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            style: {
+              marginBottom: '20px',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              maxHeight: '400px',
+              display: 'flex',
+              justifyContent: 'center',
+              background: '#000'
+            },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+              src: viewingPost.image_url,
+              alt: "Post",
+              style: {
+                maxWidth: '100%',
+                maxHeight: '400px',
+                objectFit: 'contain'
+              }
+            })
+          }), viewingPost.video_url && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            style: {
+              marginBottom: '20px',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              display: 'flex',
+              justifyContent: 'center',
+              background: '#000'
+            },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("video", {
+              src: viewingPost.video_url,
+              controls: true,
+              style: {
+                maxWidth: '100%',
+                maxHeight: '400px'
+              }
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              background: 'var(--bg-page)',
+              padding: '16px',
+              borderRadius: '8px',
+              marginBottom: '16px'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+              style: {
+                margin: '0 0 10px 0',
+                color: 'var(--text-main)'
+              },
+              children: "Post Content"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+              style: {
+                margin: 0,
+                color: 'var(--text-main)',
+                lineHeight: '1.5'
+              },
+              children: viewingPost.caption || '(No text content)'
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '12px',
+              marginBottom: '16px'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              style: {
+                background: 'var(--bg-page)',
+                padding: '12px',
+                borderRadius: '8px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: 0,
+                  fontSize: '0.85rem',
+                  color: 'var(--text-muted)'
+                },
+                children: "Author"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '4px 0 0 0',
+                  fontWeight: '600',
+                  color: 'var(--text-main)'
+                },
+                children: ((_viewingPost$pet2 = viewingPost.pet) === null || _viewingPost$pet2 === void 0 ? void 0 : _viewingPost$pet2.name) || 'Unknown'
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              style: {
+                background: 'var(--bg-page)',
+                padding: '12px',
+                borderRadius: '8px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: 0,
+                  fontSize: '0.85rem',
+                  color: 'var(--text-muted)'
+                },
+                children: "Created"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '4px 0 0 0',
+                  fontWeight: '600',
+                  color: 'var(--text-main)'
+                },
+                children: new Date(viewingPost.created_at).toLocaleString()
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '12px'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              onClick: function onClick() {
+                return setViewingPost(null);
+              },
+              style: {
+                background: 'var(--input-bg)',
+                color: 'var(--text-main)',
+                border: '1px solid var(--border-color)',
+                padding: '10px 16px',
+                borderRadius: '6px',
+                fontWeight: '600',
+                cursor: 'pointer'
+              },
+              children: "Close"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              onClick: function onClick() {
+                handleDeletePost(new Event('click'), viewingPost.id);
+                setViewingPost(null);
+              },
+              style: {
+                background: 'var(--danger)',
+                color: 'white',
+                border: 'none',
+                padding: '10px 16px',
+                borderRadius: '6px',
+                fontWeight: '600',
+                cursor: 'pointer'
+              },
+              children: "Delete Post"
+            })]
+          })]
+        })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("main", {
       className: "admin-content",
@@ -2951,7 +3276,7 @@ var AdminDashboard = function AdminDashboard() {
                         return setEditingUser(user);
                       },
                       style: {
-                        background: '#334155',
+                        background: 'var(--primary-action)',
                         color: 'white',
                         border: 'none',
                         padding: '6px 12px',
@@ -2966,7 +3291,7 @@ var AdminDashboard = function AdminDashboard() {
                         return handleDeleteUser(e, user.id);
                       },
                       style: {
-                        background: '#f1416c',
+                        background: 'var(--danger)',
                         color: 'white',
                         border: 'none',
                         padding: '6px 12px',
@@ -2996,90 +3321,241 @@ var AdminDashboard = function AdminDashboard() {
           className: "post-card",
           style: {
             padding: '20px',
-            marginTop: '20px'
+            marginTop: '20px',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-color)'
           },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
             style: {
-              borderBottom: '1px solid #eee',
+              borderBottom: '1px solid var(--border-color)',
               paddingBottom: '15px',
               marginBottom: '15px',
-              color: '#333'
+              color: 'var(--text-main)'
             },
-            children: "Recent Login Activity Logs"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
+            children: "Platform Analytics"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             style: {
-              width: '100%',
-              borderCollapse: 'collapse',
-              textAlign: 'left'
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '16px',
+              marginBottom: '20px'
             },
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("thead", {
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-                  style: {
-                    padding: '10px',
-                    borderBottom: '2px solid #eee',
-                    color: '#888'
-                  },
-                  children: "Event Time"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-                  style: {
-                    padding: '10px',
-                    borderBottom: '2px solid #eee',
-                    color: '#888'
-                  },
-                  children: "User"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-                  style: {
-                    padding: '10px',
-                    borderBottom: '2px solid #eee',
-                    color: '#888'
-                  },
-                  children: "IP Address"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-                  style: {
-                    padding: '10px',
-                    borderBottom: '2px solid #eee',
-                    color: '#888'
-                  },
-                  children: "Browser Agent"
-                })]
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("tbody", {
-              children: logins.map(function (log) {
-                var _log$user;
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              style: {
+                background: 'var(--bg-page)',
+                padding: '16px',
+                borderRadius: '8px',
+                textAlign: 'center'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '0 0 8px 0',
+                  fontSize: '0.9rem',
+                  color: 'var(--text-muted)'
+                },
+                children: "Total Users"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+                style: {
+                  margin: 0,
+                  fontSize: '1.8rem',
+                  color: 'var(--primary-action)',
+                  fontWeight: 'bold'
+                },
+                children: stats.total_users || 0
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '8px 0 0 0',
+                  fontSize: '0.8rem',
+                  color: 'var(--success)'
+                },
+                children: "\u2191 12% this month"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              style: {
+                background: 'var(--bg-page)',
+                padding: '16px',
+                borderRadius: '8px',
+                textAlign: 'center'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '0 0 8px 0',
+                  fontSize: '0.9rem',
+                  color: 'var(--text-muted)'
+                },
+                children: "Registered Pets"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+                style: {
+                  margin: 0,
+                  fontSize: '1.8rem',
+                  color: '#f7b125',
+                  fontWeight: 'bold'
+                },
+                children: stats.total_pets || 0
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '8px 0 0 0',
+                  fontSize: '0.8rem',
+                  color: 'var(--success)'
+                },
+                children: "\u2191 8% this month"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              style: {
+                background: 'var(--bg-page)',
+                padding: '16px',
+                borderRadius: '8px',
+                textAlign: 'center'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '0 0 8px 0',
+                  fontSize: '0.9rem',
+                  color: 'var(--text-muted)'
+                },
+                children: "Total Posts"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+                style: {
+                  margin: 0,
+                  fontSize: '1.8rem',
+                  color: '#e91e8c',
+                  fontWeight: 'bold'
+                },
+                children: stats.total_posts || 0
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                style: {
+                  margin: '8px 0 0 0',
+                  fontSize: '0.8rem',
+                  color: 'var(--success)'
+                },
+                children: "\u2191 24% this week"
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              background: 'var(--bg-page)',
+              padding: '16px',
+              borderRadius: '8px',
+              marginBottom: '20px'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+              style: {
+                margin: '0 0 12px 0',
+                color: 'var(--text-main)'
+              },
+              children: "User Growth Chart"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              style: {
+                height: '200px',
+                display: 'flex',
+                alignItems: 'flex-end',
+                gap: '8px',
+                justifyContent: 'space-around'
+              },
+              children: function () {
+                var maxSignup = Math.max.apply(Math, _toConsumableArray(signupData.map(function (d) {
+                  return d.count;
+                })).concat([1]));
+                var bars = signupData.length > 0 ? signupData.slice(-12) : Array(12).fill({
+                  count: 0,
+                  date: ''
+                });
+                return bars.map(function (item, i) {
+                  var h = item.count / maxSignup * 100 || 5;
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    title: item.date ? "".concat(item.date, ": ").concat(item.count, " signups") : 'No data',
                     style: {
-                      padding: '15px 10px',
-                      borderBottom: '1px solid #f5f5f5',
-                      color: '#555'
-                    },
-                    children: new Date(log.login_at).toLocaleString()
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      width: '8%',
+                      height: h + '%',
+                      background: 'linear-gradient(135deg, #f7a821, #e91e8c)',
+                      borderRadius: '4px',
+                      opacity: 0.7 + i / 20
+                    }
+                  }, i);
+                });
+              }()
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+              style: {
+                margin: '12px 0 0 0',
+                fontSize: '0.85rem',
+                color: 'var(--text-muted)',
+                textAlign: 'center'
+              },
+              children: "Last 12 months activity"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            style: {
+              background: 'var(--bg-page)',
+              padding: '16px',
+              borderRadius: '8px'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+              style: {
+                margin: '0 0 12px 0',
+                color: 'var(--text-main)'
+              },
+              children: "Recent Login Activity"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
+              style: {
+                width: '100%',
+                borderCollapse: 'collapse',
+                textAlign: 'left',
+                fontSize: '0.85rem'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("thead", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     style: {
-                      padding: '15px 10px',
-                      borderBottom: '1px solid #f5f5f5',
-                      fontWeight: '500'
+                      padding: '8px',
+                      borderBottom: '1px solid var(--border-color)',
+                      color: 'var(--text-muted)'
                     },
-                    children: ((_log$user = log.user) === null || _log$user === void 0 ? void 0 : _log$user.name) || "User ID " + log.user_id
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                    children: "User"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     style: {
-                      padding: '15px 10px',
-                      borderBottom: '1px solid #f5f5f5',
-                      color: '#666'
+                      padding: '8px',
+                      borderBottom: '1px solid var(--border-color)',
+                      color: 'var(--text-muted)'
                     },
-                    children: log.ip_address
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                    children: "Time"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     style: {
-                      padding: '15px 10px',
-                      borderBottom: '1px solid #f5f5f5',
-                      color: '#888',
-                      fontSize: '11px'
+                      padding: '8px',
+                      borderBottom: '1px solid var(--border-color)',
+                      color: 'var(--text-muted)'
                     },
-                    children: log.user_agent
+                    children: "IP Address"
                   })]
-                }, log.id);
-              })
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("tbody", {
+                children: logins.slice(0, 5).map(function (log) {
+                  var _log$user;
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      style: {
+                        padding: '10px 8px',
+                        borderBottom: '1px solid var(--border-color)',
+                        color: 'var(--text-main)'
+                      },
+                      children: ((_log$user = log.user) === null || _log$user === void 0 ? void 0 : _log$user.name) || 'User ' + log.user_id
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      style: {
+                        padding: '10px 8px',
+                        borderBottom: '1px solid var(--border-color)',
+                        color: 'var(--text-muted)'
+                      },
+                      children: new Date(log.login_at).toLocaleString()
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      style: {
+                        padding: '10px 8px',
+                        borderBottom: '1px solid var(--border-color)',
+                        color: 'var(--text-muted)'
+                      },
+                      children: log.ip_address
+                    })]
+                  }, log.id);
+                })
+              })]
             })]
           })]
         })
@@ -3091,10 +3567,10 @@ var AdminDashboard = function AdminDashboard() {
         },
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
           style: {
-            borderBottom: '1px solid #eee',
+            borderBottom: '1px solid var(--border-color)',
             paddingBottom: '15px',
             marginBottom: '15px',
-            color: '#333'
+            color: 'var(--text-main)'
           },
           children: "Global Posts Registry"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
@@ -3108,52 +3584,52 @@ var AdminDashboard = function AdminDashboard() {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                 style: {
                   padding: '10px',
-                  borderBottom: '2px solid #eee',
-                  color: '#888'
+                  borderBottom: '2px solid var(--border-color)',
+                  color: 'var(--text-muted)'
                 },
                 children: "Post ID"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                 style: {
                   padding: '10px',
-                  borderBottom: '2px solid #eee',
-                  color: '#888'
+                  borderBottom: '2px solid var(--border-color)',
+                  color: 'var(--text-muted)'
                 },
                 children: "Author Pet"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                 style: {
                   padding: '10px',
-                  borderBottom: '2px solid #eee',
-                  color: '#888'
+                  borderBottom: '2px solid var(--border-color)',
+                  color: 'var(--text-muted)'
                 },
                 children: "Content Snippet"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                 style: {
                   padding: '10px',
-                  borderBottom: '2px solid #eee',
-                  color: '#888'
+                  borderBottom: '2px solid var(--border-color)',
+                  color: 'var(--text-muted)'
                 },
                 children: "Created On"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                 style: {
                   padding: '10px',
-                  borderBottom: '2px solid #eee',
-                  color: '#888'
+                  borderBottom: '2px solid var(--border-color)',
+                  color: 'var(--text-muted)'
                 },
                 children: "Actions"
               })]
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tbody", {
             children: [posts.filter(function (p) {
-              var _p$pet, _p$content;
-              return !searchQuery || ((_p$pet = p.pet) === null || _p$pet === void 0 || (_p$pet = _p$pet.name) === null || _p$pet === void 0 ? void 0 : _p$pet.toLowerCase().includes(searchQuery.toLowerCase())) || ((_p$content = p.content) === null || _p$content === void 0 ? void 0 : _p$content.toLowerCase().includes(searchQuery.toLowerCase()));
+              var _p$pet, _p$caption;
+              return !searchQuery || ((_p$pet = p.pet) === null || _p$pet === void 0 || (_p$pet = _p$pet.name) === null || _p$pet === void 0 ? void 0 : _p$pet.toLowerCase().includes(searchQuery.toLowerCase())) || ((_p$caption = p.caption) === null || _p$caption === void 0 ? void 0 : _p$caption.toLowerCase().includes(searchQuery.toLowerCase()));
             }).map(function (post) {
               var _post$pet;
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
                   style: {
                     padding: '15px 10px',
-                    borderBottom: '1px solid #f5f5f5',
-                    color: '#666'
+                    borderBottom: '1px solid var(--border-color)',
+                    color: 'var(--text-muted)'
                   },
                   children: ["#", post.id]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
@@ -3167,37 +3643,58 @@ var AdminDashboard = function AdminDashboard() {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                   style: {
                     padding: '15px 10px',
-                    borderBottom: '1px solid #f5f5f5',
-                    color: '#555'
+                    borderBottom: '1px solid var(--border-color)',
+                    color: 'var(--text-main)'
                   },
-                  children: post.content ? post.content.substring(0, 40) + '...' : '(Media Post)'
+                  children: post.caption ? post.caption.substring(0, 40) + '...' : '(Media Post)'
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                   style: {
                     padding: '15px 10px',
-                    borderBottom: '1px solid #f5f5f5',
-                    color: '#888'
+                    borderBottom: '1px solid var(--border-color)',
+                    color: 'var(--text-muted)'
                   },
                   children: new Date(post.created_at).toLocaleDateString()
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                   style: {
                     padding: '15px 10px',
-                    borderBottom: '1px solid #f5f5f5'
+                    borderBottom: '1px solid var(--border-color)'
                   },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-                    onClick: function onClick(e) {
-                      return handleDeletePost(e, post.id);
-                    },
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                     style: {
-                      background: '#f1416c',
-                      color: 'white',
-                      border: 'none',
-                      padding: '6px 12px',
-                      borderRadius: '5px',
-                      cursor: 'pointer',
-                      fontSize: '12px',
-                      fontWeight: 'bold'
+                      display: 'flex',
+                      gap: '8px'
                     },
-                    children: "Delete Post"
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                      onClick: function onClick() {
+                        return setViewingPost(post);
+                      },
+                      style: {
+                        background: 'var(--primary-action)',
+                        color: 'white',
+                        border: 'none',
+                        padding: '6px 12px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        fontWeight: 'bold'
+                      },
+                      children: "View"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                      onClick: function onClick(e) {
+                        return handleDeletePost(e, post.id);
+                      },
+                      style: {
+                        background: 'var(--danger)',
+                        color: 'white',
+                        border: 'none',
+                        padding: '6px 12px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        fontWeight: 'bold'
+                      },
+                      children: "Delete"
+                    })]
                   })
                 })]
               }, post.id);
@@ -3222,19 +3719,19 @@ var AdminDashboard = function AdminDashboard() {
           style: {
             marginBottom: '32px',
             paddingBottom: '20px',
-            borderBottom: '1px solid #eee'
+            borderBottom: '1px solid var(--border-color)'
           },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
             style: {
               fontSize: '1.75rem',
               fontWeight: '800',
-              color: '#1E293B',
+              color: 'var(--text-main)',
               margin: 0
             },
             children: "System Configuration"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
             style: {
-              color: '#64748B',
+              color: 'var(--text-muted)',
               fontSize: '1rem',
               marginTop: '4px'
             },
@@ -3251,7 +3748,7 @@ var AdminDashboard = function AdminDashboard() {
             style: {
               padding: '24px',
               margin: 0,
-              border: '1px solid #E2E8F0',
+              border: '1px solid var(--border-color)',
               boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
             },
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -3264,9 +3761,9 @@ var AdminDashboard = function AdminDashboard() {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                 style: {
                   padding: '10px',
-                  background: '#FEE2E2',
+                  background: 'rgba(var(--danger-rgb), 0.12)',
                   borderRadius: '10px',
-                  color: '#EF4444'
+                  color: 'var(--danger)'
                 },
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(phosphor_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
                   size: 20,
@@ -3277,13 +3774,13 @@ var AdminDashboard = function AdminDashboard() {
                   margin: 0,
                   fontSize: '1.1rem',
                   fontWeight: '700',
-                  color: '#334155'
+                  color: 'var(--text-main)'
                 },
                 children: "Maintenance Mode"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
               style: {
-                color: '#64748B',
+                color: 'var(--text-muted)',
                 fontSize: '0.9rem',
                 marginBottom: '20px',
                 lineHeight: '1.5'
@@ -3292,9 +3789,9 @@ var AdminDashboard = function AdminDashboard() {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
               onClick: toggleMaintenance,
               style: {
-                background: '#F8FAFC',
-                color: '#334155',
-                border: '1.5px solid #E2E8F0',
+                background: 'var(--bg-page)',
+                color: 'var(--text-main)',
+                border: '1.5px solid var(--border-color)',
                 padding: '10px 20px',
                 borderRadius: '10px',
                 fontWeight: '700',
@@ -3308,7 +3805,7 @@ var AdminDashboard = function AdminDashboard() {
             style: {
               padding: '24px',
               margin: 0,
-              border: '1px solid #E2E8F0',
+              border: '1px solid var(--border-color)',
               boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
             },
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -3321,9 +3818,9 @@ var AdminDashboard = function AdminDashboard() {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                 style: {
                   padding: '10px',
-                  background: '#FFF7ED',
+                  background: 'rgba(var(--warning-rgb), 0.12)',
                   borderRadius: '10px',
-                  color: '#F59E0B'
+                  color: 'var(--warning)'
                 },
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(phosphor_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
                   size: 20,
@@ -3334,13 +3831,13 @@ var AdminDashboard = function AdminDashboard() {
                   margin: 0,
                   fontSize: '1.1rem',
                   fontWeight: '700',
-                  color: '#334155'
+                  color: 'var(--text-main)'
                 },
                 children: "Cache Optimization"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
               style: {
-                color: '#64748B',
+                color: 'var(--text-muted)',
                 fontSize: '0.9rem',
                 marginBottom: '20px',
                 lineHeight: '1.5'
@@ -3349,7 +3846,7 @@ var AdminDashboard = function AdminDashboard() {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
               onClick: purgeCache,
               style: {
-                background: '#ffc26d',
+                background: 'var(--primary-action)',
                 color: '#fff',
                 border: 'none',
                 padding: '10px 20px',
@@ -3357,7 +3854,7 @@ var AdminDashboard = function AdminDashboard() {
                 fontWeight: '700',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                boxShadow: '0 4px 12px rgba(255, 194, 109, 0.2)'
+                boxShadow: '0 4px 12px rgba(var(--primary-action-rgb), 0.2)'
               },
               children: "Purge All Cache"
             })]
@@ -3367,14 +3864,14 @@ var AdminDashboard = function AdminDashboard() {
           style: {
             padding: '24px',
             marginTop: '24px',
-            border: '1px solid #E2E8F0'
+            border: '1px solid var(--border-color)'
           },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
             style: {
               margin: '0 0 20px 0',
               fontSize: '1.25rem',
               fontWeight: '700',
-              color: '#1E293B'
+              color: 'var(--text-main)'
             },
             children: "Access & Registration"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -3383,7 +3880,7 @@ var AdminDashboard = function AdminDashboard() {
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '16px 0',
-              borderBottom: '1px solid #F1F5F9'
+              borderBottom: '1px solid var(--border-color)'
             },
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
@@ -3397,7 +3894,7 @@ var AdminDashboard = function AdminDashboard() {
                 style: {
                   margin: 0,
                   fontSize: '0.85rem',
-                  color: '#64748B'
+                  color: 'var(--text-muted)'
                 },
                 children: "Control whether new pet owners can join the platform."
               })]
@@ -3405,7 +3902,10 @@ var AdminDashboard = function AdminDashboard() {
               className: "switch",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
                 type: "checkbox",
-                defaultChecked: true
+                checked: registrationEnabled,
+                onChange: function onChange(e) {
+                  return setRegistrationEnabled(e.target.checked);
+                }
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
                 className: "slider"
               })]
@@ -3416,7 +3916,7 @@ var AdminDashboard = function AdminDashboard() {
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '16px 0',
-              borderBottom: '1px solid #F1F5F9'
+              borderBottom: '1px solid var(--border-color)'
             },
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
@@ -3430,14 +3930,18 @@ var AdminDashboard = function AdminDashboard() {
                 style: {
                   margin: 0,
                   fontSize: '0.85rem',
-                  color: '#64748B'
+                  color: 'var(--text-muted)'
                 },
                 children: "Require all new signups to verify their email address."
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
               className: "switch",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                type: "checkbox"
+                type: "checkbox",
+                checked: emailVerification,
+                onChange: function onChange(e) {
+                  return setEmailVerification(e.target.checked);
+                }
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
                 className: "slider"
               })]
@@ -3448,9 +3952,10 @@ var AdminDashboard = function AdminDashboard() {
               textAlign: 'right'
             },
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              onClick: handleSaveSettings,
               style: {
-                background: '#1E293B',
-                color: 'white',
+                background: 'var(--text-main)',
+                color: 'var(--bg-card)',
                 border: 'none',
                 padding: '12px 24px',
                 borderRadius: '10px',
@@ -3490,7 +3995,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Moon.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/SignOut.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Sun.es.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _hooks_useTheme__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../hooks/useTheme */ "./resources/js/hooks/useTheme.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -3501,41 +4007,36 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 var AdminSidebar = function AdminSidebar(_ref) {
   var activeTab = _ref.activeTab,
     onTabChange = _ref.onTabChange;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
-      return localStorage.getItem("petverse_theme") === "dark";
-    }),
-    _useState2 = _slicedToArray(_useState, 2),
-    isDarkMode = _useState2[0],
-    setIsDarkMode = _useState2[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var theme = isDarkMode ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("petverse_theme", theme);
-  }, [isDarkMode]);
+  var _useTheme = (0,_hooks_useTheme__WEBPACK_IMPORTED_MODULE_9__.useTheme)(),
+    _useTheme2 = _slicedToArray(_useTheme, 2),
+    theme = _useTheme2[0],
+    setTheme = _useTheme2[1];
+  var isDarkMode = theme === "dark";
   var items = [{
     id: "dashboard",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Layout, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Layout, {
       size: 22
     }),
     label: "Dashboard"
   }, {
     id: "posts",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_2__.Article, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_2__.Article, {
       size: 22
     }),
     label: "Posts Management"
   }, {
     id: "reports",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.ChartBar, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.ChartBar, {
       size: 22
     }),
     label: "Reports & Analytics"
   }, {
     id: "settings",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Gear, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Gear, {
       size: 22
     }),
     label: "System Settings"
@@ -3556,33 +4057,33 @@ var AdminSidebar = function AdminSidebar(_ref) {
     document.body.appendChild(form);
     form.submit();
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("aside", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("aside", {
     className: "admin-sidebar",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
       className: "admin-sidebar__brand",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
         className: "admin-sidebar__brand-mark",
         children: "A"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
           className: "admin-sidebar__brand-name",
           children: "Petverse"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
           className: "admin-sidebar__brand-role",
           children: "Admin Console"
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("nav", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("nav", {
       className: "admin-sidebar__nav",
       children: items.map(function (item) {
         var active = item.id === activeTab;
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("button", {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("button", {
           type: "button",
           className: "admin-nav-item ".concat(active ? "active" : ""),
           onClick: function onClick() {
             return onTabChange(item.id);
           },
-          children: [active && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.motion.div, {
+          children: [active && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.motion.div, {
             layoutId: "active-admin-pill",
             className: "admin-nav-item__bg",
             transition: {
@@ -3590,36 +4091,34 @@ var AdminSidebar = function AdminSidebar(_ref) {
               stiffness: 400,
               damping: 30
             }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
             className: "admin-nav-item__icon",
             children: item.icon
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
             className: "admin-nav-item__label",
             children: item.label
           })]
         }, item.id);
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
       className: "admin-sidebar__footer",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("button", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("button", {
         className: "admin-sidebar__logout",
         onClick: handleLogout,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.SignOut, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.SignOut, {
           size: 18
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
           children: "Log out"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
         className: "admin-sidebar__theme",
         onClick: function onClick() {
-          return setIsDarkMode(function (p) {
-            return !p;
-          });
+          return setTheme(isDarkMode ? "light" : "dark");
         },
         title: isDarkMode ? "Switch to light mode" : "Switch to dark mode",
-        children: isDarkMode ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Sun, {
+        children: isDarkMode ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Sun, {
           size: 18
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Moon, {
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Moon, {
           size: 18
         })
       })]
@@ -3646,13 +4145,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs");
 /* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Heart.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MapPin.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
-/* harmony import */ var _pages_Sidebar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/Sidebar */ "./resources/js/components/pages/Sidebar.js");
-/* harmony import */ var _sass_pages_adoption_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../sass/pages/adoption.scss */ "./resources/sass/pages/adoption.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Image.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MapPin.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
+/* harmony import */ var _pages_Sidebar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/Sidebar */ "./resources/js/components/pages/Sidebar.js");
+/* harmony import */ var _sass_pages_adoption_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../sass/pages/adoption.scss */ "./resources/sass/pages/adoption.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["children", "className", "variant"];
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
@@ -3684,7 +4184,7 @@ var Card = function Card(_ref) {
   var children = _ref.children,
     _ref$className = _ref.className,
     className = _ref$className === void 0 ? "" : _ref$className;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
     className: "adopt-card ".concat(className),
     children: children
   });
@@ -3696,7 +4196,7 @@ var Button = function Button(_ref2) {
     _ref2$variant = _ref2.variant,
     variant = _ref2$variant === void 0 ? "default" : _ref2$variant,
     props = _objectWithoutProperties(_ref2, _excluded);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", _objectSpread(_objectSpread({
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", _objectSpread(_objectSpread({
     className: "adopt-btn adopt-btn--".concat(variant, " ").concat(className)
   }, props), {}, {
     children: children
@@ -3706,7 +4206,7 @@ var Badge = function Badge(_ref3) {
   var children = _ref3.children,
     _ref3$className = _ref3.className,
     className = _ref3$className === void 0 ? "" : _ref3$className;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
     className: "adopt-badge ".concat(className),
     children: children
   });
@@ -3813,51 +4313,88 @@ var AdoptionBoard = function AdoptionBoard() {
     _useState12 = _slicedToArray(_useState11, 2),
     putFormSubmitted = _useState12[0],
     setPutFormSubmitted = _useState12[1];
-  var fetchListings = /*#__PURE__*/function () {
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState14 = _slicedToArray(_useState13, 2),
+    userPets = _useState14[0],
+    setUserPets = _useState14[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    fetchListings();
+    fetchUserPets();
+  }, []);
+  var fetchUserPets = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var res, data, formattedPets, _t;
+      var _res$data, res, data, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
             _context.p = 0;
             _context.n = 1;
-            return window.axios.get('/api/adoption-listings/available');
+            return window.axios.get('/api/pets');
           case 1:
             res = _context.v;
-            data = res.data || [];
-            formattedPets = data.map(function (listing) {
-              var _listing$pet, _listing$pet2, _listing$pet3, _listing$pet4, _listing$pet5, _listing$pet6, _listing$pet7, _listing$pet8;
-              return {
-                id: listing.id,
-                name: ((_listing$pet = listing.pet) === null || _listing$pet === void 0 ? void 0 : _listing$pet.name) || 'Unknown',
-                breed: ((_listing$pet2 = listing.pet) === null || _listing$pet2 === void 0 ? void 0 : _listing$pet2.breed) || 'Unknown',
-                age: ((_listing$pet3 = listing.pet) === null || _listing$pet3 === void 0 ? void 0 : _listing$pet3.age_label) || ((_listing$pet4 = listing.pet) === null || _listing$pet4 === void 0 ? void 0 : _listing$pet4.age) || 'Unknown',
-                description: listing.description || ((_listing$pet5 = listing.pet) === null || _listing$pet5 === void 0 ? void 0 : _listing$pet5.bio) || '',
-                location: listing.location || ((_listing$pet6 = listing.pet) === null || _listing$pet6 === void 0 ? void 0 : _listing$pet6.location) || 'Unknown',
-                image: listing.image ? "storage/".concat(listing.image) : (_listing$pet7 = listing.pet) !== null && _listing$pet7 !== void 0 && _listing$pet7.photo ? "storage/".concat(listing.pet.photo) : null,
-                imageAlt: "".concat(((_listing$pet8 = listing.pet) === null || _listing$pet8 === void 0 ? void 0 : _listing$pet8.name) || 'Pet', " for adoption"),
-                tags: [],
-                saved: false
-              };
-            });
-            setPets(formattedPets);
+            // Assuming /api/pets returns { data: [...] } or just [...]
+            data = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || res.data || [];
+            setUserPets(data);
             _context.n = 3;
             break;
           case 2:
             _context.p = 2;
             _t = _context.v;
-            console.error('Failed to fetch adoption listings:', _t);
+            console.error('Failed to fetch user pets:', _t);
           case 3:
-            _context.p = 3;
-            setLoading(false);
-            return _context.f(3);
-          case 4:
             return _context.a(2);
         }
-      }, _callee, null, [[0, 2, 3, 4]]);
+      }, _callee, null, [[0, 2]]);
+    }));
+    return function fetchUserPets() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  var fetchListings = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      var res, data, formattedPets, _t2;
+      return _regenerator().w(function (_context2) {
+        while (1) switch (_context2.p = _context2.n) {
+          case 0:
+            _context2.p = 0;
+            _context2.n = 1;
+            return window.axios.get('/api/adoption-listings/available');
+          case 1:
+            res = _context2.v;
+            data = res.data || [];
+            formattedPets = data.map(function (listing) {
+              var petData = listing.pet || {};
+              return {
+                id: listing.id,
+                name: listing.pet_name || petData.name || 'Unknown Pet',
+                breed: listing.breed || petData.breed || 'Unknown Breed',
+                age: listing.age || petData.age_label || petData.age || 'N/A',
+                description: listing.description || petData.bio || 'No description provided.',
+                location: listing.location || petData.location || 'Unknown Location',
+                image: listing.image ? "/storage/".concat(listing.image) : petData.photo ? "/storage/".concat(petData.photo) : null,
+                imageAlt: "".concat(listing.pet_name || petData.name || 'Pet', " for adoption"),
+                tags: [],
+                saved: false
+              };
+            });
+            setPets(formattedPets);
+            _context2.n = 3;
+            break;
+          case 2:
+            _context2.p = 2;
+            _t2 = _context2.v;
+            console.error('Failed to fetch adoption listings:', _t2);
+          case 3:
+            _context2.p = 3;
+            setLoading(false);
+            return _context2.f(3);
+          case 4:
+            return _context2.a(2);
+        }
+      }, _callee2, null, [[0, 2, 3, 4]]);
     }));
     return function fetchListings() {
-      return _ref4.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     };
   }();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -3873,11 +4410,11 @@ var AdoptionBoard = function AdoptionBoard() {
     });
   };
   var handleAdoptSubmit = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(e) {
+    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(e) {
       var _form$querySelector, _form$elements$, _form$querySelector2, _form$elements$2, _form$querySelector3, _form$elements$3, _form$querySelector4;
-      var form, data, _err$response, _t2;
-      return _regenerator().w(function (_context2) {
-        while (1) switch (_context2.p = _context2.n) {
+      var form, data, _err$response, _t3;
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.p = _context3.n) {
           case 0:
             e.preventDefault();
             form = e.target;
@@ -3887,8 +4424,8 @@ var AdoptionBoard = function AdoptionBoard() {
               phone: ((_form$querySelector3 = form.querySelector('[type="tel"]')) === null || _form$querySelector3 === void 0 ? void 0 : _form$querySelector3.value) || ((_form$elements$3 = form.elements[2]) === null || _form$elements$3 === void 0 ? void 0 : _form$elements$3.value) || '',
               message: ((_form$querySelector4 = form.querySelector('textarea')) === null || _form$querySelector4 === void 0 ? void 0 : _form$querySelector4.value) || ''
             };
-            _context2.p = 1;
-            _context2.n = 2;
+            _context3.p = 1;
+            _context3.n = 2;
             return window.axios.post("/api/adoption-listings/".concat(adoptFormPet.id, "/apply"), data);
           case 2:
             setFormSubmitted(true);
@@ -3897,32 +4434,32 @@ var AdoptionBoard = function AdoptionBoard() {
               setFormSubmitted(false);
               setSelectedPet(null);
             }, 2000);
-            _context2.n = 4;
+            _context3.n = 4;
             break;
           case 3:
-            _context2.p = 3;
-            _t2 = _context2.v;
-            alert(((_err$response = _t2.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Failed to submit application.');
+            _context3.p = 3;
+            _t3 = _context3.v;
+            alert(((_err$response = _t3.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Failed to submit application.');
           case 4:
-            return _context2.a(2);
+            return _context3.a(2);
         }
-      }, _callee2, null, [[1, 3]]);
+      }, _callee3, null, [[1, 3]]);
     }));
     return function handleAdoptSubmit(_x) {
-      return _ref5.apply(this, arguments);
+      return _ref6.apply(this, arguments);
     };
   }();
   var handlePutSubmit = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(e) {
-      var form, fd, _err$response2, _t3;
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.p = _context3.n) {
+    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(e) {
+      var form, fd, _err$response2, _t4;
+      return _regenerator().w(function (_context4) {
+        while (1) switch (_context4.p = _context4.n) {
           case 0:
             e.preventDefault();
             form = e.target;
             fd = new FormData(form);
-            _context3.p = 1;
-            _context3.n = 2;
+            _context4.p = 1;
+            _context4.n = 2;
             return window.axios.post('/api/adoption-listings', fd, {
               headers: {
                 'Content-Type': 'multipart/form-data'
@@ -3930,62 +4467,62 @@ var AdoptionBoard = function AdoptionBoard() {
             });
           case 2:
             setPutFormSubmitted(true);
-            _context3.n = 3;
+            _context4.n = 3;
             return fetchListings();
           case 3:
             setTimeout(function () {
               setPutForAdoptionOpen(false);
               setPutFormSubmitted(false);
             }, 1500);
-            _context3.n = 5;
+            _context4.n = 5;
             break;
           case 4:
-            _context3.p = 4;
-            _t3 = _context3.v;
-            console.error(_t3);
-            alert(((_err$response2 = _t3.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.message) || 'Failed to publish listing.');
+            _context4.p = 4;
+            _t4 = _context4.v;
+            console.error(_t4);
+            alert(((_err$response2 = _t4.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.message) || 'Failed to publish listing.');
           case 5:
-            return _context3.a(2);
+            return _context4.a(2);
         }
-      }, _callee3, null, [[1, 4]]);
+      }, _callee4, null, [[1, 4]]);
     }));
     return function handlePutSubmit(_x2) {
-      return _ref6.apply(this, arguments);
+      return _ref7.apply(this, arguments);
     };
   }();
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
     className: "adoption-page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Sidebar__WEBPACK_IMPORTED_MODULE_8__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("main", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_Sidebar__WEBPACK_IMPORTED_MODULE_9__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("main", {
       className: "adoption-main",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
         className: "adoption-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
           className: "adoption-header__text",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("h1", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("h1", {
             className: "adoption-header__title",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.PawPrint, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.PawPrint, {
               size: 32,
               weight: "fill",
               className: "adoption-header__icon"
             }), "Find Your Perfect Companion"]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
             className: "adoption-header__subtitle",
             children: "Browse our lovable pets waiting for a forever home."
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(Button, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(Button, {
           variant: "default",
           onClick: function onClick() {
             return setPutForAdoptionOpen(true);
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Plus, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Plus, {
             size: 18,
             weight: "bold"
           }), "Pet for Adoption"]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
         className: "adoption-grid",
         children: pets.map(function (pet) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
             initial: {
               opacity: 0,
               y: 20
@@ -3998,69 +4535,69 @@ var AdoptionBoard = function AdoptionBoard() {
               duration: 0.3,
               delay: pet.id * 0.05
             },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(Card, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(Card, {
               className: "pet-card",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "pet-card__image-wrap",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("img", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("img", {
                   src: pet.image,
                   alt: pet.imageAlt,
                   className: "pet-card__image"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
                   className: "pet-card__save-btn ".concat(pet.saved ? "pet-card__save-btn--saved" : ""),
                   onClick: function onClick() {
                     return toggleSave(pet.id);
                   },
                   "aria-label": pet.saved ? "Unsave pet" : "Save pet",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
                     size: 20,
                     weight: pet.saved ? "fill" : "regular"
                   })
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "pet-card__content",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                   className: "pet-card__header",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h2", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("h2", {
                       className: "pet-card__name",
                       children: pet.name
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
                       className: "pet-card__breed",
                       children: pet.breed
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Badge, {
                     className: "pet-card__age",
                     children: pet.age
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
                   className: "pet-card__description",
                   children: pet.description
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                   className: "pet-card__location",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.MapPin, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.MapPin, {
                     size: 14
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
                     children: pet.location
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
                   className: "pet-card__tags",
                   children: pet.tags.map(function (tag) {
-                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Badge, {
                       className: "pet-card__tag",
                       children: tag
                     }, tag);
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                   className: "pet-card__actions",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Button, {
                     variant: "outline",
                     className: "pet-card__btn",
                     onClick: function onClick() {
                       return setSelectedPet(pet);
                     },
                     children: "Learn More"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Button, {
                     variant: "default",
                     className: "pet-card__btn",
                     onClick: function onClick() {
@@ -4074,13 +4611,13 @@ var AdoptionBoard = function AdoptionBoard() {
           }, pet.id);
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: selectedPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: selectedPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
         className: "adopt-modal-overlay",
         onClick: function onClick() {
           return setSelectedPet(null);
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "adopt-modal",
           initial: {
             scale: 0.95,
@@ -4097,60 +4634,60 @@ var AdoptionBoard = function AdoptionBoard() {
           onClick: function onClick(e) {
             return e.stopPropagation();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
             className: "adopt-modal__image-wrap",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("img", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("img", {
               src: selectedPet.image,
               alt: selectedPet.imageAlt,
               className: "adopt-modal__image"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
               className: "adopt-modal__close",
               onClick: function onClick() {
                 return setSelectedPet(null);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.X, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.X, {
                 size: 20
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
             className: "adopt-modal__content",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "adopt-modal__header",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h2", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("h2", {
                 className: "adopt-modal__name",
                 children: selectedPet.name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Badge, {
                 className: "adopt-modal__age",
                 children: selectedPet.age
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
               className: "adopt-modal__breed",
               children: selectedPet.breed
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "adopt-modal__location",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.MapPin, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.MapPin, {
                 size: 16
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
                 children: selectedPet.location
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "adopt-modal__section",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("h3", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("h3", {
                 children: ["About ", selectedPet.name]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
                 children: selectedPet.description
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
               className: "adopt-modal__tags",
               children: selectedPet.tags.map(function (tag) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Badge, {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Badge, {
                   className: "adopt-modal__tag",
                   children: tag
                 }, tag);
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
               className: "adopt-modal__actions",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Button, {
                 variant: "default",
                 className: "adopt-modal__btn",
                 onClick: function onClick() {
@@ -4162,13 +4699,13 @@ var AdoptionBoard = function AdoptionBoard() {
           })]
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: adoptFormPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: adoptFormPet && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
         className: "adopt-modal-overlay",
         onClick: function onClick() {
           return setAdoptFormPet(null);
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "adopt-modal adopt-modal--form",
           initial: {
             scale: 0.95,
@@ -4185,87 +4722,87 @@ var AdoptionBoard = function AdoptionBoard() {
           onClick: function onClick(e) {
             return e.stopPropagation();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
             className: "adopt-modal__header-bar",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("h3", {
               children: ["Adopt ", adoptFormPet.name]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
               className: "adopt-modal__close-alt",
               onClick: function onClick() {
                 return setAdoptFormPet(null);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.X, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.X, {
                 size: 20
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
             className: "adopt-modal__form-content",
-            children: formSubmitted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+            children: formSubmitted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "adopt-modal__success",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
                 className: "adopt-modal__success-icon",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Heart, {
                   size: 40,
                   weight: "fill",
                   color: "#ef4444"
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h4", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("h4", {
                 children: "Application Submitted!"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("p", {
                 children: ["Thank you! Our team will review your application for ", adoptFormPet.name, " and get back to you soon."]
               })]
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("form", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("form", {
               onSubmit: handleAdoptSubmit,
               className: "adopt-form",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("p", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("p", {
                 className: "adopt-form__desc",
                 children: ["Please provide some details so we can process your adoption application for ", adoptFormPet.name, "."]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                   children: "Full Name"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
                   type: "text",
                   required: true,
                   placeholder: "John Doe"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                   children: "Email Address"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
                   type: "email",
                   required: true,
                   placeholder: "john@example.com"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                   children: "Phone Number"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
                   type: "tel",
                   required: true,
                   placeholder: "(555) 123-4567"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                   children: "Why are you a good fit?"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("textarea", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("textarea", {
                   required: true,
                   placeholder: "Tell us why you'd be a great parent for ".concat(adoptFormPet.name, "..."),
                   rows: 3
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__actions",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Button, {
                   variant: "outline",
                   type: "button",
                   onClick: function onClick() {
                     return setAdoptFormPet(null);
                   },
                   children: "Cancel"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Button, {
                   variant: "default",
                   type: "submit",
                   children: "Submit Application"
@@ -4275,13 +4812,13 @@ var AdoptionBoard = function AdoptionBoard() {
           })]
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: putForAdoptionOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: putForAdoptionOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
         className: "adopt-modal-overlay",
         onClick: function onClick() {
           return setPutForAdoptionOpen(false);
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "adopt-modal adopt-modal--form",
           initial: {
             scale: 0.95,
@@ -4298,113 +4835,208 @@ var AdoptionBoard = function AdoptionBoard() {
           onClick: function onClick(e) {
             return e.stopPropagation();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
             className: "adopt-modal__header-bar",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("h3", {
               children: "List Pet for Adoption"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
               className: "adopt-modal__close-alt",
               onClick: function onClick() {
                 return setPutForAdoptionOpen(false);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.X, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.X, {
                 size: 20
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
             className: "adopt-modal__form-content",
-            children: putFormSubmitted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+            children: putFormSubmitted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "adopt-modal__success",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
                 className: "adopt-modal__success-icon",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.PawPrint, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.PawPrint, {
                   size: 40,
                   weight: "fill",
                   color: "#ef4444"
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h4", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("h4", {
                 children: "Listing Created!"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
                 children: "Your pet has been successfully listed for adoption. We'll help find them a loving home!"
               })]
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("form", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("form", {
               onSubmit: handlePutSubmit,
               className: "adopt-form",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
                 className: "adopt-form__desc",
                 children: "Fill out the details below to list your pet for adoption. Make sure to provide accurate information."
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
+                className: "adopt-form__group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
+                  children: "Select Your Pet (Optional)"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("select", {
+                  className: "adopt-form__select",
+                  onChange: function onChange(e) {
+                    var selectedId = e.target.value;
+                    if (!selectedId) return;
+                    var p = userPets.find(function (up) {
+                      return up.id.toString() === selectedId;
+                    });
+                    if (p) {
+                      var form = e.target.form;
+                      form.pet_id.value = p.id;
+                      form.pet_name.value = p.name || '';
+                      form.breed.value = p.breed || '';
+                      form.age.value = p.age_label || p.age || '';
+                      form.location.value = p.location || '';
+                      form.description.value = p.bio || '';
+                    }
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("option", {
+                    value: "",
+                    children: "-- Choose one of your pets --"
+                  }), userPets.map(function (up) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("option", {
+                      value: up.id,
+                      children: up.name
+                    }, up.id);
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
+                  type: "hidden",
+                  name: "pet_id"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                   className: "adopt-form__group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                     children: "Pet Name"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
                     type: "text",
+                    name: "pet_name",
                     required: true,
                     placeholder: "e.g. Buddy"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                   className: "adopt-form__group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                     children: "Pet Type/Breed"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
                     type: "text",
+                    name: "breed",
                     required: true,
                     placeholder: "e.g. Golden Retriever"
                   })]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                   className: "adopt-form__group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                     children: "Age"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
                     type: "text",
+                    name: "age",
                     required: true,
                     placeholder: "e.g. 2 years"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                   className: "adopt-form__group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                     children: "Location"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
                     type: "text",
+                    name: "location",
                     required: true,
-                    placeholder: "e.g. San Francisco, CA"
+                    placeholder: "e.g. Manila, Philippines"
                   })]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
                   children: "Description"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("textarea", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("textarea", {
+                  name: "description",
                   required: true,
                   placeholder: "Tell potential adopters about your pet's personality, habits, and needs...",
                   rows: 4
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("label", {
-                  children: "Pet Image URL"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("input", {
-                  type: "url",
-                  placeholder: "https://example.com/pet-image.jpg"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("label", {
+                  children: "Pet Photo"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
+                  className: "file-upload-wrapper",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
+                    type: "file",
+                    id: "pet-photo-upload",
+                    name: "image",
+                    accept: "image/*",
+                    className: "adopt-form__file-input",
+                    onChange: function onChange(e) {
+                      var file = e.target.files[0];
+                      if (file) {
+                        var reader = new FileReader();
+                        reader.onload = function (ev) {
+                          document.getElementById('photo-preview-box').src = ev.target.result;
+                          document.getElementById('photo-preview-box').style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("label", {
+                    htmlFor: "pet-photo-upload",
+                    className: "file-upload-btn",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Image, {
+                      size: 20
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
+                      children: "Upload Photo"
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("img", {
+                    id: "photo-preview-box",
+                    src: "",
+                    alt: "Preview",
+                    style: {
+                      display: 'none',
+                      marginTop: '10px',
+                      borderRadius: '8px',
+                      maxWidth: '100%',
+                      height: 'auto'
+                    }
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
                   className: "adopt-form__hint",
-                  children: "For now, please provide a direct link to an image."
+                  children: "Upload a clear photo of your pet (JPG, PNG, WebP \u2014 max 5MB)."
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
+                className: "adopt-form__group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("label", {
+                  children: ["Contact Info ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
+                    style: {
+                      color: 'var(--danger)',
+                      fontSize: '0.8em'
+                    },
+                    children: "*"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("input", {
+                  type: "text",
+                  name: "contact_info",
+                  required: true,
+                  placeholder: "Your email or phone number"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
+                  className: "adopt-form__hint",
+                  children: "Potential adopters will reach you through this."
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
                 className: "adopt-form__actions",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Button, {
                   variant: "outline",
                   type: "button",
                   onClick: function onClick() {
                     return setPutForAdoptionOpen(null);
                   },
                   children: "Cancel"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Button, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(Button, {
                   variant: "default",
                   type: "submit",
                   children: "Create Listing"
@@ -5547,7 +6179,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Sidebar__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/Sidebar */ "./resources/js/components/pages/Sidebar.js");
 /* harmony import */ var _httpHelpers__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../httpHelpers */ "./resources/js/httpHelpers.js");
 /* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../context/UserContext */ "./resources/js/context/UserContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _hooks_useTheme__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../hooks/useTheme */ "./resources/js/hooks/useTheme.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["children", "variant", "className"],
   _excluded2 = ["className"];
@@ -5575,13 +6208,14 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
+
 // ── UI Components ───────────
 
 var Card = function Card(_ref) {
   var children = _ref.children,
     _ref$className = _ref.className,
     className = _ref$className === void 0 ? "" : _ref$className;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
     className: "settings-card ".concat(className),
     children: children
   });
@@ -5589,13 +6223,13 @@ var Card = function Card(_ref) {
 var Switch = function Switch(_ref2) {
   var checked = _ref2.checked,
     onCheckedChange = _ref2.onCheckedChange;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
     className: "settings-switch ".concat(checked ? 'active' : ''),
     onClick: function onClick() {
       return onCheckedChange(!checked);
     },
     type: "button",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
       className: "switch-thumb"
     })
   });
@@ -5607,7 +6241,7 @@ var Button = function Button(_ref3) {
     _ref3$className = _ref3.className,
     className = _ref3$className === void 0 ? "" : _ref3$className,
     props = _objectWithoutProperties(_ref3, _excluded);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", _objectSpread(_objectSpread({
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", _objectSpread(_objectSpread({
     className: "settings-btn ".concat(variant, " ").concat(className)
   }, props), {}, {
     children: children
@@ -5617,13 +6251,13 @@ var Input = function Input(_ref4) {
   var _ref4$className = _ref4.className,
     className = _ref4$className === void 0 ? "" : _ref4$className,
     props = _objectWithoutProperties(_ref4, _excluded2);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", _objectSpread({
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", _objectSpread({
     className: "settings-input ".concat(className)
   }, props));
 };
 var Label = function Label(_ref5) {
   var children = _ref5.children;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
     className: "settings-label",
     children: children
   });
@@ -5640,24 +6274,23 @@ var Settings = function Settings() {
     _useState2 = _slicedToArray(_useState, 2),
     activeTab = _useState2[0],
     setActiveTab = _useState2[1];
+  var _useTheme = (0,_hooks_useTheme__WEBPACK_IMPORTED_MODULE_20__.useTheme)(),
+    _useTheme2 = _slicedToArray(_useTheme, 2),
+    theme = _useTheme2[0],
+    setTheme = _useTheme2[1];
+  var isDark = theme === 'dark';
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
-      return localStorage.getItem('theme') === 'dark';
-    }),
-    _useState4 = _slicedToArray(_useState3, 2),
-    isDark = _useState4[0],
-    setIsDark = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
       return localStorage.getItem('text-size') || 'medium';
     }),
+    _useState4 = _slicedToArray(_useState3, 2),
+    textSize = _useState4[0],
+    setTextSize = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('english'),
     _useState6 = _slicedToArray(_useState5, 2),
-    textSize = _useState6[0],
-    setTextSize = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('english'),
-    _useState8 = _slicedToArray(_useState7, 2),
-    language = _useState8[0],
-    setLanguage = _useState8[1];
+    language = _useState6[0],
+    setLanguage = _useState6[1];
   var fileInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       displayName: '',
       username: '',
       email: '',
@@ -5673,10 +6306,10 @@ var Settings = function Settings() {
       petBio: '',
       avatar_url: null
     }),
-    _useState0 = _slicedToArray(_useState9, 2),
-    user = _useState0[0],
-    setUser = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    _useState8 = _slicedToArray(_useState7, 2),
+    user = _useState8[0],
+    setUser = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       likes: true,
       comments: true,
       newFollowers: true,
@@ -5687,10 +6320,10 @@ var Settings = function Settings() {
       weeklyDigest: false,
       push: true
     }),
-    _useState10 = _slicedToArray(_useState1, 2),
-    notifications = _useState10[0],
-    setNotifications = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    _useState0 = _slicedToArray(_useState9, 2),
+    notifications = _useState0[0],
+    setNotifications = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       publicProfile: true,
       showLocation: true,
       messagesFromAnyone: false,
@@ -5699,13 +6332,13 @@ var Settings = function Settings() {
       analytics: true,
       privateAccount: false
     }),
+    _useState10 = _slicedToArray(_useState1, 2),
+    privacy = _useState10[0],
+    setPrivacy = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    privacy = _useState12[0],
-    setPrivacy = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState14 = _slicedToArray(_useState13, 2),
-    isUploading = _useState14[0],
-    setIsUploading = _useState14[1];
+    isUploading = _useState12[0],
+    setIsUploading = _useState12[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (authUser) {
       var _authUser$pet, _authUser$pet2, _authUser$pet3, _authUser$pet4, _authUser$pet5, _authUser$pet6, _authUser$pet7, _authUser$pet8;
@@ -5793,15 +6426,6 @@ var Settings = function Settings() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchUser();
   }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (isDark) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDark]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     document.documentElement.setAttribute('data-text-size', textSize);
     localStorage.setItem('text-size', textSize);
@@ -6014,37 +6638,37 @@ var Settings = function Settings() {
   var tabs = [{
     id: 'account',
     label: 'Account',
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.User, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.User, {
       size: 18
     })
   }, {
     id: 'privacy',
     label: 'Privacy',
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.Lock, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.Lock, {
       size: 18
     })
   }, {
     id: 'notifications',
     label: 'Notifications',
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
       size: 18
     })
   }, {
     id: 'appearance',
     label: 'Appearance',
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.PaintBrush, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.PaintBrush, {
       size: 18
     })
   }, {
     id: 'danger',
     label: 'Danger Zone',
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Warning, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Warning, {
       size: 18
     }),
     danger: true
   }];
   var renderAccount = function renderAccount() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
       initial: {
         opacity: 0,
         y: 10
@@ -6058,20 +6682,20 @@ var Settings = function Settings() {
         y: -10
       },
       className: "settings-section",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(Card, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(Card, {
         className: "account-card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "account-card-header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h2", {
             children: "Owner Account"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
             className: "save-btn",
             onClick: handleSaveChanges,
             children: "Save Changes"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "account-profile-header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
             type: "file",
             ref: fileInputRef,
             onChange: handlePhotoChange,
@@ -6079,43 +6703,43 @@ var Settings = function Settings() {
               display: 'none'
             },
             accept: "image/*"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "avatar-container ".concat(isUploading ? 'uploading' : ''),
             onClick: triggerFileInput,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("img", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("img", {
               src: user.avatar_url || "https://ui-avatars.com/api/?name=".concat(encodeURIComponent(user.displayName || 'User'), "&background=898AA6&color=fff"),
               alt: "Profile",
               className: "profile-avatar-img"
-            }, user.avatar_url), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+            }, user.avatar_url), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
               className: "camera-badge",
-              children: isUploading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+              children: isUploading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
                 className: "spinner-mini"
-              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Camera, {
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Camera, {
                 size: 14,
                 weight: "fill"
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "profile-info",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h3", {
               children: user.displayName
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
               className: "username",
               children: user.email
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "account-form",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-group full-width",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
               className: "form-label",
               children: "Email"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "input-with-icon",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Envelope, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Envelope, {
                 size: 18
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
                 type: "email",
                 className: "form-input",
                 value: user.email,
@@ -6127,48 +6751,48 @@ var Settings = function Settings() {
                 placeholder: "email@example.com"
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-group full-width",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
               className: "form-label",
               children: "Password"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
               type: "password",
               className: "form-input",
               placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-group full-width",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
               className: "form-label",
               children: "Two-factor"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("select", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("select", {
               className: "form-input",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 children: "Disabled"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 children: "Enabled"
               })]
             })]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(Card, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(Card, {
         className: "account-card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
           className: "account-card-header",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h2", {
             children: "Pet Profile"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "account-form",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-row two-col",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
                 className: "form-label",
                 children: "Pet Name"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
                 type: "text",
                 className: "form-input",
                 value: user.petName,
@@ -6179,12 +6803,12 @@ var Settings = function Settings() {
                 },
                 placeholder: "Mochi"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
                 className: "form-label",
                 children: "Username"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
                 type: "text",
                 className: "form-input",
                 value: user.username,
@@ -6196,14 +6820,14 @@ var Settings = function Settings() {
                 placeholder: "@username"
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-row two-col",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
                 className: "form-label",
                 children: "Age"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
                 type: "number",
                 className: "form-input",
                 value: user.age,
@@ -6214,12 +6838,12 @@ var Settings = function Settings() {
                 },
                 placeholder: "2"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
                 className: "form-label",
                 children: "Gender"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("select", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("select", {
                 className: "form-input",
                 value: user.petGender,
                 onChange: function onChange(e) {
@@ -6227,24 +6851,24 @@ var Settings = function Settings() {
                     petGender: e.target.value
                   }));
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                   value: "",
                   children: "Select gender"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                   value: "male",
                   children: "Male"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                   value: "female",
                   children: "Female"
                 })]
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-group full-width",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
               className: "form-label",
               children: "Birthday"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
               type: "date",
               className: "form-input",
               value: user.petBirthday,
@@ -6254,12 +6878,12 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-group full-width",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
               className: "form-label",
               children: "Species"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("select", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("select", {
               className: "form-input",
               value: user.petSpecies,
               onChange: function onChange(e) {
@@ -6267,29 +6891,29 @@ var Settings = function Settings() {
                   petSpecies: e.target.value
                 }));
               },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "",
                 children: "Select species"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "dog",
                 children: "Dog"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "cat",
                 children: "Cat"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "bird",
                 children: "Bird"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "other",
                 children: "Other"
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-group full-width",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
               className: "form-label",
               children: "Breed"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("input", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
               type: "text",
               className: "form-input",
               value: user.breed,
@@ -6300,12 +6924,12 @@ var Settings = function Settings() {
               },
               placeholder: "Golden Retriever"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "form-group full-width",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("label", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("label", {
               className: "form-label",
               children: "Bio"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("textarea", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("textarea", {
               className: "form-textarea",
               rows: 3,
               value: user.petBio,
@@ -6322,7 +6946,7 @@ var Settings = function Settings() {
     });
   };
   var renderPrivacy = function renderPrivacy() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
       initial: {
         opacity: 0,
         y: 10
@@ -6336,32 +6960,32 @@ var Settings = function Settings() {
         y: -10
       },
       className: "settings-section",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(Card, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(Card, {
         className: "settings-card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "settings-content-header",
           style: {
             marginBottom: '24px'
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h2", {
             children: "Privacy"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Button, {
             variant: "primary",
             onClick: handleSavePrivacy,
             children: "Save Changes"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "privacy-list",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Private account"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Only approved followers can see your pet profile"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: privacy.privateAccount,
               onCheckedChange: function onCheckedChange(v) {
                 return setPrivacy(_objectSpread(_objectSpread({}, privacy), {}, {
@@ -6369,16 +6993,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Public pet info"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Anyone can view your pet's profile and posts"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: privacy.publicProfile,
               onCheckedChange: function onCheckedChange(v) {
                 return setPrivacy(_objectSpread(_objectSpread({}, privacy), {}, {
@@ -6386,16 +7010,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Show location on posts"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Display your city on posts and adoption listings"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: privacy.showLocation,
               onCheckedChange: function onCheckedChange(v) {
                 return setPrivacy(_objectSpread(_objectSpread({}, privacy), {}, {
@@ -6403,16 +7027,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Messages from anyone"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Receive messages from users you don't follow"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: privacy.messagesFromAnyone,
               onCheckedChange: function onCheckedChange(v) {
                 return setPrivacy(_objectSpread(_objectSpread({}, privacy), {}, {
@@ -6420,16 +7044,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Show online status"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Let others see when you're active"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: privacy.showOnline,
               onCheckedChange: function onCheckedChange(v) {
                 return setPrivacy(_objectSpread(_objectSpread({}, privacy), {}, {
@@ -6437,16 +7061,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Story replies"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Allow replies to your stories"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: privacy.storyReplies,
               onCheckedChange: function onCheckedChange(v) {
                 return setPrivacy(_objectSpread(_objectSpread({}, privacy), {}, {
@@ -6454,16 +7078,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Analytics & improvement"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Share anonymized data to improve PetVerse"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: privacy.analytics,
               onCheckedChange: function onCheckedChange(v) {
                 return setPrivacy(_objectSpread(_objectSpread({}, privacy), {}, {
@@ -6477,7 +7101,7 @@ var Settings = function Settings() {
     });
   };
   var renderNotifications = function renderNotifications() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
       initial: {
         opacity: 0,
         y: 10
@@ -6491,39 +7115,39 @@ var Settings = function Settings() {
         y: -10
       },
       className: "settings-section",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(Card, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(Card, {
         className: "settings-card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "settings-content-header",
           style: {
             marginBottom: '24px'
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h2", {
             children: "Notifications"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Button, {
             variant: "primary",
             children: "Save Changes"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "notification-banner",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
             size: 16,
             weight: "fill"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
             children: "You have 3 unread notifications this week."
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "privacy-list",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Likes & reactions"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "When someone likes your posts"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.likes,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6531,16 +7155,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Comments"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "When someone comments on your posts"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.comments,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6548,16 +7172,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "New followers"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "When someone follows you"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.newFollowers,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6565,16 +7189,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Mentions"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "When someone mentions you"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.mentions,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6582,16 +7206,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Adoption updates"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Updates about pets you've saved"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.adoptionUpdates,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6599,16 +7223,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Contest alerts"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "New contests and results"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.contestAlerts,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6616,16 +7240,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Message notifications"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "New messages and requests"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.messages,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6633,16 +7257,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Weekly email digest"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Weekly summary of community activity"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.weeklyDigest,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6650,16 +7274,16 @@ var Settings = function Settings() {
                 }));
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "privacy-item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "privacy-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                 children: "Push notifications"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                 children: "Alerts on your mobile device"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Switch, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Switch, {
               checked: notifications.push,
               onCheckedChange: function onCheckedChange(v) {
                 return setNotifications(_objectSpread(_objectSpread({}, notifications), {}, {
@@ -6673,7 +7297,7 @@ var Settings = function Settings() {
     });
   };
   var renderAppearance = function renderAppearance() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
       initial: {
         opacity: 0,
         y: 10
@@ -6687,73 +7311,73 @@ var Settings = function Settings() {
         y: -10
       },
       className: "settings-section",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(Card, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(Card, {
         className: "settings-card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "settings-content-header",
           style: {
             marginBottom: '24px'
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h2", {
             children: "Appearance"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Button, {
             variant: "primary",
             children: "Save Changes"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "appearance-section",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Label, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Label, {
             children: "THEME"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "theme-cards",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("button", {
               className: "theme-card ".concat(!isDark ? 'active' : ''),
               onClick: function onClick() {
-                return setIsDark(false);
+                return setTheme('light');
               },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
                 className: "theme-icon light",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Sun, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Sun, {
                   size: 24,
                   weight: "fill"
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                 className: "theme-name",
                 children: "Light"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                 className: "theme-status",
                 children: !isDark ? 'Active' : ''
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("button", {
               className: "theme-card ".concat(isDark ? 'active' : ''),
               onClick: function onClick() {
-                return setIsDark(true);
+                return setTheme('dark');
               },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
                 className: "theme-icon dark",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Moon, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Moon, {
                   size: 24,
                   weight: "fill"
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                 className: "theme-name",
                 children: "Dark"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                 className: "theme-status",
                 children: isDark ? 'Active' : ''
               })]
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
           className: "appearance-divider"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "appearance-section",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Label, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Label, {
             children: "TEXT SIZE"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
             className: "text-size-buttons",
             children: ['small', 'medium', 'large'].map(function (size) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("button", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
                 className: "size-btn ".concat(textSize === size ? 'active' : ''),
                 onClick: function onClick() {
                   return setTextSize(size);
@@ -6762,32 +7386,32 @@ var Settings = function Settings() {
               }, size);
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
           className: "appearance-divider"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "appearance-section",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Label, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Label, {
             children: "LANGUAGE"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "language-dropdown",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.GlobeSimple, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.GlobeSimple, {
               size: 18
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("select", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("select", {
               value: language,
               onChange: function onChange(e) {
                 return setLanguage(e.target.value);
               },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "english",
                 children: "English (US)"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "spanish",
                 children: "Spanish"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("option", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("option", {
                 value: "french",
                 children: "French"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.CaretRight, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.CaretRight, {
               size: 16,
               className: "dropdown-chevron"
             })]
@@ -6797,7 +7421,7 @@ var Settings = function Settings() {
     });
   };
   var renderDangerZone = function renderDangerZone() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
       initial: {
         opacity: 0,
         y: 10
@@ -6811,86 +7435,86 @@ var Settings = function Settings() {
         y: -10
       },
       className: "settings-section",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
         className: "settings-content-header",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h2", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h2", {
           children: "Danger Zone"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Card, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Card, {
         className: "danger-zone-card",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "danger-banner",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Warning, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.Warning, {
             size: 20,
             weight: "fill",
             className: "warning-icon"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
               children: "Danger Zone"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
               children: "These actions are permanent and cannot be undone. Please proceed with caution."
             })]
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(Card, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(Card, {
         className: "danger-actions-card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "danger-action-item",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
             className: "danger-action-icon orange",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Power, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Power, {
               size: 20
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "danger-action-text",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
               children: "Deactivate Account"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
               children: "Temporarily hide your profile and posts from the community."
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Button, {
             variant: "danger-light",
             onClick: handleDeactivate,
             children: "Deactivate"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
           className: "danger-action-divider"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "danger-action-item",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
             className: "danger-action-icon yellow",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Devices, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Devices, {
               size: 20
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "danger-action-text",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
               children: "Log Out of All Devices"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
               children: "Sign out from every device where you're currently logged in."
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Button, {
             variant: "warning-light",
             onClick: handleLogoutAll,
             children: "Log Out All"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
           className: "danger-action-divider"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "danger-action-item",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
             className: "danger-action-icon red",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Trash, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Trash, {
               size: 20
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "danger-action-text",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h4", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
               children: "Delete Account"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
               children: "Permanently delete your account and all associated data."
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(Button, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(Button, {
             variant: "danger",
             onClick: handleDeleteAccount,
             children: "Delete Account"
@@ -6899,42 +7523,42 @@ var Settings = function Settings() {
       })]
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
     className: "settings-page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_pages_Sidebar__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("main", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_pages_Sidebar__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("main", {
       className: "settings-main",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
         className: "settings-container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("aside", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("aside", {
           className: "settings-sidebar",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "settings-header",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("h1", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h1", {
               children: "Settings"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
               children: "Manage your account and preferences"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("nav", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("nav", {
             className: "settings-nav",
             children: tabs.map(function (tab) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)("button", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("button", {
                 className: "settings-nav-item ".concat(activeTab === tab.id ? 'active' : '', " ").concat(tab.danger ? 'danger' : ''),
                 onClick: function onClick() {
                   return setActiveTab(tab.id);
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                   className: "nav-icon",
                   children: tab.icon
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                   className: "nav-label",
                   children: tab.label
                 })]
               }, tab.id);
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("section", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("section", {
           className: "settings-content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
             mode: "wait",
             children: [activeTab === 'account' && renderAccount(), activeTab === 'privacy' && renderPrivacy(), activeTab === 'notifications' && renderNotifications(), activeTab === 'appearance' && renderAppearance(), activeTab === 'danger' && renderDangerZone()]
           })
@@ -7545,6 +8169,16 @@ var ContestEntryModal = function ContestEntryModal(_ref) {
               accept: "image/*",
               onChange: handleFileChange
             })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+            className: "upload-actions",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+              type: "button",
+              className: "choose-image-btn",
+              onClick: function onClick() {
+                return document.getElementById('contest-photo').click();
+              },
+              children: selectedImage ? 'Change Image' : 'Choose Image'
+            })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
             className: "caption-area",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("label", {
@@ -7566,7 +8200,7 @@ var ContestEntryModal = function ContestEntryModal(_ref) {
               className: "submit-btn ".concat(isSubmitting ? 'loading' : ''),
               disabled: !selectedImage || isSubmitting,
               onClick: handleSubmit,
-              children: isSubmitting ? "Submitting..." : "Submit Entry"
+              children: isSubmitting ? "Submitting..." : "Enter Contest"
             })]
           })]
         })]
@@ -7751,6 +8385,8 @@ var BadgesContests = function BadgesContests() {
           className: "badges-grid",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
             children: filteredBadges.map(function (badge) {
+              var rarityLabel = badge.rarity || 'Common';
+              var rarity = rarityLabel.toLowerCase();
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
                 layout: true,
                 initial: {
@@ -7768,7 +8404,7 @@ var BadgesContests = function BadgesContests() {
                 transition: {
                   duration: 0.2
                 },
-                className: "badge-card ".concat(badge.status, " border-").concat(badge.rarity.toLowerCase()),
+                className: "badge-card ".concat(badge.status, " border-").concat(rarity),
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
                   className: "badge-card__top-icon",
                   children: [badge.status === "earned" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.CheckCircle, {
@@ -7796,7 +8432,7 @@ var BadgesContests = function BadgesContests() {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                     className: "progress-bar",
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
-                      className: "progress-fill fill-".concat(badge.rarity.toLowerCase()),
+                      className: "progress-fill fill-".concat(rarity),
                       style: {
                         width: "".concat(badge.progress / badge.total * 100, "%")
                       }
@@ -7808,8 +8444,8 @@ var BadgesContests = function BadgesContests() {
                 }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
                   className: "badge-spacer"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
-                  className: "badge-rarity rarity-".concat(badge.rarity.toLowerCase()),
-                  children: badge.rarity
+                  className: "badge-rarity rarity-".concat(rarity),
+                  children: rarityLabel
                 })]
               }, badge.id);
             })
@@ -8010,6 +8646,7 @@ var BadgesContests = function BadgesContests() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PostModal: () => (/* binding */ PostModal),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -8156,6 +8793,15 @@ var getMenuItems = function getMenuItems(post, currentUserId) {
   var isOwner = (post === null || post === void 0 || (_post$pet = post.pet) === null || _post$pet === void 0 || (_post$pet = _post$pet.user) === null || _post$pet === void 0 ? void 0 : _post$pet.id) === currentUserId;
   if (isOwner) {
     return [{
+      key: "save",
+      icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Bookmark,
+      label: "Save this post",
+      sub: "Add to your saved posts collection.",
+      color: "var(--text-main)",
+      action: "save"
+    }, {
+      divider: true
+    }, {
       key: "edit",
       icon: _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_20__.PencilSimple,
       label: "Edit caption",
@@ -8393,9 +9039,11 @@ var PostMenu = function PostMenu(_ref4) {
 // ── Feed Component ─────────────────────────────────────────────────────
 
 var PostModal = function PostModal(_ref5) {
+  var _replyingTo$pet;
   var post = _ref5.post,
     onClose = _ref5.onClose,
     onLike = _ref5.onLike,
+    onSave = _ref5.onSave,
     onOpenLikers = _ref5.onOpenLikers,
     onCommentAdded = _ref5.onCommentAdded;
   var _useUser = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_33__.useUser)(),
@@ -8412,6 +9060,10 @@ var PostModal = function PostModal(_ref5) {
     _useState0 = _slicedToArray(_useState9, 2),
     isPostingComment = _useState0[0],
     setIsPostingComment = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState10 = _slicedToArray(_useState1, 2),
+    replyingTo = _useState10[0],
+    setReplyingTo = _useState10[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!post) return;
     var isActive = true;
@@ -8453,14 +9105,26 @@ var PostModal = function PostModal(_ref5) {
             return window.axios.post("/api/comments", {
               post_id: post.id,
               pet_id: petId,
-              content: commentText.trim()
+              content: commentText.trim(),
+              parent_id: (replyingTo === null || replyingTo === void 0 ? void 0 : replyingTo.id) || null
             });
           case 4:
             res = _context.v;
             created = res.data;
-            setComments(function (prev) {
-              return [created].concat(_toConsumableArray(prev));
-            });
+            if (replyingTo) {
+              setComments(function (prev) {
+                return prev.map(function (c) {
+                  return c.id === replyingTo.id ? _objectSpread(_objectSpread({}, c), {}, {
+                    replies: [].concat(_toConsumableArray(c.replies || []), [created])
+                  }) : c;
+                });
+              });
+              setReplyingTo(null);
+            } else {
+              setComments(function (prev) {
+                return [created].concat(_toConsumableArray(prev));
+              });
+            }
             setCommentText("");
             onCommentAdded === null || onCommentAdded === void 0 || onCommentAdded(post.id, created);
             _context.n = 6;
@@ -8601,26 +9265,87 @@ var PostModal = function PostModal(_ref5) {
             }) : comments.map(function (comment) {
               var _comment$pet, _comment$pet2;
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
-                className: "post-modal-comment",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)(Avatar, {
-                  src: (_comment$pet = comment.pet) === null || _comment$pet === void 0 ? void 0 : _comment$pet.image_url,
-                  size: "sm"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
-                  className: "comment-body",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                    className: "comment-author",
-                    children: (_comment$pet2 = comment.pet) === null || _comment$pet2 === void 0 ? void 0 : _comment$pet2.name
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                    className: "comment-text",
-                    children: comment.content
+                className: "post-modal-comment-thread",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                  className: "post-modal-comment",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)(Avatar, {
+                    src: (_comment$pet = comment.pet) === null || _comment$pet === void 0 ? void 0 : _comment$pet.image_url,
+                    size: "sm"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                    className: "comment-content-area",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                      className: "comment-body",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
+                        className: "comment-author",
+                        children: (_comment$pet2 = comment.pet) === null || _comment$pet2 === void 0 ? void 0 : _comment$pet2.name
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
+                        className: "comment-text",
+                        children: comment.content
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                      className: "comment-actions",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
+                        className: "time",
+                        children: comment.time_ago || "Just now"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("button", {
+                        className: "reply-btn",
+                        onClick: function onClick() {
+                          return setReplyingTo(comment);
+                        },
+                        children: "Reply"
+                      })]
+                    })]
                   })]
+                }), comment.replies && comment.replies.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("div", {
+                  className: "comment-replies",
+                  children: comment.replies.map(function (reply) {
+                    var _reply$pet, _reply$pet2;
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                      className: "post-modal-comment reply",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)(Avatar, {
+                        src: (_reply$pet = reply.pet) === null || _reply$pet === void 0 ? void 0 : _reply$pet.image_url,
+                        size: "sm"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                        className: "comment-content-area",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+                          className: "comment-body",
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
+                            className: "comment-author",
+                            children: (_reply$pet2 = reply.pet) === null || _reply$pet2 === void 0 ? void 0 : _reply$pet2.name
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
+                            className: "comment-text",
+                            children: reply.content
+                          })]
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("div", {
+                          className: "comment-actions",
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
+                            className: "time",
+                            children: reply.time_ago || "Just now"
+                          })
+                        })]
+                      })]
+                    }, reply.id);
+                  })
                 })]
               }, comment.id);
             })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
           className: "post-modal-footer",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+          children: [replyingTo && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
+            className: "replying-to-banner",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("span", {
+              children: ["Replying to ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("strong", {
+                children: (_replyingTo$pet = replyingTo.pet) === null || _replyingTo$pet === void 0 ? void 0 : _replyingTo$pet.name
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("button", {
+              className: "cancel-reply",
+              onClick: function onClick() {
+                return setReplyingTo(null);
+              },
+              children: "Cancel"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
             className: "actions",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
               className: "actions-left",
@@ -8646,8 +9371,12 @@ var PostModal = function PostModal(_ref5) {
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("button", {
               className: "action-btn bookmark",
+              onClick: function onClick() {
+                return onSave === null || onSave === void 0 ? void 0 : onSave(post);
+              },
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Bookmark, {
-                size: 24
+                size: 24,
+                weight: post.isSaved ? "fill" : "bold"
               })
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("button", {
@@ -8682,14 +9411,14 @@ var LikersModal = function LikersModal(_ref7) {
     onClose = _ref7.onClose;
   var _useUser2 = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_33__.useUser)(),
     user = _useUser2.user;
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState10 = _slicedToArray(_useState1, 2),
-    likes = _useState10[0],
-    setLikes = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState12 = _slicedToArray(_useState11, 2),
-    isLoading = _useState12[0],
-    setIsLoading = _useState12[1];
+    likes = _useState12[0],
+    setLikes = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    isLoading = _useState14[0],
+    setIsLoading = _useState14[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!post) return;
     var isActive = true;
@@ -8833,11 +9562,11 @@ var Feed = function Feed() {
   var _viewerState$userStor, _viewerState$userStor2, _viewerState$userStor3, _viewerState$userStor4, _viewerState$userStor5, _user$pet6;
   var _useUser3 = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_33__.useUser)(),
     user = _useUser3.user;
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState14 = _slicedToArray(_useState13, 2),
-    posts = _useState14[0],
-    setPosts = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    posts = _useState16[0],
+    setPosts = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
       try {
         var raw = localStorage.getItem("hiddenPosts");
         return raw ? JSON.parse(raw) : [];
@@ -8845,129 +9574,129 @@ var Feed = function Feed() {
         return [];
       }
     }),
-    _useState16 = _slicedToArray(_useState15, 2),
-    hiddenPostIds = _useState16[0],
-    setHiddenPostIds = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState18 = _slicedToArray(_useState17, 2),
-    dynamicStories = _useState18[0],
-    setStories = _useState18[1];
+    hiddenPostIds = _useState18[0],
+    setHiddenPostIds = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState20 = _slicedToArray(_useState19, 2),
-    hiddenStoryUsers = _useState20[0],
-    setHiddenStoryUsers = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    dynamicStories = _useState20[0],
+    setStories = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState22 = _slicedToArray(_useState21, 2),
-    isAddMenuOpen = _useState22[0],
-    setIsAddMenuOpen = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    hiddenStoryUsers = _useState22[0],
+    setHiddenStoryUsers = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState24 = _slicedToArray(_useState23, 2),
+    isAddMenuOpen = _useState24[0],
+    setIsAddMenuOpen = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       isOpen: false,
       userStories: [],
       currentIndex: 0
     }),
-    _useState24 = _slicedToArray(_useState23, 2),
-    viewerState = _useState24[0],
-    setViewerState = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState26 = _slicedToArray(_useState25, 2),
-    showStoryMenu = _useState26[0],
-    setShowStoryMenu = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    viewerState = _useState26[0],
+    setViewerState = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState28 = _slicedToArray(_useState27, 2),
-    postText = _useState28[0],
-    setPostText = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    showStoryMenu = _useState28[0],
+    setShowStoryMenu = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState30 = _slicedToArray(_useState29, 2),
-    isCreateExpanded = _useState30[0],
-    setExpanded = _useState30[1];
+    postText = _useState30[0],
+    setPostText = _useState30[1];
   var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState32 = _slicedToArray(_useState31, 2),
-    isPosting = _useState32[0],
-    setIsPosting = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("public"),
+    isCreateExpanded = _useState32[0],
+    setExpanded = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState34 = _slicedToArray(_useState33, 2),
-    postPrivacy = _useState34[0],
-    setPostPrivacy = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    isPosting = _useState34[0],
+    setIsPosting = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("public"),
     _useState36 = _slicedToArray(_useState35, 2),
-    showPrivacyMenu = _useState36[0],
-    setShowPrivacyMenu = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    postPrivacy = _useState36[0],
+    setPostPrivacy = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState38 = _slicedToArray(_useState37, 2),
-    postLocation = _useState38[0],
-    setPostLocation = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    showPrivacyMenu = _useState38[0],
+    setShowPrivacyMenu = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState40 = _slicedToArray(_useState39, 2),
-    isLocating = _useState40[0],
-    setIsLocating = _useState40[1];
+    postLocation = _useState40[0],
+    setPostLocation = _useState40[1];
   var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState42 = _slicedToArray(_useState41, 2),
-    isLocationPickerOpen = _useState42[0],
-    setIsLocationPickerOpen = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    isLocating = _useState42[0],
+    setIsLocating = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState44 = _slicedToArray(_useState43, 2),
-    locationSearchQuery = _useState44[0],
-    setLocationSearchQuery = _useState44[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    isLocationPickerOpen = _useState44[0],
+    setIsLocationPickerOpen = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState46 = _slicedToArray(_useState45, 2),
-    suggestedLocations = _useState46[0],
-    setSuggestedLocations = _useState46[1];
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    locationSearchQuery = _useState46[0],
+    setLocationSearchQuery = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState48 = _slicedToArray(_useState47, 2),
-    isTagPickerOpen = _useState48[0],
-    setIsTagPickerOpen = _useState48[1];
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    suggestedLocations = _useState48[0],
+    setSuggestedLocations = _useState48[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState50 = _slicedToArray(_useState49, 2),
-    taggedPets = _useState50[0],
-    setTaggedPets = _useState50[1];
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    isTagPickerOpen = _useState50[0],
+    setIsTagPickerOpen = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState52 = _slicedToArray(_useState51, 2),
-    petSearchQuery = _useState52[0],
-    setPetSearchQuery = _useState52[1];
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    taggedPets = _useState52[0],
+    setTaggedPets = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState54 = _slicedToArray(_useState53, 2),
-    suggestedPets = _useState54[0],
-    setSuggestedPets = _useState54[1];
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    petSearchQuery = _useState54[0],
+    setPetSearchQuery = _useState54[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState56 = _slicedToArray(_useState55, 2),
-    isSearchingPets = _useState56[0],
-    setIsSearchingPets = _useState56[1];
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    suggestedPets = _useState56[0],
+    setSuggestedPets = _useState56[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState58 = _slicedToArray(_useState57, 2),
-    activePost = _useState58[0],
-    setActivePost = _useState58[1];
-  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    isSearchingPets = _useState58[0],
+    setIsSearchingPets = _useState58[1];
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState60 = _slicedToArray(_useState59, 2),
-    showVisibilitySubmenu = _useState60[0],
-    setShowVisibilitySubmenu = _useState60[1];
-  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    activePost = _useState60[0],
+    setActivePost = _useState60[1];
+  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState62 = _slicedToArray(_useState61, 2),
-    storyProgress = _useState62[0],
-    setStoryProgress = _useState62[1];
-  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    showVisibilitySubmenu = _useState62[0],
+    setShowVisibilitySubmenu = _useState62[1];
+  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState64 = _slicedToArray(_useState63, 2),
-    filterTag = _useState64[0],
-    setFilterTag = _useState64[1];
-  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    storyProgress = _useState64[0],
+    setStoryProgress = _useState64[1];
+  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState66 = _slicedToArray(_useState65, 2),
-    isSeeAllPetsOpen = _useState66[0],
-    setIsSeeAllPetsOpen = _useState66[1];
-  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    filterTag = _useState66[0],
+    setFilterTag = _useState66[1];
+  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState68 = _slicedToArray(_useState67, 2),
-    contestEntryCount = _useState68[0],
-    setContestEntryCount = _useState68[1];
-  var _useState69 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    isSeeAllPetsOpen = _useState68[0],
+    setIsSeeAllPetsOpen = _useState68[1];
+  var _useState69 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState70 = _slicedToArray(_useState69, 2),
-    likersFor = _useState70[0],
-    setLikersFor = _useState70[1];
-  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    contestEntryCount = _useState70[0],
+    setContestEntryCount = _useState70[1];
+  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState72 = _slicedToArray(_useState71, 2),
-    trendingTags = _useState72[0],
-    setTrendingTags = _useState72[1];
-  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    likersFor = _useState72[0],
+    setLikersFor = _useState72[1];
+  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState74 = _slicedToArray(_useState73, 2),
-    liveContest = _useState74[0],
-    setLiveContest = _useState74[1];
+    trendingTags = _useState74[0],
+    setTrendingTags = _useState74[1];
+  var _useState75 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState76 = _slicedToArray(_useState75, 2),
+    liveContest = _useState76[0],
+    setLiveContest = _useState76[1];
   var privacyMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var storyMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var searchDebounceRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
@@ -8976,22 +9705,22 @@ var Feed = function Feed() {
   var videoInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var addMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var createCardRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-  var _useState75 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState76 = _slicedToArray(_useState75, 2),
-    postImage = _useState76[0],
-    setPostImage = _useState76[1];
   var _useState77 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState78 = _slicedToArray(_useState77, 2),
-    postVideo = _useState78[0],
-    setPostVideo = _useState78[1];
+    postImage = _useState78[0],
+    setPostImage = _useState78[1];
   var _useState79 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState80 = _slicedToArray(_useState79, 2),
-    imagePreview = _useState80[0],
-    setImagePreview = _useState80[1];
+    postVideo = _useState80[0],
+    setPostVideo = _useState80[1];
   var _useState81 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState82 = _slicedToArray(_useState81, 2),
-    videoPreview = _useState82[0],
-    setVideoPreview = _useState82[1];
+    imagePreview = _useState82[0],
+    setImagePreview = _useState82[1];
+  var _useState83 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState84 = _slicedToArray(_useState83, 2),
+    videoPreview = _useState84[0],
+    setVideoPreview = _useState84[1];
 
   // Reset submenu when story menu closes
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -9049,6 +9778,7 @@ var Feed = function Feed() {
                 likes: (_p$likes_count = p.likes_count) !== null && _p$likes_count !== void 0 ? _p$likes_count : 0,
                 comments: (_p$comments_count = p.comments_count) !== null && _p$comments_count !== void 0 ? _p$comments_count : 0,
                 isLiked: !!p.liked_by_me,
+                isSaved: !!p.saved_by_me || !!p.is_saved,
                 privacy: p.privacy || 'public',
                 tagged_pets: p.tagged_pets || [],
                 pet: p.pet || null,
@@ -9818,6 +10548,18 @@ var Feed = function Feed() {
               post_id: post.id
             });
           case 1:
+            setPosts(function (prev) {
+              return prev.map(function (p) {
+                return p.id === post.id ? _objectSpread(_objectSpread({}, p), {}, {
+                  isSaved: true
+                }) : p;
+              });
+            });
+            setActivePost(function (prev) {
+              return (prev === null || prev === void 0 ? void 0 : prev.id) === post.id ? _objectSpread(_objectSpread({}, prev), {}, {
+                isSaved: true
+              }) : prev;
+            });
             _context14.n = 3;
             break;
           case 2:
@@ -10071,6 +10813,7 @@ var Feed = function Feed() {
               likes: 0,
               comments: 0,
               isLiked: false,
+              isSaved: false,
               tagged_pets: createdPost.tagged_pets || [],
               pet: createdPost.pet || null,
               user: ((_createdPost$pet4 = createdPost.pet) === null || _createdPost$pet4 === void 0 ? void 0 : _createdPost$pet4.user) || createdPost.user || null
@@ -10647,22 +11390,8 @@ var Feed = function Feed() {
             className: "feed-filter-indicator",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)(Card, {
               className: "filter-card",
-              style: {
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '12px 20px',
-                marginBottom: '20px',
-                background: 'rgba(233, 30, 140, 0.1)',
-                border: '1px solid rgba(233, 30, 140, 0.2)'
-              },
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsxs)("div", {
                 className: "filter-info",
-                style: {
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px'
-                },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_25__.TrendUp, {
                   size: 20,
                   weight: "fill",
@@ -10676,12 +11405,6 @@ var Feed = function Feed() {
                 className: "clear-filter",
                 onClick: function onClick() {
                   return setFilterTag(null);
-                },
-                style: {
-                  background: 'none',
-                  border: 'none',
-                  color: 'var(--text-muted)',
-                  cursor: 'pointer'
                 },
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_31__.X, {
                   size: 18
@@ -10741,9 +11464,17 @@ var Feed = function Feed() {
                               href: "https://maps.google.com/?q=".concat(post.location_lat, ",").concat(post.location_lon),
                               target: "_blank",
                               rel: "noopener",
-                              children: post.location
+                              title: post.location,
+                              className: "location-text",
+                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("strong", {
+                                children: post.location
+                              })
                             }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("span", {
-                              children: post.location
+                              title: post.location,
+                              className: "location-text",
+                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_35__.jsx)("strong", {
+                                children: post.location
+                              })
                             })]
                           })]
                         })]
@@ -10976,6 +11707,7 @@ var Feed = function Feed() {
           return setActivePost(null);
         },
         onLike: toggleLike,
+        onSave: handleSavePost,
         onOpenLikers: function onOpenLikers(post) {
           return setLikersFor(post);
         },
@@ -11318,20 +12050,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/ArrowLeft.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/DotsThree.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Gear.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MagnifyingGlass.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PaperPlaneTilt.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Paperclip.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Phone.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Users.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/VideoCamera.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
-/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
-/* harmony import */ var _sass_pages_messages_scss__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../sass/pages/messages.scss */ "./resources/sass/pages/messages.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/File.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Gear.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MagnifyingGlass.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PaperPlaneTilt.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Paperclip.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PencilSimple.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Phone.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Users.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/VideoCamera.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
+/* harmony import */ var _sass_pages_messages_scss__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../../sass/pages/messages.scss */ "./resources/sass/pages/messages.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -11368,48 +12103,22 @@ var Avatar = function Avatar(_ref) {
     online = _ref$online === void 0 ? false : _ref$online,
     _ref$color = _ref.color,
     color = _ref$color === void 0 ? null : _ref$color;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
     className: "msg-avatar msg-avatar--".concat(size, " ").concat(online ? "msg-avatar--online" : ""),
     style: color ? {
       background: color
     } : {},
-    children: [src ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("img", {
+    children: [src ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("img", {
       src: src,
       alt: "avatar"
-    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
       className: "msg-avatar__fallback",
       children: fallback
-    }), online && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+    }), online && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
       className: "msg-avatar__dot"
     })]
   });
 };
-var groupMembers = [{
-  id: 1,
-  name: "Sarah",
-  initial: "S",
-  color: "#898AA6"
-}, {
-  id: 2,
-  name: "Luna's Mom",
-  initial: "L",
-  color: "#7b9ea6"
-}, {
-  id: 3,
-  name: "Buddy's Dad",
-  initial: "B",
-  color: "#a6897b"
-}, {
-  id: 4,
-  name: "Max's Owner",
-  initial: "M",
-  color: "#7ba688"
-}, {
-  id: 5,
-  name: "Whiskers Fan",
-  initial: "W",
-  color: "#a67bb0"
-}];
 
 // ── Component ──────────────────────────────────────────────────────────
 
@@ -11438,48 +12147,74 @@ var Messages = function Messages() {
     _useState10 = _slicedToArray(_useState1, 2),
     showBlockPanel = _useState10[0],
     setShowBlockPanel = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState12 = _slicedToArray(_useState11, 2),
-    groupName = _useState12[0],
-    setGroupName = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    selectedMembers = _useState12[0],
+    setSelectedMembers = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    selectedMembers = _useState14[0],
-    setSelectedMembers = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    isRenaming = _useState14[0],
+    setIsRenaming = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    showChatActions = _useState16[0],
+    setShowChatActions = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState18 = _slicedToArray(_useState17, 2),
+    newChatName = _useState18[0],
+    setNewChatName = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       messageRequests: true,
       readReceipts: true,
       soundNotifications: true
     }),
-    _useState16 = _slicedToArray(_useState15, 2),
-    settingsConfig = _useState16[0],
-    setSettingsConfig = _useState16[1];
+    _useState20 = _slicedToArray(_useState19, 2),
+    settingsConfig = _useState20[0],
+    setSettingsConfig = _useState20[1];
   var toggleSetting = function toggleSetting(key) {
     setSettingsConfig(function (prev) {
       return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, key, !prev[key]));
     });
   };
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState18 = _slicedToArray(_useState17, 2),
-    searchQuery = _useState18[0],
-    setSearchQuery = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState20 = _slicedToArray(_useState19, 2),
-    chats = _useState20[0],
-    setChats = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState22 = _slicedToArray(_useState21, 2),
-    requestChats = _useState22[0],
-    setRequestChats = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    searchQuery = _useState22[0],
+    setSearchQuery = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState24 = _slicedToArray(_useState23, 2),
-    blockedUsers = _useState24[0],
-    setBlockedUsers = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    buddySearch = _useState24[0],
+    setBuddySearch = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState26 = _slicedToArray(_useState25, 2),
-    messages = _useState26[0],
-    setMessages = _useState26[1];
+    chats = _useState26[0],
+    setChats = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState28 = _slicedToArray(_useState27, 2),
+    requestChats = _useState28[0],
+    setRequestChats = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState30 = _slicedToArray(_useState29, 2),
+    buddies = _useState30[0],
+    setBuddies = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState32 = _slicedToArray(_useState31, 2),
+    blockedUsers = _useState32[0],
+    setBlockedUsers = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState34 = _slicedToArray(_useState33, 2),
+    messages = _useState34[0],
+    setMessages = _useState34[1];
   var messagesEndRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var fileInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var formatPHTime = function formatPHTime(value) {
+    var date = value ? new Date(value) : new Date();
+    return new Intl.DateTimeFormat('en-PH', {
+      timeZone: 'Asia/Manila',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    }).format(date);
+  };
   var displayChats = activeTab === "All" ? chats.filter(function (chat) {
     return !chat.archived_at;
   }) : activeTab === "Archived" ? chats.filter(function (chat) {
@@ -11540,84 +12275,349 @@ var Messages = function Messages() {
       return _ref3.apply(this, arguments);
     };
   }();
+  var fetchBuddies = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+      var res, _t3;
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.p = _context3.n) {
+          case 0:
+            _context3.p = 0;
+            _context3.n = 1;
+            return window.axios.get('/api/my-conversations/buddies');
+          case 1:
+            res = _context3.v;
+            setBuddies(res.data || []);
+            _context3.n = 3;
+            break;
+          case 2:
+            _context3.p = 2;
+            _t3 = _context3.v;
+            console.error(_t3);
+          case 3:
+            return _context3.a(2);
+        }
+      }, _callee3, null, [[0, 2]]);
+    }));
+    return function fetchBuddies() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchConversations();
+    fetchBuddies();
   }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var id = setInterval(function () {
+      fetchConversations();
+    }, 5000);
+    return function () {
+      return clearInterval(id);
+    };
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!(selectedChat !== null && selectedChat !== void 0 && selectedChat.id)) return;
+    var id = setInterval(function () {
+      handleSelectChat(selectedChat, {
+        silent: true
+      });
+    }, 3000);
+    return function () {
+      return clearInterval(id);
+    };
+  }, [selectedChat === null || selectedChat === void 0 ? void 0 : selectedChat.id]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var _messagesEndRef$curre;
     (_messagesEndRef$curre = messagesEndRef.current) === null || _messagesEndRef$curre === void 0 || _messagesEndRef$curre.scrollIntoView({
       behavior: "smooth"
     });
   }, [messages, selectedChat]);
-  var handleSend = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-      var res, _t3;
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.p = _context3.n) {
-          case 0:
-            if (!(!messageText.trim() || !selectedChat)) {
-              _context3.n = 1;
-              break;
-            }
-            return _context3.a(2);
-          case 1:
-            _context3.p = 1;
-            _context3.n = 2;
-            return window.axios.post('/api/my-messages', {
-              receiver_id: selectedChat.user_id,
-              content: messageText
-            });
-          case 2:
-            res = _context3.v;
-            setMessages(function (prev) {
-              return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, selectedChat.id, [].concat(_toConsumableArray(prev[selectedChat.id] || []), [res.data])));
-            });
-            setMessageText("");
-            setChats(function (prev) {
-              return prev.map(function (chat) {
-                return chat.id === selectedChat.id ? _objectSpread(_objectSpread({}, chat), {}, {
-                  preview: res.data.text,
-                  time: "just now",
-                  last_message_at: new Date().toISOString()
-                }) : chat;
-              });
-            });
-            _context3.n = 4;
-            break;
-          case 3:
-            _context3.p = 3;
-            _t3 = _context3.v;
-            console.error(_t3);
-          case 4:
-            return _context3.a(2);
-        }
-      }, _callee3, null, [[1, 3]]);
-    }));
-    return function handleSend() {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-  var handleSelectChat = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(chat) {
-      var res, data, unread, _t4;
+  var handleDeleteChat = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+      var _t4;
       return _regenerator().w(function (_context4) {
         while (1) switch (_context4.p = _context4.n) {
           case 0:
-            setSelectedChat(chat);
-            setShowSettings(false);
-            _context4.p = 1;
-            _context4.n = 2;
+            if (selectedChat) {
+              _context4.n = 1;
+              break;
+            }
+            return _context4.a(2);
+          case 1:
+            if (window.confirm("Are you sure you want to delete your conversation with ".concat(selectedChat.name, "? This action cannot be undone."))) {
+              _context4.n = 2;
+              break;
+            }
+            return _context4.a(2);
+          case 2:
+            _context4.p = 2;
+            _context4.n = 3;
+            return window.axios["delete"]("/api/my-conversations/".concat(selectedChat.id));
+          case 3:
+            setChats(function (prev) {
+              return prev.filter(function (c) {
+                return c.id !== selectedChat.id;
+              });
+            });
+            setSelectedChat(null);
+            setShowChatActions(false);
+            _context4.n = 5;
+            break;
+          case 4:
+            _context4.p = 4;
+            _t4 = _context4.v;
+            console.error(_t4);
+            alert("Failed to delete conversation.");
+          case 5:
+            return _context4.a(2);
+        }
+      }, _callee4, null, [[2, 4]]);
+    }));
+    return function handleDeleteChat() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+  var handleRename = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+      var convId, _t5;
+      return _regenerator().w(function (_context5) {
+        while (1) switch (_context5.p = _context5.n) {
+          case 0:
+            if (!(!newChatName.trim() || !selectedChat)) {
+              _context5.n = 1;
+              break;
+            }
+            return _context5.a(2);
+          case 1:
+            _context5.p = 1;
+            convId = selectedChat.id.toString().startsWith('gc_') ? selectedChat.id.toString().replace('gc_', '') : selectedChat.id;
+            _context5.n = 2;
+            return window.axios.patch("/api/my-conversations/".concat(convId), {
+              name: newChatName.trim()
+            });
+          case 2:
+            setChats(function (prev) {
+              return prev.map(function (c) {
+                return c.id === selectedChat.id ? _objectSpread(_objectSpread({}, c), {}, {
+                  name: newChatName.trim()
+                }) : c;
+              });
+            });
+            setSelectedChat(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, {
+                name: newChatName.trim()
+              });
+            });
+            setIsRenaming(false);
+            _context5.n = 4;
+            break;
+          case 3:
+            _context5.p = 3;
+            _t5 = _context5.v;
+            console.error(_t5);
+            alert("Failed to rename group chat.");
+          case 4:
+            return _context5.a(2);
+        }
+      }, _callee5, null, [[1, 3]]);
+    }));
+    return function handleRename() {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+  var handleFileSend = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(e) {
+      var _e$target$files;
+      var file, isImage, isVideo, previewUrl, pendingId, pendingMessage, fd, res, _t6;
+      return _regenerator().w(function (_context6) {
+        while (1) switch (_context6.p = _context6.n) {
+          case 0:
+            file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
+            if (!(!file || !selectedChat)) {
+              _context6.n = 1;
+              break;
+            }
+            return _context6.a(2);
+          case 1:
+            e.target.value = '';
+            isImage = file.type.startsWith('image/');
+            isVideo = file.type.startsWith('video/');
+            previewUrl = URL.createObjectURL(file);
+            pendingId = "pending-".concat(Date.now());
+            pendingMessage = {
+              id: pendingId,
+              text: null,
+              media_url: previewUrl,
+              media_type: isVideo ? 'video' : 'image',
+              isSelf: true,
+              is_read: false,
+              pending: true,
+              created_at: new Date().toISOString(),
+              time: formatPHTime(new Date().toISOString())
+            };
+            setMessages(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, selectedChat.id, [].concat(_toConsumableArray(prev[selectedChat.id] || []), [pendingMessage])));
+            });
+            fd = new FormData();
+            fd.append('receiver_id', selectedChat.id);
+            fd.append('media', file);
+            _context6.p = 2;
+            _context6.n = 3;
+            return window.axios.post('/api/my-messages', fd, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+          case 3:
+            res = _context6.v;
+            // Update the pending message with real data
+            setMessages(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, selectedChat.id, (prev[selectedChat.id] || []).map(function (msg) {
+                return msg.id === pendingId ? _objectSpread(_objectSpread({}, res.data), {}, {
+                  pending: false,
+                  time: formatPHTime(res.data.created_at),
+                  isSelf: true // Ensure isSelf is preserved
+                }) : msg;
+              })));
+            });
+            _context6.n = 5;
+            break;
+          case 4:
+            _context6.p = 4;
+            _t6 = _context6.v;
+            console.error(_t6);
+            setMessages(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, selectedChat.id, (prev[selectedChat.id] || []).filter(function (m) {
+                return m.id !== pendingId;
+              })));
+            });
+          case 5:
+            return _context6.a(2);
+        }
+      }, _callee6, null, [[2, 4]]);
+    }));
+    return function handleFileSend(_x) {
+      return _ref7.apply(this, arguments);
+    };
+  }();
+  var handleSend = /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
+      var pendingId, pendingMessage, res, _t7;
+      return _regenerator().w(function (_context7) {
+        while (1) switch (_context7.p = _context7.n) {
+          case 0:
+            if (!(!messageText.trim() || !selectedChat)) {
+              _context7.n = 1;
+              break;
+            }
+            return _context7.a(2);
+          case 1:
+            pendingId = "pending-".concat(Date.now());
+            pendingMessage = {
+              id: pendingId,
+              text: messageText,
+              isSelf: true,
+              is_read: false,
+              pending: true,
+              created_at: new Date().toISOString(),
+              time: formatPHTime(new Date().toISOString())
+            };
+            setMessages(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, selectedChat.id, [].concat(_toConsumableArray(prev[selectedChat.id] || []), [pendingMessage])));
+            });
+            setMessageText("");
+            _context7.p = 2;
+            _context7.n = 3;
+            return window.axios.post('/api/my-messages', {
+              receiver_id: selectedChat.id,
+              content: pendingMessage.text
+            });
+          case 3:
+            res = _context7.v;
+            setMessages(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, selectedChat.id, (prev[selectedChat.id] || []).map(function (msg) {
+                return msg.id === pendingId ? _objectSpread(_objectSpread({}, res.data), {}, {
+                  pending: false,
+                  time: formatPHTime(res.data.created_at)
+                }) : msg;
+              })));
+            });
+            setChats(function (prev) {
+              var next = prev.map(function (chat) {
+                return chat.id === selectedChat.id ? _objectSpread(_objectSpread({}, chat), {}, {
+                  preview: res.data.text,
+                  time: formatPHTime(res.data.created_at),
+                  last_message_at: res.data.created_at || new Date().toISOString()
+                }) : chat;
+              });
+              if (next.find(function (chat) {
+                return chat.id === selectedChat.id;
+              })) {
+                return next;
+              }
+              return [_objectSpread(_objectSpread({}, selectedChat), {}, {
+                preview: res.data.text,
+                time: formatPHTime(res.data.created_at),
+                unread: 0,
+                last_message_at: res.data.created_at || new Date().toISOString(),
+                archived_at: null
+              })].concat(_toConsumableArray(next));
+            });
+            _context7.n = 5;
+            break;
+          case 4:
+            _context7.p = 4;
+            _t7 = _context7.v;
+            console.error(_t7);
+            setMessages(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, selectedChat.id, (prev[selectedChat.id] || []).filter(function (msg) {
+                return msg.id !== pendingId;
+              })));
+            });
+          case 5:
+            return _context7.a(2);
+        }
+      }, _callee7, null, [[2, 4]]);
+    }));
+    return function handleSend() {
+      return _ref8.apply(this, arguments);
+    };
+  }();
+  var handleSelectChat = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(chat) {
+      var options,
+        _options$silent,
+        silent,
+        res,
+        data,
+        unread,
+        _args8 = arguments,
+        _t8;
+      return _regenerator().w(function (_context8) {
+        while (1) switch (_context8.p = _context8.n) {
+          case 0:
+            options = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : {};
+            _options$silent = options.silent, silent = _options$silent === void 0 ? false : _options$silent;
+            if (!silent) {
+              setSelectedChat(chat);
+              setShowSettings(false);
+            }
+            _context8.p = 1;
+            _context8.n = 2;
             return window.axios.get("/api/my-conversations/".concat(chat.id, "/messages"));
           case 2:
-            res = _context4.v;
-            data = res.data || [];
+            res = _context8.v;
+            data = (res.data || []).map(function (msg) {
+              return _objectSpread(_objectSpread({}, msg), {}, {
+                time: formatPHTime(msg.created_at)
+              });
+            });
             setMessages(function (prev) {
               return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, chat.id, data));
             });
             unread = data.filter(function (msg) {
               return !msg.isSelf && !msg.is_read;
             });
-            _context4.n = 3;
+            _context8.n = 3;
             return Promise.all(unread.map(function (msg) {
               return window.axios.post("/api/messages/".concat(msg.id, "/read"));
             }));
@@ -11629,39 +12629,39 @@ var Messages = function Messages() {
                 }) : c;
               });
             });
-            _context4.n = 5;
+            _context8.n = 5;
             break;
           case 4:
-            _context4.p = 4;
-            _t4 = _context4.v;
-            console.error(_t4);
+            _context8.p = 4;
+            _t8 = _context8.v;
+            console.error(_t8);
           case 5:
-            return _context4.a(2);
+            return _context8.a(2);
         }
-      }, _callee4, null, [[1, 4]]);
+      }, _callee8, null, [[1, 4]]);
     }));
-    return function handleSelectChat(_x) {
-      return _ref5.apply(this, arguments);
+    return function handleSelectChat(_x2) {
+      return _ref9.apply(this, arguments);
     };
   }();
   var handleArchiveOldChats = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-      var cutoff, targets, _t5;
-      return _regenerator().w(function (_context5) {
-        while (1) switch (_context5.p = _context5.n) {
+    var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9() {
+      var cutoff, targets, _t9;
+      return _regenerator().w(function (_context9) {
+        while (1) switch (_context9.p = _context9.n) {
           case 0:
             if (window.confirm('Archive chats inactive for 30 days?')) {
-              _context5.n = 1;
+              _context9.n = 1;
               break;
             }
-            return _context5.a(2);
+            return _context9.a(2);
           case 1:
             cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
             targets = chats.filter(function (chat) {
               return chat.last_message_at && new Date(chat.last_message_at).getTime() < cutoff;
             });
-            _context5.p = 2;
-            _context5.n = 3;
+            _context9.p = 2;
+            _context9.n = 3;
             return Promise.all(targets.map(function (chat) {
               return window.axios.post("/api/my-conversations/".concat(chat.id, "/archive"));
             }));
@@ -11676,19 +12676,19 @@ var Messages = function Messages() {
               });
             });
             setActiveTab('Archived');
-            _context5.n = 5;
+            _context9.n = 5;
             break;
           case 4:
-            _context5.p = 4;
-            _t5 = _context5.v;
-            console.error(_t5);
+            _context9.p = 4;
+            _t9 = _context9.v;
+            console.error(_t9);
           case 5:
-            return _context5.a(2);
+            return _context9.a(2);
         }
-      }, _callee5, null, [[2, 4]]);
+      }, _callee9, null, [[2, 4]]);
     }));
     return function handleArchiveOldChats() {
-      return _ref6.apply(this, arguments);
+      return _ref0.apply(this, arguments);
     };
   }();
   var openBlockPanel = function openBlockPanel() {
@@ -11696,13 +12696,13 @@ var Messages = function Messages() {
     fetchBlocks();
   };
   var handleUnblock = /*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(blockId) {
-      var _t6;
-      return _regenerator().w(function (_context6) {
-        while (1) switch (_context6.p = _context6.n) {
+    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(blockId) {
+      var _t0;
+      return _regenerator().w(function (_context0) {
+        while (1) switch (_context0.p = _context0.n) {
           case 0:
-            _context6.p = 0;
-            _context6.n = 1;
+            _context0.p = 0;
+            _context0.n = 1;
             return window.axios["delete"]("/api/blocks/".concat(blockId));
           case 1:
             setBlockedUsers(function (prev) {
@@ -11710,29 +12710,29 @@ var Messages = function Messages() {
                 return b.id !== blockId;
               });
             });
-            _context6.n = 3;
+            _context0.n = 3;
             break;
           case 2:
-            _context6.p = 2;
-            _t6 = _context6.v;
-            console.error(_t6);
+            _context0.p = 2;
+            _t0 = _context0.v;
+            console.error(_t0);
           case 3:
-            return _context6.a(2);
+            return _context0.a(2);
         }
-      }, _callee6, null, [[0, 2]]);
+      }, _callee0, null, [[0, 2]]);
     }));
-    return function handleUnblock(_x2) {
-      return _ref7.apply(this, arguments);
+    return function handleUnblock(_x3) {
+      return _ref1.apply(this, arguments);
     };
   }();
   var handleBlockUser = /*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(blockedUserId) {
-      var _t7;
-      return _regenerator().w(function (_context7) {
-        while (1) switch (_context7.p = _context7.n) {
+    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(blockedUserId) {
+      var _t1;
+      return _regenerator().w(function (_context1) {
+        while (1) switch (_context1.p = _context1.n) {
           case 0:
-            _context7.p = 0;
-            _context7.n = 1;
+            _context1.p = 0;
+            _context1.n = 1;
             return window.axios.post('/api/blocks', {
               blocked_user_id: blockedUserId
             });
@@ -11743,64 +12743,197 @@ var Messages = function Messages() {
               });
             });
             fetchBlocks();
-            _context7.n = 3;
+            _context1.n = 3;
             break;
           case 2:
-            _context7.p = 2;
-            _t7 = _context7.v;
-            console.error(_t7);
+            _context1.p = 2;
+            _t1 = _context1.v;
+            console.error(_t1);
           case 3:
-            return _context7.a(2);
+            return _context1.a(2);
         }
-      }, _callee7, null, [[0, 2]]);
+      }, _callee1, null, [[0, 2]]);
     }));
-    return function handleBlockUser(_x3) {
-      return _ref8.apply(this, arguments);
+    return function handleBlockUser(_x4) {
+      return _ref10.apply(this, arguments);
     };
   }();
   var toggleMember = function toggleMember(id) {
     setSelectedMembers(function (prev) {
-      return prev.includes(id) ? prev.filter(function (m) {
-        return m !== id;
+      return prev.includes(id) ? prev.filter(function (mid) {
+        return mid !== id;
       }) : [].concat(_toConsumableArray(prev), [id]);
     });
   };
+  var startChatFromModal = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10() {
+      var selectedId, buddy, chat, _iterator, _step, memberId, memberIds, res, newChat, _t10, _t11;
+      return _regenerator().w(function (_context10) {
+        while (1) switch (_context10.p = _context10.n) {
+          case 0:
+            if (!(selectedMembers.length === 0)) {
+              _context10.n = 1;
+              break;
+            }
+            return _context10.a(2);
+          case 1:
+            if (!(!selectedChat && selectedMembers.length === 1)) {
+              _context10.n = 4;
+              break;
+            }
+            selectedId = selectedMembers[0];
+            buddy = buddies.find(function (b) {
+              return b.id === selectedId;
+            });
+            if (buddy) {
+              _context10.n = 2;
+              break;
+            }
+            return _context10.a(2);
+          case 2:
+            chat = {
+              id: buddy.id,
+              user_id: buddy.id,
+              isGroup: false,
+              name: buddy.name,
+              avatar: buddy.avatar || null,
+              unread: 0
+            };
+            setShowGroupModal(false);
+            setSelectedMembers([]);
+            setBuddySearch('');
+            _context10.n = 3;
+            return handleSelectChat(chat);
+          case 3:
+            _context10.n = 16;
+            break;
+          case 4:
+            _context10.p = 4;
+            if (!(selectedChat !== null && selectedChat !== void 0 && selectedChat.isGroup)) {
+              _context10.n = 12;
+              break;
+            }
+            // Add members to existing GC
+            _iterator = _createForOfIteratorHelper(selectedMembers);
+            _context10.p = 5;
+            _iterator.s();
+          case 6:
+            if ((_step = _iterator.n()).done) {
+              _context10.n = 8;
+              break;
+            }
+            memberId = _step.value;
+            _context10.n = 7;
+            return window.axios.post("/api/conversations/".concat(selectedChat.conversation_id, "/members"), {
+              pet_id: memberId
+            });
+          case 7:
+            _context10.n = 6;
+            break;
+          case 8:
+            _context10.n = 10;
+            break;
+          case 9:
+            _context10.p = 9;
+            _t10 = _context10.v;
+            _iterator.e(_t10);
+          case 10:
+            _context10.p = 10;
+            _iterator.f();
+            return _context10.f(10);
+          case 11:
+            setShowGroupModal(false);
+            setSelectedMembers([]);
+            setBuddySearch('');
+            handleSelectChat(selectedChat);
+            _context10.n = 14;
+            break;
+          case 12:
+            // Create new GC
+            memberIds = _toConsumableArray(selectedMembers);
+            if (selectedChat && !selectedChat.isGroup) {
+              memberIds.push(selectedChat.id);
+            }
+            _context10.n = 13;
+            return window.axios.post('/api/conversations', {
+              member_ids: memberIds,
+              name: "Group Chat (".concat(memberIds.length + 1, ")")
+            });
+          case 13:
+            res = _context10.v;
+            newChat = _objectSpread(_objectSpread({}, res.data), {}, {
+              id: 'gc_' + res.data.id,
+              conversation_id: res.data.id,
+              isGroup: true,
+              unread: 0
+            });
+            setChats(function (prev) {
+              return [newChat].concat(_toConsumableArray(prev));
+            });
+            setShowGroupModal(false);
+            setSelectedMembers([]);
+            setBuddySearch('');
+            _context10.n = 14;
+            return handleSelectChat(newChat);
+          case 14:
+            _context10.n = 16;
+            break;
+          case 15:
+            _context10.p = 15;
+            _t11 = _context10.v;
+            console.error(_t11);
+            alert('Failed to update conversation');
+          case 16:
+            return _context10.a(2);
+        }
+      }, _callee10, null, [[5, 9, 10, 11], [4, 15]]);
+    }));
+    return function startChatFromModal() {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  var filteredSuggestedMembers = buddies.filter(function (member) {
+    var _member$name;
+    var q = buddySearch.trim().toLowerCase();
+    if (!q) return true;
+    return (_member$name = member.name) === null || _member$name === void 0 ? void 0 : _member$name.toLowerCase().includes(q);
+  });
   var chatMessages = selectedChat ? messages[selectedChat.id] || [] : [];
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
     className: "messages-page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_15__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("aside", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("aside", {
       className: "msg-list-pane",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
         className: "msg-list-pane__header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("h2", {
           className: "msg-list-pane__title",
           children: "Messages"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
           className: "msg-list-pane__icons",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
             className: "msg-icon-btn",
             onClick: function onClick() {
               return setShowGroupModal(true);
             },
             title: "New chat",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Plus, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Plus, {
               size: 18
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             style: {
               position: 'relative'
             },
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-icon-btn ".concat(showSettings ? "msg-icon-btn--active" : ""),
               onClick: function onClick() {
                 return setShowSettings(!showSettings);
               },
               title: "Settings",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Gear, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Gear, {
                 size: 18
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-              children: showSettings && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+              children: showSettings && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
                 className: "msg-settings-popup",
                 initial: {
                   opacity: 0,
@@ -11820,56 +12953,56 @@ var Messages = function Messages() {
                 transition: {
                   duration: 0.15
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
                   className: "msg-settings-popup__label",
                   children: "MESSAGE SETTINGS"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                   className: "msg-settings-popup__item",
-                  children: ["Message Requests", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+                  children: ["Message Requests", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
                     className: "msg-toggle-switch ".concat(settingsConfig.messageRequests ? 'on' : 'off'),
                     onClick: function onClick() {
                       return toggleSetting('messageRequests');
                     },
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
                       className: "msg-toggle-switch__thumb"
                     })
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                   className: "msg-settings-popup__item",
-                  children: ["Read Receipts", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+                  children: ["Read Receipts", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
                     className: "msg-toggle-switch ".concat(settingsConfig.readReceipts ? 'on' : 'off'),
                     onClick: function onClick() {
                       return toggleSetting('readReceipts');
                     },
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
                       className: "msg-toggle-switch__thumb"
                     })
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                   className: "msg-settings-popup__item",
-                  children: ["Sound Notifications", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+                  children: ["Sound Notifications", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
                     className: "msg-toggle-switch ".concat(settingsConfig.soundNotifications ? 'on' : 'off'),
                     onClick: function onClick() {
                       return toggleSetting('soundNotifications');
                     },
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
                       className: "msg-toggle-switch__thumb"
                     })
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
                   className: "msg-settings-popup__divider"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                   style: {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     gap: '10px'
                   },
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
                     className: "msg-settings-popup__link",
                     onClick: handleArchiveOldChats,
                     children: "Archive old chats"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
                     className: "msg-settings-popup__link",
                     style: {
                       color: '#ef4444'
@@ -11882,12 +13015,12 @@ var Messages = function Messages() {
             })]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
         className: "msg-search",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.MagnifyingGlass, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.MagnifyingGlass, {
           size: 16,
           className: "msg-search__icon"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("input", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("input", {
           className: "msg-search__input",
           placeholder: "Search messages...",
           value: searchQuery,
@@ -11895,34 +13028,34 @@ var Messages = function Messages() {
             return setSearchQuery(e.target.value);
           }
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
         className: "msg-tabs",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
           className: "msg-tab ".concat(activeTab === "All" ? "msg-tab--active" : ""),
           onClick: function onClick() {
             return setActiveTab("All");
           },
           children: "All"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("button", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("button", {
           className: "msg-tab ".concat(activeTab === "Requests" ? "msg-tab--active" : ""),
           onClick: function onClick() {
             return setActiveTab("Requests");
           },
-          children: ["Requests ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+          children: ["Requests ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
             className: "msg-tab__badge",
             children: requestChats.length
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
           className: "msg-tab ".concat(activeTab === "Archived" ? "msg-tab--active" : ""),
           onClick: function onClick() {
             return setActiveTab("Archived");
           },
           children: "Archived"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
         className: "msg-chat-list",
         children: displayChats.map(function (chat) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
             className: "msg-chat-item ".concat((selectedChat === null || selectedChat === void 0 ? void 0 : selectedChat.id) === chat.id ? "msg-chat-item--active" : "", " ").concat(chat.isRequest ? "msg-chat-item--request" : ""),
             onClick: function onClick() {
               handleSelectChat(chat);
@@ -11930,96 +13063,185 @@ var Messages = function Messages() {
             whileHover: {
               backgroundColor: "rgba(137,138,166,0.06)"
             },
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
               className: "msg-chat-item__avatar-wrap",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(Avatar, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(Avatar, {
                 src: chat.avatar,
                 fallback: chat.name[0],
                 size: "md",
                 online: chat.online,
                 color: chat.color
-              }), chat.isGroup && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+              }), chat.isGroup && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                 className: "msg-chat-item__group-badge",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Users, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Users, {
                   size: 8
                 })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
               className: "msg-chat-item__body",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                 className: "msg-chat-item__top",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                   className: "msg-chat-item__name ".concat(chat.isRequest ? "msg-chat-item__name--request" : ""),
                   children: chat.name
-                }), chat.time && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                }), chat.time && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                   className: "msg-chat-item__time",
                   children: chat.time
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                 className: "msg-chat-item__preview",
                 children: chat.preview
               })]
-            }), chat.unread > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+            }), chat.unread > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
               className: "msg-unread-badge",
               children: chat.unread
             })]
           }, chat.id);
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("main", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("main", {
       className: "msg-main-pane",
-      children: selectedChat ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.Fragment, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("header", {
+      children: selectedChat ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.Fragment, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("header", {
           className: "msg-chat-header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             className: "msg-chat-header__left",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-icon-btn msg-back-btn",
               onClick: function onClick() {
                 return setSelectedChat(null);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.ArrowLeft, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.ArrowLeft, {
                 size: 20
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(Avatar, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(Avatar, {
               src: selectedChat.avatar,
               fallback: selectedChat.name[0],
               size: "md",
               online: selectedChat.online,
               color: selectedChat.color
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
-                className: "msg-chat-header__name",
-                children: selectedChat.name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+                style: {
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
+                  className: "msg-chat-header__name",
+                  children: selectedChat.name
+                }), selectedChat.isGroup && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
+                  className: "msg-rename-btn",
+                  onClick: function onClick() {
+                    setNewChatName(selectedChat.name);
+                    setIsRenaming(true);
+                  },
+                  title: "Rename Group",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.PencilSimple, {
+                    size: 14
+                  })
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
                 className: "msg-chat-header__status",
                 children: selectedChat.online ? "Online" : "Offline"
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             className: "msg-chat-header__right",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-icon-btn",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Phone, {
+              onClick: function onClick() {
+                return setShowGroupModal(true);
+              },
+              title: "Add member",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Plus, {
                 size: 18
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-icon-btn",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.VideoCamera, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Phone, {
                 size: 18
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-icon-btn",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.DotsThree, {
-                size: 20
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.VideoCamera, {
+                size: 18
               })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+              style: {
+                position: 'relative'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
+                className: "msg-icon-btn ".concat(showChatActions ? 'msg-icon-btn--active' : ''),
+                onClick: function onClick() {
+                  return setShowChatActions(!showChatActions);
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.DotsThree, {
+                  size: 20
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+                children: showChatActions && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+                  className: "msg-settings-popup",
+                  style: {
+                    right: 0,
+                    top: '100%',
+                    marginTop: '8px',
+                    minWidth: '180px'
+                  },
+                  initial: {
+                    opacity: 0,
+                    y: -10
+                  },
+                  animate: {
+                    opacity: 1,
+                    y: 0
+                  },
+                  exit: {
+                    opacity: 0,
+                    y: -10
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("button", {
+                    className: "msg-settings-popup__link",
+                    onClick: function onClick() {
+                      setIsRenaming(true);
+                      setShowChatActions(false);
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.PencilSimple, {
+                      size: 16
+                    }), " Rename Chat"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+                    className: "msg-settings-popup__divider"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("button", {
+                    className: "msg-settings-popup__link",
+                    style: {
+                      color: '#ef4444'
+                    },
+                    onClick: handleDeleteChat,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(Trash, {
+                      size: 16
+                    }), " Delete Conversation"]
+                  })]
+                })
+              })]
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
           className: "msg-viewport",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
             children: chatMessages.map(function (msg, i) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+              // Determine delivery status: sent (pending), delivered (on server, not viewed), seen (viewed by recipient)
+              var statusIcon = '✓ Sent';
+              var statusClass = 'sent';
+              if (!msg.pending) {
+                if (msg.is_read) {
+                  statusIcon = '✓✓ Seen';
+                  statusClass = 'seen';
+                } else {
+                  statusIcon = '✓✓ Delivered';
+                  statusClass = 'delivered';
+                }
+              }
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
                 className: "msg-bubble-row ".concat(msg.isSelf ? "msg-bubble-row--self" : "msg-bubble-row--other"),
                 initial: {
                   opacity: 0,
@@ -12029,54 +13251,97 @@ var Messages = function Messages() {
                   opacity: 1,
                   y: 0
                 },
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                   className: "msg-bubble",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+                  children: [msg.media_url && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+                    className: "msg-media-container",
+                    children: msg.media_type === 'video' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("video", {
+                      src: msg.media_url,
+                      controls: true,
+                      className: "msg-media"
+                    }) : msg.media_type === 'image' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("img", {
+                      src: msg.media_url,
+                      alt: "attachment",
+                      className: "msg-media"
+                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("a", {
+                      href: msg.media_url,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      className: "msg-file-link",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.File, {
+                        size: 24,
+                        weight: "fill"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+                        className: "msg-file-link__info",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
+                          children: "Attachment"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("small", {
+                          children: "Click to download"
+                        })]
+                      })]
+                    })
+                  }), msg.text && !['📹 Video', '📷 Photo', '📎 File'].includes(msg.text) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
                     children: msg.text
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                     className: "msg-bubble__time",
                     children: msg.time
+                  }), msg.isSelf && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
+                    className: "msg-bubble__status ".concat(statusClass),
+                    children: statusIcon
                   })]
                 })
               }, msg.id || i);
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
             ref: messagesEndRef
           })]
-        }), selectedChat.isRequest ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("footer", {
+        }), selectedChat.isRequest ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("footer", {
           className: "msg-request-footer",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("p", {
             className: "msg-request-footer__text",
-            children: ["If you accept, ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("strong", {
+            children: ["If you accept, ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("strong", {
               children: selectedChat.name
-            }), " will also be able to call you and may see info like your Active Status and when you've read messages. ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+            }), " will also be able to call you and may see info like your Active Status and when you've read messages. ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
               className: "msg-request-footer__link",
               children: "Choose who can message you"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             className: "msg-request-footer__actions",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-request-btn msg-request-btn--block",
               onClick: function onClick() {
                 return handleBlockUser(selectedChat.user_id);
               },
               children: "Block"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-request-btn msg-request-btn--delete",
               children: "Delete"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-request-btn msg-request-btn--accept",
               children: "Accept"
             })]
           })]
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("footer", {
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("footer", {
           className: "msg-input-bar",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("input", {
+            type: "file",
+            ref: fileInputRef,
+            style: {
+              display: 'none'
+            },
+            accept: "image/*,video/*,.pdf,.doc,.docx",
+            onChange: handleFileSend
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
             className: "msg-icon-btn",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.Paperclip, {
+            onClick: function onClick() {
+              var _fileInputRef$current;
+              return (_fileInputRef$current = fileInputRef.current) === null || _fileInputRef$current === void 0 ? void 0 : _fileInputRef$current.click();
+            },
+            title: "Attach file",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.Paperclip, {
               size: 18
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("input", {
             className: "msg-input",
             placeholder: "Type a message...",
             value: messageText,
@@ -12086,11 +13351,11 @@ var Messages = function Messages() {
             onKeyDown: function onKeyDown(e) {
               return e.key === "Enter" && handleSend();
             }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
             className: "msg-send-btn",
             onClick: handleSend,
             disabled: !messageText.trim(),
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.PaperPlaneTilt, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.PaperPlaneTilt, {
               size: 16,
               weight: "fill"
             })
@@ -12099,32 +13364,32 @@ var Messages = function Messages() {
       }) :
       /*#__PURE__*/
       /* Empty State */
-      (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+      (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
         className: "msg-empty-state",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
           className: "msg-empty-state__icon",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.PawPrint, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.PawPrint, {
             size: 48,
             weight: "light"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h3", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("h3", {
           className: "msg-empty-state__title",
           children: "Your Messages"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
           className: "msg-empty-state__sub",
           children: "Select a conversation or start a new one with a fellow pet lover"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("button", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("button", {
           className: "msg-empty-state__btn",
           onClick: function onClick() {
             return setShowGroupModal(true);
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.PaperPlaneTilt, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.PaperPlaneTilt, {
             size: 16
           }), " Send Message"]
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: showGroupModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: showGroupModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
         className: "msg-modal-overlay",
         initial: {
           opacity: 0
@@ -12138,7 +13403,7 @@ var Messages = function Messages() {
         onClick: function onClick() {
           return setShowGroupModal(false);
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "pv-msg-modal",
           initial: {
             scale: 0.94,
@@ -12159,98 +13424,105 @@ var Messages = function Messages() {
             display: 'flex',
             flexDirection: 'column'
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             className: "pv-msg-modal__header",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("h3", {
               children: "New message"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-icon-btn",
               onClick: function onClick() {
                 return setShowGroupModal(false);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.X, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.X, {
                 size: 20
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             className: "pv-msg-modal__search-to",
             style: {
               display: 'flex',
               alignItems: 'center',
               gap: '12px'
             },
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
               className: "to-label",
               children: "To:"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("input", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("input", {
               className: "pv-msg-modal__search-input",
               placeholder: "Search...",
-              value: groupName,
+              value: buddySearch,
               onChange: function onChange(e) {
-                return setGroupName(e.target.value);
+                return setBuddySearch(e.target.value);
               },
               style: {
                 flex: 1,
                 width: '100%'
               }
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             className: "pv-msg-modal__body",
             style: {
               display: 'flex',
               flexDirection: 'column'
             },
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
               className: "pv-msg-modal__section-label",
               children: "Suggested"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
               className: "pv-msg-modal__member-list",
               style: {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '8px'
               },
-              children: groupMembers.map(function (m) {
+              children: [filteredSuggestedMembers.map(function (m) {
+                var _m$name;
                 var isSelected = selectedMembers.includes(m.id);
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("button", {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("button", {
                   className: "pv-msg-modal__member ".concat(isSelected ? "pv-msg-modal__member--selected" : ""),
+                  type: "button",
                   onClick: function onClick() {
                     return toggleMember(m.id);
                   },
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(Avatar, {
-                    fallback: m.initial,
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(Avatar, {
+                    src: m.avatar,
+                    fallback: m.initial || ((_m$name = m.name) === null || _m$name === void 0 ? void 0 : _m$name[0]) || '?',
                     size: "md",
-                    color: m.color
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                    color: m.bg || m.color
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                     className: "pv-msg-modal__member-info",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                       className: "member-name",
                       children: m.name
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                       className: "member-username",
-                      children: m.name.toLowerCase().replace(/\s+/g, '')
+                      children: (m.preview || m.name || '').toLowerCase().replace(/\s+/g, '')
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
                     className: "pv-msg-modal__member-radio ".concat(isSelected ? 'selected' : ''),
-                    children: isSelected && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+                    children: isSelected && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
                       className: "radio-inner"
                     })
                   })]
                 }, m.id);
-              })
+              }), filteredSuggestedMembers.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+                className: "pv-msg-modal__empty",
+                children: "No accounts found"
+              })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
             className: "pv-msg-modal__footer",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "pv-msg-modal__create-btn ".concat(selectedMembers.length > 0 ? "pv-msg-modal__create-btn--enabled" : ""),
               disabled: !selectedMembers.length,
+              onClick: startChatFromModal,
               children: "Chat"
             })
           })]
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: showBlockPanel && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: showBlockPanel && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
         className: "msg-modal-overlay",
         initial: {
           opacity: 0
@@ -12264,7 +13536,7 @@ var Messages = function Messages() {
         onClick: function onClick() {
           return setShowBlockPanel(false);
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "msg-block-modal",
           initial: {
             scale: 0.96,
@@ -12281,32 +13553,32 @@ var Messages = function Messages() {
           onClick: function onClick(e) {
             return e.stopPropagation();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
             className: "msg-block-modal__header",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("h3", {
               children: "Blocked accounts"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
               className: "msg-icon-btn",
               onClick: function onClick() {
                 return setShowBlockPanel(false);
               },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.X, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.X, {
                 size: 20
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
             className: "msg-block-modal__body",
-            children: blockedUsers.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+            children: blockedUsers.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
               className: "msg-block-modal__empty",
               children: "No blocked accounts."
             }) : blockedUsers.map(function (block) {
               var _block$blocked_user;
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                 className: "msg-block-row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("span", {
                   className: "name",
                   children: ((_block$blocked_user = block.blocked_user) === null || _block$blocked_user === void 0 ? void 0 : _block$blocked_user.name) || 'User'
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
                   className: "msg-unblock-btn",
                   onClick: function onClick() {
                     return handleUnblock(block.id);
@@ -12315,6 +13587,114 @@ var Messages = function Messages() {
                 })]
               }, block.id);
             })
+          })]
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: isRenaming && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        className: "msg-modal-overlay",
+        initial: {
+          opacity: 0
+        },
+        animate: {
+          opacity: 1
+        },
+        exit: {
+          opacity: 0
+        },
+        onClick: function onClick() {
+          return setIsRenaming(false);
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          className: "msg-rename-modal",
+          initial: {
+            scale: 0.95,
+            opacity: 0
+          },
+          animate: {
+            scale: 1,
+            opacity: 1
+          },
+          exit: {
+            scale: 0.95,
+            opacity: 0
+          },
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+            className: "msg-rename-modal__header",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("h3", {
+              children: "Rename Group Chat"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
+              className: "msg-icon-btn",
+              onClick: function onClick() {
+                return setIsRenaming(false);
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.X, {
+                size: 20
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+            className: "msg-rename-modal__body",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("input", {
+              className: "msg-rename-input",
+              value: newChatName,
+              onChange: function onChange(e) {
+                return setNewChatName(e.target.value);
+              },
+              placeholder: "Enter new group name",
+              autoFocus: true
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+            className: "msg-rename-modal__footer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
+              className: "msg-cancel-btn",
+              onClick: function onClick() {
+                return setIsRenaming(false);
+              },
+              children: "Cancel"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("button", {
+              className: "msg-save-btn",
+              disabled: !newChatName.trim() || newChatName === selectedChat.name,
+              onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11() {
+                var _t12;
+                return _regenerator().w(function (_context11) {
+                  while (1) switch (_context11.p = _context11.n) {
+                    case 0:
+                      _context11.p = 0;
+                      _context11.n = 1;
+                      return window.axios.patch("/api/conversations/".concat(selectedChat.conversation_id), {
+                        name: newChatName
+                      });
+                    case 1:
+                      setSelectedChat(function (prev) {
+                        return _objectSpread(_objectSpread({}, prev), {}, {
+                          name: newChatName
+                        });
+                      });
+                      setChats(function (prev) {
+                        return prev.map(function (c) {
+                          return c.id === selectedChat.id ? _objectSpread(_objectSpread({}, c), {}, {
+                            name: newChatName
+                          }) : c;
+                        });
+                      });
+                      setIsRenaming(false);
+                      _context11.n = 3;
+                      break;
+                    case 2:
+                      _context11.p = 2;
+                      _t12 = _context11.v;
+                      console.error(_t12);
+                      alert("Failed to rename conversation");
+                    case 3:
+                      return _context11.a(2);
+                  }
+                }, _callee11, null, [[0, 2]]);
+              })),
+              children: "Save"
+            })]
           })]
         })
       })
@@ -12458,6 +13838,12 @@ var Notifications = function Notifications() {
   }();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchNotifications();
+    var id = setInterval(function () {
+      fetchNotifications();
+    }, 8000);
+    return function () {
+      return clearInterval(id);
+    };
   }, []);
   var markAsRead = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(id) {
@@ -12773,24 +14159,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/BookmarkSimple.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Calendar.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Camera.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/GridFour.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Heart.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MapPin.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PencilSimple.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Play.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Star.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Tag.es.js");
-/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js");
-/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _sass_pages_profile_scss__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../sass/pages/profile.scss */ "./resources/sass/pages/profile.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs");
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! framer-motion */ "./node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/BookmarkSimple.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Calendar.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Camera.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/GridFour.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Heart.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/MapPin.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PawPrint.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/PencilSimple.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Play.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Plus.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Star.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Tag.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Trophy.es.js");
+/* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/pages/Sidebar.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _Feed__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Feed */ "./resources/js/components/pages/Feed.js");
+/* harmony import */ var _sass_pages_profile_scss__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../../sass/pages/profile.scss */ "./resources/sass/pages/profile.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -12807,16 +14203,18 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
 var Profile = function Profile() {
-  var _pet$posts, _pet$posts2;
+  var _pet$posts, _pet$user;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     pet = _useState2[0],
     setPet = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    userPets = _useState4[0],
-    setUserPets = _useState4[1];
+    currentUserId = _useState4[0],
+    setCurrentUserId = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState6 = _slicedToArray(_useState5, 2),
     loading = _useState6[0],
@@ -12829,6 +14227,62 @@ var Profile = function Profile() {
     _useState0 = _slicedToArray(_useState9, 2),
     isFollowing = _useState0[0],
     setIsFollowing = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState10 = _slicedToArray(_useState1, 2),
+    taggedPosts = _useState10[0],
+    setTaggedPosts = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState12 = _slicedToArray(_useState11, 2),
+    savedPosts = _useState12[0],
+    setSavedPosts = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    activePost = _useState14[0],
+    setActivePost = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    highlights = _useState16[0],
+    setHighlights = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    showPetInfoModal = _useState18[0],
+    setShowPetInfoModal = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    showBadgesModal = _useState20[0],
+    setShowBadgesModal = _useState20[1];
+
+  // Map raw API post → PostModal format
+  var normalizePost = function normalizePost(p) {
+    var _p$pet, _p$pet2, _p$pet3, _p$pet4, _p$caption, _p$likes_count, _p$comments_count, _p$pet5;
+    var image = p.image_url || (p.image ? p.image.startsWith('http') ? p.image : "/storage/".concat(p.image) : null);
+    var video = p.video_url || (p.video ? p.video.startsWith('http') ? p.video : "/storage/".concat(p.video) : null);
+    return {
+      id: p.id,
+      author: ((_p$pet = p.pet) === null || _p$pet === void 0 ? void 0 : _p$pet.name) || "Unknown",
+      breed: ((_p$pet2 = p.pet) === null || _p$pet2 === void 0 ? void 0 : _p$pet2.breed) || "",
+      location: p.location || "",
+      avatar: ((_p$pet3 = p.pet) === null || _p$pet3 === void 0 ? void 0 : _p$pet3.image_url) || ((_p$pet4 = p.pet) === null || _p$pet4 === void 0 ? void 0 : _p$pet4.photo_url) || null,
+      time: p.created_at ? new Date(p.created_at).toLocaleDateString() : "just now",
+      content: p.caption || "",
+      hashtags: ((_p$caption = p.caption) === null || _p$caption === void 0 ? void 0 : _p$caption.match(/#\w+/g)) || [],
+      image: image,
+      video: video,
+      likes: (_p$likes_count = p.likes_count) !== null && _p$likes_count !== void 0 ? _p$likes_count : 0,
+      comments: (_p$comments_count = p.comments_count) !== null && _p$comments_count !== void 0 ? _p$comments_count : 0,
+      isLiked: !!p.liked_by_me,
+      isSaved: !!p.is_saved || !!p.saved_by_me,
+      privacy: p.privacy || "public",
+      tagged_pets: p.tagged_pets || [],
+      pet: p.pet || null,
+      user: ((_p$pet5 = p.pet) === null || _p$pet5 === void 0 ? void 0 : _p$pet5.user) || null
+    };
+  };
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    activeHighlight = _useState22[0],
+    setActiveHighlight = _useState22[1];
+  var coverInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var getPetId = function getPetId() {
     var parts = window.location.pathname.split("/");
     var lastPart = parts[parts.length - 1];
@@ -12839,7 +14293,7 @@ var Profile = function Profile() {
   }, [window.location.pathname]);
   var fetchData = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var _myPetsRes$data, id, myPetsRes, petsArray, targetId, response, _t;
+      var _me$pet, _me$pet2, id, meRes, me, targetId, response, highlightsRes, myPetId, _savedRes$data, savedRes, rawSaved, taggedRes, _t, _t2, _t3, _t4;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -12847,12 +14301,12 @@ var Profile = function Profile() {
             setLoading(true);
             id = getPetId();
             _context.n = 1;
-            return axios__WEBPACK_IMPORTED_MODULE_15___default().get("/api/pets");
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().get('/api/user');
           case 1:
-            myPetsRes = _context.v;
-            petsArray = ((_myPetsRes$data = myPetsRes.data) === null || _myPetsRes$data === void 0 ? void 0 : _myPetsRes$data.data) || myPetsRes.data || [];
-            setUserPets(Array.isArray(petsArray) ? petsArray : []);
-            targetId = id || (Array.isArray(petsArray) && petsArray.length > 0 ? petsArray[0].id : null);
+            meRes = _context.v;
+            me = meRes.data || {};
+            setCurrentUserId(me.id || null);
+            targetId = id || (me === null || me === void 0 || (_me$pet = me.pet) === null || _me$pet === void 0 ? void 0 : _me$pet.id) || null;
             if (targetId) {
               _context.n = 2;
               break;
@@ -12861,48 +14315,258 @@ var Profile = function Profile() {
             return _context.a(2);
           case 2:
             _context.n = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_15___default().get("/api/pets/".concat(targetId));
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().get("/api/pets/".concat(targetId));
           case 3:
             response = _context.v;
             setPet(response.data);
             setIsFollowing(response.data.is_following);
-            _context.n = 5;
-            break;
-          case 4:
+
+            // Fetch highlights
             _context.p = 4;
-            _t = _context.v;
-            console.error("Error fetching profile data:", _t);
+            _context.n = 5;
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().get("/api/pets/".concat(targetId, "/highlights"));
           case 5:
-            _context.p = 5;
-            setLoading(false);
-            return _context.f(5);
+            highlightsRes = _context.v;
+            setHighlights(highlightsRes.data);
+            _context.n = 7;
+            break;
           case 6:
+            _context.p = 6;
+            _t = _context.v;
+            console.error("Error fetching highlights:", _t);
+          case 7:
+            // Fetch saved posts (own profile only)
+            myPetId = me === null || me === void 0 || (_me$pet2 = me.pet) === null || _me$pet2 === void 0 ? void 0 : _me$pet2.id;
+            if (!(!id || String(id) === String(myPetId))) {
+              _context.n = 11;
+              break;
+            }
+            _context.p = 8;
+            _context.n = 9;
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().get('/api/saved-posts');
+          case 9:
+            savedRes = _context.v;
+            console.log("Profile: Saved Posts Data:", savedRes.data);
+            rawSaved = ((_savedRes$data = savedRes.data) === null || _savedRes$data === void 0 ? void 0 : _savedRes$data.data) || savedRes.data || [];
+            setSavedPosts(rawSaved.map(function (sp) {
+              return sp.post || sp;
+            }));
+            _context.n = 11;
+            break;
+          case 10:
+            _context.p = 10;
+            _t2 = _context.v;
+            console.error("Error fetching saved posts:", _t2);
+          case 11:
+            _context.p = 11;
+            _context.n = 12;
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().get("/api/pets/".concat(targetId, "/tagged-posts"));
+          case 12:
+            taggedRes = _context.v;
+            console.log("Profile: Tagged Posts Data:", taggedRes.data);
+            setTaggedPosts(taggedRes.data || []);
+            _context.n = 14;
+            break;
+          case 13:
+            _context.p = 13;
+            _t3 = _context.v;
+            console.error("Error fetching tagged posts:", _t3);
+          case 14:
+            _context.n = 16;
+            break;
+          case 15:
+            _context.p = 15;
+            _t4 = _context.v;
+            console.error("Error fetching profile data:", _t4);
+          case 16:
+            _context.p = 16;
+            setLoading(false);
+            return _context.f(16);
+          case 17:
             return _context.a(2);
         }
-      }, _callee, null, [[0, 4, 5, 6]]);
+      }, _callee, null, [[11, 13], [8, 10], [4, 6], [0, 15, 16, 17]]);
     }));
     return function fetchData() {
       return _ref.apply(this, arguments);
     };
   }();
-  if (loading) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+  var handleAddHighlight = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+      var input;
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.n) {
+          case 0:
+            input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*,video/*';
+            input.onchange = /*#__PURE__*/function () {
+              var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(e) {
+                var file, formData, res, highlightsRes, _t5;
+                return _regenerator().w(function (_context2) {
+                  while (1) switch (_context2.p = _context2.n) {
+                    case 0:
+                      file = e.target.files[0];
+                      if (file) {
+                        _context2.n = 1;
+                        break;
+                      }
+                      return _context2.a(2);
+                    case 1:
+                      formData = new FormData();
+                      formData.append('media', file);
+                      formData.append('is_highlight', '1');
+                      _context2.p = 2;
+                      _context2.n = 3;
+                      return axios__WEBPACK_IMPORTED_MODULE_18___default().post('/api/stories', formData);
+                    case 3:
+                      res = _context2.v;
+                      _context2.n = 4;
+                      return axios__WEBPACK_IMPORTED_MODULE_18___default().get("/api/pets/".concat(pet.id, "/highlights"));
+                    case 4:
+                      highlightsRes = _context2.v;
+                      setHighlights(highlightsRes.data);
+                      _context2.n = 6;
+                      break;
+                    case 5:
+                      _context2.p = 5;
+                      _t5 = _context2.v;
+                      console.error(_t5);
+                    case 6:
+                      return _context2.a(2);
+                  }
+                }, _callee2, null, [[2, 5]]);
+              }));
+              return function (_x) {
+                return _ref3.apply(this, arguments);
+              };
+            }();
+            input.click();
+          case 1:
+            return _context3.a(2);
+        }
+      }, _callee3);
+    }));
+    return function handleAddHighlight() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  var handleCoverUpload = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(e) {
+      var file, formData, res, _t6;
+      return _regenerator().w(function (_context4) {
+        while (1) switch (_context4.p = _context4.n) {
+          case 0:
+            file = e.target.files[0];
+            if (file) {
+              _context4.n = 1;
+              break;
+            }
+            return _context4.a(2);
+          case 1:
+            formData = new FormData();
+            formData.append("cover_photo", file);
+            _context4.p = 2;
+            _context4.n = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().post("/api/pets/".concat(pet.id, "/cover"), formData, {
+              headers: {
+                "Content-Type": "multipart/form-data"
+              }
+            });
+          case 3:
+            res = _context4.v;
+            // Update local pet state with new cover URL
+            setPet(function (prev) {
+              return _objectSpread(_objectSpread({}, prev), {}, {
+                cover_photo_url: res.data.cover_photo_url
+              });
+            });
+            _context4.n = 5;
+            break;
+          case 4:
+            _context4.p = 4;
+            _t6 = _context4.v;
+            console.error("Error uploading cover photo:", _t6);
+            alert("Failed to upload cover photo.");
+          case 5:
+            return _context4.a(2);
+        }
+      }, _callee4, null, [[2, 4]]);
+    }));
+    return function handleCoverUpload(_x2) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  var handleSavePost = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(post) {
+      var _me$pet3, meRes, me, id, myPetId, _savedRes$data2, savedRes, rawSaved, _t7;
+      return _regenerator().w(function (_context5) {
+        while (1) switch (_context5.p = _context5.n) {
+          case 0:
+            _context5.p = 0;
+            _context5.n = 1;
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().post("/api/saved-posts", {
+              post_id: post.id
+            });
+          case 1:
+            _context5.n = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().get('/api/user');
+          case 2:
+            meRes = _context5.v;
+            me = meRes.data || {};
+            id = getPetId();
+            myPetId = me === null || me === void 0 || (_me$pet3 = me.pet) === null || _me$pet3 === void 0 ? void 0 : _me$pet3.id;
+            if (!(!id || String(id) === String(myPetId))) {
+              _context5.n = 4;
+              break;
+            }
+            _context5.n = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_18___default().get('/api/saved-posts');
+          case 3:
+            savedRes = _context5.v;
+            rawSaved = ((_savedRes$data2 = savedRes.data) === null || _savedRes$data2 === void 0 ? void 0 : _savedRes$data2.data) || savedRes.data || [];
+            setSavedPosts(rawSaved.map(function (sp) {
+              return sp.post || sp;
+            }));
+          case 4:
+            setActivePost(function (prev) {
+              return (prev === null || prev === void 0 ? void 0 : prev.id) === post.id ? _objectSpread(_objectSpread({}, prev), {}, {
+                isSaved: true
+              }) : prev;
+            });
+            _context5.n = 6;
+            break;
+          case 5:
+            _context5.p = 5;
+            _t7 = _context5.v;
+            console.error(_t7);
+          case 6:
+            return _context5.a(2);
+        }
+      }, _callee5, null, [[0, 5]]);
+    }));
+    return function handleSavePost(_x3) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+  if (loading) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
     className: "profile-loading",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
       className: "spinner"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
       children: "Loading Profile..."
     })]
   });
-  if (!pet) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+  if (!pet) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
     className: "profile-error",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_14__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
       className: "profile-error__content",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.PawPrint, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.PawPrint, {
         size: 64,
         weight: "thin"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h2", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h2", {
         children: "Pet not found"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
         onClick: function onClick() {
           return window.history.back();
         },
@@ -12911,9 +14575,7 @@ var Profile = function Profile() {
       })]
     })]
   });
-  var isOwnProfile = userPets.some(function (p) {
-    return p.id === pet.id;
-  });
+  var isOwnProfile = currentUserId && (pet === null || pet === void 0 ? void 0 : pet.user_id) === currentUserId;
   var postsCount = ((_pet$posts = pet.posts) === null || _pet$posts === void 0 ? void 0 : _pet$posts.length) || 0;
   var followersCount = pet.followers_count || 0;
   var followingCount = pet.following_count || 0;
@@ -12926,7 +14588,7 @@ var Profile = function Profile() {
     id: 1,
     name: "Pawfect Learner",
     description: "Mastering basic commands",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Star, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Star, {
       weight: "fill"
     }),
     color: "#898AA6"
@@ -12934,7 +14596,7 @@ var Profile = function Profile() {
     id: 2,
     name: "Park Explorer",
     description: "Earned by visiting multiple parks",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Trophy, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trophy, {
       weight: "fill"
     }),
     color: "#898AA6"
@@ -12942,171 +14604,235 @@ var Profile = function Profile() {
     id: 3,
     name: "Social Butterfly",
     description: "Love meeting new people and animals",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Heart, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Heart, {
       weight: "fill"
     }),
     color: "#898AA6"
   }];
   var tabs = [{
     id: "Posts",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.GridFour, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.GridFour, {
       size: 20
     })
   }, {
     id: "Tagged",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Tag, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Tag, {
       size: 20
     })
   }, {
     id: "Saved",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_1__.BookmarkSimple, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.BookmarkSimple, {
       size: 20
     })
   }];
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
     className: "profile-page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_14__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("main", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("main", {
       className: "profile-main",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
         className: "profile-cover",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("img", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("img", {
           src: pet.cover_photo_url || "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?q=80&w=2070&auto=format&fit=crop",
           alt: "Cover",
           className: "profile-cover__img"
-        }), isOwnProfile && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("button", {
-          className: "profile-cover__edit-btn",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Camera, {
-            size: 18,
-            weight: "bold"
-          }), "Edit Cover"]
+        }), isOwnProfile && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("button", {
+            className: "profile-cover__edit-btn",
+            onClick: function onClick() {
+              var _coverInputRef$curren;
+              return (_coverInputRef$curren = coverInputRef.current) === null || _coverInputRef$curren === void 0 ? void 0 : _coverInputRef$curren.click();
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Camera, {
+              size: 18,
+              weight: "bold"
+            }), "Edit Cover"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("input", {
+            type: "file",
+            ref: coverInputRef,
+            style: {
+              display: 'none'
+            },
+            accept: "image/*",
+            onChange: handleCoverUpload
+          })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
         className: "profile-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
           className: "profile-avatar",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("img", {
-            src: pet.image_url || "https://ui-avatars.com/api/?name=".concat(encodeURIComponent(pet.name || 'Pet'), "&background=898AA6&color=fff"),
-            alt: pet.name
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("img", {
+            src: pet.image_url || ((_pet$user = pet.user) === null || _pet$user === void 0 ? void 0 : _pet$user.profile_photo_url) || "https://ui-avatars.com/api/?name=".concat(encodeURIComponent(pet.name || 'Pet'), "&background=898AA6&color=fff"),
+            alt: pet.name,
+            onError: function onError(e) {
+              e.currentTarget.src = "https://ui-avatars.com/api/?name=".concat(encodeURIComponent(pet.name || 'Pet'), "&background=898AA6&color=fff");
+            }
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "profile-info",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h1", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h1", {
             className: "profile-name",
             children: pet.name
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("p", {
             className: "profile-username",
             children: ["@", username]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "profile-stats",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("span", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("span", {
               children: [followersCount, " Followers"]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
               className: "dot",
               children: "\u2022"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("span", {
               children: [postsCount, " Posts"]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
               className: "dot",
               children: "\u2022"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("span", {
               children: [followingCount, " Following"]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
             className: "profile-bio",
             children: pet.bio || "Living life one tail wag at a time. Lover of parks, belly rubs, and every stranger I've ever met."
           })]
-        }), isOwnProfile && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("button", {
+        }), isOwnProfile && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("button", {
           className: "btn-edit-profile",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.PencilSimple, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.PencilSimple, {
             size: 16,
             weight: "bold"
           }), "Edit Profile"]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
         className: "profile-content-wrapper",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("aside", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("aside", {
           className: "profile-sidebar",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "sidebar-card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h3", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h3", {
               children: "Highlights"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
-              className: "highlight-circle",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Plus, {
-                size: 32,
-                weight: "bold"
-              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+              className: "highlights-list",
+              style: {
+                display: 'flex',
+                gap: '12px',
+                overflowX: 'auto',
+                paddingBottom: '8px'
+              },
+              children: [highlights.map(function (highlight) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+                  className: "highlight-circle",
+                  onClick: function onClick() {
+                    return setActiveHighlight(highlight);
+                  },
+                  style: {
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    border: '2px solid var(--primary-action)',
+                    cursor: 'pointer',
+                    flexShrink: 0
+                  },
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("img", {
+                    src: highlight.media_url || highlight.media_path,
+                    alt: "Highlight",
+                    style: {
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }
+                  })
+                }, highlight.id);
+              }), isOwnProfile && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+                className: "highlight-circle",
+                onClick: handleAddHighlight,
+                style: {
+                  width: '60px',
+                  height: '60px',
+                  borderRadius: '50%',
+                  border: '2px dashed var(--border-color)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  color: 'var(--text-muted)'
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_12__.Plus, {
+                  size: 24,
+                  weight: "bold"
+                })
+              })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "sidebar-card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "sidebar-card-header",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h3", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h3", {
                 children: "Pet's Info"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
                 className: "view-all-link",
                 onClick: function onClick() {
-                  return alert("View All Pet Info");
+                  return setShowPetInfoModal(true);
                 },
                 children: "View All"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "pet-info-list",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
                 className: "pet-info-item",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.PawPrint, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.PawPrint, {
                   size: 16,
                   weight: "fill"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                   children: petType
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
                 className: "pet-info-item",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_2__.Calendar, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Calendar, {
                   size: 16,
                   weight: "fill"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                   children: petAge
                 })]
-              }), pet.location && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+              }), pet.location && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
                 className: "pet-info-item",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.MapPin, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.MapPin, {
                   size: 16,
                   weight: "fill"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
                   children: pet.location
                 })]
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
             className: "sidebar-card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
               className: "sidebar-card-header",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h3", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h3", {
                 children: "Earned Badges"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("button", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
                 className: "view-all-link",
                 onClick: function onClick() {
-                  return alert("View All Badges");
+                  return setShowBadgesModal(true);
                 },
                 children: "View All"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
               className: "badges-list",
               children: badges.map(function (badge) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
                   className: "badge-list-item",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
                     className: "badge-icon",
                     style: {
                       backgroundColor: badge.color
                     },
                     children: badge.icon
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
                     className: "badge-text",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("h4", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
                       children: badge.name
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
                       children: badge.description
                     })]
                   })]
@@ -13114,12 +14840,12 @@ var Profile = function Profile() {
               })
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
           className: "profile-content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
             className: "profile-tabs",
             children: tabs.map(function (tab) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("button", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("button", {
                 type: "button",
                 className: "tab-btn ".concat(activeTab === tab.id ? "active" : ""),
                 onClick: function onClick() {
@@ -13128,44 +14854,434 @@ var Profile = function Profile() {
                 children: [tab.icon, tab.id]
               }, tab.id);
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
             className: "profile-gallery",
-            children: [(_pet$posts2 = pet.posts) === null || _pet$posts2 === void 0 ? void 0 : _pet$posts2.map(function (post) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("div", {
-                className: "gallery-item",
-                children: [post.video_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.Fragment, {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("video", {
-                    src: post.video_url,
-                    muted: true
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
-                    className: "video-icon",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.Play, {
-                      size: 20,
-                      weight: "fill"
+            children: function () {
+              var postsToDisplay = [];
+              if (activeTab === "Posts") {
+                postsToDisplay = pet.posts || [];
+              } else if (activeTab === "Tagged") {
+                postsToDisplay = taggedPosts;
+              } else if (activeTab === "Saved") {
+                postsToDisplay = savedPosts;
+              }
+              if (postsToDisplay.length === 0) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+                  className: "gallery-empty-message",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("p", {
+                    children: ["No ", activeTab.toLowerCase(), " yet"]
+                  })
+                });
+              }
+              return postsToDisplay.map(function (post) {
+                var _post$video, _post$image;
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                  className: "gallery-item",
+                  onClick: function onClick() {
+                    return setActivePost(normalizePost(post));
+                  },
+                  children: [post.video_url || post.video ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.Fragment, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("video", {
+                      src: post.video_url || ((_post$video = post.video) !== null && _post$video !== void 0 && _post$video.startsWith('http') ? post.video : "/storage/".concat(post.video)),
+                      muted: true
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+                      className: "video-icon",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Play, {
+                        size: 20,
+                        weight: "fill"
+                      })
+                    })]
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("img", {
+                    src: post.image_url || ((_post$image = post.image) !== null && _post$image !== void 0 && _post$image.startsWith('http') ? post.image : "/storage/".concat(post.image)),
+                    alt: post.caption || 'Post image'
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+                    className: "gallery-overlay",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("span", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Heart, {
+                        size: 20,
+                        weight: "fill"
+                      }), " ", post.likes_count || 0]
                     })
                   })]
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("img", {
-                  src: post.image_url,
-                  alt: post.caption
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
-                  className: "gallery-overlay",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsxs)("span", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Heart, {
-                      size: 20,
-                      weight: "fill"
-                    }), " ", post.likes_count || 0]
-                  })
-                })]
-              }, post.id);
-            }), (!pet.posts || pet.posts.length === 0) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("div", {
-              className: "gallery-empty-message",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_17__.jsx)("p", {
-                children: "No posts yet"
-              })
-            })]
+                }, post.id);
+              });
+            }()
           })]
         })]
       })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: activePost && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_Feed__WEBPACK_IMPORTED_MODULE_19__.PostModal, {
+        post: activePost,
+        onClose: function onClose() {
+          return setActivePost(null);
+        },
+        onSave: handleSavePost,
+        onLike: (/*#__PURE__*/function () {
+          var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(postId) {
+            var response, _t8;
+            return _regenerator().w(function (_context6) {
+              while (1) switch (_context6.p = _context6.n) {
+                case 0:
+                  _context6.p = 0;
+                  _context6.n = 1;
+                  return axios__WEBPACK_IMPORTED_MODULE_18___default().post("/api/posts/".concat(postId, "/like"));
+                case 1:
+                  response = _context6.v;
+                  setPet(function (prev) {
+                    if (!prev) return prev;
+                    var updatedPosts = prev.posts.map(function (p) {
+                      return p.id === postId ? _objectSpread(_objectSpread({}, p), {}, {
+                        isLiked: response.data.liked,
+                        likes_count: response.data.likes_count
+                      }) : p;
+                    });
+                    return _objectSpread(_objectSpread({}, prev), {}, {
+                      posts: updatedPosts
+                    });
+                  });
+                  setActivePost(function (prev) {
+                    return _objectSpread(_objectSpread({}, prev), {}, {
+                      isLiked: response.data.liked,
+                      likes_count: response.data.likes_count
+                    });
+                  });
+                  _context6.n = 3;
+                  break;
+                case 2:
+                  _context6.p = 2;
+                  _t8 = _context6.v;
+                  console.error(_t8);
+                case 3:
+                  return _context6.a(2);
+              }
+            }, _callee6, null, [[0, 2]]);
+          }));
+          return function (_x4) {
+            return _ref6.apply(this, arguments);
+          };
+        }()),
+        onCommentAdded: function onCommentAdded(postId, created) {
+          setPet(function (prev) {
+            if (!prev) return prev;
+            var updatedPosts = prev.posts.map(function (p) {
+              return p.id === postId ? _objectSpread(_objectSpread({}, p), {}, {
+                comments_count: (p.comments_count || 0) + 1
+              }) : p;
+            });
+            return _objectSpread(_objectSpread({}, prev), {}, {
+              posts: updatedPosts
+            });
+          });
+        }
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: activeHighlight && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+        className: "post-modal-overlay",
+        onClick: function onClick() {
+          return setActiveHighlight(null);
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+          className: "post-modal-bg"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+          className: "highlight-viewer-content",
+          style: {
+            position: 'relative',
+            zIndex: 101,
+            maxWidth: '400px',
+            width: '100%',
+            height: '80vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          },
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          },
+          children: activeHighlight.media_type === 'video' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("video", {
+            src: activeHighlight.media_url || activeHighlight.media_path,
+            controls: true,
+            autoPlay: true,
+            style: {
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              background: '#000',
+              borderRadius: '16px'
+            }
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("img", {
+            src: activeHighlight.media_url || activeHighlight.media_path,
+            alt: "Highlight",
+            style: {
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              background: '#000',
+              borderRadius: '16px'
+            }
+          })
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: showPetInfoModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+        className: "post-modal-overlay",
+        onClick: function onClick() {
+          return setShowPetInfoModal(false);
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+          className: "post-modal-bg"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          className: "sidebar-card",
+          style: {
+            position: 'relative',
+            zIndex: 101,
+            maxWidth: '500px',
+            width: '90%',
+            maxHeight: '90vh',
+            background: 'var(--bg-card)',
+            padding: '24px',
+            borderRadius: '16px',
+            display: 'flex',
+            flexDirection: 'column'
+          },
+          initial: {
+            opacity: 0,
+            scale: 0.9
+          },
+          animate: {
+            opacity: 1,
+            scale: 1
+          },
+          exit: {
+            opacity: 0,
+            scale: 0.9
+          },
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+            className: "sidebar-card-header",
+            style: {
+              marginBottom: '20px',
+              flexShrink: 0
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h3", {
+              children: "Full Pet Information"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
+              onClick: function onClick() {
+                return setShowPetInfoModal(false);
+              },
+              style: {
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.X, {
+                size: 24
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+            className: "pet-info-list",
+            style: {
+              gap: '16px',
+              overflowY: 'auto',
+              scrollbarWidth: 'none'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+              className: "pet-info-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.PawPrint, {
+                size: 20,
+                weight: "fill"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                style: {
+                  display: 'flex',
+                  flexDirection: 'column'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("small", {
+                  style: {
+                    color: 'var(--text-muted)'
+                  },
+                  children: "Species/Breed"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("span", {
+                  children: [petType, " (", pet.breed || 'Unknown', ")"]
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+              className: "pet-info-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.Calendar, {
+                size: 20,
+                weight: "fill"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                style: {
+                  display: 'flex',
+                  flexDirection: 'column'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("small", {
+                  style: {
+                    color: 'var(--text-muted)'
+                  },
+                  children: "Age"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
+                  children: petAge
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+              className: "pet-info-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.MapPin, {
+                size: 20,
+                weight: "fill"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                style: {
+                  display: 'flex',
+                  flexDirection: 'column'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("small", {
+                  style: {
+                    color: 'var(--text-muted)'
+                  },
+                  children: "Location"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
+                  children: pet.location || 'Not set'
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+              className: "pet-info-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Tag, {
+                size: 20,
+                weight: "fill"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                style: {
+                  display: 'flex',
+                  flexDirection: 'column'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("small", {
+                  style: {
+                    color: 'var(--text-muted)'
+                  },
+                  children: "Username"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("span", {
+                  children: ["@", username]
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+              className: "pet-info-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.Star, {
+                size: 20,
+                weight: "fill"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                style: {
+                  display: 'flex',
+                  flexDirection: 'column'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("small", {
+                  style: {
+                    color: 'var(--text-muted)'
+                  },
+                  children: "Bio"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("span", {
+                  children: pet.bio || "No bio provided yet."
+                })]
+              })]
+            })]
+          })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: showBadgesModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+        className: "post-modal-overlay",
+        onClick: function onClick() {
+          return setShowBadgesModal(false);
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+          className: "post-modal-bg"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+          className: "sidebar-card",
+          style: {
+            position: 'relative',
+            zIndex: 101,
+            maxWidth: '500px',
+            width: '90%',
+            maxHeight: '90vh',
+            background: 'var(--bg-card)',
+            padding: '24px',
+            borderRadius: '16px',
+            display: 'flex',
+            flexDirection: 'column'
+          },
+          initial: {
+            opacity: 0,
+            scale: 0.9
+          },
+          animate: {
+            opacity: 1,
+            scale: 1
+          },
+          exit: {
+            opacity: 0,
+            scale: 0.9
+          },
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+            className: "sidebar-card-header",
+            style: {
+              marginBottom: '20px',
+              flexShrink: 0
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h3", {
+              children: "All Earned Badges"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("button", {
+              onClick: function onClick() {
+                return setShowBadgesModal(false);
+              },
+              style: {
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_16__.X, {
+                size: 24
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+            className: "badges-list",
+            style: {
+              gap: '20px',
+              overflowY: 'auto',
+              scrollbarWidth: 'none'
+            },
+            children: badges.map(function (badge) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                className: "badge-list-item",
+                style: {
+                  marginBottom: '0'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("div", {
+                  className: "badge-icon",
+                  style: {
+                    backgroundColor: badge.color,
+                    width: '48px',
+                    height: '48px'
+                  },
+                  children: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().cloneElement(badge.icon, {
+                    size: 24
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsxs)("div", {
+                  className: "badge-text",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("h4", {
+                    style: {
+                      fontSize: '1.1rem'
+                    },
+                    children: badge.name
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_21__.jsx)("p", {
+                    children: badge.description
+                  })]
+                })]
+              }, badge.id);
+            })
+          })]
+        })]
+      })
     })]
   });
 };
@@ -13207,7 +15323,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/X.es.js");
 /* harmony import */ var _BottomNav__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../BottomNav */ "./resources/js/components/BottomNav.js");
 /* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../context/UserContext */ "./resources/js/context/UserContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _hooks_useTheme__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../hooks/useTheme */ "./resources/js/hooks/useTheme.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -13228,6 +15345,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -13272,47 +15390,34 @@ var Sidebar = function Sidebar(_ref) {
   var _useUser = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_21__.useUser)(),
     user = _useUser.user;
   var currentPath = window.location.pathname;
-
-  // Read persisted preference on mount
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
-      var saved = localStorage.getItem("petverse_theme");
-      return saved === "dark";
-    }),
-    _useState2 = _slicedToArray(_useState, 2),
-    isDarkMode = _useState2[0],
-    setIsDarkMode = _useState2[1];
-
-  // Apply theme to <html> on mount AND whenever it changes
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var theme = isDarkMode ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("petverse_theme", theme);
-  }, [isDarkMode]);
+  var _useTheme = (0,_hooks_useTheme__WEBPACK_IMPORTED_MODULE_22__.useTheme)(),
+    _useTheme2 = _slicedToArray(_useTheme, 2),
+    theme = _useTheme2[0],
+    setTheme = _useTheme2[1];
+  var isDarkMode = theme === "dark";
   var toggleTheme = function toggleTheme() {
-    return setIsDarkMode(function (prev) {
-      return !prev;
-    });
+    return setTheme(isDarkMode ? "light" : "dark");
   };
 
   // Notification panel state
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    isNotifOpen = _useState2[0],
+    setIsNotifOpen = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    isNotifOpen = _useState4[0],
-    setIsNotifOpen = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    notifications = _useState4[0],
+    setNotifications = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
-    notifications = _useState6[0],
-    setNotifications = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    notifLoading = _useState8[0],
-    setNotifLoading = _useState8[1];
+    notifLoading = _useState6[0],
+    setNotifLoading = _useState6[1];
 
   // Search state
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState0 = _slicedToArray(_useState9, 2),
-    searchQuery = _useState0[0],
-    setSearchQuery = _useState0[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    searchQuery = _useState8[0],
+    setSearchQuery = _useState8[1];
   var fetchNotifications = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
       var _res$data, res, data, _t;
@@ -13447,66 +15552,75 @@ var Sidebar = function Sidebar(_ref) {
       fetchNotifications();
     }
   };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    fetchNotifications();
+    var id = setInterval(function () {
+      fetchNotifications();
+    }, 8000);
+    return function () {
+      return clearInterval(id);
+    };
+  }, []);
   var unreadCount = notifications.filter(function (n) {
     return !n.is_read;
   }).length;
   var navItems = [{
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.House, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_8__.House, {
       size: 22
     }),
     label: "Home",
     route: "/homefeed"
   }, {
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
       size: 22
     }),
     label: "Notifications",
     route: "/notifications",
     isNotifTrigger: true
   }, {
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.ChatCircle, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_4__.ChatCircle, {
       size: 22
     }),
     label: "Messages",
     route: "/messages"
   }, {
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Medal, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_10__.Medal, {
       size: 22
     }),
     label: "Badges",
     route: "/badges"
   }, {
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Heart, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_7__.Heart, {
       size: 22
     }),
     label: "Adoption",
     route: "/adoption"
   }, {
-    icon: user !== null && user !== void 0 && user.avatar_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+    icon: user !== null && user !== void 0 && user.avatar_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
       className: "sidebar-user-avatar",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("img", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("img", {
         src: user.avatar_url,
         alt: "Profile"
       })
-    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.User, {
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_17__.User, {
       size: 22
     }),
     label: "Profile",
     route: "/profile"
   }, {
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Gear, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Gear, {
       size: 22
     }),
     label: "Settings",
     route: "/settings"
   }].concat(_toConsumableArray(user !== null && user !== void 0 && user.is_admin ? [{
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Gear, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_6__.Gear, {
       size: 22
     }),
     label: "Admin Console",
     route: "/admin"
   }] : []), [{
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.SignOut, {
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_13__.SignOut, {
       size: 22
     }),
     label: "Logout",
@@ -13546,27 +15660,27 @@ var Sidebar = function Sidebar(_ref) {
     }
     window.location.href = item.route;
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("aside", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("aside", {
       className: "sidebar-aside",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
         className: "sidebar-logo",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("img", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("img", {
           src: "/petlogo.png",
           alt: "Petverse Logo",
           className: "logo-image"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("span", {
           className: "logo-text",
           children: brandText
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
         className: "sidebar-search",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
           className: "sidebar-search__wrapper",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.MagnifyingGlass, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_9__.MagnifyingGlass, {
             size: 18,
             className: "sidebar-search__icon"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("input", {
             type: "text",
             className: "sidebar-search__input",
             placeholder: "Search...",
@@ -13581,18 +15695,18 @@ var Sidebar = function Sidebar(_ref) {
             }
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("nav", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("nav", {
         className: "sidebar-nav",
         children: navItems.map(function (item) {
           var active = isActive(item.route);
           var notifActive = item.isNotifTrigger && isNotifOpen;
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("a", {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("a", {
             href: item.route,
             onClick: function onClick(e) {
               return handleNav(e, item);
             },
             className: "nav-item ".concat(active || notifActive ? "active" : ""),
-            children: [(active || notifActive) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+            children: [(active || notifActive) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
               layoutId: "active-sidebar-pill",
               className: "nav-item-active-bg",
               initial: false,
@@ -13601,17 +15715,17 @@ var Sidebar = function Sidebar(_ref) {
                 stiffness: 400,
                 damping: 30
               }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("span", {
               className: "nav-icon",
               style: {
                 position: "relative",
                 zIndex: 1
               },
-              children: [item.icon, item.isNotifTrigger && unreadCount > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
+              children: [item.icon, item.isNotifTrigger && unreadCount > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("span", {
                 className: "nav-badge",
                 children: unreadCount
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("span", {
               className: "nav-label",
               style: {
                 position: "relative",
@@ -13621,24 +15735,24 @@ var Sidebar = function Sidebar(_ref) {
             })]
           }, item.label);
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
         className: "sidebar-footer",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("p", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("p", {
           children: "\xA9 2024 Petverse"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("button", {
           className: "theme-toggle",
           onClick: toggleTheme,
           title: isDarkMode ? "Switch to light mode" : "Switch to dark mode",
-          children: isDarkMode ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Sun, {
+          children: isDarkMode ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_14__.Sun, {
             size: 20
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Moon, {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_11__.Moon, {
             size: 20
           })
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
-      children: isNotifOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.Fragment, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_1__.AnimatePresence, {
+      children: isNotifOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.Fragment, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "notif-panel__backdrop",
           initial: {
             opacity: 0
@@ -13655,7 +15769,7 @@ var Sidebar = function Sidebar(_ref) {
           onClick: function onClick() {
             return setIsNotifOpen(false);
           }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
           className: "notif-panel",
           initial: {
             x: 60,
@@ -13673,54 +15787,54 @@ var Sidebar = function Sidebar(_ref) {
             duration: 0.25,
             ease: "easeOut"
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
             className: "notif-panel__header",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("h2", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("h2", {
               children: "Notifications"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
               className: "notif-panel__actions",
-              children: [unreadCount > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+              children: [unreadCount > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("button", {
                 className: "mark-all-btn",
                 onClick: markAllAsRead,
                 title: "Mark all read",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Check, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Check, {
                   size: 14,
                   weight: "bold"
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("button", {
                 className: "close-btn",
                 onClick: function onClick() {
                   return setIsNotifOpen(false);
                 },
                 title: "Close",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__.X, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__.X, {
                   size: 18
                 })
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
             className: "notif-panel__list",
-            children: notifLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+            children: notifLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
               className: "notif-panel__empty",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
                 className: "skeleton-row"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
                 className: "skeleton-row"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
                 className: "skeleton-row"
               })]
-            }) : notifications.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+            }) : notifications.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
               className: "notif-panel__empty",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_3__.Bell, {
                 size: 32
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("p", {
                 children: "No notifications yet"
               })]
             }) : notifications.map(function (n) {
               var meta = typeMeta[n.type] || typeMeta["default"];
               var Icon = meta.icon;
               var isFollowRequest = n.type === "follow";
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.div, {
                 layout: true,
                 initial: {
                   opacity: 0,
@@ -13735,33 +15849,33 @@ var Sidebar = function Sidebar(_ref) {
                   x: -12
                 },
                 className: "notif-panel__item ".concat(!n.is_read ? "unread" : ""),
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
                   className: "notif-panel__dot",
                   style: {
                     background: meta.color
                   },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(Icon, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(Icon, {
                     size: 12,
                     weight: "fill",
                     color: "#fff"
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
                   className: "notif-panel__body",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("p", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("strong", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("p", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("strong", {
                       children: n.title || "Petverse"
                     }), " ", n.message || meta.label]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("span", {
                     children: n.created_at ? new Date(n.created_at).toLocaleString() : "Just now"
-                  }), isFollowRequest && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsxs)("div", {
+                  }), isFollowRequest && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
                     className: "notif-panel__req-actions",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("button", {
                       className: "confirm-btn",
                       onClick: function onClick() {
                         return markAsRead(n.id);
                       },
                       children: "Confirm"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("button", {
                       className: "delete-btn",
                       onClick: function onClick() {
                         return deleteNotification(n.id);
@@ -13769,23 +15883,23 @@ var Sidebar = function Sidebar(_ref) {
                       children: "Delete"
                     })]
                   })]
-                }), !isFollowRequest && !n.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+                }), !isFollowRequest && !n.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("button", {
                   className: "icon-btn read-btn",
                   onClick: function onClick() {
                     return markAsRead(n.id);
                   },
                   title: "Mark as read",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Check, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_5__.Check, {
                     size: 14,
                     weight: "bold"
                   })
-                }), !isFollowRequest && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)("button", {
+                }), !isFollowRequest && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("button", {
                   className: "icon-btn delete-btn",
                   onClick: function onClick() {
                     return deleteNotification(n.id);
                   },
                   title: "Delete",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trash, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_phosphor_icons_react__WEBPACK_IMPORTED_MODULE_15__.Trash, {
                     size: 14
                   })
                 })]
@@ -13794,7 +15908,7 @@ var Sidebar = function Sidebar(_ref) {
           })]
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_22__.jsx)(_BottomNav__WEBPACK_IMPORTED_MODULE_20__["default"], {})]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)(_BottomNav__WEBPACK_IMPORTED_MODULE_20__["default"], {})]
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sidebar);
@@ -13921,6 +16035,42 @@ var useUser = function useUser() {
 
 /***/ },
 
+/***/ "./resources/js/hooks/useTheme.js"
+/*!****************************************!*\
+  !*** ./resources/js/hooks/useTheme.js ***!
+  \****************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useTheme: () => (/* binding */ useTheme)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+function useTheme() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
+      return localStorage.getItem('petverse_theme') || 'light';
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    theme = _useState2[0],
+    setTheme = _useState2[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('petverse_theme', theme);
+  }, [theme]);
+  return [theme, setTheme];
+}
+
+/***/ },
+
 /***/ "./resources/js/httpHelpers.js"
 /*!*************************************!*\
   !*** ./resources/js/httpHelpers.js ***!
@@ -13989,7 +16139,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pawtastic-login {\n  display: flex;\n  min-height: 100vh;\n  font-family: \"Inter\", sans-serif;\n  background: #fff;\n}\n.pawtastic-login .login-sidebar {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  background: #fff;\n}\n.pawtastic-login .login-sidebar .sidebar-image {\n  flex: 1;\n  background: url(\"/login-background.png\") no-repeat top center/cover;\n  width: 100%;\n}\n.pawtastic-login .login-sidebar .sidebar-content {\n  padding: 2.5rem 4rem;\n  text-align: center;\n  color: #2F2F2F;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.pawtastic-login .login-sidebar .brand {\n  font-family: \"Akaya Kanadaka\", cursive;\n  color: #D9A5A0;\n  font-weight: 700;\n  font-size: 1.4rem;\n  margin-bottom: 1.5rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n}\n.pawtastic-login .login-sidebar .brand .brand-icon {\n  height: 28px;\n  width: auto;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.pawtastic-login .login-sidebar .quote {\n  font-family: \"Playfair Display\", serif;\n  font-size: 2.2rem;\n  margin-bottom: 1rem;\n  font-weight: 600;\n  color: #2F2F2F;\n}\n.pawtastic-login .login-sidebar .description {\n  font-size: 1.1rem;\n  line-height: 1.6;\n  color: #7A7A7A;\n}\n.pawtastic-login .login-form-container {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 2rem;\n}\n.pawtastic-login .login-form-container .form-box {\n  width: 100%;\n  max-width: 400px;\n}\n.pawtastic-login .login-form-container .welcome-text {\n  font-size: 2.2rem;\n  margin-bottom: 3rem;\n  font-weight: 400;\n  color: #2F2F2F;\n}\n.pawtastic-login .login-form-container .input-group {\n  margin-bottom: 1.5rem;\n  display: flex;\n  flex-direction: column;\n}\n.pawtastic-login .login-form-container .input-group label {\n  font-size: 0.9rem;\n  margin-bottom: 0.5rem;\n  color: #7A7A7A;\n}\n.pawtastic-login .login-form-container .input-group input {\n  padding: 0.8rem 1rem;\n  border: 1px solid #F0E5E2;\n  border-radius: 8px;\n  font-size: 1rem;\n  transition: border-color 0.2s;\n  color: #2F2F2F;\n}\n.pawtastic-login .login-form-container .input-group input:focus {\n  outline: none;\n  border-color: #D9A5A0;\n  box-shadow: 0 0 0 3px rgba(217, 165, 160, 0.15);\n}\n.pawtastic-login .login-form-container .input-group .forgot-link {\n  align-self: flex-end;\n  font-size: 0.8rem;\n  color: #D9A5A0;\n  text-decoration: none;\n  margin-top: 0.5rem;\n}\n.pawtastic-login .login-form-container .input-group .forgot-link:hover {\n  text-decoration: underline;\n}\n.pawtastic-login .login-form-container .login-btn {\n  width: 100%;\n  background: #D9A5A0;\n  color: white;\n  border: none;\n  padding: 1rem;\n  border-radius: 8px;\n  font-size: 1.1rem;\n  font-weight: 600;\n  cursor: pointer;\n  margin-top: 1rem;\n  transition: opacity 0.2s, background 0.2s;\n}\n.pawtastic-login .login-form-container .login-btn:hover {\n  background: rgb(205.3428571429, 137.3909774436, 130.8571428571);\n}\n.pawtastic-login .login-form-container .signup-text {\n  text-align: left;\n  margin-top: 2rem;\n  font-size: 0.85rem;\n  color: #7A7A7A;\n}\n.pawtastic-login .login-form-container .signup-text a {\n  color: #D9A5A0;\n  text-decoration: none;\n  font-weight: 600;\n}\n.pawtastic-login .login-form-container .signup-text a:hover {\n  text-decoration: underline;\n}\n\n@media (max-width: 900px) {\n  .pawtastic-login {\n    flex-direction: column;\n  }\n  .pawtastic-login .login-sidebar {\n    display: none;\n  }\n  .pawtastic-login .login-form-container {\n    padding: 4rem 1.5rem;\n  }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".pawtastic-login {\n  display: flex;\n  min-height: 100vh;\n  font-family: \"Inter\", sans-serif;\n  background: #fff;\n}\n.pawtastic-login .login-sidebar {\n  flex: 1.2;\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  background: url(\"/login-background.png\") no-repeat center center/cover;\n}\n.pawtastic-login .login-sidebar::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.9) 100%);\n  z-index: 1;\n}\n.pawtastic-login .login-sidebar .sidebar-image {\n  display: none;\n}\n.pawtastic-login .login-sidebar .sidebar-content {\n  position: relative;\n  z-index: 2;\n  padding: 4rem;\n  color: #fff;\n  text-align: left;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n}\n.pawtastic-login .login-sidebar .brand {\n  position: absolute;\n  top: 2.5rem;\n  left: 4rem;\n  font-family: \"Akaya Kanadaka\", cursive;\n  color: #fff;\n  font-weight: 700;\n  font-size: 1.8rem;\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);\n}\n.pawtastic-login .login-sidebar .brand .brand-icon {\n  height: 36px;\n  width: auto;\n  -o-object-fit: contain;\n     object-fit: contain;\n  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));\n}\n.pawtastic-login .login-sidebar .quote {\n  font-family: \"Playfair Display\", serif;\n  font-size: 3.2rem;\n  margin-bottom: 1rem;\n  font-weight: 600;\n  color: #fff;\n  line-height: 1.1;\n  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);\n}\n.pawtastic-login .login-sidebar .description {\n  font-size: 1.15rem;\n  line-height: 1.6;\n  color: rgba(255, 255, 255, 0.85);\n  max-width: 480px;\n  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);\n}\n.pawtastic-login .login-form-container {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4rem;\n  background: #ffffff;\n  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.05);\n  z-index: 10;\n}\n.pawtastic-login .login-form-container .form-box {\n  width: 100%;\n  max-width: 420px;\n}\n.pawtastic-login .login-form-container .welcome-text {\n  font-size: 2.4rem;\n  margin-bottom: 2.5rem;\n  font-weight: 700;\n  color: #2F2F2F;\n  letter-spacing: -0.02em;\n}\n.pawtastic-login .login-form-container .input-group {\n  margin-bottom: 1.5rem;\n  display: flex;\n  flex-direction: column;\n}\n.pawtastic-login .login-form-container .input-group label {\n  font-size: 0.9rem;\n  margin-bottom: 0.6rem;\n  font-weight: 600;\n  color: #7A7A7A;\n}\n.pawtastic-login .login-form-container .input-group input {\n  padding: 0.9rem 1.2rem;\n  border: 1.5px solid #eaeaea;\n  border-radius: 12px;\n  font-size: 1rem;\n  transition: all 0.2s ease;\n  color: #2F2F2F;\n  background: #fdfdfd;\n}\n.pawtastic-login .login-form-container .input-group input:focus {\n  outline: none;\n  border-color: #D9A5A0;\n  background: #fff;\n  box-shadow: 0 0 0 4px rgba(217, 165, 160, 0.15);\n}\n.pawtastic-login .login-form-container .input-group .forgot-link {\n  align-self: flex-end;\n  font-size: 0.85rem;\n  color: #D9A5A0;\n  font-weight: 600;\n  text-decoration: none;\n  margin-top: 0.5rem;\n}\n.pawtastic-login .login-form-container .input-group .forgot-link:hover {\n  text-decoration: underline;\n}\n.pawtastic-login .login-form-container .login-btn {\n  width: 100%;\n  background: #D9A5A0;\n  color: white;\n  border: none;\n  padding: 1rem;\n  border-radius: 12px;\n  font-size: 1.1rem;\n  font-weight: 700;\n  cursor: pointer;\n  margin-top: 1rem;\n  transition: all 0.2s ease;\n  box-shadow: 0 4px 14px rgba(217, 165, 160, 0.4);\n}\n.pawtastic-login .login-form-container .login-btn:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 6px 20px rgba(217, 165, 160, 0.5);\n  filter: brightness(1.05);\n}\n.pawtastic-login .login-form-container .login-btn:active {\n  transform: translateY(0);\n  box-shadow: 0 2px 8px rgba(217, 165, 160, 0.4);\n}\n.pawtastic-login .login-form-container .signup-text {\n  text-align: center;\n  margin-top: 2.5rem;\n  font-size: 0.9rem;\n  color: #7A7A7A;\n}\n.pawtastic-login .login-form-container .signup-text a {\n  color: #D9A5A0;\n  text-decoration: none;\n  font-weight: 700;\n  margin-left: 4px;\n}\n.pawtastic-login .login-form-container .signup-text a:hover {\n  text-decoration: underline;\n}\n\n@media (max-width: 900px) {\n  .pawtastic-login {\n    flex-direction: column;\n  }\n  .pawtastic-login .login-sidebar {\n    display: none;\n  }\n  .pawtastic-login .login-form-container {\n    padding: 4rem 1.5rem;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14013,7 +16163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".admin-shell {\n  display: grid;\n  grid-template-columns: 240px 1fr;\n  min-height: 100vh;\n  background: #0f172a;\n  color: #e2e8f0;\n}\n\n.admin-sidebar {\n  background: #111827;\n  border-right: 1px solid rgba(148, 163, 184, 0.12);\n  padding: 24px 16px;\n  display: flex;\n  flex-direction: column;\n}\n.admin-sidebar__brand {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 0 8px 24px;\n  border-bottom: 1px solid rgba(148, 163, 184, 0.12);\n  margin-bottom: 16px;\n}\n.admin-sidebar__brand-mark {\n  width: 36px;\n  height: 36px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #6366f1, #8b5cf6);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-weight: 700;\n  color: #fff;\n}\n.admin-sidebar__brand-name {\n  display: block;\n  font-weight: 600;\n  color: #f1f5f9;\n}\n.admin-sidebar__brand-role {\n  display: block;\n  font-size: 11px;\n  color: #94a3b8;\n  text-transform: uppercase;\n  letter-spacing: 0.08em;\n}\n.admin-sidebar__nav {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  flex: 1;\n}\n.admin-sidebar__footer {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 16px;\n  border-top: 1px solid rgba(148, 163, 184, 0.12);\n}\n.admin-sidebar__logout {\n  background: transparent;\n  border: 0;\n  color: #fca5a5;\n  display: inline-flex;\n  gap: 8px;\n  align-items: center;\n  padding: 8px 12px;\n  border-radius: 8px;\n  cursor: pointer;\n}\n.admin-sidebar__logout:hover {\n  background: rgba(248, 113, 113, 0.08);\n}\n.admin-sidebar__theme {\n  background: transparent;\n  border: 0;\n  color: #94a3b8;\n  padding: 8px;\n  border-radius: 8px;\n  cursor: pointer;\n}\n.admin-sidebar__theme:hover {\n  background: rgba(148, 163, 184, 0.08);\n}\n\n.admin-nav-item {\n  position: relative;\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 10px 12px;\n  border-radius: 10px;\n  border: 0;\n  background: transparent;\n  color: #94a3b8;\n  cursor: pointer;\n  text-align: left;\n  font: inherit;\n}\n.admin-nav-item__bg {\n  position: absolute;\n  inset: 0;\n  border-radius: 10px;\n  background: rgba(99, 102, 241, 0.18);\n}\n.admin-nav-item__icon, .admin-nav-item__label {\n  position: relative;\n  z-index: 1;\n}\n.admin-nav-item__label {\n  font-weight: 500;\n}\n.admin-nav-item:hover {\n  color: #f1f5f9;\n  background: rgba(148, 163, 184, 0.06);\n}\n.admin-nav-item.active {\n  color: #fff;\n}\n\n.admin-content {\n  padding: 32px 40px;\n  max-width: 1280px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".admin-shell {\n  display: grid;\n  grid-template-columns: 240px 1fr;\n  min-height: 100vh;\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n\n.admin-sidebar {\n  background: var(--bg-card);\n  border-right: 1px solid var(--border-color);\n  padding: 24px 16px;\n  display: flex;\n  flex-direction: column;\n}\n.admin-sidebar__brand {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 0 8px 24px;\n  border-bottom: 1px solid var(--border-color);\n  margin-bottom: 16px;\n}\n.admin-sidebar__brand-mark {\n  width: 36px;\n  height: 36px;\n  border-radius: 10px;\n  background: linear-gradient(135deg, #6366f1, #8b5cf6);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-weight: 700;\n  color: #fff;\n}\n.admin-sidebar__brand-name {\n  display: block;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.admin-sidebar__brand-role {\n  display: block;\n  font-size: 11px;\n  color: var(--text-muted);\n  text-transform: uppercase;\n  letter-spacing: 0.08em;\n}\n.admin-sidebar__nav {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  flex: 1;\n}\n.admin-sidebar__footer {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 16px;\n  border-top: 1px solid var(--border-color);\n}\n.admin-sidebar__logout {\n  background: transparent;\n  border: 0;\n  color: var(--danger);\n  display: inline-flex;\n  gap: 8px;\n  align-items: center;\n  padding: 8px 12px;\n  border-radius: 8px;\n  cursor: pointer;\n}\n.admin-sidebar__logout:hover {\n  background: rgba(var(--danger-rgb), 0.08);\n}\n.admin-sidebar__theme {\n  background: transparent;\n  border: 0;\n  color: var(--text-muted);\n  padding: 8px;\n  border-radius: 8px;\n  cursor: pointer;\n}\n.admin-sidebar__theme:hover {\n  background: rgba(var(--text-main-rgb), 0.08);\n}\n\n.admin-nav-item {\n  position: relative;\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 10px 12px;\n  border-radius: 10px;\n  border: 0;\n  background: transparent;\n  color: var(--text-muted);\n  cursor: pointer;\n  text-align: left;\n  font: inherit;\n}\n.admin-nav-item__bg {\n  position: absolute;\n  inset: 0;\n  border-radius: 10px;\n  background: rgba(99, 102, 241, 0.18);\n}\n.admin-nav-item__icon, .admin-nav-item__label {\n  position: relative;\n  z-index: 1;\n}\n.admin-nav-item__label {\n  font-weight: 500;\n}\n.admin-nav-item:hover {\n  color: var(--text-main);\n  background: rgba(var(--text-main-rgb), 0.06);\n}\n.admin-nav-item.active {\n  color: var(--text-main);\n}\n\n.admin-content {\n  padding: 32px 40px;\n  width: 100%;\n  min-width: 0;\n  box-sizing: border-box;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14037,7 +16187,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".adoption-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.adoption-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 40px;\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n@media (max-width: 768px) {\n  .adoption-main {\n    margin-left: 0;\n    padding: 20px;\n    padding-bottom: 100px;\n  }\n}\n\n.adoption-header {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n  gap: 16px;\n  margin-bottom: 8px;\n}\n.adoption-header__text {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.adoption-header__title {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 2rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n  line-height: 1.15;\n}\n.adoption-header__icon {\n  color: var(--primary-action);\n}\n.adoption-header__subtitle {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  margin: 0;\n  line-height: 1.4;\n  padding-left: 0;\n}\n\n.adoption-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));\n  gap: 24px;\n}\n@media (max-width: 480px) {\n  .adoption-grid {\n    grid-template-columns: 1fr;\n  }\n}\n\n.adopt-card {\n  background-color: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 16px;\n  overflow: hidden;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);\n  transition: box-shadow 0.2s, transform 0.2s;\n}\n.adopt-card:hover {\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);\n  transform: translateY(-2px);\n}\n\n.pet-card__image-wrap {\n  position: relative;\n  height: 220px;\n  overflow: hidden;\n}\n.pet-card__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 0.4s;\n}\n.adopt-card:hover .pet-card__image {\n  transform: scale(1.04);\n}\n.pet-card__save-btn {\n  position: absolute;\n  top: 12px;\n  right: 12px;\n  width: 40px;\n  background: rgba(var(--bg-card-rgb), 0.8);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: all 0.2s;\n  backdrop-filter: blur(4px);\n}\n.pet-card__save-btn:hover {\n  background: var(--bg-card);\n  transform: scale(1.1);\n}\n.pet-card__save-btn--saved {\n  color: #ef4444;\n}\n.pet-card__content {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.pet-card__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: flex-start;\n}\n.pet-card__name {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 2px 0;\n}\n.pet-card__breed {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n.pet-card__description {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  display: -webkit-box;\n  -webkit-line-clamp: 3;\n  line-clamp: 3;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n.pet-card__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.pet-card__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n}\n.pet-card__tag {\n  font-size: 0.7rem;\n  font-weight: 600;\n  padding: 3px 10px;\n  background-color: var(--primary-color);\n  color: var(--primary-action);\n  border-radius: 999px;\n}\n.pet-card__age {\n  font-size: 0.75rem;\n  font-weight: 700;\n  padding: 4px 10px;\n  background-color: var(--primary-action);\n  color: white;\n  border-radius: 999px;\n  white-space: nowrap;\n}\n.pet-card__actions {\n  display: flex;\n  gap: 10px;\n  margin-top: 4px;\n}\n.pet-card__actions .pet-card__btn {\n  flex: 1;\n}\n\n.adopt-btn {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  padding: 9px 16px;\n  border-radius: 10px;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  transition: all 0.2s;\n  border: none;\n  font-family: inherit;\n}\n.adopt-btn--default {\n  background-color: var(--primary-action);\n  color: white;\n}\n.adopt-btn--default:hover {\n  filter: brightness(0.92);\n}\n.adopt-btn--outline {\n  background: transparent;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.adopt-btn--outline:hover {\n  background-color: var(--bg-page);\n}\n.adopt-btn--ghost {\n  background: transparent;\n  color: var(--text-main);\n}\n.adopt-btn--ghost:hover {\n  background: rgba(var(--text-main-rgb), 0.05);\n}\n\n.adopt-badge {\n  display: inline-flex;\n  align-items: center;\n  padding: 3px 10px;\n  border-radius: 999px;\n  font-size: 0.75rem;\n  font-weight: 600;\n}\n\n.adopt-modal-overlay {\n  position: fixed;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.45);\n  backdrop-filter: blur(4px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 300;\n  padding: 20px;\n}\n\n.adopt-modal {\n  background: var(--bg-card);\n  border-radius: 20px;\n  width: 100%;\n  max-width: 480px;\n  box-shadow: var(--shadow);\n  overflow: hidden;\n  position: relative;\n  max-height: 90vh;\n  display: flex;\n  flex-direction: column;\n}\n.adopt-modal__image-wrap {\n  position: relative;\n  height: 280px;\n  flex-shrink: 0;\n}\n.adopt-modal__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.adopt-modal__close {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.4);\n  color: white;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close:hover {\n  background: rgba(0, 0, 0, 0.6);\n}\n.adopt-modal__close-alt {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  color: var(--text-main);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close-alt:hover {\n  background: var(--border-color);\n}\n.adopt-modal__header-bar {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 24px 16px;\n  border-bottom: 1px solid var(--border-color);\n}\n.adopt-modal__header-bar h3 {\n  font-size: 1.25rem;\n  font-weight: 800;\n  margin: 0;\n  color: var(--text-main);\n}\n.adopt-modal__content {\n  padding: 24px;\n  overflow-y: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.adopt-modal__form-content {\n  padding: 24px;\n  overflow-y: auto;\n}\n.adopt-modal__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.adopt-modal__name {\n  font-size: 1.6rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__age {\n  font-size: 0.8rem;\n  background: var(--primary-action);\n  color: white;\n}\n.adopt-modal__breed {\n  font-size: 1rem;\n  color: var(--text-muted);\n  margin: -8px 0 0 0;\n}\n.adopt-modal__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.9rem;\n  color: var(--text-muted);\n}\n.adopt-modal__section h3 {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 8px 0;\n}\n.adopt-modal__section p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n}\n.adopt-modal__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 4px;\n}\n.adopt-modal__tag {\n  background: var(--primary-color);\n  color: var(--primary-action);\n  font-size: 0.8rem;\n}\n.adopt-modal__actions {\n  margin-top: 8px;\n}\n.adopt-modal__actions .adopt-modal__btn {\n  width: 100%;\n  padding: 14px;\n  font-size: 1rem;\n  border-radius: 12px;\n}\n.adopt-modal__success {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  padding: 40px 20px;\n  gap: 16px;\n}\n.adopt-modal__success-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background: rgba(var(--danger-rgb), 0.1);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.adopt-modal__success h4 {\n  font-size: 1.4rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__success p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  max-width: 300px;\n}\n\n.adopt-form {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n.adopt-form__desc {\n  font-size: 0.9rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n  margin: 0;\n}\n.adopt-form__group {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.adopt-form__group label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.adopt-form__group input, .adopt-form__group textarea {\n  width: 100%;\n  padding: 12px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 10px;\n  background: var(--bg-page);\n  font-size: 0.95rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.adopt-form__group input:focus, .adopt-form__group textarea:focus {\n  border-color: var(--primary-action);\n}\n.adopt-form__group input::-moz-placeholder, .adopt-form__group textarea::-moz-placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group input::placeholder, .adopt-form__group textarea::placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group textarea {\n  resize: vertical;\n  min-height: 80px;\n}\n.adopt-form__actions {\n  display: flex;\n  gap: 12px;\n  margin-top: 8px;\n}\n.adopt-form__actions button {\n  flex: 1;\n  padding: 12px;\n}\n.adopt-form__row {\n  display: flex;\n  gap: 16px;\n}\n.adopt-form__row .adopt-form__group {\n  flex: 1;\n}\n@media (max-width: 480px) {\n  .adopt-form__row {\n    flex-direction: column;\n    gap: 20px;\n  }\n}\n.adopt-form__hint {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  margin-top: 4px;\n  opacity: 0.8;\n}\n\n@media (max-width: 640px) {\n  .adoption-header {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: 20px;\n  }\n  .adoption-header .adopt-btn {\n    width: 100%;\n  }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --bg-page: #F8F9FA;\n  --bg-card: #FFFFFF;\n  --text-main: #2F2F2F;\n  --text-muted: #7A7A7A;\n  --border-color: #E2E8F0;\n  --primary-color: #E6E6FA;\n  --primary-action: #898AA6;\n  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n  --input-bg: #FFFFFF;\n  --success: #22c55e;\n  --danger: #ef4444;\n  --warning: #f59e0b;\n  --success-bg: #f0fdf4;\n  --danger-bg: #fef2f2;\n  --warning-bg: #fffbeb;\n  --primary-action-rgb: 137, 138, 166;\n  --success-rgb: 34, 197, 94;\n  --danger-rgb: 239, 68, 68;\n  --warning-rgb: 245, 158, 11;\n  --bg-card-rgb: 255, 255, 255;\n  --text-main-rgb: 47, 47, 47;\n  --text-muted-rgb: 122, 122, 122;\n}\n\nhtml {\n  transition: background-color 0.25s ease;\n}\n\nbody,\n.pawtastic-feed,\n.messages-page,\n.profile-page,\n.modern-badges,\n.adoption-page,\n.settings-page,\n.admin-dashboard,\n.adoption-board,\n.register-page,\n.badges-contests,\n.notifications-page,\n.feed-card,\n.sidebar-aside,\n.msg-list-pane,\n.msg-main-pane,\n.msg-chat-header,\n.msg-input-bar,\n.msg-modal,\n.feed-create-modal,\n.post-menu__dropdown,\n.reaction-picker,\n.settings-card,\n.ui-card,\n.admin-card {\n  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.2s ease;\n}\n\n[data-theme=dark] {\n  --bg-page: #111418;\n  --bg-card: #1C2028;\n  --text-main: #E8EAF0;\n  --text-muted: #8A8FA8;\n  --border-color: #2C3248;\n  --primary-color: #242A3A;\n  --primary-action: #C9A9C0;\n  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);\n  --input-bg: #1A1F2E;\n  --success: #4ade80;\n  --danger: #f87171;\n  --warning-bg: rgba(245, 158, 11, 0.15);\n  --primary-action-rgb: 201, 169, 192;\n  --success-rgb: 74, 222, 128;\n  --danger-rgb: 248, 113, 113;\n  --warning-rgb: 251, 191, 36;\n  --bg-card-rgb: 28, 32, 40;\n  --text-main-rgb: 232, 234, 240;\n  --text-muted-rgb: 138, 143, 168;\n}\n[data-theme=dark] body {\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .profile-cover__bg {\n  background: linear-gradient(135deg, #2a2040 0%, #1a1828 100%) !important;\n}\n[data-theme=dark] .profile-avatar {\n  border-color: var(--bg-card) !important;\n}\n[data-theme=dark] input,\n[data-theme=dark] select,\n[data-theme=dark] textarea {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] select::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder,\n[data-theme=dark] select::placeholder,\n[data-theme=dark] textarea::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .msg-bubble-row--other .msg-bubble {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .profile-achievement--gold {\n  background: #2a2010 !important;\n  border-color: #4a3500 !important;\n  color: #fbbf24 !important;\n}\n[data-theme=dark] .profile-achievement--blue {\n  background: #0f1e36 !important;\n  border-color: #1e3a5f !important;\n  color: #93c5fd !important;\n}\n[data-theme=dark] .profile-achievement--purple {\n  background: #1a1040 !important;\n  border-color: #3b1f60 !important;\n  color: #d8b4fe !important;\n}\n[data-theme=dark] .profile-achievement--green {\n  background: #0a2010 !important;\n  border-color: #1a4020 !important;\n  color: #86efac !important;\n}\n[data-theme=dark] .msg-tab {\n  border-color: var(--border-color) !important;\n  color: var(--text-muted) !important;\n  background: transparent !important;\n}\n[data-theme=dark] .msg-tab--active {\n  background: var(--primary-action) !important;\n  border-color: var(--primary-action) !important;\n  color: #fff !important;\n}\n[data-theme=dark] .profile-tabs {\n  border-bottom-color: var(--border-color) !important;\n}\n[data-theme=dark] .profile-tabs__tab {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .profile-tabs__tab--active {\n  color: var(--primary-action) !important;\n  border-bottom-color: var(--primary-action) !important;\n}\n[data-theme=dark] .feed-modal-overlay {\n  background: rgba(0, 0, 0, 0.7) !important;\n}\n[data-theme=dark] .profile-stats-card,\n[data-theme=dark] .leaderboard-card-modern,\n[data-theme=dark] .badge-card-modern,\n[data-theme=dark] .contest-banner {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-create-modal__audience-btn,\n[data-theme=dark] .feed-create-modal__add-row {\n  background: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] ::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n[data-theme=dark] ::-webkit-scrollbar-track {\n  background: var(--bg-page);\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb:hover {\n  background: var(--text-muted);\n}\n[data-theme=dark] .dropdown-menu,\n[data-theme=dark] .popover,\n[data-theme=dark] .tooltip {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-stories-container,\n[data-theme=dark] .feed-card,\n[data-theme=dark] .sidebar-card,\n[data-theme=dark] .post-card,\n[data-theme=dark] .admin-card {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;\n}\n[data-theme=dark] .feed-story__img-box {\n  border-color: var(--bg-card) !important;\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .feed-story__label {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__header .user .meta .meta-top .name {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__body .post-text {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__footer {\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-post-v2__footer .action-btn:hover {\n  background-color: var(--bg-page) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input, [data-theme=dark] textarea, [data-theme=dark] select {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder, [data-theme=dark] select::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder, [data-theme=dark] textarea::placeholder, [data-theme=dark] select::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .post-modal-content,\n[data-theme=dark] .settings-content {\n  background-color: var(--bg-card) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .post-modal-header,\n[data-theme=dark] .post-modal-footer {\n  border-color: var(--border-color) !important;\n}\n\n:root[data-text-size=small] {\n  font-size: 14px;\n}\n\n:root[data-text-size=medium] {\n  font-size: 16px;\n}\n\n:root[data-text-size=large] {\n  font-size: 18px;\n}\n\nbody {\n  font-size: 1rem;\n  line-height: 1.5;\n}\n\n.adopt-modal {\n  width: min(560px, 92vw);\n  max-height: min(640px, 88vh);\n  overflow-y: auto;\n  border-radius: 16px;\n  padding: 20px 24px;\n  background: var(--bg-card);\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n\n.adopt-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.55);\n  backdrop-filter: blur(6px);\n}\n\n.adoption-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.adoption-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 40px;\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n@media (max-width: 768px) {\n  .adoption-main {\n    margin-left: 0;\n    padding: 20px;\n    padding-bottom: 100px;\n  }\n}\n\n.adoption-header {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n  gap: 16px;\n  margin-bottom: 8px;\n}\n.adoption-header__text {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.adoption-header__title {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 2rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n  line-height: 1.15;\n}\n.adoption-header__icon {\n  color: var(--primary-action);\n}\n.adoption-header__subtitle {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  margin: 0;\n  line-height: 1.4;\n  padding-left: 0;\n}\n\n.adoption-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));\n  gap: 24px;\n}\n@media (max-width: 480px) {\n  .adoption-grid {\n    grid-template-columns: 1fr;\n  }\n}\n\n.adopt-card {\n  background-color: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 16px;\n  overflow: hidden;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);\n  transition: box-shadow 0.2s, transform 0.2s;\n}\n.adopt-card:hover {\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);\n  transform: translateY(-2px);\n}\n\n.pet-card__image-wrap {\n  position: relative;\n  height: 220px;\n  overflow: hidden;\n}\n.pet-card__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 0.4s;\n}\n.adopt-card:hover .pet-card__image {\n  transform: scale(1.04);\n}\n.pet-card__save-btn {\n  position: absolute;\n  top: 12px;\n  right: 12px;\n  width: 40px;\n  background: rgba(var(--bg-card-rgb), 0.8);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: all 0.2s;\n  backdrop-filter: blur(4px);\n}\n.pet-card__save-btn:hover {\n  background: var(--bg-card);\n  transform: scale(1.1);\n}\n.pet-card__save-btn--saved {\n  color: #ef4444;\n}\n.pet-card__content {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.pet-card__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: flex-start;\n}\n.pet-card__name {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 2px 0;\n}\n.pet-card__breed {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n.pet-card__description {\n  font-size: 0.875rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  display: -webkit-box;\n  -webkit-line-clamp: 3;\n  line-clamp: 3;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n.pet-card__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.pet-card__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n}\n.pet-card__tag {\n  font-size: 0.7rem;\n  font-weight: 600;\n  padding: 3px 10px;\n  background-color: var(--primary-color);\n  color: var(--primary-action);\n  border-radius: 999px;\n}\n.pet-card__age {\n  font-size: 0.75rem;\n  font-weight: 700;\n  padding: 4px 10px;\n  background-color: var(--primary-action);\n  color: white;\n  border-radius: 999px;\n  white-space: nowrap;\n}\n.pet-card__actions {\n  display: flex;\n  gap: 10px;\n  margin-top: 4px;\n}\n.pet-card__actions .pet-card__btn {\n  flex: 1;\n}\n\n.adopt-btn {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  padding: 9px 16px;\n  border-radius: 10px;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  transition: all 0.2s;\n  border: none;\n  font-family: inherit;\n}\n.adopt-btn--default {\n  background-color: var(--primary-action);\n  color: white;\n}\n.adopt-btn--default:hover {\n  filter: brightness(0.92);\n}\n.adopt-btn--outline {\n  background: transparent;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.adopt-btn--outline:hover {\n  background-color: var(--bg-page);\n}\n.adopt-btn--ghost {\n  background: transparent;\n  color: var(--text-main);\n}\n.adopt-btn--ghost:hover {\n  background: rgba(var(--text-main-rgb), 0.05);\n}\n\n.adopt-badge {\n  display: inline-flex;\n  align-items: center;\n  padding: 3px 10px;\n  border-radius: 999px;\n  font-size: 0.75rem;\n  font-weight: 600;\n}\n\n.adopt-modal-overlay {\n  z-index: 300;\n  padding: 20px;\n}\n\n.adopt-modal {\n  width: 100%;\n  max-width: 480px;\n  max-height: none;\n  overflow: hidden;\n  position: relative;\n  display: flex;\n  flex-direction: column;\n}\n.adopt-modal--form {\n  width: min(760px, 96vw);\n  max-width: 760px;\n}\n.adopt-modal__image-wrap {\n  position: relative;\n  height: 280px;\n  flex-shrink: 0;\n}\n.adopt-modal__image {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.adopt-modal__close {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.4);\n  color: white;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close:hover {\n  background: rgba(0, 0, 0, 0.6);\n}\n.adopt-modal__close-alt {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  color: var(--text-main);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: background 0.2s;\n}\n.adopt-modal__close-alt:hover {\n  background: var(--border-color);\n}\n.adopt-modal__header-bar {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 24px 16px;\n  border-bottom: 1px solid var(--border-color);\n}\n.adopt-modal__header-bar h3 {\n  font-size: 1.25rem;\n  font-weight: 800;\n  margin: 0;\n  color: var(--text-main);\n}\n.adopt-modal__content {\n  padding: 24px;\n  overflow-y: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.adopt-modal__form-content {\n  padding: 24px;\n  overflow: visible;\n}\n.adopt-modal__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.adopt-modal__name {\n  font-size: 1.6rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__age {\n  font-size: 0.8rem;\n  background: var(--primary-action);\n  color: white;\n}\n.adopt-modal__breed {\n  font-size: 1rem;\n  color: var(--text-muted);\n  margin: -8px 0 0 0;\n}\n.adopt-modal__location {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.9rem;\n  color: var(--text-muted);\n}\n.adopt-modal__section h3 {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 8px 0;\n}\n.adopt-modal__section p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n}\n.adopt-modal__tags {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 4px;\n}\n.adopt-modal__tag {\n  background: var(--primary-color);\n  color: var(--primary-action);\n  font-size: 0.8rem;\n}\n.adopt-modal__actions {\n  margin-top: 8px;\n}\n.adopt-modal__actions .adopt-modal__btn {\n  width: 100%;\n  padding: 14px;\n  font-size: 1rem;\n  border-radius: 12px;\n}\n.adopt-modal__success {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  padding: 40px 20px;\n  gap: 16px;\n}\n.adopt-modal__success-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background: rgba(var(--danger-rgb), 0.1);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.adopt-modal__success h4 {\n  font-size: 1.4rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.adopt-modal__success p {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.6;\n  margin: 0;\n  max-width: 300px;\n}\n\n@media (max-height: 760px) {\n  .adopt-modal--form {\n    max-height: 88vh;\n    overflow-y: auto;\n  }\n  .adopt-modal--form .adopt-modal__form-content {\n    overflow-y: auto;\n  }\n}\n.adopt-form {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n.adopt-form__desc {\n  font-size: 0.9rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n  margin: 0;\n}\n.adopt-form__group {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.adopt-form__group label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.adopt-form__group input, .adopt-form__group textarea {\n  width: 100%;\n  padding: 12px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 10px;\n  background: var(--bg-page);\n  font-size: 0.95rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.adopt-form__group input:focus, .adopt-form__group textarea:focus {\n  border-color: var(--primary-action);\n}\n.adopt-form__group input::-moz-placeholder, .adopt-form__group textarea::-moz-placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group input::placeholder, .adopt-form__group textarea::placeholder {\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n.adopt-form__group textarea {\n  resize: vertical;\n  min-height: 80px;\n}\n.adopt-form__actions {\n  display: flex;\n  gap: 12px;\n  margin-top: 8px;\n}\n.adopt-form__actions button {\n  flex: 1;\n  padding: 12px;\n}\n.adopt-form__row {\n  display: flex;\n  gap: 16px;\n}\n.adopt-form__row .adopt-form__group {\n  flex: 1;\n}\n@media (max-width: 480px) {\n  .adopt-form__row {\n    flex-direction: column;\n    gap: 20px;\n  }\n}\n.adopt-form__hint {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  margin-top: 4px;\n  opacity: 0.8;\n}\n.adopt-form__file-input {\n  display: none;\n}\n.adopt-form .file-upload-wrapper {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.adopt-form .file-upload-btn {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  padding: 16px;\n  border: 2px dashed var(--border-color);\n  border-radius: 12px;\n  background: var(--bg-card);\n  color: var(--text-muted);\n  cursor: pointer;\n  transition: all 0.2s;\n  font-weight: 600;\n}\n.adopt-form .file-upload-btn:hover {\n  border-color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb), 0.05);\n  color: var(--primary-action);\n}\n.adopt-form .file-upload-btn svg {\n  color: inherit;\n}\n.adopt-form #photo-preview-box {\n  width: 100%;\n  max-height: 300px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 12px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n\n@media (max-width: 640px) {\n  .adoption-header {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: 20px;\n  }\n  .adoption-header .adopt-btn {\n    width: 100%;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14061,7 +16211,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".modern-badges .page-header {\n  margin-bottom: 8px;\n}\n.modern-badges .page-header h1 {\n  font-size: 2.25rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin-bottom: 8px;\n  letter-spacing: -0.02em;\n}\n.modern-badges .page-header p {\n  font-size: 1.1rem;\n  color: var(--text-muted);\n}\n.modern-badges .section-top {\n  display: flex;\n  align-items: baseline;\n  gap: 12px;\n  justify-content: flex-start;\n  margin-bottom: 20px;\n}\n.modern-badges .section-top h2 {\n  font-size: 1.5rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .section-top .badges-count {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  background: var(--border-color);\n  padding: 6px 12px;\n  border-radius: 20px;\n}\n.modern-badges .section-top h2 + .badges-count {\n  margin-left: 4px;\n}\n.modern-badges .filters-row {\n  display: flex;\n  gap: 8px;\n  margin-bottom: 24px;\n  overflow-x: auto;\n  padding-bottom: 8px;\n}\n.modern-badges .filters-row::-webkit-scrollbar {\n  height: 4px;\n}\n.modern-badges .filters-row::-webkit-scrollbar-thumb {\n  background-color: var(--border-color);\n  border-radius: 4px;\n}\n.modern-badges .filters-row .filter-btn {\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.875rem;\n  font-weight: 600;\n  padding: 8px 16px;\n  border-radius: 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  white-space: nowrap;\n}\n.modern-badges .filters-row .filter-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.modern-badges .filters-row .filter-btn.active {\n  background: var(--text-main);\n  color: var(--bg-card);\n  border-color: var(--text-main);\n  box-shadow: var(--shadow);\n}\n.modern-badges .badges-section {\n  margin-bottom: 16px;\n}\n.modern-badges .badges-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));\n  gap: 16px;\n}\n.modern-badges .badge-card {\n  background: var(--bg-card);\n  border-radius: 16px;\n  padding: 16px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  position: relative;\n  box-shadow: var(--shadow);\n  border: 2px solid transparent;\n  transition: transform 0.2s ease, box-shadow 0.2s ease;\n}\n.modern-badges .badge-card:hover {\n  transform: translateY(-4px);\n}\n.modern-badges .badge-card.border-common {\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.border-rare {\n  border-color: rgba(59, 130, 246, 0.2);\n}\n.modern-badges .badge-card.border-epic {\n  border-color: rgba(168, 85, 247, 0.2);\n}\n.modern-badges .badge-card.border-legendary {\n  border-color: rgba(234, 179, 8, 0.2);\n}\n.modern-badges .badge-card.locked {\n  opacity: 0.8;\n  background: var(--bg-page);\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.locked .badge-icon-wrap {\n  filter: grayscale(100%);\n  opacity: 0.5;\n}\n.modern-badges .badge-card .badge-card__top-icon {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon {\n  font-size: 18px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.earned-icon {\n  color: var(--success);\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.locked-icon {\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-icon-wrap {\n  width: 52px;\n  height: 52px;\n  border-radius: 14px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-bottom: 12px;\n  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-orange {\n  background: linear-gradient(135deg, #fb923c, #ea580c);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-pink {\n  background: linear-gradient(135deg, #f472b6, #db2777);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-yellow {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-green {\n  background: linear-gradient(135deg, #34d399, #059669);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-gold {\n  background: linear-gradient(135deg, #fbbf24, #d97706);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-blue {\n  background: linear-gradient(135deg, #60a5fa, #2563eb);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-purple {\n  background: linear-gradient(135deg, #c084fc, #9333ea);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-teal {\n  background: linear-gradient(135deg, #2dd4bf, #0d9488);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-red {\n  background: linear-gradient(135deg, #f87171, #dc2626);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-magenta {\n  background: linear-gradient(135deg, #e879f9, #c026d3);\n}\n.modern-badges .badge-card .badge-name {\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 4px 0;\n}\n.modern-badges .badge-card .badge-desc {\n  font-size: 0.78rem;\n  color: var(--text-muted);\n  margin: 0 0 16px 0;\n  line-height: 1.4;\n  height: 40px;\n}\n.modern-badges .badge-card .badge-progress {\n  width: 100%;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 3px;\n  overflow: hidden;\n  margin-bottom: 6px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill {\n  height: 100%;\n  border-radius: 3px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-common {\n  background: var(--text-muted);\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-rare {\n  background: #3b82f6;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-epic {\n  background: #a855f7;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-legendary {\n  background: #eab308;\n}\n.modern-badges .badge-card .badge-progress .progress-text {\n  font-size: 0.7rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-spacer {\n  height: 38px;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-rarity {\n  font-size: 0.7rem;\n  font-weight: 800;\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n  padding: 2px 8px;\n  border-radius: 12px;\n}\n.modern-badges .badge-card .badge-rarity.rarity-common {\n  color: var(--text-muted);\n  background: var(--border-color);\n}\n.modern-badges .badge-card .badge-rarity.rarity-rare {\n  color: #3b82f6;\n  background: rgba(59, 130, 246, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-epic {\n  color: #9333ea;\n  background: rgba(147, 51, 234, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-legendary {\n  color: #d97706;\n  background: rgba(217, 119, 6, 0.1333333333);\n}\n.modern-badges .leaderboard-section {\n  margin-top: 24px;\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 32px;\n  box-shadow: var(--shadow);\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-section {\n    padding: 20px;\n  }\n}\n.modern-badges .leaderboard-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.modern-badges .leaderboard-item {\n  display: flex;\n  align-items: center;\n  padding: 16px 24px;\n  background: var(--bg-page);\n  border-radius: 16px;\n  transition: transform 0.2s;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item {\n    padding: 12px;\n    gap: 12px;\n  }\n}\n.modern-badges .leaderboard-item:hover {\n  transform: translateX(4px);\n  background: var(--border-color);\n}\n.modern-badges .leaderboard-item.current-user-item {\n  margin-top: 12px;\n  background: var(--primary-color);\n  border: 1px solid var(--border-color);\n  box-shadow: var(--shadow);\n}\n.modern-badges .leaderboard-item.current-user-item .user-name {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .stat {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .stat.text-dark {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-val {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-lbl {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .rank-badge {\n  width: 40px;\n  height: 40px;\n  border-radius: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-weight: 800;\n  font-size: 1.1rem;\n  margin-right: 20px;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item .rank-badge {\n    width: 32px;\n    height: 32px;\n    margin-right: 0;\n  }\n}\n.modern-badges .leaderboard-item .rank-badge.rank-1 {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n  color: white;\n  box-shadow: 0 4px 10px rgba(234, 179, 8, 0.3);\n}\n.modern-badges .leaderboard-item .rank-badge.rank-2 {\n  background: linear-gradient(135deg, #e2e8f0, #94a3b8);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-3 {\n  background: linear-gradient(135deg, #fed7aa, #c2410c);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-4, .modern-badges .leaderboard-item .rank-badge.rank-5 {\n  background: var(--border-color);\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-avatar {\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  overflow: hidden;\n  margin-right: 16px;\n  border: 2px solid var(--bg-card);\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .leaderboard-item .user-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.modern-badges .leaderboard-item .user-info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.modern-badges .leaderboard-item .user-info .user-name {\n  font-weight: 700;\n  font-size: 1.05rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-info .user-stats {\n  display: flex;\n  gap: 16px;\n}\n.modern-badges .leaderboard-item .user-info .user-stats .stat {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-xp {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n.modern-badges .leaderboard-item .user-xp .xp-val {\n  font-weight: 800;\n  font-size: 1.1rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-xp .xp-lbl {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n}\n.modern-badges .contests-section {\n  margin-top: 32px;\n  margin-bottom: 40px;\n}\n.modern-badges .contests-section .live-pill {\n  background: #22c55e;\n  color: white;\n  font-size: 0.7rem;\n  font-weight: 800;\n  padding: 4px 10px;\n  border-radius: 8px;\n  letter-spacing: 0.05em;\n  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);\n}\n.modern-badges .contest-banner-card {\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 32px;\n  box-shadow: var(--shadow);\n  border: 1px solid var(--border-color);\n  position: relative;\n  overflow: hidden;\n}\n.modern-badges .contest-banner-card::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n  background: linear-gradient(90deg, #facc15, #f472b6, #fb923c);\n}\n.modern-badges .contest-banner-card .contest-content {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 40px;\n}\n@media (max-width: 900px) {\n  .modern-badges .contest-banner-card .contest-content {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: 24px;\n  }\n}\n.modern-badges .contest-banner-card .contest-info-main {\n  display: flex;\n  gap: 24px;\n  flex: 1;\n}\n@media (max-width: 600px) {\n  .modern-badges .contest-banner-card .contest-info-main {\n    flex-direction: column;\n    gap: 16px;\n  }\n}\n.modern-badges .contest-banner-card .contest-info-main .contest-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 20px;\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  box-shadow: 0 8px 20px rgba(234, 179, 8, 0.2);\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details h3 {\n  font-size: 1.5rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0 0 8px 0;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details p {\n  font-size: 1rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n  margin: 0 0 16px 0;\n  max-width: 500px;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta {\n  display: flex;\n  gap: 20px;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta .meta-item {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.9rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta .meta-item svg {\n  color: var(--primary-action);\n}\n.modern-badges .contest-banner-card .contest-action-area {\n  width: 300px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n@media (max-width: 900px) {\n  .modern-badges .contest-banner-card .contest-action-area {\n    width: 100%;\n  }\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-labels {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 8px;\n  font-size: 0.85rem;\n  font-weight: 700;\n  color: var(--text-muted);\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-bar {\n  height: 10px;\n  background: var(--bg-page);\n  border-radius: 5px;\n  overflow: hidden;\n  border: 1px solid var(--border-color);\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-bar .progress-fill {\n  height: 100%;\n  background: linear-gradient(90deg, var(--primary-action), #f472b6);\n  border-radius: 5px;\n  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn {\n  background: var(--text-main);\n  color: var(--bg-card);\n  border: none;\n  padding: 14px;\n  border-radius: 16px;\n  font-weight: 700;\n  font-size: 1rem;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);\n  opacity: 0.9;\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn:active {\n  transform: scale(0.98);\n}\n.modern-badges .contest-modal-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 1100;\n}\n.modern-badges .contest-modal-overlay .contest-modal-bg {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(8px);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content {\n  position: relative;\n  width: 95%;\n  max-width: 500px;\n  background: var(--bg-card);\n  border-radius: 24px;\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);\n  border: 1px solid var(--border-color);\n  overflow: hidden;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header {\n  padding: 24px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid var(--border-color);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header h2 {\n  font-size: 1.25rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header button {\n  background: transparent;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  transition: color 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header button:hover {\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body {\n  padding: 24px;\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .contest-brief {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 12px 16px;\n  background: var(--bg-page);\n  border-radius: 12px;\n  border: 1px solid var(--border-color);\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area {\n  aspect-ratio: 4/3;\n  background: var(--bg-page);\n  border: 2px dashed var(--border-color);\n  border-radius: 16px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.2s;\n  overflow: hidden;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area:hover {\n  border-color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb), 0.05);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  gap: 12px;\n  color: var(--text-muted);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder p {\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder span {\n  font-size: 0.8rem;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .preview-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area label {\n  font-weight: 700;\n  font-size: 0.9rem;\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area textarea {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 12px;\n  color: var(--text-main);\n  font-family: inherit;\n  resize: none;\n  height: 100px;\n  transition: border-color 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area textarea:focus {\n  outline: none;\n  border-color: var(--primary-action);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer {\n  display: flex;\n  gap: 12px;\n  margin-top: 10px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer button {\n  flex: 1;\n  padding: 14px;\n  border-radius: 12px;\n  font-weight: 700;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .cancel-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .cancel-btn:hover {\n  background: var(--border-color);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn {\n  background: var(--primary-action);\n  border: none;\n  color: white;\n  box-shadow: 0 4px 12px rgba(233, 30, 140, 0.3);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n  box-shadow: none;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn.loading {\n  opacity: 0.8;\n  cursor: wait;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --bg-page: #F8F9FA;\n  --bg-card: #FFFFFF;\n  --text-main: #2F2F2F;\n  --text-muted: #7A7A7A;\n  --border-color: #E2E8F0;\n  --primary-color: #E6E6FA;\n  --primary-action: #898AA6;\n  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n  --input-bg: #FFFFFF;\n  --success: #22c55e;\n  --danger: #ef4444;\n  --warning: #f59e0b;\n  --success-bg: #f0fdf4;\n  --danger-bg: #fef2f2;\n  --warning-bg: #fffbeb;\n  --primary-action-rgb: 137, 138, 166;\n  --success-rgb: 34, 197, 94;\n  --danger-rgb: 239, 68, 68;\n  --warning-rgb: 245, 158, 11;\n  --bg-card-rgb: 255, 255, 255;\n  --text-main-rgb: 47, 47, 47;\n  --text-muted-rgb: 122, 122, 122;\n}\n\nhtml {\n  transition: background-color 0.25s ease;\n}\n\nbody,\n.pawtastic-feed,\n.messages-page,\n.profile-page,\n.modern-badges,\n.adoption-page,\n.settings-page,\n.admin-dashboard,\n.adoption-board,\n.register-page,\n.badges-contests,\n.notifications-page,\n.feed-card,\n.sidebar-aside,\n.msg-list-pane,\n.msg-main-pane,\n.msg-chat-header,\n.msg-input-bar,\n.msg-modal,\n.feed-create-modal,\n.post-menu__dropdown,\n.reaction-picker,\n.settings-card,\n.ui-card,\n.admin-card {\n  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.2s ease;\n}\n\n[data-theme=dark] {\n  --bg-page: #111418;\n  --bg-card: #1C2028;\n  --text-main: #E8EAF0;\n  --text-muted: #8A8FA8;\n  --border-color: #2C3248;\n  --primary-color: #242A3A;\n  --primary-action: #C9A9C0;\n  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);\n  --input-bg: #1A1F2E;\n  --success: #4ade80;\n  --danger: #f87171;\n  --warning-bg: rgba(245, 158, 11, 0.15);\n  --primary-action-rgb: 201, 169, 192;\n  --success-rgb: 74, 222, 128;\n  --danger-rgb: 248, 113, 113;\n  --warning-rgb: 251, 191, 36;\n  --bg-card-rgb: 28, 32, 40;\n  --text-main-rgb: 232, 234, 240;\n  --text-muted-rgb: 138, 143, 168;\n}\n[data-theme=dark] body {\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .profile-cover__bg {\n  background: linear-gradient(135deg, #2a2040 0%, #1a1828 100%) !important;\n}\n[data-theme=dark] .profile-avatar {\n  border-color: var(--bg-card) !important;\n}\n[data-theme=dark] input,\n[data-theme=dark] select,\n[data-theme=dark] textarea {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] select::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder,\n[data-theme=dark] select::placeholder,\n[data-theme=dark] textarea::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .msg-bubble-row--other .msg-bubble {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .profile-achievement--gold {\n  background: #2a2010 !important;\n  border-color: #4a3500 !important;\n  color: #fbbf24 !important;\n}\n[data-theme=dark] .profile-achievement--blue {\n  background: #0f1e36 !important;\n  border-color: #1e3a5f !important;\n  color: #93c5fd !important;\n}\n[data-theme=dark] .profile-achievement--purple {\n  background: #1a1040 !important;\n  border-color: #3b1f60 !important;\n  color: #d8b4fe !important;\n}\n[data-theme=dark] .profile-achievement--green {\n  background: #0a2010 !important;\n  border-color: #1a4020 !important;\n  color: #86efac !important;\n}\n[data-theme=dark] .msg-tab {\n  border-color: var(--border-color) !important;\n  color: var(--text-muted) !important;\n  background: transparent !important;\n}\n[data-theme=dark] .msg-tab--active {\n  background: var(--primary-action) !important;\n  border-color: var(--primary-action) !important;\n  color: #fff !important;\n}\n[data-theme=dark] .profile-tabs {\n  border-bottom-color: var(--border-color) !important;\n}\n[data-theme=dark] .profile-tabs__tab {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .profile-tabs__tab--active {\n  color: var(--primary-action) !important;\n  border-bottom-color: var(--primary-action) !important;\n}\n[data-theme=dark] .feed-modal-overlay {\n  background: rgba(0, 0, 0, 0.7) !important;\n}\n[data-theme=dark] .profile-stats-card,\n[data-theme=dark] .leaderboard-card-modern,\n[data-theme=dark] .badge-card-modern,\n[data-theme=dark] .contest-banner {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-create-modal__audience-btn,\n[data-theme=dark] .feed-create-modal__add-row {\n  background: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] ::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n[data-theme=dark] ::-webkit-scrollbar-track {\n  background: var(--bg-page);\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb:hover {\n  background: var(--text-muted);\n}\n[data-theme=dark] .dropdown-menu,\n[data-theme=dark] .popover,\n[data-theme=dark] .tooltip {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-stories-container,\n[data-theme=dark] .feed-card,\n[data-theme=dark] .sidebar-card,\n[data-theme=dark] .post-card,\n[data-theme=dark] .admin-card {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;\n}\n[data-theme=dark] .feed-story__img-box {\n  border-color: var(--bg-card) !important;\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .feed-story__label {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__header .user .meta .meta-top .name {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__body .post-text {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__footer {\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-post-v2__footer .action-btn:hover {\n  background-color: var(--bg-page) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input, [data-theme=dark] textarea, [data-theme=dark] select {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder, [data-theme=dark] select::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder, [data-theme=dark] textarea::placeholder, [data-theme=dark] select::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .post-modal-content,\n[data-theme=dark] .settings-content {\n  background-color: var(--bg-card) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .post-modal-header,\n[data-theme=dark] .post-modal-footer {\n  border-color: var(--border-color) !important;\n}\n\n:root[data-text-size=small] {\n  font-size: 14px;\n}\n\n:root[data-text-size=medium] {\n  font-size: 16px;\n}\n\n:root[data-text-size=large] {\n  font-size: 18px;\n}\n\nbody {\n  font-size: 1rem;\n  line-height: 1.5;\n}\n\n.modern-badges .contest-modal-overlay .contest-modal-content {\n  width: min(560px, 92vw);\n  max-height: min(640px, 88vh);\n  overflow-y: auto;\n  border-radius: 16px;\n  padding: 20px 24px;\n  background: var(--bg-card);\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n\n.modern-badges .contest-modal-overlay .contest-modal-content {\n  width: min(720px, 94vw);\n}\n\n.modern-badges .contest-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.55);\n  backdrop-filter: blur(6px);\n}\n\n.modern-badges .page-header {\n  margin-bottom: 8px;\n}\n.modern-badges .page-header h1 {\n  font-size: 2.25rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin-bottom: 8px;\n  letter-spacing: -0.02em;\n}\n.modern-badges .page-header p {\n  font-size: 1.1rem;\n  color: var(--text-muted);\n}\n.modern-badges .section-top {\n  display: flex;\n  align-items: baseline;\n  gap: 12px;\n  justify-content: flex-start;\n  margin-bottom: 20px;\n}\n.modern-badges .section-top h2 {\n  font-size: 1.5rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .section-top .badges-count {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  background: var(--border-color);\n  padding: 6px 12px;\n  border-radius: 20px;\n}\n.modern-badges .section-top h2 + .badges-count {\n  margin-left: 4px;\n}\n.modern-badges .filters-row {\n  display: flex;\n  gap: 8px;\n  margin-bottom: 24px;\n  overflow-x: auto;\n  padding-bottom: 8px;\n}\n.modern-badges .filters-row::-webkit-scrollbar {\n  height: 4px;\n}\n.modern-badges .filters-row::-webkit-scrollbar-thumb {\n  background-color: var(--border-color);\n  border-radius: 4px;\n}\n.modern-badges .filters-row .filter-btn {\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.875rem;\n  font-weight: 600;\n  padding: 8px 16px;\n  border-radius: 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  white-space: nowrap;\n}\n.modern-badges .filters-row .filter-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.modern-badges .filters-row .filter-btn.active {\n  background: var(--text-main);\n  color: var(--bg-card);\n  border-color: var(--text-main);\n  box-shadow: var(--shadow);\n}\n.modern-badges .badges-section {\n  margin-bottom: 16px;\n}\n.modern-badges .badges-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));\n  gap: 16px;\n}\n.modern-badges .badge-card {\n  background: var(--bg-card);\n  border-radius: 16px;\n  padding: 16px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  position: relative;\n  box-shadow: var(--shadow);\n  border: 2px solid transparent;\n  transition: transform 0.2s ease, box-shadow 0.2s ease;\n}\n.modern-badges .badge-card:hover {\n  transform: translateY(-4px);\n}\n.modern-badges .badge-card.border-common {\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.border-rare {\n  border-color: rgba(59, 130, 246, 0.2);\n}\n.modern-badges .badge-card.border-epic {\n  border-color: rgba(168, 85, 247, 0.2);\n}\n.modern-badges .badge-card.border-legendary {\n  border-color: rgba(234, 179, 8, 0.2);\n}\n.modern-badges .badge-card.locked {\n  opacity: 0.8;\n  background: var(--bg-page);\n  border-color: var(--border-color);\n}\n.modern-badges .badge-card.locked .badge-icon-wrap {\n  filter: grayscale(100%);\n  opacity: 0.5;\n}\n.modern-badges .badge-card .badge-card__top-icon {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon {\n  font-size: 18px;\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.earned-icon {\n  color: var(--success);\n}\n.modern-badges .badge-card .badge-card__top-icon .status-icon.locked-icon {\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-icon-wrap {\n  width: 52px;\n  height: 52px;\n  border-radius: 14px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-bottom: 12px;\n  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-orange {\n  background: linear-gradient(135deg, #fb923c, #ea580c);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-pink {\n  background: linear-gradient(135deg, #f472b6, #db2777);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-yellow {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-green {\n  background: linear-gradient(135deg, #34d399, #059669);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-gold {\n  background: linear-gradient(135deg, #fbbf24, #d97706);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-blue {\n  background: linear-gradient(135deg, #60a5fa, #2563eb);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-purple {\n  background: linear-gradient(135deg, #c084fc, #9333ea);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-teal {\n  background: linear-gradient(135deg, #2dd4bf, #0d9488);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-red {\n  background: linear-gradient(135deg, #f87171, #dc2626);\n}\n.modern-badges .badge-card .badge-icon-wrap.bg-gradient-magenta {\n  background: linear-gradient(135deg, #e879f9, #c026d3);\n}\n.modern-badges .badge-card .badge-name {\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0 0 4px 0;\n}\n.modern-badges .badge-card .badge-desc {\n  font-size: 0.78rem;\n  color: var(--text-muted);\n  margin: 0 0 16px 0;\n  line-height: 1.4;\n  height: 40px;\n}\n.modern-badges .badge-card .badge-progress {\n  width: 100%;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 3px;\n  overflow: hidden;\n  margin-bottom: 6px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill {\n  height: 100%;\n  border-radius: 3px;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-common {\n  background: var(--text-muted);\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-rare {\n  background: #3b82f6;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-epic {\n  background: #a855f7;\n}\n.modern-badges .badge-card .badge-progress .progress-bar .progress-fill.fill-legendary {\n  background: #eab308;\n}\n.modern-badges .badge-card .badge-progress .progress-text {\n  font-size: 0.7rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .badge-card .badge-spacer {\n  height: 38px;\n  margin-bottom: 16px;\n}\n.modern-badges .badge-card .badge-rarity {\n  font-size: 0.7rem;\n  font-weight: 800;\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n  padding: 2px 8px;\n  border-radius: 12px;\n}\n.modern-badges .badge-card .badge-rarity.rarity-common {\n  color: var(--text-muted);\n  background: var(--border-color);\n}\n.modern-badges .badge-card .badge-rarity.rarity-rare {\n  color: #3b82f6;\n  background: rgba(59, 130, 246, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-epic {\n  color: #9333ea;\n  background: rgba(147, 51, 234, 0.1333333333);\n}\n.modern-badges .badge-card .badge-rarity.rarity-legendary {\n  color: #d97706;\n  background: rgba(217, 119, 6, 0.1333333333);\n}\n.modern-badges .leaderboard-section {\n  margin-top: 24px;\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 32px;\n  box-shadow: var(--shadow);\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-section {\n    padding: 20px;\n  }\n}\n.modern-badges .leaderboard-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.modern-badges .leaderboard-item {\n  display: flex;\n  align-items: center;\n  padding: 16px 24px;\n  background: var(--bg-page);\n  border-radius: 16px;\n  transition: transform 0.2s;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item {\n    padding: 12px;\n    gap: 12px;\n  }\n}\n.modern-badges .leaderboard-item:hover {\n  transform: translateX(4px);\n  background: var(--border-color);\n}\n.modern-badges .leaderboard-item.current-user-item {\n  margin-top: 12px;\n  background: var(--primary-color);\n  border: 1px solid var(--border-color);\n  box-shadow: var(--shadow);\n}\n.modern-badges .leaderboard-item.current-user-item .user-name {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .stat {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .stat.text-dark {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-val {\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item.current-user-item .xp-lbl {\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .rank-badge {\n  width: 40px;\n  height: 40px;\n  border-radius: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-weight: 800;\n  font-size: 1.1rem;\n  margin-right: 20px;\n}\n@media (max-width: 600px) {\n  .modern-badges .leaderboard-item .rank-badge {\n    width: 32px;\n    height: 32px;\n    margin-right: 0;\n  }\n}\n.modern-badges .leaderboard-item .rank-badge.rank-1 {\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n  color: white;\n  box-shadow: 0 4px 10px rgba(234, 179, 8, 0.3);\n}\n.modern-badges .leaderboard-item .rank-badge.rank-2 {\n  background: linear-gradient(135deg, #e2e8f0, #94a3b8);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-3 {\n  background: linear-gradient(135deg, #fed7aa, #c2410c);\n  color: white;\n}\n.modern-badges .leaderboard-item .rank-badge.rank-4, .modern-badges .leaderboard-item .rank-badge.rank-5 {\n  background: var(--border-color);\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-avatar {\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  overflow: hidden;\n  margin-right: 16px;\n  border: 2px solid var(--bg-card);\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .leaderboard-item .user-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.modern-badges .leaderboard-item .user-info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.modern-badges .leaderboard-item .user-info .user-name {\n  font-weight: 700;\n  font-size: 1.05rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-info .user-stats {\n  display: flex;\n  gap: 16px;\n}\n.modern-badges .leaderboard-item .user-info .user-stats .stat {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.modern-badges .leaderboard-item .user-xp {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n.modern-badges .leaderboard-item .user-xp .xp-val {\n  font-weight: 800;\n  font-size: 1.1rem;\n  color: var(--text-main);\n}\n.modern-badges .leaderboard-item .user-xp .xp-lbl {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-transform: uppercase;\n  letter-spacing: 0.05em;\n}\n.modern-badges .contests-section {\n  margin-top: 32px;\n  margin-bottom: 40px;\n}\n.modern-badges .contests-section .live-pill {\n  background: #22c55e;\n  color: white;\n  font-size: 0.7rem;\n  font-weight: 800;\n  padding: 4px 10px;\n  border-radius: 8px;\n  letter-spacing: 0.05em;\n  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);\n}\n.modern-badges .contest-banner-card {\n  background: var(--bg-card);\n  border-radius: 24px;\n  padding: 32px;\n  box-shadow: var(--shadow);\n  border: 1px solid var(--border-color);\n  position: relative;\n  overflow: hidden;\n}\n.modern-badges .contest-banner-card::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n  background: linear-gradient(90deg, #facc15, #f472b6, #fb923c);\n}\n.modern-badges .contest-banner-card .contest-content {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 40px;\n}\n@media (max-width: 900px) {\n  .modern-badges .contest-banner-card .contest-content {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: 24px;\n  }\n}\n.modern-badges .contest-banner-card .contest-info-main {\n  display: flex;\n  gap: 24px;\n  flex: 1;\n}\n@media (max-width: 600px) {\n  .modern-badges .contest-banner-card .contest-info-main {\n    flex-direction: column;\n    gap: 16px;\n  }\n}\n.modern-badges .contest-banner-card .contest-info-main .contest-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 20px;\n  background: linear-gradient(135deg, #facc15, #ca8a04);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  box-shadow: 0 8px 20px rgba(234, 179, 8, 0.2);\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details h3 {\n  font-size: 1.5rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0 0 8px 0;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details p {\n  font-size: 1rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n  margin: 0 0 16px 0;\n  max-width: 500px;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta {\n  display: flex;\n  gap: 20px;\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta .meta-item {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.9rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .contest-banner-card .contest-info-main .text-details .contest-meta .meta-item svg {\n  color: var(--primary-action);\n}\n.modern-badges .contest-banner-card .contest-action-area {\n  width: 300px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n@media (max-width: 900px) {\n  .modern-badges .contest-banner-card .contest-action-area {\n    width: 100%;\n  }\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-labels {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 8px;\n  font-size: 0.85rem;\n  font-weight: 700;\n  color: var(--text-muted);\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-bar {\n  height: 10px;\n  background: var(--bg-page);\n  border-radius: 5px;\n  overflow: hidden;\n  border: 1px solid var(--border-color);\n}\n.modern-badges .contest-banner-card .contest-action-area .contest-progress-wrap .progress-bar .progress-fill {\n  height: 100%;\n  background: linear-gradient(90deg, var(--primary-action), #f472b6);\n  border-radius: 5px;\n  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn {\n  background: var(--text-main);\n  color: var(--bg-card);\n  border: none;\n  padding: 14px;\n  border-radius: 16px;\n  font-weight: 700;\n  font-size: 1rem;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);\n  opacity: 0.9;\n}\n.modern-badges .contest-banner-card .contest-action-area .enter-contest-btn:active {\n  transform: scale(0.98);\n}\n.modern-badges .contest-modal-overlay {\n  z-index: 1100;\n}\n.modern-badges .contest-modal-overlay .contest-modal-bg {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(8px);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content {\n  position: relative;\n  border-radius: 24px;\n  border: 1px solid var(--border-color);\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header {\n  padding: 24px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid var(--border-color);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header h2 {\n  font-size: 1.25rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header button {\n  background: transparent;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  transition: color 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-header button:hover {\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body {\n  padding: 24px;\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n  overflow-y: auto;\n  max-height: calc(min(640px, 88vh) - 96px);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .contest-brief {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 12px 16px;\n  background: var(--bg-page);\n  border-radius: 12px;\n  border: 1px solid var(--border-color);\n  font-weight: 700;\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area {\n  aspect-ratio: 4/3;\n  max-height: 320px;\n  min-height: 180px;\n  background: var(--bg-page);\n  border: 2px dashed var(--border-color);\n  border-radius: 16px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.2s;\n  overflow: hidden;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area:hover {\n  border-color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb), 0.05);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n  gap: 12px;\n  color: var(--text-muted);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder p {\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .upload-placeholder span {\n  font-size: 0.8rem;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .image-upload-area .preview-img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .upload-actions {\n  display: flex;\n  justify-content: flex-end;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .upload-actions .choose-image-btn {\n  border: 1px solid var(--border-color);\n  background: var(--bg-page);\n  color: var(--text-main);\n  padding: 8px 12px;\n  border-radius: 10px;\n  font-weight: 700;\n  cursor: pointer;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area label {\n  font-weight: 700;\n  font-size: 0.9rem;\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area textarea {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 12px;\n  color: var(--text-main);\n  font-family: inherit;\n  resize: none;\n  height: 100px;\n  transition: border-color 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .caption-area textarea:focus {\n  outline: none;\n  border-color: var(--primary-action);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer {\n  display: flex;\n  gap: 12px;\n  margin-top: 10px;\n  position: sticky;\n  bottom: 0;\n  background: var(--bg-card);\n  padding-top: 6px;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer button {\n  flex: 1;\n  padding: 14px;\n  border-radius: 12px;\n  font-weight: 700;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .cancel-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--text-main);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .cancel-btn:hover {\n  background: var(--border-color);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn {\n  background: var(--primary-action);\n  border: none;\n  color: white;\n  box-shadow: 0 4px 12px rgba(233, 30, 140, 0.3);\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n  box-shadow: none;\n}\n.modern-badges .contest-modal-overlay .contest-modal-content .modal-body .modal-footer .submit-btn.loading {\n  opacity: 0.8;\n  cursor: wait;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14085,7 +16235,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pawtastic-feed {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.feed-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 32px 40px;\n  max-width: calc(100vw - 260px);\n}\n@media (max-width: 768px) {\n  .feed-main {\n    margin-left: 0;\n    padding: 20px;\n  }\n}\n\n.feed-page-header {\n  max-width: 1100px;\n  margin: 0 auto 28px;\n}\n.feed-page-header__title {\n  font-size: 1.75rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0 0 4px;\n}\n.feed-page-header__sub {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.feed-layout {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr) 300px;\n  gap: 32px;\n  align-items: start;\n  max-width: 1100px;\n  margin: 0 auto;\n}\n@media (max-width: 1024px) {\n  .feed-layout {\n    grid-template-columns: 1fr;\n  }\n}\n\n.feed-center {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n  min-width: 0;\n}\n\n.feed-card {\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n}\n\n.feed-stories-container {\n  padding: 24px;\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n}\n\n.feed-stories {\n  display: flex;\n  gap: 20px;\n  overflow-x: auto;\n  scrollbar-width: none;\n}\n.feed-stories::-webkit-scrollbar {\n  display: none;\n}\n\n.feed-story-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n\n.feed-story {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n  cursor: pointer;\n  width: 76px;\n}\n.feed-story__ring {\n  position: relative;\n  width: 76px;\n  height: 76px;\n  border-radius: 50%;\n  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.feed-story__ring--add {\n  background: linear-gradient(135deg, #c4c5d6, #a8a9be);\n}\n.feed-story__ring > * {\n  z-index: 2;\n  position: relative;\n}\n.feed-story__img-box {\n  width: 72px;\n  height: 72px;\n  border-radius: 50%;\n  overflow: hidden;\n  background: var(--bg-page);\n  border: 3px solid var(--bg-card);\n}\n.feed-story__img-box img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.feed-story__plus {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  background: var(--primary-action);\n  color: white;\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  border: 2.5px solid var(--bg-card);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 11px;\n  z-index: 3;\n  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);\n}\n.feed-story__label {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-align: center;\n  margin-top: 4px;\n}\n.feed-story__menu {\n  position: absolute;\n  top: 90px;\n  left: 0;\n  background: var(--bg-card);\n  border-radius: 12px;\n  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);\n  width: 170px;\n  padding: 8px;\n  z-index: 1000;\n  border: 1px solid var(--border-color);\n}\n.feed-story__menu button {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  width: 100%;\n  padding: 10px;\n  border: none;\n  background: none;\n  border-radius: 8px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  cursor: pointer;\n  color: var(--text-main);\n}\n.feed-story__menu button:hover {\n  background: var(--bg-page);\n  color: var(--primary-action);\n}\n.feed-story__menu button.cancel {\n  color: var(--danger);\n}\n.feed-story__menu .divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 4px 0;\n}\n\n.feed-post-v2 {\n  display: flex;\n  flex-direction: column;\n}\n.feed-post-v2__header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-post-v2__header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-post-v2__header .user .meta .meta-top {\n  display: flex;\n  align-items: baseline;\n  gap: 8px;\n}\n.feed-post-v2__header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.feed-post-v2__header .user .meta .meta-top .time {\n  margin-left: auto;\n  color: var(--text-muted);\n  font-size: 0.8rem;\n}\n.feed-post-v2__header .user .meta .meta-top .tag-with {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.feed-post-v2__header .user .meta .meta-top .tag-with b {\n  color: var(--text-main);\n}\n.feed-post-v2__header .user .meta .meta-bottom {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  row-gap: 2px;\n  align-items: center;\n  color: var(--text-muted);\n  font-size: 0.8rem;\n}\n.feed-post-v2__header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.feed-post-v2__header .user .meta .meta-bottom .dot {\n  color: var(--text-muted);\n}\n.feed-post-v2__header .user .meta .meta-bottom .location {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n}\n.feed-post-v2__header .user .meta .meta-bottom .location a {\n  color: inherit;\n  text-decoration: none;\n}\n.feed-post-v2__header .user .meta .meta-bottom .location a:hover {\n  text-decoration: underline;\n}\n.feed-post-v2__header .actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .actions .icon-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  transition: color 0.2s;\n}\n.feed-post-v2__header .actions .icon-btn:hover {\n  color: var(--text-main);\n}\n.feed-post-v2__body {\n  padding: 0;\n}\n.feed-post-v2__body .post-text {\n  padding: 0 20px;\n  color: var(--text-main);\n  line-height: 1.5;\n  font-size: 0.95rem;\n  margin-bottom: 8px;\n}\n.feed-post-v2__body .post-text .text-more {\n  color: var(--text-muted);\n  cursor: pointer;\n  margin-left: 4px;\n}\n.feed-post-v2__body .hashtags {\n  padding: 0 20px;\n  display: flex;\n  gap: 8px;\n  margin-bottom: 16px;\n  flex-wrap: wrap;\n}\n.feed-post-v2__body .hashtags span {\n  color: var(--text-muted);\n  font-size: 0.85rem;\n}\n.feed-post-v2__body .main-img {\n  width: 100%;\n  display: block;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 0;\n}\n.feed-post-v2__body .main-video {\n  width: 100%;\n  display: block;\n  border-radius: 0;\n  max-height: 540px;\n  background: #000;\n}\n.feed-post-v2__footer {\n  padding: 12px 20px;\n  border-top: 1px solid var(--border-color);\n  display: flex;\n  gap: 24px;\n}\n.feed-post-v2__footer .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: 0.2s;\n  padding: 6px 12px;\n  border-radius: 8px;\n}\n.feed-post-v2__footer .action-btn span {\n  font-weight: 700;\n  font-size: 0.9rem;\n}\n.feed-post-v2__footer .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-post-v2__footer .action-btn.active {\n  color: var(--danger);\n}\n.feed-post-v2__footer .likes-count-btn {\n  color: var(--text-main);\n  padding-left: 4px;\n}\n\n.feed-right-col {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n\n.sidebar-card {\n  padding: 20px;\n}\n.sidebar-card__title {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  margin-bottom: 20px;\n  color: var(--text-main);\n  font-weight: 800;\n  font-size: 0.9rem;\n}\n.sidebar-card__title--between {\n  justify-content: space-between;\n  gap: 8px;\n}\n\n.tag-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n\n.tag-row {\n  display: flex;\n  justify-content: space-between;\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.tag-row .count {\n  color: var(--text-muted);\n}\n\n.title-left {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n}\n\n.see-all-btn {\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.live-contest {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.live-contest__top {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 10px;\n}\n\n.contest-name {\n  font-weight: 800;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n\n.contest-sub {\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  margin-top: 4px;\n}\n\n.live-pill {\n  background: rgba(var(--success-rgb), 0.15);\n  color: var(--success);\n  font-size: 0.65rem;\n  font-weight: 800;\n  padding: 2px 8px;\n  border-radius: 999px;\n}\n\n.contest-progress {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 999px;\n  overflow: hidden;\n}\n\n.contest-progress__bar {\n  width: 74%;\n  height: 100%;\n  background: linear-gradient(90deg, var(--primary-action), var(--text-muted));\n}\n\n.contest-btn {\n  width: 100%;\n}\n\n.suggested-users {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n\n.user-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.user-row .info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.user-row .info .name {\n  font-weight: 700;\n  font-size: 0.85rem;\n  color: var(--text-main);\n}\n.user-row .info .sub {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.user-row .follow-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--primary-action);\n  font-weight: 600;\n  font-size: 0.75rem;\n  line-height: 1;\n  padding: 7px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n  min-width: 58px;\n  transition: all 0.18s ease;\n}\n.user-row .follow-btn:hover {\n  background: var(--bg-card);\n  border-color: var(--primary-action);\n}\n\n.story-viewer-v2 {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.92);\n  backdrop-filter: blur(20px);\n}\n.story-viewer-v2__main {\n  position: relative;\n  width: 100%;\n  max-width: 440px;\n  height: 100%;\n  max-height: 90vh;\n  background: #000;\n  border-radius: 16px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);\n}\n@media (max-width: 480px) {\n  .story-viewer-v2__main {\n    max-height: 100vh;\n    border-radius: 0;\n  }\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars {\n  position: absolute;\n  top: 12px;\n  left: 10px;\n  right: 10px;\n  display: flex;\n  gap: 4px;\n  z-index: 100;\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars .story-progress-bg {\n  flex: 1;\n  height: 2px;\n  background: rgba(255, 255, 255, 0.3);\n  border-radius: 99px;\n  overflow: hidden;\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars .story-progress-fill {\n  height: 100%;\n  background: #fff;\n  transition: width 0.1s linear;\n}\n.story-viewer-v2__main .story-viewer-v2__header {\n  padding: 32px 16px 40px;\n  display: flex;\n  align-items: center;\n  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);\n  z-index: 10;\n  position: absolute;\n  top: 0;\n  width: 100%;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info {\n  display: flex;\n  flex-direction: column;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line .name {\n  color: #fff;\n  font-weight: 700;\n  font-size: 0.95rem;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n  line-height: 1.1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line .time {\n  color: rgba(255, 255, 255, 0.8);\n  font-size: 0.85rem;\n  font-weight: 500;\n  line-height: 1.1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .visibility-icon {\n  color: rgba(255, 255, 255, 0.9);\n  margin-top: 4px;\n  display: flex;\n  align-items: center;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions {\n  position: absolute;\n  top: 28px;\n  right: 32px;\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  z-index: 20;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn {\n  background: rgba(0, 0, 0, 0.45);\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  width: 38px;\n  height: 38px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n  backdrop-filter: blur(10px);\n  box-sizing: border-box;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn:hover, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn:hover {\n  background: rgba(0, 0, 0, 0.7);\n  transform: scale(1.08);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn svg, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn svg {\n  display: block;\n  width: 22px;\n  height: 22px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn svg {\n  width: 26px;\n  height: 26px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu {\n  position: absolute;\n  top: calc(100% + 8px);\n  right: 0;\n  background: rgba(30, 30, 35, 0.95);\n  backdrop-filter: blur(12px);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 14px;\n  min-width: 220px;\n  padding: 6px;\n  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);\n  z-index: 300;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  padding: 10px 12px;\n  border: none;\n  background: transparent;\n  color: #fff;\n  font-size: 0.9rem;\n  font-weight: 500;\n  cursor: pointer;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button:hover {\n  background: rgba(255, 255, 255, 0.08);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button svg {\n  width: 20px;\n  height: 20px;\n  opacity: 0.8;\n  color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button span {\n  margin-left: 12px;\n  flex: 1;\n  text-align: left;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete {\n  color: #ff5c5c;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete svg {\n  color: #ff5c5c;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete:hover {\n  background: rgba(255, 92, 92, 0.1);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.has-submenu svg:last-child {\n  opacity: 0.5;\n  margin-left: 8px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.active {\n  background: rgba(255, 255, 255, 0.1);\n  color: #fff;\n  font-weight: 700;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.active svg {\n  opacity: 1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu .visibility-submenu .submenu-header {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 0;\n  margin-bottom: 4px;\n  padding-bottom: 10px;\n  font-weight: 700;\n  color: rgba(255, 255, 255, 0.6);\n}\n.story-viewer-v2__main .story-viewer-v2__footer {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  padding: 24px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);\n  z-index: 10;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 4px;\n  color: #fff;\n  cursor: pointer;\n  transition: opacity 0.2s;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item:hover {\n  opacity: 0.8;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item .icon-circle {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: rgba(255, 255, 255, 0.15);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  backdrop-filter: blur(10px);\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item span {\n  font-size: 0.75rem;\n  font-weight: 600;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n}\n.story-viewer-v2__main .story-viewer-v2__body {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #000;\n}\n.story-viewer-v2__main .story-viewer-v2__body img, .story-viewer-v2__main .story-viewer-v2__body video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n\n.nav-arrow {\n  position: fixed;\n  top: 50%;\n  transform: translateY(-50%);\n  background: rgba(255, 255, 255, 0.15);\n  border: none;\n  color: #fff;\n  width: 52px;\n  height: 52px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  z-index: 1000;\n  transition: all 0.2s;\n  backdrop-filter: blur(10px);\n}\n.nav-arrow:hover {\n  background: rgba(255, 255, 255, 0.3);\n  transform: translateY(-50%) scale(1.1);\n}\n.nav-arrow.prev {\n  left: 20px;\n}\n.nav-arrow.next {\n  right: 20px;\n}\n\n.feed-btn--primary {\n  background: #898AA6;\n  color: white;\n  border: none;\n  padding: 8px 24px;\n  border-radius: 99px;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.feed-avatar {\n  position: relative;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n}\n.feed-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 50%;\n}\n.feed-avatar--sm {\n  width: 32px;\n  height: 32px;\n  min-width: 32px;\n}\n.feed-avatar--md {\n  width: 44px;\n  height: 44px;\n  min-width: 44px;\n}\n.feed-avatar.online .feed-avatar__dot {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 12px;\n  height: 12px;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n  border-radius: 50%;\n}\n\n.post-menu {\n  position: relative;\n}\n.post-menu__trigger {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  transition: all 0.2s;\n}\n.post-menu__trigger:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.post-menu__trigger:active {\n  transform: scale(0.95);\n}\n.post-menu__dropdown {\n  position: absolute;\n  top: calc(100% + 6px);\n  right: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);\n  z-index: 100;\n  min-width: 200px;\n  padding: 6px;\n  transform-origin: top right;\n}\n.post-menu__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 6px 4px;\n}\n.post-menu__submenu {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.post-menu__back {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  width: 100%;\n  padding: 10px 12px;\n  border: none;\n  border-radius: 8px;\n  background: none;\n  color: var(--text-muted, #64748b);\n  cursor: pointer;\n  text-align: left;\n}\n.post-menu__back:hover {\n  background: var(--bg-page, #f8f9fa);\n  color: var(--text-main);\n}\n.post-menu__item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  padding: 10px 12px;\n  border: none;\n  border-radius: 8px;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n}\n.post-menu__item:hover {\n  background: var(--bg-page, #f8f9fa);\n}\n.post-menu__item svg {\n  color: var(--text-muted, #64748b);\n  flex-shrink: 0;\n}\n.post-menu__item .item-text {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-menu__item .item-text .label {\n  font-size: 0.9rem;\n  color: var(--text-main, #1e293b);\n  font-weight: 500;\n}\n.post-menu__item .item-text .sub {\n  font-size: 0.75rem;\n  color: var(--text-muted, #94a3b8);\n}\n.post-menu__item.danger svg {\n  color: #e11d48;\n}\n.post-menu__item.danger .label {\n  color: #e11d48;\n}\n\n.post-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.post-modal-bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.65);\n  backdrop-filter: blur(8px);\n}\n\n.post-modal-content {\n  position: relative;\n  display: flex;\n  background: var(--bg-card);\n  border-radius: 20px;\n  overflow: hidden;\n  max-height: 90vh;\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n.post-modal-content.has-image {\n  width: 1000px;\n  max-width: 95vw;\n  height: 800px;\n}\n.post-modal-content.has-image .post-modal-media {\n  flex: 1.5;\n  background: #000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.post-modal-content.has-image .post-modal-media img, .post-modal-content.has-image .post-modal-media video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.post-modal-content.has-image .post-modal-sidebar {\n  width: 400px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  border-left: 1px solid var(--border-color);\n}\n.post-modal-content.text-only {\n  width: 600px;\n  max-width: 95vw;\n}\n.post-modal-content.text-only .post-modal-sidebar {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.post-modal-header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid var(--border-color);\n}\n.post-modal-header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-modal-header .user .meta .meta-top {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.post-modal-header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.post-modal-header .user .meta .meta-top .time {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.post-modal-header .user .meta .meta-bottom {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  color: #94a3b8;\n  font-size: 0.8rem;\n}\n.post-modal-header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.post-modal-header .user .meta .meta-bottom .location {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n.post-modal-header .close-btn {\n  background: none;\n  border: none;\n  color: #94a3b8;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  border-radius: 50%;\n  transition: 0.2s;\n}\n.post-modal-header .close-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n\n.post-modal-scrollable {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.post-modal-scrollable::-webkit-scrollbar {\n  width: 6px;\n}\n.post-modal-scrollable::-webkit-scrollbar-track {\n  background: transparent;\n}\n.post-modal-scrollable::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n\n.post-modal-caption {\n  display: flex;\n  gap: 12px;\n}\n.post-modal-caption .caption-content {\n  flex: 1;\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n}\n.post-modal-caption .caption-content .author-name {\n  font-weight: 700;\n  color: var(--text-main);\n  margin-right: 6px;\n}\n.post-modal-caption .caption-content .hashtags {\n  display: flex;\n  gap: 8px;\n  margin-top: 8px;\n  flex-wrap: wrap;\n}\n.post-modal-caption .caption-content .hashtags span {\n  color: var(--primary-action);\n  font-size: 0.85rem;\n  font-weight: 500;\n}\n\n.post-modal-comments {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n  gap: 16px;\n}\n.post-modal-comments .empty-state {\n  margin: auto;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  padding: 40px 0;\n}\n.post-modal-comments .empty-state span:first-child {\n  font-weight: 600;\n  color: var(--text-main);\n}\n.post-modal-comments .post-modal-comment {\n  display: flex;\n  align-items: flex-start;\n  gap: 12px;\n}\n.post-modal-comments .post-modal-comment .comment-body {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.post-modal-comments .post-modal-comment .comment-author {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.9rem;\n}\n.post-modal-comments .post-modal-comment .comment-text {\n  color: var(--text-muted);\n  font-size: 0.9rem;\n  line-height: 1.4;\n}\n\n.post-modal-footer {\n  border-top: 1px solid var(--border-color);\n  padding: 16px 20px;\n}\n.post-modal-footer .actions {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 12px;\n}\n.post-modal-footer .actions .actions-left {\n  display: flex;\n  gap: 16px;\n}\n.post-modal-footer .actions .action-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 0;\n  transition: 0.2s;\n}\n.post-modal-footer .actions .action-btn:hover {\n  color: var(--text-main);\n  transform: scale(1.05);\n}\n.post-modal-footer .actions .action-btn.active {\n  color: var(--danger);\n}\n.post-modal-footer .likes-count-btn {\n  background: none;\n  border: none;\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n  margin-bottom: 16px;\n  padding: 0;\n  cursor: pointer;\n  text-align: left;\n}\n.post-modal-footer .add-comment {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-footer .add-comment input {\n  flex: 1;\n  border: none;\n  outline: none;\n  background: transparent;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.post-modal-footer .add-comment input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment input::placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment .post-btn {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 700;\n  font-size: 0.95rem;\n  cursor: pointer;\n}\n.post-modal-footer .add-comment .post-btn:hover {\n  color: var(--primary-action);\n  opacity: 0.8;\n}\n\n.likers-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.likers-modal-bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(6px);\n}\n\n.likers-modal {\n  position: relative;\n  width: min(480px, 92vw);\n  max-height: 80vh;\n  overflow-y: auto;\n  background: var(--bg-card);\n  border-radius: 16px;\n  padding: 20px;\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.likers-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.likers-modal__header h3 {\n  margin: 0;\n  font-size: 1.1rem;\n  color: var(--text-main);\n}\n.likers-modal__header .close-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%;\n}\n.likers-modal__header .close-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.likers-modal__body {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.likers-modal__loading, .likers-modal__empty {\n  color: var(--text-muted);\n  font-size: 0.9rem;\n}\n.likers-modal .liker-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 8px 0;\n  border-bottom: 1px solid var(--border-color);\n}\n.likers-modal .liker-row .liker-info {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.likers-modal .liker-row .liker-info .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.9rem;\n}\n.likers-modal .liker-row .liker-info .emoji {\n  font-size: 1rem;\n}\n.likers-modal .liker-row .follow-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--primary-action);\n  font-weight: 600;\n  font-size: 0.75rem;\n  padding: 6px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n}\n.likers-modal .liker-row .follow-btn.following {\n  color: var(--text-main);\n}\n\n.feed-composer {\n  padding: 16px 20px;\n  display: flex;\n  flex-direction: column;\n}\n.feed-composer__main {\n  display: flex;\n  gap: 12px;\n  align-items: flex-start;\n}\n.feed-composer__input-wrapper {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  min-width: 0;\n}\n.feed-composer__trigger {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 12px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  cursor: text;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  transition: all 0.2s;\n  box-sizing: border-box;\n  min-height: 44px;\n}\n.feed-composer__trigger:hover {\n  background: var(--bg-card);\n}\n.feed-composer__trigger-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 8px 0;\n  cursor: pointer;\n}\n.feed-composer__trigger-text {\n  flex: 1;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  padding: 10px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  transition: background 0.2s;\n}\n.feed-composer__trigger-text:hover {\n  background: var(--bg-card);\n}\n.feed-composer__header-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-bottom: 12px;\n}\n.feed-composer__user-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-composer__username {\n  font-weight: 700;\n  font-size: 0.95rem;\n  color: var(--text-main, #1e293b);\n}\n.feed-composer__privacy-wrapper {\n  position: relative;\n  display: inline-block;\n}\n.feed-composer__privacy {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  background: var(--bg-page);\n  padding: 3px 8px;\n  border-radius: 4px;\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  width: -moz-fit-content;\n  width: fit-content;\n  border: none;\n  cursor: pointer;\n  font-family: inherit;\n  transition: background 0.15s;\n}\n.feed-composer__privacy:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu {\n  position: absolute;\n  top: calc(100% + 8px);\n  left: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 8px;\n  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);\n  z-index: 300;\n  min-width: 180px;\n  padding: 4px;\n}\n.feed-composer .privacy-menu .privacy-option {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 8px 10px;\n  border-radius: 6px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  width: 100%;\n  text-align: left;\n  transition: background 0.15s;\n}\n.feed-composer .privacy-menu .privacy-option:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu .privacy-option.active {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer .privacy-menu .privacy-option svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .desc {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.feed-composer__textarea {\n  background: transparent;\n  border: none;\n  padding: 0;\n  color: var(--text-main);\n  font-size: 1rem;\n  width: 100%;\n  resize: none;\n  outline: none;\n  font-family: inherit;\n  line-height: 1.5;\n}\n.feed-composer__textarea::-moz-placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__textarea::placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__media-preview {\n  position: relative;\n  margin: 12px 0;\n  border-radius: 12px;\n  overflow: hidden;\n  background: var(--bg-page);\n  height: 220px;\n}\n.feed-composer__media-preview img, .feed-composer__media-preview video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  display: block;\n}\n.feed-composer__media-clear {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.5);\n  color: #fff;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  backdrop-filter: blur(4px);\n  transition: background 0.15s;\n}\n.feed-composer__media-clear:hover {\n  background: rgba(0, 0, 0, 0.7);\n}\n.feed-composer__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 16px 0;\n  width: 100%;\n}\n.feed-composer__actions {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-composer__actions .group {\n  display: flex;\n  gap: 16px;\n}\n.feed-composer__actions .group-right {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n}\n.feed-composer__actions .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  font-size: 0.85rem;\n  font-weight: 600;\n  cursor: pointer;\n  padding: 6px 8px;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.feed-composer__actions .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-composer__actions .action-btn.active {\n  color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer__actions .action-btn.loading {\n  opacity: 0.7;\n  cursor: wait;\n}\n.feed-composer__actions .action-btn:disabled {\n  opacity: 0.6;\n  cursor: not-allowed;\n}\n.feed-composer__actions .char-count {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  font-weight: 600;\n}\n.feed-composer__actions .post-submit-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: var(--border-color);\n  color: var(--text-muted);\n  border: none;\n  padding: 8px 16px;\n  border-radius: 20px;\n  font-weight: 700;\n  font-size: 0.9rem;\n  cursor: not-allowed;\n  transition: all 0.2s;\n}\n.feed-composer__actions .post-submit-btn.active {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.feed-composer__actions .post-submit-btn.active:hover {\n  opacity: 0.9;\n  transform: translateY(-1px);\n}\n\n.location-picker-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(4px);\n  z-index: 1000;\n  display: flex;\n  align-items: flex-end;\n  justify-content: center;\n}\n@media (min-width: 768px) {\n  .location-picker-overlay {\n    align-items: center;\n  }\n}\n\n.location-picker {\n  background: var(--bg-card);\n  width: 100%;\n  max-width: 480px;\n  max-height: 85vh;\n  border-radius: 20px 20px 0 0;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);\n}\n@media (min-width: 768px) {\n  .location-picker {\n    border-radius: 16px;\n    max-height: 600px;\n  }\n}\n.location-picker__header {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__header .back-btn {\n  background: none;\n  border: none;\n  color: var(--text-main);\n  cursor: pointer;\n  padding: 8px;\n  margin: -8px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: background 0.2s;\n}\n.location-picker__header .back-btn:hover {\n  background: var(--bg-page);\n}\n.location-picker__header h3 {\n  font-size: 1.1rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0;\n  flex: 1;\n  text-align: center;\n}\n.location-picker__header .done-btn {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 700;\n  font-size: 0.95rem;\n  cursor: pointer;\n  padding: 4px 8px;\n  border-radius: 4px;\n}\n.location-picker__header .done-btn:hover {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.location-picker__search {\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__search .search-input-wrapper {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 24px;\n  padding: 12px 16px;\n  transition: border-color 0.2s, box-shadow 0.2s;\n}\n.location-picker__search .search-input-wrapper:focus-within {\n  border-color: var(--primary-action);\n  box-shadow: 0 0 0 3px rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.location-picker__search .search-input-wrapper svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.location-picker__search .search-input-wrapper input {\n  flex: 1;\n  border: none;\n  background: transparent;\n  outline: none;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.location-picker__search .search-input-wrapper input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper input::placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper .clear-search {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: color 0.2s, background 0.2s;\n}\n.location-picker__search .search-input-wrapper .clear-search:hover {\n  color: var(--text-main);\n  background: var(--border-color);\n}\n.location-picker__content {\n  flex: 1;\n  overflow-y: auto;\n  padding: 12px 0;\n}\n.location-picker__content .suggested-title {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0 20px 12px;\n  text-transform: uppercase;\n  letter-spacing: 0.5px;\n}\n.location-picker__content .loading-locations {\n  padding: 40px 20px;\n  text-align: center;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n}\n.location-picker__content .locations-list {\n  display: flex;\n  flex-direction: column;\n}\n.location-picker__content .location-item {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px 20px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n  width: 100%;\n}\n.location-picker__content .location-item:hover {\n  background: var(--bg-page);\n}\n.location-picker__content .location-item:active {\n  background: var(--border-color);\n}\n.location-picker__content .location-item.selected {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.05);\n}\n.location-picker__content .location-item .location-icon {\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  font-size: 1.2rem;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.location-picker__content .location-item .location-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n}\n.location-picker__content .location-item .location-info .location-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.location-picker__content .location-item .location-info .location-sub {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.location-picker__content .location-item .selection-indicator {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --bg-page: #F8F9FA;\n  --bg-card: #FFFFFF;\n  --text-main: #2F2F2F;\n  --text-muted: #7A7A7A;\n  --border-color: #E2E8F0;\n  --primary-color: #E6E6FA;\n  --primary-action: #898AA6;\n  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n  --input-bg: #FFFFFF;\n  --success: #22c55e;\n  --danger: #ef4444;\n  --warning: #f59e0b;\n  --success-bg: #f0fdf4;\n  --danger-bg: #fef2f2;\n  --warning-bg: #fffbeb;\n  --primary-action-rgb: 137, 138, 166;\n  --success-rgb: 34, 197, 94;\n  --danger-rgb: 239, 68, 68;\n  --warning-rgb: 245, 158, 11;\n  --bg-card-rgb: 255, 255, 255;\n  --text-main-rgb: 47, 47, 47;\n  --text-muted-rgb: 122, 122, 122;\n}\n\nhtml {\n  transition: background-color 0.25s ease;\n}\n\nbody,\n.pawtastic-feed,\n.messages-page,\n.profile-page,\n.modern-badges,\n.adoption-page,\n.settings-page,\n.admin-dashboard,\n.adoption-board,\n.register-page,\n.badges-contests,\n.notifications-page,\n.feed-card,\n.sidebar-aside,\n.msg-list-pane,\n.msg-main-pane,\n.msg-chat-header,\n.msg-input-bar,\n.msg-modal,\n.feed-create-modal,\n.post-menu__dropdown,\n.reaction-picker,\n.settings-card,\n.ui-card,\n.admin-card {\n  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.2s ease;\n}\n\n[data-theme=dark] {\n  --bg-page: #111418;\n  --bg-card: #1C2028;\n  --text-main: #E8EAF0;\n  --text-muted: #8A8FA8;\n  --border-color: #2C3248;\n  --primary-color: #242A3A;\n  --primary-action: #C9A9C0;\n  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);\n  --input-bg: #1A1F2E;\n  --success: #4ade80;\n  --danger: #f87171;\n  --warning-bg: rgba(245, 158, 11, 0.15);\n  --primary-action-rgb: 201, 169, 192;\n  --success-rgb: 74, 222, 128;\n  --danger-rgb: 248, 113, 113;\n  --warning-rgb: 251, 191, 36;\n  --bg-card-rgb: 28, 32, 40;\n  --text-main-rgb: 232, 234, 240;\n  --text-muted-rgb: 138, 143, 168;\n}\n[data-theme=dark] body {\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .profile-cover__bg {\n  background: linear-gradient(135deg, #2a2040 0%, #1a1828 100%) !important;\n}\n[data-theme=dark] .profile-avatar {\n  border-color: var(--bg-card) !important;\n}\n[data-theme=dark] input,\n[data-theme=dark] select,\n[data-theme=dark] textarea {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] select::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder,\n[data-theme=dark] select::placeholder,\n[data-theme=dark] textarea::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .msg-bubble-row--other .msg-bubble {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .profile-achievement--gold {\n  background: #2a2010 !important;\n  border-color: #4a3500 !important;\n  color: #fbbf24 !important;\n}\n[data-theme=dark] .profile-achievement--blue {\n  background: #0f1e36 !important;\n  border-color: #1e3a5f !important;\n  color: #93c5fd !important;\n}\n[data-theme=dark] .profile-achievement--purple {\n  background: #1a1040 !important;\n  border-color: #3b1f60 !important;\n  color: #d8b4fe !important;\n}\n[data-theme=dark] .profile-achievement--green {\n  background: #0a2010 !important;\n  border-color: #1a4020 !important;\n  color: #86efac !important;\n}\n[data-theme=dark] .msg-tab {\n  border-color: var(--border-color) !important;\n  color: var(--text-muted) !important;\n  background: transparent !important;\n}\n[data-theme=dark] .msg-tab--active {\n  background: var(--primary-action) !important;\n  border-color: var(--primary-action) !important;\n  color: #fff !important;\n}\n[data-theme=dark] .profile-tabs {\n  border-bottom-color: var(--border-color) !important;\n}\n[data-theme=dark] .profile-tabs__tab {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .profile-tabs__tab--active {\n  color: var(--primary-action) !important;\n  border-bottom-color: var(--primary-action) !important;\n}\n[data-theme=dark] .feed-modal-overlay {\n  background: rgba(0, 0, 0, 0.7) !important;\n}\n[data-theme=dark] .profile-stats-card,\n[data-theme=dark] .leaderboard-card-modern,\n[data-theme=dark] .badge-card-modern,\n[data-theme=dark] .contest-banner {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-create-modal__audience-btn,\n[data-theme=dark] .feed-create-modal__add-row {\n  background: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] ::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n[data-theme=dark] ::-webkit-scrollbar-track {\n  background: var(--bg-page);\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb:hover {\n  background: var(--text-muted);\n}\n[data-theme=dark] .dropdown-menu,\n[data-theme=dark] .popover,\n[data-theme=dark] .tooltip {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-stories-container,\n[data-theme=dark] .feed-card,\n[data-theme=dark] .sidebar-card,\n[data-theme=dark] .post-card,\n[data-theme=dark] .admin-card {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;\n}\n[data-theme=dark] .feed-story__img-box {\n  border-color: var(--bg-card) !important;\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .feed-story__label {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__header .user .meta .meta-top .name {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__body .post-text {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__footer {\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-post-v2__footer .action-btn:hover {\n  background-color: var(--bg-page) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input, [data-theme=dark] textarea, [data-theme=dark] select {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder, [data-theme=dark] select::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder, [data-theme=dark] textarea::placeholder, [data-theme=dark] select::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .post-modal-content,\n[data-theme=dark] .settings-content {\n  background-color: var(--bg-card) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .post-modal-header,\n[data-theme=dark] .post-modal-footer {\n  border-color: var(--border-color) !important;\n}\n\n:root[data-text-size=small] {\n  font-size: 14px;\n}\n\n:root[data-text-size=medium] {\n  font-size: 16px;\n}\n\n:root[data-text-size=large] {\n  font-size: 18px;\n}\n\nbody {\n  font-size: 1rem;\n  line-height: 1.5;\n}\n\n.likers-modal {\n  width: min(560px, 92vw);\n  max-height: min(640px, 88vh);\n  overflow-y: auto;\n  border-radius: 16px;\n  padding: 20px 24px;\n  background: var(--bg-card);\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n\n.post-modal-overlay, .likers-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.55);\n  backdrop-filter: blur(6px);\n}\n\n.pawtastic-feed {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.feed-main {\n  flex: 1;\n  margin-left: 260px;\n  padding: 32px 40px;\n  max-width: calc(100vw - 260px);\n}\n@media (max-width: 768px) {\n  .feed-main {\n    margin-left: 0;\n    padding: 20px;\n  }\n}\n\n.feed-page-header {\n  max-width: 1100px;\n  margin: 0 auto 28px;\n}\n.feed-page-header__title {\n  font-size: 1.75rem;\n  font-weight: 800;\n  color: var(--text-main);\n  margin: 0 0 4px;\n}\n.feed-page-header__sub {\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.feed-layout {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr) 300px;\n  gap: 32px;\n  align-items: start;\n  max-width: 1100px;\n  margin: 0 auto;\n}\n@media (max-width: 1024px) {\n  .feed-layout {\n    grid-template-columns: 1fr;\n  }\n}\n\n.feed-center {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n  min-width: 0;\n}\n\n.feed-filter-indicator .filter-card {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 20px;\n  margin-bottom: 20px;\n  background: rgba(233, 30, 140, 0.1);\n  border: 1px solid rgba(233, 30, 140, 0.25);\n}\n.feed-filter-indicator .filter-info {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.feed-filter-indicator .clear-filter {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.feed-card {\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n  margin-bottom: 20px;\n}\n\n.feed-stories-container {\n  padding: 24px;\n  background: var(--bg-card);\n  border-radius: 16px;\n  border: 1px solid var(--border-color);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);\n  overflow: hidden;\n}\n\n.feed-stories {\n  display: flex;\n  gap: 20px;\n  overflow-x: auto;\n  scrollbar-width: none;\n}\n.feed-stories::-webkit-scrollbar {\n  display: none;\n}\n\n.feed-story-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n\n.feed-story {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n  cursor: pointer;\n  width: 76px;\n}\n.feed-story__ring {\n  position: relative;\n  width: 76px;\n  height: 76px;\n  border-radius: 50%;\n  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.feed-story__ring--add {\n  background: linear-gradient(135deg, #c4c5d6, #a8a9be);\n}\n.feed-story__ring > * {\n  z-index: 2;\n  position: relative;\n}\n.feed-story__img-box {\n  width: 72px;\n  height: 72px;\n  border-radius: 50%;\n  overflow: hidden;\n  background: var(--bg-page);\n  border: 3px solid var(--bg-card);\n}\n.feed-story__img-box img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.feed-story__plus {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  background: var(--primary-action);\n  color: white;\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  border: 2.5px solid var(--bg-card);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 11px;\n  z-index: 3;\n  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);\n}\n.feed-story__label {\n  font-size: 0.7rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  text-align: center;\n  margin-top: 4px;\n}\n.feed-story__menu {\n  position: absolute;\n  top: 90px;\n  left: 0;\n  background: var(--bg-card);\n  border-radius: 12px;\n  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);\n  width: 170px;\n  padding: 8px;\n  z-index: 1000;\n  border: 1px solid var(--border-color);\n}\n.feed-story__menu button {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  width: 100%;\n  padding: 10px;\n  border: none;\n  background: none;\n  border-radius: 8px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  cursor: pointer;\n  color: var(--text-main);\n}\n.feed-story__menu button:hover {\n  background: var(--bg-page);\n  color: var(--primary-action);\n}\n.feed-story__menu button.cancel {\n  color: var(--danger);\n}\n.feed-story__menu .divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 4px 0;\n}\n\n.feed-post-v2 {\n  display: flex;\n  flex-direction: column;\n}\n.feed-post-v2__header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-post-v2__header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-post-v2__header .user .meta .meta-top {\n  display: flex;\n  align-items: baseline;\n  gap: 8px;\n}\n.feed-post-v2__header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.feed-post-v2__header .user .meta .meta-top .time {\n  margin-left: auto;\n  color: var(--text-muted);\n  font-size: 0.8rem;\n}\n.feed-post-v2__header .user .meta .meta-top .tag-with {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.feed-post-v2__header .user .meta .meta-top .tag-with b {\n  color: var(--text-main);\n}\n.feed-post-v2__header .user .meta .meta-bottom {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  row-gap: 2px;\n  align-items: center;\n  color: var(--text-muted);\n  font-size: 0.8rem;\n}\n.feed-post-v2__header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.feed-post-v2__header .user .meta .meta-bottom .dot {\n  color: var(--text-muted);\n}\n.feed-post-v2__header .user .meta .meta-bottom .location {\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  max-width: 300px;\n}\n.feed-post-v2__header .user .meta .meta-bottom .location .location-text {\n  color: var(--text-muted);\n  font-weight: 600;\n  text-decoration: none;\n  display: inline-flex;\n  align-items: center;\n  max-width: 270px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.feed-post-v2__header .user .meta .meta-bottom .location .location-text:hover {\n  text-decoration: underline;\n  color: var(--text-main);\n}\n.feed-post-v2__header .user .meta .meta-row {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.feed-post-v2__header .actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.feed-post-v2__header .actions .icon-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  transition: color 0.2s;\n}\n.feed-post-v2__header .actions .icon-btn:hover {\n  color: var(--text-main);\n}\n.feed-post-v2__body {\n  padding: 0;\n}\n.feed-post-v2__body .post-text {\n  padding: 0 20px;\n  color: var(--text-main);\n  line-height: 1.5;\n  font-size: 0.95rem;\n  margin-bottom: 8px;\n}\n.feed-post-v2__body .post-text .text-more {\n  color: var(--text-muted);\n  cursor: pointer;\n  margin-left: 4px;\n}\n.feed-post-v2__body .hashtags {\n  padding: 0 20px;\n  display: flex;\n  gap: 8px;\n  margin-bottom: 16px;\n  flex-wrap: wrap;\n}\n.feed-post-v2__body .hashtags span {\n  color: var(--text-muted);\n  font-size: 0.85rem;\n}\n.feed-post-v2__body .main-img {\n  width: 100%;\n  max-height: 540px;\n  display: block;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 0;\n  background: var(--bg-page);\n}\n.feed-post-v2__body .main-video {\n  width: 100%;\n  display: block;\n  border-radius: 0;\n  max-height: 540px;\n  background: #000;\n}\n.feed-post-v2__footer {\n  padding: 12px 20px;\n  border-top: 1px solid var(--border-color);\n  display: flex;\n  gap: 24px;\n}\n.feed-post-v2__footer .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  color: var(--text-muted);\n  transition: 0.2s;\n  padding: 6px 12px;\n  border-radius: 8px;\n}\n.feed-post-v2__footer .action-btn span {\n  font-weight: 700;\n  font-size: 0.9rem;\n}\n.feed-post-v2__footer .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-post-v2__footer .action-btn.active {\n  color: var(--danger);\n}\n.feed-post-v2__footer .likes-count-btn {\n  color: var(--text-main);\n  padding-left: 4px;\n}\n\n.feed-right-col {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n\n.sidebar-card {\n  padding: 20px;\n}\n.sidebar-card__title {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  margin-bottom: 20px;\n  color: var(--text-main);\n  font-weight: 800;\n  font-size: 0.9rem;\n}\n.sidebar-card__title--between {\n  justify-content: space-between;\n  gap: 8px;\n}\n\n.tag-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n\n.tag-row {\n  display: flex;\n  justify-content: space-between;\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-muted);\n}\n.tag-row .count {\n  color: var(--text-muted);\n}\n\n.title-left {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n}\n\n.see-all-btn {\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.live-contest {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.live-contest__top {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 10px;\n}\n\n.contest-name {\n  font-weight: 800;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n\n.contest-sub {\n  color: var(--text-muted);\n  font-size: 0.75rem;\n  margin-top: 4px;\n}\n\n.live-pill {\n  background: rgba(var(--success-rgb), 0.15);\n  color: var(--success);\n  font-size: 0.65rem;\n  font-weight: 800;\n  padding: 2px 8px;\n  border-radius: 999px;\n}\n\n.contest-progress {\n  height: 6px;\n  background: var(--border-color);\n  border-radius: 999px;\n  overflow: hidden;\n}\n\n.contest-progress__bar {\n  width: 74%;\n  height: 100%;\n  background: linear-gradient(90deg, var(--primary-action), var(--text-muted));\n}\n\n.contest-btn {\n  width: 100%;\n}\n\n.suggested-users {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n}\n\n.user-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.user-row .info {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.user-row .info .name {\n  font-weight: 700;\n  font-size: 0.85rem;\n  color: var(--text-main);\n}\n.user-row .info .sub {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.user-row .follow-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--primary-action);\n  font-weight: 600;\n  font-size: 0.75rem;\n  line-height: 1;\n  padding: 7px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n  min-width: 58px;\n  transition: all 0.18s ease;\n}\n.user-row .follow-btn:hover {\n  background: var(--bg-card);\n  border-color: var(--primary-action);\n}\n\n.story-viewer-v2 {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.92);\n  backdrop-filter: blur(20px);\n}\n.story-viewer-v2__main {\n  position: relative;\n  width: 100%;\n  max-width: 440px;\n  height: 100%;\n  max-height: 90vh;\n  background: #000;\n  border-radius: 16px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);\n}\n@media (max-width: 480px) {\n  .story-viewer-v2__main {\n    max-height: 100vh;\n    border-radius: 0;\n  }\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars {\n  position: absolute;\n  top: 12px;\n  left: 10px;\n  right: 10px;\n  display: flex;\n  gap: 4px;\n  z-index: 100;\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars .story-progress-bg {\n  flex: 1;\n  height: 2px;\n  background: rgba(255, 255, 255, 0.3);\n  border-radius: 99px;\n  overflow: hidden;\n}\n.story-viewer-v2__main .story-viewer-v2__progress-bars .story-progress-fill {\n  height: 100%;\n  background: #fff;\n  transition: width 0.1s linear;\n}\n.story-viewer-v2__main .story-viewer-v2__header {\n  padding: 32px 16px 40px;\n  display: flex;\n  align-items: center;\n  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);\n  z-index: 10;\n  position: absolute;\n  top: 0;\n  width: 100%;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info {\n  display: flex;\n  flex-direction: column;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line .name {\n  color: #fff;\n  font-weight: 700;\n  font-size: 0.95rem;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n  line-height: 1.1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .top-line .time {\n  color: rgba(255, 255, 255, 0.8);\n  font-size: 0.85rem;\n  font-weight: 500;\n  line-height: 1.1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__user .user-info .visibility-icon {\n  color: rgba(255, 255, 255, 0.9);\n  margin-top: 4px;\n  display: flex;\n  align-items: center;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions {\n  position: absolute;\n  top: 28px;\n  right: 32px;\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  z-index: 20;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn {\n  background: rgba(0, 0, 0, 0.45);\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  width: 38px;\n  height: 38px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n  backdrop-filter: blur(10px);\n  box-sizing: border-box;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn:hover, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn:hover {\n  background: rgba(0, 0, 0, 0.7);\n  transform: scale(1.08);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .dots-btn svg, .story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn svg {\n  display: block;\n  width: 22px;\n  height: 22px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .close-btn svg {\n  width: 26px;\n  height: 26px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu {\n  position: absolute;\n  top: calc(100% + 8px);\n  right: 0;\n  background: rgba(30, 30, 35, 0.95);\n  backdrop-filter: blur(12px);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 14px;\n  min-width: 220px;\n  padding: 6px;\n  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);\n  z-index: 300;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  padding: 10px 12px;\n  border: none;\n  background: transparent;\n  color: #fff;\n  font-size: 0.9rem;\n  font-weight: 500;\n  cursor: pointer;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button:hover {\n  background: rgba(255, 255, 255, 0.08);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button svg {\n  width: 20px;\n  height: 20px;\n  opacity: 0.8;\n  color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button span {\n  margin-left: 12px;\n  flex: 1;\n  text-align: left;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete {\n  color: #ff5c5c;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete svg {\n  color: #ff5c5c;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.delete:hover {\n  background: rgba(255, 92, 92, 0.1);\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.has-submenu svg:last-child {\n  opacity: 0.5;\n  margin-left: 8px;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.active {\n  background: rgba(255, 255, 255, 0.1);\n  color: #fff;\n  font-weight: 700;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu button.active svg {\n  opacity: 1;\n}\n.story-viewer-v2__main .story-viewer-v2__header .story-viewer-v2__actions .story-options-trigger .story-menu .visibility-submenu .submenu-header {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1);\n  border-radius: 0;\n  margin-bottom: 4px;\n  padding-bottom: 10px;\n  font-weight: 700;\n  color: rgba(255, 255, 255, 0.6);\n}\n.story-viewer-v2__main .story-viewer-v2__footer {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  padding: 24px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);\n  z-index: 10;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 4px;\n  color: #fff;\n  cursor: pointer;\n  transition: opacity 0.2s;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item:hover {\n  opacity: 0.8;\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item .icon-circle {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: rgba(255, 255, 255, 0.15);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  backdrop-filter: blur(10px);\n}\n.story-viewer-v2__main .story-viewer-v2__footer .footer-item span {\n  font-size: 0.75rem;\n  font-weight: 600;\n  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);\n}\n.story-viewer-v2__main .story-viewer-v2__body {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #000;\n}\n.story-viewer-v2__main .story-viewer-v2__body img, .story-viewer-v2__main .story-viewer-v2__body video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n\n.nav-arrow {\n  position: fixed;\n  top: 50%;\n  transform: translateY(-50%);\n  background: rgba(255, 255, 255, 0.15);\n  border: none;\n  color: #fff;\n  width: 52px;\n  height: 52px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  z-index: 1000;\n  transition: all 0.2s;\n  backdrop-filter: blur(10px);\n}\n.nav-arrow:hover {\n  background: rgba(255, 255, 255, 0.3);\n  transform: translateY(-50%) scale(1.1);\n}\n.nav-arrow.prev {\n  left: 20px;\n}\n.nav-arrow.next {\n  right: 20px;\n}\n\n.feed-btn--primary {\n  background: #898AA6;\n  color: white;\n  border: none;\n  padding: 8px 24px;\n  border-radius: 99px;\n  font-weight: 700;\n  cursor: pointer;\n}\n\n.feed-avatar {\n  position: relative;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n}\n.feed-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 50%;\n}\n.feed-avatar--sm {\n  width: 32px;\n  height: 32px;\n  min-width: 32px;\n}\n.feed-avatar--md {\n  width: 44px;\n  height: 44px;\n  min-width: 44px;\n}\n.feed-avatar.online .feed-avatar__dot {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 12px;\n  height: 12px;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n  border-radius: 50%;\n}\n\n.post-menu {\n  position: relative;\n}\n.post-menu__trigger {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  transition: all 0.2s;\n}\n.post-menu__trigger:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.post-menu__trigger:active {\n  transform: scale(0.95);\n}\n.post-menu__dropdown {\n  position: absolute;\n  top: calc(100% + 6px);\n  right: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);\n  z-index: 100;\n  min-width: 200px;\n  padding: 6px;\n  transform-origin: top right;\n}\n.post-menu__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 6px 4px;\n}\n.post-menu__submenu {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.post-menu__back {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  width: 100%;\n  padding: 10px 12px;\n  border: none;\n  border-radius: 8px;\n  background: none;\n  color: var(--text-muted, #64748b);\n  cursor: pointer;\n  text-align: left;\n}\n.post-menu__back:hover {\n  background: var(--bg-page, #f8f9fa);\n  color: var(--text-main);\n}\n.post-menu__item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  padding: 10px 12px;\n  border: none;\n  border-radius: 8px;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n}\n.post-menu__item:hover {\n  background: var(--bg-page, #f8f9fa);\n}\n.post-menu__item svg {\n  color: var(--text-muted, #64748b);\n  flex-shrink: 0;\n}\n.post-menu__item .item-text {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-menu__item .item-text .label {\n  font-size: 0.9rem;\n  color: var(--text-main, #1e293b);\n  font-weight: 500;\n}\n.post-menu__item .item-text .sub {\n  font-size: 0.75rem;\n  color: var(--text-muted, #94a3b8);\n}\n.post-menu__item.danger svg {\n  color: #e11d48;\n}\n.post-menu__item.danger .label {\n  color: #e11d48;\n}\n\n.post-modal-overlay {\n  z-index: 2000;\n}\n\n.post-modal-bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.65);\n  backdrop-filter: blur(8px);\n}\n\n.post-modal-content {\n  position: relative;\n  display: flex;\n  background: var(--bg-card);\n  border-radius: 20px;\n  overflow: hidden;\n  max-height: min(640px, 88vh);\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n.post-modal-content.has-image {\n  width: min(1000px, 94vw);\n  height: auto;\n}\n.post-modal-content.has-image .post-modal-media {\n  flex: 1.5;\n  background: #000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.post-modal-content.has-image .post-modal-media img, .post-modal-content.has-image .post-modal-media video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.post-modal-content.has-image .post-modal-sidebar {\n  width: 400px;\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  border-left: 1px solid var(--border-color);\n}\n.post-modal-content.text-only {\n  width: 600px;\n  max-width: 95vw;\n}\n.post-modal-content.text-only .post-modal-sidebar {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.post-modal-header {\n  padding: 16px 20px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid var(--border-color);\n}\n.post-modal-header .user {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-header .user .meta {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-modal-header .user .meta .meta-top {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.post-modal-header .user .meta .meta-top .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n}\n.post-modal-header .user .meta .meta-top .time {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.post-modal-header .user .meta .meta-bottom {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  color: #94a3b8;\n  font-size: 0.8rem;\n}\n.post-modal-header .user .meta .meta-bottom .breed {\n  font-weight: 500;\n}\n.post-modal-header .user .meta .meta-bottom .location {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n.post-modal-header .close-btn {\n  background: none;\n  border: none;\n  color: #94a3b8;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  border-radius: 50%;\n  transition: 0.2s;\n}\n.post-modal-header .close-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n\n.post-modal-scrollable {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.post-modal-scrollable::-webkit-scrollbar {\n  width: 6px;\n}\n.post-modal-scrollable::-webkit-scrollbar-track {\n  background: transparent;\n}\n.post-modal-scrollable::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n\n.post-modal-caption {\n  display: flex;\n  gap: 12px;\n}\n.post-modal-caption .caption-content {\n  flex: 1;\n  font-size: 0.95rem;\n  color: var(--text-muted);\n  line-height: 1.5;\n}\n.post-modal-caption .caption-content .author-name {\n  font-weight: 700;\n  color: var(--text-main);\n  margin-right: 6px;\n}\n.post-modal-caption .caption-content .hashtags {\n  display: flex;\n  gap: 8px;\n  margin-top: 8px;\n  flex-wrap: wrap;\n}\n.post-modal-caption .caption-content .hashtags span {\n  color: var(--primary-action);\n  font-size: 0.85rem;\n  font-weight: 500;\n}\n\n.post-modal-comments {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n  gap: 16px;\n}\n.post-modal-comments .empty-state {\n  margin: auto;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  padding: 40px 0;\n}\n.post-modal-comments .empty-state span:first-child {\n  font-weight: 600;\n  color: var(--text-main);\n}\n.post-modal-comments .post-modal-comment-thread {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.post-modal-comments .post-modal-comment-thread .comment-replies {\n  padding-left: 44px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  margin-top: 4px;\n}\n.post-modal-comments .post-modal-comment {\n  display: flex;\n  align-items: flex-start;\n  gap: 12px;\n}\n.post-modal-comments .post-modal-comment .comment-content-area {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n  background: var(--bg-page);\n  padding: 10px 14px;\n  border-radius: 12px;\n}\n.post-modal-comments .post-modal-comment.reply .comment-content-area {\n  background: transparent;\n  padding: 0;\n  border-radius: 0;\n}\n.post-modal-comments .post-modal-comment .comment-body {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.post-modal-comments .post-modal-comment .comment-author {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.9rem;\n}\n.post-modal-comments .post-modal-comment .comment-text {\n  color: var(--text-main);\n  font-size: 0.9rem;\n  line-height: 1.4;\n}\n.post-modal-comments .post-modal-comment .comment-actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-top: 6px;\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  font-weight: 600;\n}\n.post-modal-comments .post-modal-comment .comment-actions .reply-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  font-weight: 700;\n  cursor: pointer;\n  padding: 0;\n}\n.post-modal-comments .post-modal-comment .comment-actions .reply-btn:hover {\n  color: var(--primary-action);\n}\n\n.replying-to-banner {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  background: var(--bg-page);\n  padding: 8px 16px;\n  border-radius: 8px;\n  margin-bottom: 12px;\n  font-size: 0.85rem;\n  color: var(--text-muted);\n}\n.replying-to-banner strong {\n  color: var(--text-main);\n}\n.replying-to-banner .cancel-reply {\n  background: none;\n  border: none;\n  color: var(--danger);\n  font-weight: 700;\n  cursor: pointer;\n  padding: 0;\n}\n.replying-to-banner .cancel-reply:hover {\n  opacity: 0.8;\n}\n\n.post-modal-footer {\n  border-top: 1px solid var(--border-color);\n  padding: 16px 20px;\n}\n.post-modal-footer .actions {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 12px;\n}\n.post-modal-footer .actions .actions-left {\n  display: flex;\n  gap: 16px;\n}\n.post-modal-footer .actions .action-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 0;\n  transition: 0.2s;\n}\n.post-modal-footer .actions .action-btn:hover {\n  color: var(--text-main);\n  transform: scale(1.05);\n}\n.post-modal-footer .actions .action-btn.active {\n  color: var(--danger);\n}\n.post-modal-footer .likes-count-btn {\n  background: none;\n  border: none;\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.95rem;\n  margin-bottom: 16px;\n  padding: 0;\n  cursor: pointer;\n  text-align: left;\n}\n.post-modal-footer .add-comment {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.post-modal-footer .add-comment input {\n  flex: 1;\n  border: none;\n  outline: none;\n  background: transparent;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.post-modal-footer .add-comment input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment input::placeholder {\n  color: var(--text-muted);\n}\n.post-modal-footer .add-comment .post-btn {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 700;\n  font-size: 0.95rem;\n  cursor: pointer;\n}\n.post-modal-footer .add-comment .post-btn:hover {\n  color: var(--primary-action);\n  opacity: 0.8;\n}\n\n.likers-modal-overlay {\n  z-index: 2000;\n}\n\n.likers-modal-bg {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(6px);\n}\n\n.likers-modal {\n  position: relative;\n  width: min(480px, 92vw);\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.likers-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.likers-modal__header h3 {\n  margin: 0;\n  font-size: 1.1rem;\n  color: var(--text-main);\n}\n.likers-modal__header .close-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%;\n}\n.likers-modal__header .close-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.likers-modal__body {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.likers-modal__loading, .likers-modal__empty {\n  color: var(--text-muted);\n  font-size: 0.9rem;\n}\n.likers-modal .liker-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 8px 0;\n  border-bottom: 1px solid var(--border-color);\n}\n.likers-modal .liker-row .liker-info {\n  flex: 1;\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.likers-modal .liker-row .liker-info .name {\n  font-weight: 700;\n  color: var(--text-main);\n  font-size: 0.9rem;\n}\n.likers-modal .liker-row .liker-info .emoji {\n  font-size: 1rem;\n}\n.likers-modal .liker-row .follow-btn {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  color: var(--primary-action);\n  font-weight: 600;\n  font-size: 0.75rem;\n  padding: 6px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n}\n.likers-modal .liker-row .follow-btn.following {\n  color: var(--text-main);\n}\n\n.feed-composer {\n  padding: 16px 20px;\n  display: flex;\n  flex-direction: column;\n}\n.feed-composer__main {\n  display: flex;\n  gap: 12px;\n  align-items: flex-start;\n}\n.feed-composer__input-wrapper {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  min-width: 0;\n}\n.feed-composer__trigger {\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 12px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  cursor: text;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  transition: all 0.2s;\n  box-sizing: border-box;\n  min-height: 44px;\n}\n.feed-composer__trigger:hover {\n  background: var(--bg-card);\n}\n.feed-composer__trigger-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 8px 0;\n  cursor: pointer;\n}\n.feed-composer__trigger-text {\n  flex: 1;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  padding: 10px 16px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n  transition: background 0.2s;\n}\n.feed-composer__trigger-text:hover {\n  background: var(--bg-card);\n}\n.feed-composer__header-row {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-bottom: 12px;\n}\n.feed-composer__user-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n.feed-composer__username {\n  font-weight: 700;\n  font-size: 0.95rem;\n  color: var(--text-main, #1e293b);\n}\n.feed-composer__privacy-wrapper {\n  position: relative;\n  display: inline-block;\n}\n.feed-composer__privacy {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  background: var(--bg-page);\n  padding: 3px 8px;\n  border-radius: 4px;\n  display: inline-flex;\n  align-items: center;\n  gap: 4px;\n  width: -moz-fit-content;\n  width: fit-content;\n  border: none;\n  cursor: pointer;\n  font-family: inherit;\n  transition: background 0.15s;\n}\n.feed-composer__privacy:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu {\n  position: absolute;\n  top: calc(100% + 8px);\n  left: 0;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 8px;\n  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);\n  z-index: 300;\n  min-width: 180px;\n  padding: 4px;\n}\n.feed-composer .privacy-menu .privacy-option {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 8px 10px;\n  border-radius: 6px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  width: 100%;\n  text-align: left;\n  transition: background 0.15s;\n}\n.feed-composer .privacy-menu .privacy-option:hover {\n  background: var(--bg-page);\n}\n.feed-composer .privacy-menu .privacy-option.active {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer .privacy-menu .privacy-option svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .label {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.feed-composer .privacy-menu .privacy-option .privacy-info .desc {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n}\n.feed-composer__textarea {\n  background: transparent;\n  border: none;\n  padding: 0;\n  color: var(--text-main);\n  font-size: 1rem;\n  width: 100%;\n  resize: none;\n  outline: none;\n  font-family: inherit;\n  line-height: 1.5;\n}\n.feed-composer__textarea::-moz-placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__textarea::placeholder {\n  color: var(--text-muted);\n}\n.feed-composer__media-preview {\n  position: relative;\n  margin: 12px 0;\n  border-radius: 12px;\n  overflow: hidden;\n  background: var(--bg-page);\n  height: 220px;\n}\n.feed-composer__media-preview img, .feed-composer__media-preview video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  display: block;\n}\n.feed-composer__media-clear {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.5);\n  color: #fff;\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  backdrop-filter: blur(4px);\n  transition: background 0.15s;\n}\n.feed-composer__media-clear:hover {\n  background: rgba(0, 0, 0, 0.7);\n}\n.feed-composer__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 16px 0;\n  width: 100%;\n}\n.feed-composer__actions {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.feed-composer__actions .group {\n  display: flex;\n  gap: 16px;\n}\n.feed-composer__actions .group-right {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n}\n.feed-composer__actions .action-btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  font-size: 0.85rem;\n  font-weight: 600;\n  cursor: pointer;\n  padding: 6px 8px;\n  border-radius: 8px;\n  transition: all 0.2s;\n}\n.feed-composer__actions .action-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.feed-composer__actions .action-btn.active {\n  color: var(--primary-action);\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.feed-composer__actions .action-btn.loading {\n  opacity: 0.7;\n  cursor: wait;\n}\n.feed-composer__actions .action-btn:disabled {\n  opacity: 0.6;\n  cursor: not-allowed;\n}\n.feed-composer__actions .char-count {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  font-weight: 600;\n}\n.feed-composer__actions .post-submit-btn {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: var(--border-color);\n  color: var(--text-muted);\n  border: none;\n  padding: 8px 16px;\n  border-radius: 20px;\n  font-weight: 700;\n  font-size: 0.9rem;\n  cursor: not-allowed;\n  transition: all 0.2s;\n}\n.feed-composer__actions .post-submit-btn.active {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.feed-composer__actions .post-submit-btn.active:hover {\n  opacity: 0.9;\n  transform: translateY(-1px);\n}\n\n.location-picker-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.6);\n  backdrop-filter: blur(4px);\n  z-index: 1000;\n  display: flex;\n  align-items: flex-end;\n  justify-content: center;\n}\n@media (min-width: 768px) {\n  .location-picker-overlay {\n    align-items: center;\n  }\n}\n\n.location-picker {\n  background: var(--bg-card);\n  width: 100%;\n  max-width: 540px;\n  max-height: 85vh;\n  border-radius: 20px 20px 0 0;\n  overflow: hidden;\n  overflow-x: hidden;\n  display: flex;\n  flex-direction: column;\n  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);\n}\n@media (min-width: 768px) {\n  .location-picker {\n    border-radius: 16px;\n    max-height: 600px;\n  }\n}\n.location-picker__header {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__header .back-btn {\n  background: none;\n  border: none;\n  color: var(--text-main);\n  cursor: pointer;\n  padding: 8px;\n  margin: -8px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: background 0.2s;\n}\n.location-picker__header .back-btn:hover {\n  background: var(--bg-page);\n}\n.location-picker__header h3 {\n  font-size: 1.1rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0;\n  flex: 1;\n  text-align: center;\n}\n.location-picker__header .done-btn {\n  background: none;\n  border: none;\n  color: var(--primary-action);\n  font-weight: 700;\n  font-size: 0.95rem;\n  cursor: pointer;\n  padding: 4px 8px;\n  border-radius: 4px;\n}\n.location-picker__header .done-btn:hover {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.location-picker__search {\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.location-picker__search .search-input-wrapper {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  background: var(--bg-page);\n  border: 1px solid var(--border-color);\n  border-radius: 24px;\n  padding: 12px 16px;\n  transition: border-color 0.2s, box-shadow 0.2s;\n}\n.location-picker__search .search-input-wrapper:focus-within {\n  border-color: var(--primary-action);\n  box-shadow: 0 0 0 3px rgba(var(--primary-action-rgb, 137, 138, 166), 0.1);\n}\n.location-picker__search .search-input-wrapper svg {\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.location-picker__search .search-input-wrapper input {\n  flex: 1;\n  border: none;\n  background: transparent;\n  outline: none;\n  font-size: 0.95rem;\n  color: var(--text-main);\n}\n.location-picker__search .search-input-wrapper input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper input::placeholder {\n  color: var(--text-muted);\n}\n.location-picker__search .search-input-wrapper .clear-search {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: color 0.2s, background 0.2s;\n}\n.location-picker__search .search-input-wrapper .clear-search:hover {\n  color: var(--text-main);\n  background: var(--border-color);\n}\n.location-picker__content {\n  flex: 1;\n  overflow-y: auto;\n  overflow-x: hidden;\n  padding: 12px 0;\n  scrollbar-width: none;\n}\n.location-picker__content::-webkit-scrollbar {\n  display: none;\n}\n.location-picker__content .suggested-title {\n  font-size: 0.85rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0 20px 12px;\n  text-transform: uppercase;\n  letter-spacing: 0.5px;\n}\n.location-picker__content .loading-locations {\n  padding: 40px 20px;\n  text-align: center;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n}\n.location-picker__content .locations-list {\n  display: flex;\n  flex-direction: column;\n}\n.location-picker__content .location-item {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px 20px;\n  border: none;\n  background: none;\n  cursor: pointer;\n  text-align: left;\n  transition: background 0.15s;\n  width: 100%;\n}\n.location-picker__content .location-item:hover {\n  background: var(--bg-page);\n}\n.location-picker__content .location-item:active {\n  background: var(--border-color);\n}\n.location-picker__content .location-item.selected {\n  background: rgba(var(--primary-action-rgb, 137, 138, 166), 0.05);\n}\n.location-picker__content .location-item .location-icon {\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background: var(--bg-page);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  font-size: 1.2rem;\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n}\n.location-picker__content .location-item .location-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n  min-width: 0;\n}\n.location-picker__content .location-item .location-info .location-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.location-picker__content .location-item .location-info .location-sub {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.location-picker__content .location-item .selection-indicator {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14109,7 +16259,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@charset \"UTF-8\";\n.messages-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.msg-avatar {\n  position: relative;\n  border-radius: 50%;\n  overflow: hidden;\n  flex-shrink: 0;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.msg-avatar--sm {\n  width: 28px;\n  height: 28px;\n}\n.msg-avatar--md {\n  width: 42px;\n  height: 42px;\n}\n.msg-avatar--lg {\n  width: 52px;\n  height: 52px;\n}\n.msg-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.msg-avatar__fallback {\n  font-weight: 700;\n  color: white;\n  font-size: 0.85rem;\n  line-height: 1;\n}\n.msg-avatar__dot {\n  position: absolute;\n  bottom: 1px;\n  right: 1px;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n}\n\n.msg-icon-btn {\n  width: 34px;\n  height: 34px;\n  border-radius: 9px;\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.15s;\n  flex-shrink: 0;\n}\n.msg-icon-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.msg-icon-btn--active {\n  background: var(--primary-color);\n  color: var(--primary-action);\n}\n\n.msg-list-pane {\n  width: 330px;\n  flex-shrink: 0;\n  margin-left: 260px;\n  border-right: 1px solid var(--border-color);\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  background: var(--bg-card);\n  overflow: hidden;\n}\n@media (max-width: 768px) {\n  .msg-list-pane {\n    display: none;\n  }\n}\n.msg-list-pane__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 28px 16px;\n  flex-shrink: 0;\n}\n.msg-list-pane__title {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-list-pane__icons {\n  display: flex;\n  gap: 2px;\n}\n\n.msg-settings-popup {\n  position: absolute;\n  top: calc(100% + 8px);\n  right: 0;\n  width: 220px;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 16px;\n  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);\n  z-index: 50;\n  max-height: 60vh;\n  overflow-y: auto;\n}\n.msg-settings-popup__label {\n  font-size: 0.68rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  letter-spacing: 0.08em;\n  margin: 0 0 10px;\n}\n.msg-settings-popup__item {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  margin: 0 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.msg-settings-popup__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 12px 0;\n}\n.msg-settings-popup__link {\n  background: none;\n  border: none;\n  font-size: 0.8rem;\n  color: var(--primary-action);\n  cursor: pointer;\n  padding: 0;\n  font-family: inherit;\n  font-weight: 500;\n}\n.msg-settings-popup__link:hover {\n  text-decoration: underline;\n}\n\n.msg-block-modal {\n  background: var(--bg-card);\n  border-radius: 16px;\n  width: min(420px, 92vw);\n  max-height: 60vh;\n  overflow-y: auto;\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n  border: 1px solid var(--border-color);\n  display: flex;\n  flex-direction: column;\n}\n.msg-block-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 16px 18px;\n  border-bottom: 1px solid var(--border-color);\n}\n.msg-block-modal__header h3 {\n  margin: 0;\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.msg-block-modal__body {\n  padding: 16px 18px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.msg-block-modal__empty {\n  margin: 0;\n  color: var(--text-muted);\n  font-size: 0.9rem;\n}\n\n.msg-block-row {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 12px;\n  padding: 10px 0;\n  border-bottom: 1px solid var(--border-color);\n}\n.msg-block-row .name {\n  font-weight: 600;\n  color: var(--text-main);\n}\n\n.msg-unblock-btn {\n  border: 1px solid var(--border-color);\n  background: var(--bg-page);\n  color: var(--text-main);\n  font-size: 0.75rem;\n  font-weight: 600;\n  padding: 6px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n}\n\n.msg-toggle-switch {\n  width: 36px;\n  height: 20px;\n  border-radius: 20px;\n  background: var(--border-color);\n  border: none;\n  position: relative;\n  cursor: pointer;\n  transition: background 0.3s ease;\n  padding: 0;\n}\n.msg-toggle-switch.on {\n  background: var(--primary-action);\n}\n.msg-toggle-switch.on .msg-toggle-switch__thumb {\n  transform: translateX(16px);\n  background: white;\n}\n.msg-toggle-switch__thumb {\n  width: 14px;\n  height: 14px;\n  border-radius: 50%;\n  background: white;\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n  box-shadow: var(--shadow);\n}\n\n.msg-search {\n  position: relative;\n  padding: 10px 28px;\n  flex-shrink: 0;\n}\n.msg-search__icon {\n  position: absolute;\n  left: 36px;\n  top: 50%;\n  transform: translateY(-50%);\n  color: var(--text-muted);\n  pointer-events: none;\n}\n.msg-search__input {\n  width: 100%;\n  padding: 8px 12px 8px 36px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.825rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  box-sizing: border-box;\n  transition: border-color 0.2s;\n}\n.msg-search__input:focus {\n  border-color: var(--primary-action);\n}\n.msg-search__input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.msg-search__input::placeholder {\n  color: var(--text-muted);\n}\n\n.msg-tabs {\n  display: flex;\n  gap: 8px;\n  padding: 0 28px 12px;\n  flex-shrink: 0;\n}\n\n.msg-tab {\n  flex: 1;\n  padding: 7px 12px;\n  border-radius: 20px;\n  border: 1px solid var(--border-color);\n  background: none;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.18s;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n}\n.msg-tab--active {\n  background: var(--primary-action);\n  border-color: var(--primary-action);\n  color: white;\n}\n.msg-tab__badge {\n  background: var(--danger);\n  color: white;\n  font-size: 0.65rem;\n  font-weight: 700;\n  padding: 1px 5px;\n  border-radius: 999px;\n  line-height: 1.4;\n}\n\n.msg-chat-list {\n  flex: 1;\n  overflow-y: auto;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-chat-item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 26px;\n  cursor: pointer;\n  transition: background 0.15s;\n  position: relative;\n}\n.msg-chat-item:hover {\n  background: rgba(var(--primary-action-rgb), 0.05);\n}\n.msg-chat-item--active {\n  background: var(--primary-color);\n}\n.msg-chat-item__avatar-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n.msg-chat-item__group-badge {\n  position: absolute;\n  bottom: -2px;\n  right: -2px;\n  width: 16px;\n  height: 16px;\n  background: var(--primary-action);\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  border: 2px solid var(--bg-card);\n}\n.msg-chat-item__body {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.msg-chat-item__top {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.msg-chat-item__name {\n  font-size: 0.875rem;\n  font-weight: 600;\n  color: var(--text-main);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item__name--request {\n  color: var(--warning);\n}\n.msg-chat-item__time {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.msg-chat-item__preview {\n  font-size: 0.78rem;\n  color: var(--text-muted);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item--request .msg-chat-item__preview::before {\n  content: \"🔔 \";\n  font-size: 0.7rem;\n}\n\n.msg-unread-badge {\n  background: var(--primary-action);\n  color: white;\n  font-size: 0.7rem;\n  font-weight: 700;\n  padding: 2px 7px;\n  border-radius: 999px;\n  flex-shrink: 0;\n  min-width: 20px;\n  text-align: center;\n}\n\n.msg-main-pane {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  overflow: hidden;\n  background: var(--bg-page);\n}\n\n.msg-chat-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  background: var(--bg-card);\n  border-bottom: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n.msg-chat-header__left {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.msg-chat-header__name {\n  font-size: 0.9rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-chat-header__status {\n  font-size: 0.72rem;\n  color: var(--success);\n  margin: 0;\n}\n.msg-chat-header__right {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n\n.msg-back-btn {\n  display: none;\n}\n@media (max-width: 768px) {\n  .msg-back-btn {\n    display: flex;\n  }\n}\n\n.msg-viewport {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-bubble-row {\n  display: flex;\n}\n.msg-bubble-row--self {\n  justify-content: flex-end;\n}\n.msg-bubble-row--other {\n  justify-content: flex-start;\n}\n\n.msg-bubble {\n  max-width: 60%;\n  padding: 10px 14px;\n  border-radius: 16px;\n  font-size: 0.875rem;\n  line-height: 1.5;\n}\n.msg-bubble-row--self .msg-bubble {\n  background: var(--primary-action);\n  color: white;\n  border-bottom-right-radius: 4px;\n}\n.msg-bubble-row--other .msg-bubble {\n  background: var(--bg-card);\n  color: var(--text-main);\n  border-bottom-left-radius: 4px;\n  border: 1px solid var(--border-color);\n}\n.msg-bubble p {\n  margin: 0 0 4px;\n}\n.msg-bubble__time {\n  font-size: 0.67rem;\n  opacity: 0.65;\n  display: block;\n  text-align: right;\n}\n\n.msg-input-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 12px 16px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n\n.msg-input {\n  flex: 1;\n  padding: 9px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.875rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.msg-input:focus {\n  border-color: var(--primary-action);\n}\n\n.msg-send-btn {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--primary-action);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  cursor: pointer;\n  flex-shrink: 0;\n  transition: filter 0.18s;\n}\n.msg-send-btn:hover {\n  filter: brightness(0.9);\n}\n.msg-send-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n\n.msg-request-footer {\n  padding: 16px 20px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  align-items: center;\n}\n.msg-request-footer__text {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  text-align: center;\n  line-height: 1.5;\n  margin: 0;\n  max-width: 600px;\n}\n.msg-request-footer__text strong {\n  color: var(--text-main);\n}\n.msg-request-footer__link {\n  color: var(--primary-action);\n  cursor: pointer;\n}\n.msg-request-footer__link:hover {\n  text-decoration: underline;\n}\n.msg-request-footer__actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  max-width: 600px;\n}\n\n.msg-request-btn {\n  flex: 1;\n  padding: 10px 16px;\n  border-radius: 8px;\n  border: none;\n  font-size: 0.9rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.15s;\n  background: rgba(var(--primary-action-rgb), 0.1);\n  color: var(--text-main);\n}\n.msg-request-btn:hover {\n  background: rgba(var(--primary-action-rgb), 0.2);\n}\n\n.msg-empty-state {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n  padding: 40px;\n  gap: 12px;\n}\n.msg-empty-state__icon {\n  width: 96px;\n  height: 96px;\n  border-radius: 24px;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-muted);\n  margin-bottom: 8px;\n}\n.msg-empty-state__title {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-empty-state__sub {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  max-width: 260px;\n  line-height: 1.5;\n  margin: 0;\n}\n.msg-empty-state__btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 10px 20px;\n  border-radius: 12px;\n  background: var(--primary-action);\n  color: white;\n  border: none;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  margin-top: 4px;\n  transition: filter 0.18s;\n}\n.msg-empty-state__btn:hover {\n  filter: brightness(0.9);\n}\n\n.msg-modal-overlay {\n  position: fixed;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.4);\n  backdrop-filter: blur(8px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 3000;\n}\n\n.pv-msg-modal {\n  background: var(--bg-card);\n  border-radius: 20px;\n  width: 100%;\n  max-width: 460px;\n  max-height: 60vh;\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  border: 1px solid var(--border-color);\n}\n.pv-msg-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 18px 20px 14px;\n  border-bottom: 1px solid var(--border-color);\n}\n.pv-msg-modal__header h3 {\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.pv-msg-modal__body {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 14px;\n  overflow-y: auto;\n}\n.pv-msg-modal__search-to {\n  display: flex;\n  align-items: center;\n  padding: 12px 24px;\n  border-bottom: 1px solid var(--border-color);\n  gap: 12px;\n}\n.pv-msg-modal__search-to .to-label {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.pv-msg-modal__search-input {\n  width: 100%;\n  padding: 6px 0;\n  border: none;\n  background: transparent;\n  font-size: 0.9rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n}\n.pv-msg-modal__search-input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.pv-msg-modal__search-input::placeholder {\n  color: var(--text-muted);\n}\n.pv-msg-modal__section-label {\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin-bottom: 4px;\n  padding-left: 4px;\n}\n.pv-msg-modal__member-list {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.pv-msg-modal__member {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 14px;\n  border-radius: 12px;\n  border: none;\n  background: transparent;\n  cursor: pointer;\n  font-family: inherit;\n  text-align: left;\n  transition: all 0.15s;\n  width: 100%;\n}\n.pv-msg-modal__member:hover {\n  background: rgba(var(--primary-action-rgb), 0.06);\n}\n.pv-msg-modal__member--selected {\n  background: rgba(var(--primary-action-rgb), 0.03);\n}\n.pv-msg-modal__member-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n}\n.pv-msg-modal__member-info .member-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.pv-msg-modal__member-info .member-username {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.pv-msg-modal__member-radio {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  border: 2px solid var(--border-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-left: auto;\n  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);\n  background: var(--bg-page);\n}\n.pv-msg-modal__member-radio.selected {\n  border-color: var(--primary-action);\n  background: var(--primary-action);\n}\n.pv-msg-modal__member-radio.selected .radio-inner {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: white;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.pv-msg-modal__footer {\n  padding: 14px 20px;\n  border-top: 1px solid var(--border-color);\n}\n.pv-msg-modal__create-btn {\n  width: 100%;\n  padding: 11px;\n  border-radius: 12px;\n  border: none;\n  background: var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.9rem;\n  font-weight: 700;\n  cursor: not-allowed;\n  font-family: inherit;\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.pv-msg-modal__create-btn--enabled {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.pv-msg-modal__create-btn--enabled:hover {\n  filter: brightness(0.92);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@charset \"UTF-8\";\n:root {\n  --bg-page: #F8F9FA;\n  --bg-card: #FFFFFF;\n  --text-main: #2F2F2F;\n  --text-muted: #7A7A7A;\n  --border-color: #E2E8F0;\n  --primary-color: #E6E6FA;\n  --primary-action: #898AA6;\n  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n  --input-bg: #FFFFFF;\n  --success: #22c55e;\n  --danger: #ef4444;\n  --warning: #f59e0b;\n  --success-bg: #f0fdf4;\n  --danger-bg: #fef2f2;\n  --warning-bg: #fffbeb;\n  --primary-action-rgb: 137, 138, 166;\n  --success-rgb: 34, 197, 94;\n  --danger-rgb: 239, 68, 68;\n  --warning-rgb: 245, 158, 11;\n  --bg-card-rgb: 255, 255, 255;\n  --text-main-rgb: 47, 47, 47;\n  --text-muted-rgb: 122, 122, 122;\n}\n\nhtml {\n  transition: background-color 0.25s ease;\n}\n\nbody,\n.pawtastic-feed,\n.messages-page,\n.profile-page,\n.modern-badges,\n.adoption-page,\n.settings-page,\n.admin-dashboard,\n.adoption-board,\n.register-page,\n.badges-contests,\n.notifications-page,\n.feed-card,\n.sidebar-aside,\n.msg-list-pane,\n.msg-main-pane,\n.msg-chat-header,\n.msg-input-bar,\n.msg-modal,\n.feed-create-modal,\n.post-menu__dropdown,\n.reaction-picker,\n.settings-card,\n.ui-card,\n.admin-card {\n  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.2s ease;\n}\n\n[data-theme=dark] {\n  --bg-page: #111418;\n  --bg-card: #1C2028;\n  --text-main: #E8EAF0;\n  --text-muted: #8A8FA8;\n  --border-color: #2C3248;\n  --primary-color: #242A3A;\n  --primary-action: #C9A9C0;\n  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);\n  --input-bg: #1A1F2E;\n  --success: #4ade80;\n  --danger: #f87171;\n  --warning-bg: rgba(245, 158, 11, 0.15);\n  --primary-action-rgb: 201, 169, 192;\n  --success-rgb: 74, 222, 128;\n  --danger-rgb: 248, 113, 113;\n  --warning-rgb: 251, 191, 36;\n  --bg-card-rgb: 28, 32, 40;\n  --text-main-rgb: 232, 234, 240;\n  --text-muted-rgb: 138, 143, 168;\n}\n[data-theme=dark] body {\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .profile-cover__bg {\n  background: linear-gradient(135deg, #2a2040 0%, #1a1828 100%) !important;\n}\n[data-theme=dark] .profile-avatar {\n  border-color: var(--bg-card) !important;\n}\n[data-theme=dark] input,\n[data-theme=dark] select,\n[data-theme=dark] textarea {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] select::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder,\n[data-theme=dark] select::placeholder,\n[data-theme=dark] textarea::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .msg-bubble-row--other .msg-bubble {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .profile-achievement--gold {\n  background: #2a2010 !important;\n  border-color: #4a3500 !important;\n  color: #fbbf24 !important;\n}\n[data-theme=dark] .profile-achievement--blue {\n  background: #0f1e36 !important;\n  border-color: #1e3a5f !important;\n  color: #93c5fd !important;\n}\n[data-theme=dark] .profile-achievement--purple {\n  background: #1a1040 !important;\n  border-color: #3b1f60 !important;\n  color: #d8b4fe !important;\n}\n[data-theme=dark] .profile-achievement--green {\n  background: #0a2010 !important;\n  border-color: #1a4020 !important;\n  color: #86efac !important;\n}\n[data-theme=dark] .msg-tab {\n  border-color: var(--border-color) !important;\n  color: var(--text-muted) !important;\n  background: transparent !important;\n}\n[data-theme=dark] .msg-tab--active {\n  background: var(--primary-action) !important;\n  border-color: var(--primary-action) !important;\n  color: #fff !important;\n}\n[data-theme=dark] .profile-tabs {\n  border-bottom-color: var(--border-color) !important;\n}\n[data-theme=dark] .profile-tabs__tab {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .profile-tabs__tab--active {\n  color: var(--primary-action) !important;\n  border-bottom-color: var(--primary-action) !important;\n}\n[data-theme=dark] .feed-modal-overlay {\n  background: rgba(0, 0, 0, 0.7) !important;\n}\n[data-theme=dark] .profile-stats-card,\n[data-theme=dark] .leaderboard-card-modern,\n[data-theme=dark] .badge-card-modern,\n[data-theme=dark] .contest-banner {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-create-modal__audience-btn,\n[data-theme=dark] .feed-create-modal__add-row {\n  background: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] ::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n[data-theme=dark] ::-webkit-scrollbar-track {\n  background: var(--bg-page);\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb:hover {\n  background: var(--text-muted);\n}\n[data-theme=dark] .dropdown-menu,\n[data-theme=dark] .popover,\n[data-theme=dark] .tooltip {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-stories-container,\n[data-theme=dark] .feed-card,\n[data-theme=dark] .sidebar-card,\n[data-theme=dark] .post-card,\n[data-theme=dark] .admin-card {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;\n}\n[data-theme=dark] .feed-story__img-box {\n  border-color: var(--bg-card) !important;\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .feed-story__label {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__header .user .meta .meta-top .name {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__body .post-text {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__footer {\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-post-v2__footer .action-btn:hover {\n  background-color: var(--bg-page) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input, [data-theme=dark] textarea, [data-theme=dark] select {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder, [data-theme=dark] select::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder, [data-theme=dark] textarea::placeholder, [data-theme=dark] select::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .post-modal-content,\n[data-theme=dark] .settings-content {\n  background-color: var(--bg-card) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .post-modal-header,\n[data-theme=dark] .post-modal-footer {\n  border-color: var(--border-color) !important;\n}\n\n:root[data-text-size=small] {\n  font-size: 14px;\n}\n\n:root[data-text-size=medium] {\n  font-size: 16px;\n}\n\n:root[data-text-size=large] {\n  font-size: 18px;\n}\n\nbody {\n  font-size: 1rem;\n  line-height: 1.5;\n}\n\n.pv-msg-modal {\n  width: min(560px, 92vw);\n  max-height: min(640px, 88vh);\n  overflow-y: auto;\n  border-radius: 16px;\n  padding: 20px 24px;\n  background: var(--bg-card);\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n}\n\n.msg-modal-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 2000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.55);\n  backdrop-filter: blur(6px);\n}\n\n.messages-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n}\n\n.msg-avatar {\n  position: relative;\n  border-radius: 50%;\n  overflow: hidden;\n  flex-shrink: 0;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.msg-avatar--sm {\n  width: 28px;\n  height: 28px;\n}\n.msg-avatar--md {\n  width: 42px;\n  height: 42px;\n}\n.msg-avatar--lg {\n  width: 52px;\n  height: 52px;\n}\n.msg-avatar img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.msg-avatar__fallback {\n  font-weight: 700;\n  color: white;\n  font-size: 0.85rem;\n  line-height: 1;\n}\n.msg-avatar__dot {\n  position: absolute;\n  bottom: 1px;\n  right: 1px;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: var(--success);\n  border: 2px solid var(--bg-card);\n}\n\n.msg-icon-btn {\n  width: 34px;\n  height: 34px;\n  border-radius: 9px;\n  border: none;\n  background: none;\n  color: var(--text-muted);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.15s;\n  flex-shrink: 0;\n}\n.msg-icon-btn:hover {\n  background: var(--bg-page);\n  color: var(--text-main);\n}\n.msg-icon-btn--active {\n  background: var(--primary-color);\n  color: var(--primary-action);\n}\n\n.msg-list-pane {\n  width: 330px;\n  flex-shrink: 0;\n  margin-left: 260px;\n  border-right: 1px solid var(--border-color);\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  background: var(--bg-card);\n  overflow: hidden;\n}\n@media (max-width: 768px) {\n  .msg-list-pane {\n    display: none;\n  }\n}\n.msg-list-pane__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 20px 28px 16px;\n  flex-shrink: 0;\n}\n.msg-list-pane__title {\n  font-size: 1.2rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-list-pane__icons {\n  display: flex;\n  gap: 2px;\n}\n\n.msg-settings-popup {\n  position: absolute;\n  top: calc(100% + 8px);\n  right: 0;\n  width: 220px;\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 12px;\n  padding: 16px;\n  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);\n  z-index: 50;\n  max-height: 60vh;\n  overflow-y: auto;\n}\n.msg-settings-popup__label {\n  font-size: 0.68rem;\n  font-weight: 700;\n  color: var(--text-muted);\n  letter-spacing: 0.08em;\n  margin: 0 0 10px;\n}\n.msg-settings-popup__item {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  margin: 0 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.msg-settings-popup__divider {\n  height: 1px;\n  background: var(--border-color);\n  margin: 12px 0;\n}\n.msg-settings-popup__link {\n  background: none;\n  border: none;\n  font-size: 0.8rem;\n  color: var(--primary-action);\n  cursor: pointer;\n  padding: 0;\n  font-family: inherit;\n  font-weight: 500;\n}\n.msg-settings-popup__link:hover {\n  text-decoration: underline;\n}\n\n.msg-block-modal {\n  background: var(--bg-card);\n  border-radius: 16px;\n  width: min(420px, 92vw);\n  max-height: 60vh;\n  overflow-y: auto;\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n  border: 1px solid var(--border-color);\n  display: flex;\n  flex-direction: column;\n}\n.msg-block-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 16px 18px;\n  border-bottom: 1px solid var(--border-color);\n}\n.msg-block-modal__header h3 {\n  margin: 0;\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.msg-block-modal__body {\n  padding: 16px 18px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.msg-block-modal__empty {\n  margin: 0;\n  color: var(--text-muted);\n  font-size: 0.9rem;\n}\n\n.msg-block-row {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 12px;\n  padding: 10px 0;\n  border-bottom: 1px solid var(--border-color);\n}\n.msg-block-row .name {\n  font-weight: 600;\n  color: var(--text-main);\n}\n\n.msg-unblock-btn {\n  border: 1px solid var(--border-color);\n  background: var(--bg-page);\n  color: var(--text-main);\n  font-size: 0.75rem;\n  font-weight: 600;\n  padding: 6px 12px;\n  border-radius: 999px;\n  cursor: pointer;\n}\n\n.msg-toggle-switch {\n  width: 36px;\n  height: 20px;\n  border-radius: 20px;\n  background: var(--border-color);\n  border: none;\n  position: relative;\n  cursor: pointer;\n  transition: background 0.3s ease;\n  padding: 0;\n}\n.msg-toggle-switch.on {\n  background: var(--primary-action);\n}\n.msg-toggle-switch.on .msg-toggle-switch__thumb {\n  transform: translateX(16px);\n  background: white;\n}\n.msg-toggle-switch__thumb {\n  width: 14px;\n  height: 14px;\n  border-radius: 50%;\n  background: white;\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n  box-shadow: var(--shadow);\n}\n\n.msg-search {\n  position: relative;\n  padding: 10px 28px;\n  flex-shrink: 0;\n}\n.msg-search__icon {\n  position: absolute;\n  left: 36px;\n  top: 50%;\n  transform: translateY(-50%);\n  color: var(--text-muted);\n  pointer-events: none;\n}\n.msg-search__input {\n  width: 100%;\n  padding: 8px 12px 8px 36px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.825rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  box-sizing: border-box;\n  transition: border-color 0.2s;\n}\n.msg-search__input:focus {\n  border-color: var(--primary-action);\n}\n.msg-search__input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.msg-search__input::placeholder {\n  color: var(--text-muted);\n}\n\n.msg-tabs {\n  display: flex;\n  gap: 8px;\n  padding: 0 28px 12px;\n  flex-shrink: 0;\n}\n\n.msg-tab {\n  flex: 1;\n  padding: 7px 12px;\n  border-radius: 20px;\n  border: 1px solid var(--border-color);\n  background: none;\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.18s;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n}\n.msg-tab--active {\n  background: var(--primary-action);\n  border-color: var(--primary-action);\n  color: white;\n}\n.msg-tab__badge {\n  background: var(--danger);\n  color: white;\n  font-size: 0.65rem;\n  font-weight: 700;\n  padding: 1px 5px;\n  border-radius: 999px;\n  line-height: 1.4;\n}\n\n.msg-chat-list {\n  flex: 1;\n  overflow-y: auto;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-chat-item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 26px;\n  cursor: pointer;\n  transition: background 0.15s;\n  position: relative;\n}\n.msg-chat-item:hover {\n  background: rgba(var(--primary-action-rgb), 0.05);\n}\n.msg-chat-item--active {\n  background: var(--primary-color);\n}\n.msg-chat-item__avatar-wrap {\n  position: relative;\n  flex-shrink: 0;\n}\n.msg-chat-item__group-badge {\n  position: absolute;\n  bottom: -2px;\n  right: -2px;\n  width: 16px;\n  height: 16px;\n  background: var(--primary-action);\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  border: 2px solid var(--bg-card);\n}\n.msg-chat-item__body {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.msg-chat-item__top {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.msg-chat-item__name {\n  font-size: 0.875rem;\n  font-weight: 600;\n  color: var(--text-main);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item__name--request {\n  color: var(--warning);\n}\n.msg-chat-item__time {\n  font-size: 0.7rem;\n  color: var(--text-muted);\n  flex-shrink: 0;\n}\n.msg-chat-item__preview {\n  font-size: 0.78rem;\n  color: var(--text-muted);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.msg-chat-item--request .msg-chat-item__preview::before {\n  content: \"🔔 \";\n  font-size: 0.7rem;\n}\n\n.msg-unread-badge {\n  background: var(--primary-action);\n  color: white;\n  font-size: 0.7rem;\n  font-weight: 700;\n  padding: 2px 7px;\n  border-radius: 999px;\n  flex-shrink: 0;\n  min-width: 20px;\n  text-align: center;\n}\n\n.msg-main-pane {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  overflow: hidden;\n  background: var(--bg-page);\n}\n\n.msg-chat-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 20px;\n  background: var(--bg-card);\n  border-bottom: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n.msg-chat-header__left {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n.msg-chat-header__name {\n  font-size: 0.9rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-chat-header__status {\n  font-size: 0.72rem;\n  color: var(--success);\n  margin: 0;\n}\n.msg-chat-header__right {\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n\n.msg-back-btn {\n  display: none;\n}\n@media (max-width: 768px) {\n  .msg-back-btn {\n    display: flex;\n  }\n}\n\n.msg-viewport {\n  flex: 1;\n  overflow-y: auto;\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  scrollbar-width: thin;\n  scrollbar-color: var(--border-color) transparent;\n}\n\n.msg-bubble-row {\n  display: flex;\n}\n.msg-bubble-row--self {\n  justify-content: flex-end;\n}\n.msg-bubble-row--other {\n  justify-content: flex-start;\n}\n\n.msg-bubble {\n  max-width: 60%;\n  padding: 10px 14px;\n  border-radius: 16px;\n  font-size: 0.875rem;\n  line-height: 1.5;\n}\n.msg-bubble-row--self .msg-bubble {\n  background: var(--primary-action);\n  color: white;\n  border-bottom-right-radius: 4px;\n}\n.msg-bubble-row--other .msg-bubble {\n  background: var(--bg-card);\n  color: var(--text-main);\n  border-bottom-left-radius: 4px;\n  border: 1px solid var(--border-color);\n}\n.msg-bubble p {\n  margin: 0 0 4px;\n}\n.msg-bubble__time {\n  font-size: 0.67rem;\n  opacity: 0.65;\n  display: block;\n  text-align: right;\n}\n.msg-bubble__status {\n  margin-top: 2px;\n  font-size: 0.65rem;\n  display: block;\n  text-align: right;\n  opacity: 0.85;\n}\n.msg-bubble__status.seen {\n  color: #7dd3fc;\n}\n.msg-bubble__status.delivered {\n  color: rgba(255, 255, 255, 0.85);\n}\n.msg-bubble .msg-media {\n  display: block;\n  max-width: 100%;\n  max-height: 260px;\n  border-radius: 10px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  margin-bottom: 4px;\n  cursor: pointer;\n}\n.msg-bubble .msg-file-link {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  background: rgba(0, 0, 0, 0.1);\n  padding: 8px 12px;\n  border-radius: 8px;\n  text-decoration: none;\n  color: inherit;\n  transition: background 0.2s;\n  margin-bottom: 4px;\n}\n.msg-bubble .msg-file-link:hover {\n  background: rgba(0, 0, 0, 0.2);\n}\n.msg-bubble .msg-file-link__info {\n  display: flex;\n  flex-direction: column;\n}\n.msg-bubble .msg-file-link__info span {\n  font-weight: 500;\n  font-size: 0.85rem;\n}\n.msg-bubble .msg-file-link__info small {\n  font-size: 0.7rem;\n  opacity: 0.7;\n}\n\n.msg-input-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 12px 16px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n}\n\n.msg-input {\n  flex: 1;\n  padding: 9px 14px;\n  border: 1px solid var(--border-color);\n  border-radius: 20px;\n  background: var(--bg-page);\n  font-size: 0.875rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n  transition: border-color 0.2s;\n}\n.msg-input:focus {\n  border-color: var(--primary-action);\n}\n\n.msg-send-btn {\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: var(--primary-action);\n  border: none;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  cursor: pointer;\n  flex-shrink: 0;\n  transition: filter 0.18s;\n}\n.msg-send-btn:hover {\n  filter: brightness(0.9);\n}\n.msg-send-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n\n.msg-request-footer {\n  padding: 16px 20px;\n  background: var(--bg-card);\n  border-top: 1px solid var(--border-color);\n  flex-shrink: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  align-items: center;\n}\n.msg-request-footer__text {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  text-align: center;\n  line-height: 1.5;\n  margin: 0;\n  max-width: 600px;\n}\n.msg-request-footer__text strong {\n  color: var(--text-main);\n}\n.msg-request-footer__link {\n  color: var(--primary-action);\n  cursor: pointer;\n}\n.msg-request-footer__link:hover {\n  text-decoration: underline;\n}\n.msg-request-footer__actions {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  width: 100%;\n  max-width: 600px;\n}\n\n.msg-request-btn {\n  flex: 1;\n  padding: 10px 16px;\n  border-radius: 8px;\n  border: none;\n  font-size: 0.9rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  transition: all 0.15s;\n  background: rgba(var(--primary-action-rgb), 0.1);\n  color: var(--text-main);\n}\n.msg-request-btn:hover {\n  background: rgba(var(--primary-action-rgb), 0.2);\n}\n\n.msg-empty-state {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n  padding: 40px;\n  gap: 12px;\n}\n.msg-empty-state__icon {\n  width: 96px;\n  height: 96px;\n  border-radius: 24px;\n  background: var(--primary-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-muted);\n  margin-bottom: 8px;\n}\n.msg-empty-state__title {\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.msg-empty-state__sub {\n  font-size: 0.85rem;\n  color: var(--text-muted);\n  max-width: 260px;\n  line-height: 1.5;\n  margin: 0;\n}\n.msg-empty-state__btn {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 10px 20px;\n  border-radius: 12px;\n  background: var(--primary-action);\n  color: white;\n  border: none;\n  font-size: 0.875rem;\n  font-weight: 600;\n  cursor: pointer;\n  font-family: inherit;\n  margin-top: 4px;\n  transition: filter 0.18s;\n}\n.msg-empty-state__btn:hover {\n  filter: brightness(0.9);\n}\n\n.msg-modal-overlay {\n  z-index: 3000;\n}\n\n.pv-msg-modal {\n  border-radius: 20px;\n  width: 100%;\n  max-width: 460px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  border: 1px solid var(--border-color);\n}\n.pv-msg-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 18px 20px 14px;\n  border-bottom: 1px solid var(--border-color);\n}\n.pv-msg-modal__header h3 {\n  font-size: 1rem;\n  font-weight: 700;\n  color: var(--text-main);\n  margin: 0;\n}\n.pv-msg-modal__body {\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 14px;\n  overflow-y: auto;\n}\n.pv-msg-modal__search-to {\n  display: flex;\n  align-items: center;\n  padding: 12px 24px;\n  border-bottom: 1px solid var(--border-color);\n  gap: 12px;\n}\n.pv-msg-modal__search-to .to-label {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.pv-msg-modal__search-input {\n  width: 100%;\n  padding: 6px 0;\n  border: none;\n  background: transparent;\n  font-size: 0.9rem;\n  color: var(--text-main);\n  outline: none;\n  font-family: inherit;\n}\n.pv-msg-modal__search-input::-moz-placeholder {\n  color: var(--text-muted);\n}\n.pv-msg-modal__search-input::placeholder {\n  color: var(--text-muted);\n}\n.pv-msg-modal__section-label {\n  font-size: 0.8rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin-bottom: 4px;\n  padding-left: 4px;\n}\n.pv-msg-modal__member-list {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.pv-msg-modal__member {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 14px;\n  border-radius: 12px;\n  border: none;\n  background: transparent;\n  cursor: pointer;\n  font-family: inherit;\n  text-align: left;\n  transition: all 0.15s;\n  width: 100%;\n}\n.pv-msg-modal__member:hover {\n  background: rgba(var(--primary-action-rgb), 0.06);\n}\n.pv-msg-modal__member--selected {\n  background: rgba(var(--primary-action-rgb), 0.03);\n}\n.pv-msg-modal__member-info {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  flex: 1;\n}\n.pv-msg-modal__member-info .member-name {\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--text-main);\n}\n.pv-msg-modal__member-info .member-username {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n}\n.pv-msg-modal__member-radio {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  border: 2px solid var(--border-color);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-left: auto;\n  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);\n  background: var(--bg-page);\n}\n.pv-msg-modal__member-radio.selected {\n  border-color: var(--primary-action);\n  background: var(--primary-action);\n}\n.pv-msg-modal__member-radio.selected .radio-inner {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background: white;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.pv-msg-modal__footer {\n  padding: 14px 20px;\n  border-top: 1px solid var(--border-color);\n}\n.pv-msg-modal__create-btn {\n  width: 100%;\n  padding: 11px;\n  border-radius: 12px;\n  border: none;\n  background: var(--border-color);\n  color: var(--text-muted);\n  font-size: 0.9rem;\n  font-weight: 700;\n  cursor: not-allowed;\n  font-family: inherit;\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.pv-msg-modal__create-btn--enabled {\n  background: var(--primary-action);\n  color: white;\n  cursor: pointer;\n}\n.pv-msg-modal__create-btn--enabled:hover {\n  filter: brightness(0.92);\n}\n\n.msg-rename-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 4px;\n  border-radius: 4px;\n  transition: all 0.2s;\n}\n.msg-rename-btn:hover {\n  background: rgba(var(--primary-action-rgb), 0.1);\n  color: var(--primary-action);\n}\n\n.msg-rename-modal {\n  background: var(--bg-card);\n  border-radius: 16px;\n  width: min(400px, 92vw);\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n  border: 1px solid var(--border-color);\n  overflow: hidden;\n}\n.msg-rename-modal__header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 16px 20px;\n  border-bottom: 1px solid var(--border-color);\n}\n.msg-rename-modal__header h3 {\n  margin: 0;\n  font-size: 1.1rem;\n  font-weight: 700;\n  color: var(--text-main);\n}\n.msg-rename-modal__body {\n  padding: 24px 20px;\n}\n.msg-rename-modal__footer {\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  gap: 12px;\n  padding: 16px 20px;\n  background: var(--bg-page);\n  border-top: 1px solid var(--border-color);\n}\n\n.msg-rename-input {\n  width: 100%;\n  padding: 12px 16px;\n  border-radius: 8px;\n  border: 1px solid var(--border-color);\n  background: var(--bg-page);\n  color: var(--text-main);\n  font-size: 1rem;\n  outline: none;\n  box-sizing: border-box;\n}\n.msg-rename-input:focus {\n  border-color: var(--primary-action);\n}\n\n.msg-save-btn {\n  padding: 10px 20px;\n  border-radius: 8px;\n  border: none;\n  background: var(--primary-action);\n  color: white;\n  font-weight: 600;\n  cursor: pointer;\n  transition: filter 0.2s;\n}\n.msg-save-btn:hover:not(:disabled) {\n  filter: brightness(0.9);\n}\n.msg-save-btn:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n\n.msg-cancel-btn {\n  padding: 10px 20px;\n  border-radius: 8px;\n  border: none;\n  background: transparent;\n  color: var(--text-muted);\n  font-weight: 600;\n  cursor: pointer;\n}\n.msg-cancel-btn:hover {\n  color: var(--text-main);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14157,7 +16307,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --bg-page: #F8F9FA;\n  --bg-card: #FFFFFF;\n  --text-main: #2F2F2F;\n  --text-muted: #7A7A7A;\n  --border-color: #E2E8F0;\n  --primary-color: #E6E6FA;\n  --primary-action: #898AA6;\n  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n  --input-bg: #FFFFFF;\n  --success: #22c55e;\n  --danger: #ef4444;\n  --warning: #f59e0b;\n  --success-bg: #f0fdf4;\n  --danger-bg: #fef2f2;\n  --warning-bg: #fffbeb;\n  --primary-action-rgb: 137, 138, 166;\n  --success-rgb: 34, 197, 94;\n  --danger-rgb: 239, 68, 68;\n  --warning-rgb: 245, 158, 11;\n  --bg-card-rgb: 255, 255, 255;\n  --text-main-rgb: 47, 47, 47;\n}\n\nhtml {\n  transition: background-color 0.25s ease;\n}\n\nbody,\n.pawtastic-feed,\n.messages-page,\n.profile-page,\n.modern-badges,\n.adoption-page,\n.settings-page,\n.admin-dashboard,\n.adoption-board,\n.register-page,\n.badges-contests,\n.notifications-page,\n.feed-card,\n.sidebar-aside,\n.msg-list-pane,\n.msg-main-pane,\n.msg-chat-header,\n.msg-input-bar,\n.msg-modal,\n.feed-create-modal,\n.post-menu__dropdown,\n.reaction-picker,\n.settings-card,\n.ui-card,\n.admin-card {\n  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.2s ease;\n}\n\n[data-theme=dark] {\n  --bg-page: #111418;\n  --bg-card: #1C2028;\n  --text-main: #E8EAF0;\n  --text-muted: #8A8FA8;\n  --border-color: #2C3248;\n  --primary-color: #242A3A;\n  --primary-action: #C9A9C0;\n  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);\n  --input-bg: #1A1F2E;\n  --success: #4ade80;\n  --danger: #f87171;\n  --warning-bg: rgba(245, 158, 11, 0.15);\n  --primary-action-rgb: 201, 169, 192;\n  --success-rgb: 74, 222, 128;\n  --danger-rgb: 248, 113, 113;\n  --warning-rgb: 251, 191, 36;\n  --bg-card-rgb: 28, 32, 40;\n  --text-main-rgb: 232, 234, 240;\n}\n[data-theme=dark] body {\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .profile-cover__bg {\n  background: linear-gradient(135deg, #2a2040 0%, #1a1828 100%) !important;\n}\n[data-theme=dark] .profile-avatar {\n  border-color: var(--bg-card) !important;\n}\n[data-theme=dark] input,\n[data-theme=dark] select,\n[data-theme=dark] textarea {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] select::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder,\n[data-theme=dark] select::placeholder,\n[data-theme=dark] textarea::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .msg-bubble-row--other .msg-bubble {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .profile-achievement--gold {\n  background: #2a2010 !important;\n  border-color: #4a3500 !important;\n  color: #fbbf24 !important;\n}\n[data-theme=dark] .profile-achievement--blue {\n  background: #0f1e36 !important;\n  border-color: #1e3a5f !important;\n  color: #93c5fd !important;\n}\n[data-theme=dark] .profile-achievement--purple {\n  background: #1a1040 !important;\n  border-color: #3b1f60 !important;\n  color: #d8b4fe !important;\n}\n[data-theme=dark] .profile-achievement--green {\n  background: #0a2010 !important;\n  border-color: #1a4020 !important;\n  color: #86efac !important;\n}\n[data-theme=dark] .msg-tab {\n  border-color: var(--border-color) !important;\n  color: var(--text-muted) !important;\n  background: transparent !important;\n}\n[data-theme=dark] .msg-tab--active {\n  background: var(--primary-action) !important;\n  border-color: var(--primary-action) !important;\n  color: #fff !important;\n}\n[data-theme=dark] .profile-tabs {\n  border-bottom-color: var(--border-color) !important;\n}\n[data-theme=dark] .profile-tabs__tab {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .profile-tabs__tab--active {\n  color: var(--primary-action) !important;\n  border-bottom-color: var(--primary-action) !important;\n}\n[data-theme=dark] .feed-modal-overlay {\n  background: rgba(0, 0, 0, 0.7) !important;\n}\n[data-theme=dark] .profile-stats-card,\n[data-theme=dark] .leaderboard-card-modern,\n[data-theme=dark] .badge-card-modern,\n[data-theme=dark] .contest-banner {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-create-modal__audience-btn,\n[data-theme=dark] .feed-create-modal__add-row {\n  background: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] ::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n[data-theme=dark] ::-webkit-scrollbar-track {\n  background: var(--bg-page);\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb:hover {\n  background: var(--text-muted);\n}\n[data-theme=dark] .dropdown-menu,\n[data-theme=dark] .popover,\n[data-theme=dark] .tooltip {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-stories-container,\n[data-theme=dark] .feed-card,\n[data-theme=dark] .sidebar-card,\n[data-theme=dark] .post-card,\n[data-theme=dark] .admin-card {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;\n}\n[data-theme=dark] .feed-story__img-box {\n  border-color: var(--bg-card) !important;\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .feed-story__label {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__header .user .meta .meta-top .name {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__body .post-text {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__footer {\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-post-v2__footer .action-btn:hover {\n  background-color: var(--bg-page) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input, [data-theme=dark] textarea, [data-theme=dark] select {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder, [data-theme=dark] select::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder, [data-theme=dark] textarea::placeholder, [data-theme=dark] select::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .post-modal-content,\n[data-theme=dark] .settings-content {\n  background-color: var(--bg-card) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .post-modal-header,\n[data-theme=dark] .post-modal-footer {\n  border-color: var(--border-color) !important;\n}\n\n:root[data-text-size=small] {\n  font-size: 14px;\n}\n\n:root[data-text-size=medium] {\n  font-size: 16px;\n}\n\n:root[data-text-size=large] {\n  font-size: 18px;\n}\n\nbody {\n  font-size: 1rem;\n  line-height: 1.5;\n}\n\n.profile-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n  color: var(--text-main);\n}\n\n.profile-main {\n  flex: 1;\n  margin-left: 260px;\n  max-width: calc(100vw - 260px);\n  overflow-x: hidden;\n  padding-bottom: 40px;\n}\n@media (max-width: 1024px) {\n  .profile-main {\n    margin-left: 0;\n    max-width: 100vw;\n    padding-bottom: 80px;\n  }\n}\n\n.profile-cover {\n  position: relative;\n  height: 350px;\n  width: 100%;\n  max-width: 1040px;\n  margin: 0 auto;\n  background: var(--bg-page);\n  border-radius: 0 0 12px 12px;\n  overflow: hidden;\n}\n@media (max-width: 768px) {\n  .profile-cover {\n    height: 250px;\n  }\n}\n.profile-cover__img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 0 0 12px 12px;\n}\n.profile-cover__edit-btn {\n  position: absolute;\n  bottom: 20px;\n  right: 24px;\n  background: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  padding: 8px 16px;\n  border-radius: 8px;\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 0.9rem;\n  font-weight: 600;\n  border: 1px solid rgba(255, 255, 255, 0.2);\n  cursor: pointer;\n  backdrop-filter: blur(4px);\n  transition: background 0.2s;\n  z-index: 10;\n}\n.profile-cover__edit-btn:hover {\n  background: rgba(0, 0, 0, 0.75);\n}\n\n.profile-header {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n  max-width: 1040px;\n  margin: 24px auto 40px;\n  padding: 0 24px;\n  position: relative;\n}\n@media (max-width: 768px) {\n  .profile-header {\n    margin: 20px auto 32px;\n    padding: 0 16px;\n    gap: 16px;\n  }\n}\n\n.profile-avatar {\n  flex-shrink: 0;\n  margin-top: -64px;\n  z-index: 5;\n}\n.profile-avatar img {\n  width: 128px;\n  height: 128px;\n  border-radius: 50%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border: 4px solid var(--bg-card);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);\n  display: block;\n}\n@media (max-width: 768px) {\n  .profile-avatar img {\n    width: 96px;\n    height: 96px;\n    margin-top: -48px;\n  }\n}\n\n.profile-header {\n  padding-top: 0;\n  align-items: flex-start;\n}\n\n.profile-name {\n  font-size: 1.5rem;\n  font-weight: 700;\n  margin: 0;\n  color: var(--text-main);\n  line-height: 1.2;\n}\n@media (max-width: 768px) {\n  .profile-name {\n    font-size: 1.25rem;\n  }\n}\n\n.profile-username {\n  font-size: 0.9rem;\n  color: var(--text-muted);\n  margin: 0 0 6px 0;\n  font-weight: 500;\n}\n\n.profile-stats {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n  margin: 2px 0 8px 0;\n  font-size: 0.85rem;\n  color: var(--text-muted);\n}\n.profile-stats span {\n  display: flex;\n  align-items: center;\n}\n.profile-stats .dot {\n  font-size: 0.5rem;\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n\n.profile-bio {\n  font-size: 0.9rem;\n  color: var(--text-main);\n  line-height: 1.5;\n  margin: 4px 0 0 0;\n  max-width: 500px;\n}\n\n.btn-edit-profile {\n  margin-left: auto;\n  align-self: center;\n  margin-top: 8px;\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  padding: 8px 16px;\n  border-radius: 8px;\n  font-weight: 600;\n  font-size: 0.85rem;\n  cursor: pointer;\n  background: var(--input-bg);\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n  transition: all 0.2s;\n  white-space: nowrap;\n}\n.btn-edit-profile:hover {\n  background: var(--bg-page);\n  border-color: var(--text-muted);\n}\n@media (max-width: 768px) {\n  .btn-edit-profile {\n    padding: 6px 12px;\n    font-size: 0.75rem;\n    gap: 4px;\n  }\n}\n\n.profile-content-wrapper {\n  max-width: 1040px;\n  margin: 40px auto 0;\n  padding: 0 24px;\n  display: grid;\n  grid-template-columns: 260px 1fr;\n  gap: 20px;\n}\n@media (max-width: 900px) {\n  .profile-content-wrapper {\n    grid-template-columns: 1fr;\n    padding: 0 16px;\n    margin-top: 32px;\n  }\n}\n\n.profile-sidebar {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n\n.sidebar-card {\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 10px;\n  padding: 14px 16px;\n}\n.sidebar-card h3 {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0 0 10px 0;\n}\n\n.sidebar-card-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-bottom: 12px;\n}\n.sidebar-card-header h3 {\n  margin: 0;\n}\n.sidebar-card-header .view-all-link {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 0;\n  font-weight: 500;\n}\n.sidebar-card-header .view-all-link:hover {\n  color: var(--text-main);\n  text-decoration: underline;\n}\n\n.highlight-circle {\n  width: 72px;\n  height: 72px;\n  border-radius: 50%;\n  border: 3px solid transparent;\n  background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box, linear-gradient(135deg, #f7a821, #e91e8c) border-box;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n}\n\n.pet-info-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n\n.pet-info-item {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  color: var(--text-muted);\n  font-size: 0.9rem;\n}\n.pet-info-item svg {\n  color: var(--text-muted);\n}\n\n.badges-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n\n.badge-list-item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n\n.badge-icon {\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  flex-shrink: 0;\n}\n\n.badge-text h4 {\n  font-size: 0.9rem;\n  font-weight: 600;\n  margin: 0 0 2px 0;\n  color: var(--text-main);\n}\n.badge-text p {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.profile-content {\n  display: flex;\n  flex-direction: column;\n  gap: 0;\n}\n\n.profile-tabs {\n  display: flex;\n  border-bottom: 1px solid var(--border-color);\n  background: var(--bg-card);\n  border-radius: 10px 10px 0 0;\n}\n.profile-tabs .tab-btn {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  padding: 14px 24px;\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  background: none;\n  border: none;\n  border-bottom: 2px solid transparent;\n  cursor: pointer;\n  transition: all 0.2s;\n  flex: 1;\n}\n.profile-tabs .tab-btn:hover {\n  color: var(--text-main);\n}\n.profile-tabs .tab-btn.active {\n  color: var(--text-main);\n  border-bottom-color: var(--primary-action);\n}\n\n.profile-gallery {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 12px;\n}\n@media (max-width: 1100px) {\n  .profile-gallery {\n    grid-template-columns: repeat(3, 1fr);\n  }\n}\n@media (max-width: 768px) {\n  .profile-gallery {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n\n.gallery-empty-message {\n  grid-column: 1/-1;\n  text-align: center;\n  padding: 60px 20px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n}\n.gallery-empty-message p {\n  margin: 0;\n}\n\n.gallery-item {\n  position: relative;\n  aspect-ratio: 1;\n  border-radius: 8px;\n  overflow: hidden;\n  background: var(--bg-card);\n  cursor: pointer;\n}\n.gallery-item img, .gallery-item video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.gallery-item .gallery-overlay {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.4);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  opacity: 0;\n  transition: opacity 0.2s;\n}\n.gallery-item .gallery-overlay span {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-weight: 600;\n}\n.gallery-item:hover .gallery-overlay {\n  opacity: 1;\n}\n.gallery-item .video-icon {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  background: rgba(0, 0, 0, 0.5);\n  color: white;\n  border-radius: 50%;\n  padding: 4px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.profile-loading {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  gap: 16px;\n}\n.profile-loading .spinner {\n  width: 40px;\n  height: 40px;\n  border: 3px solid var(--border-color);\n  border-top-color: var(--primary-action);\n  border-radius: 50%;\n  animation: spin 1s linear infinite;\n}\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.profile-loading p {\n  color: var(--text-muted);\n  font-weight: 500;\n}\n\n.profile-error {\n  display: flex;\n  min-height: 100vh;\n}\n.profile-error__content {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  color: var(--text-muted);\n}\n.profile-error__back-btn {\n  background: var(--primary-action);\n  color: white;\n  border: none;\n  border-radius: 8px;\n  font-weight: 600;\n  cursor: pointer;\n}\n.profile-error__back-btn:hover {\n  filter: brightness(1.1);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --bg-page: #F8F9FA;\n  --bg-card: #FFFFFF;\n  --text-main: #2F2F2F;\n  --text-muted: #7A7A7A;\n  --border-color: #E2E8F0;\n  --primary-color: #E6E6FA;\n  --primary-action: #898AA6;\n  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n  --input-bg: #FFFFFF;\n  --success: #22c55e;\n  --danger: #ef4444;\n  --warning: #f59e0b;\n  --success-bg: #f0fdf4;\n  --danger-bg: #fef2f2;\n  --warning-bg: #fffbeb;\n  --primary-action-rgb: 137, 138, 166;\n  --success-rgb: 34, 197, 94;\n  --danger-rgb: 239, 68, 68;\n  --warning-rgb: 245, 158, 11;\n  --bg-card-rgb: 255, 255, 255;\n  --text-main-rgb: 47, 47, 47;\n  --text-muted-rgb: 122, 122, 122;\n}\n\nhtml {\n  transition: background-color 0.25s ease;\n}\n\nbody,\n.pawtastic-feed,\n.messages-page,\n.profile-page,\n.modern-badges,\n.adoption-page,\n.settings-page,\n.admin-dashboard,\n.adoption-board,\n.register-page,\n.badges-contests,\n.notifications-page,\n.feed-card,\n.sidebar-aside,\n.msg-list-pane,\n.msg-main-pane,\n.msg-chat-header,\n.msg-input-bar,\n.msg-modal,\n.feed-create-modal,\n.post-menu__dropdown,\n.reaction-picker,\n.settings-card,\n.ui-card,\n.admin-card {\n  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.2s ease;\n}\n\n[data-theme=dark] {\n  --bg-page: #111418;\n  --bg-card: #1C2028;\n  --text-main: #E8EAF0;\n  --text-muted: #8A8FA8;\n  --border-color: #2C3248;\n  --primary-color: #242A3A;\n  --primary-action: #C9A9C0;\n  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);\n  --input-bg: #1A1F2E;\n  --success: #4ade80;\n  --danger: #f87171;\n  --warning-bg: rgba(245, 158, 11, 0.15);\n  --primary-action-rgb: 201, 169, 192;\n  --success-rgb: 74, 222, 128;\n  --danger-rgb: 248, 113, 113;\n  --warning-rgb: 251, 191, 36;\n  --bg-card-rgb: 28, 32, 40;\n  --text-main-rgb: 232, 234, 240;\n  --text-muted-rgb: 138, 143, 168;\n}\n[data-theme=dark] body {\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .profile-cover__bg {\n  background: linear-gradient(135deg, #2a2040 0%, #1a1828 100%) !important;\n}\n[data-theme=dark] .profile-avatar {\n  border-color: var(--bg-card) !important;\n}\n[data-theme=dark] input,\n[data-theme=dark] select,\n[data-theme=dark] textarea {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] select::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder,\n[data-theme=dark] select::placeholder,\n[data-theme=dark] textarea::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .msg-bubble-row--other .msg-bubble {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .profile-achievement--gold {\n  background: #2a2010 !important;\n  border-color: #4a3500 !important;\n  color: #fbbf24 !important;\n}\n[data-theme=dark] .profile-achievement--blue {\n  background: #0f1e36 !important;\n  border-color: #1e3a5f !important;\n  color: #93c5fd !important;\n}\n[data-theme=dark] .profile-achievement--purple {\n  background: #1a1040 !important;\n  border-color: #3b1f60 !important;\n  color: #d8b4fe !important;\n}\n[data-theme=dark] .profile-achievement--green {\n  background: #0a2010 !important;\n  border-color: #1a4020 !important;\n  color: #86efac !important;\n}\n[data-theme=dark] .msg-tab {\n  border-color: var(--border-color) !important;\n  color: var(--text-muted) !important;\n  background: transparent !important;\n}\n[data-theme=dark] .msg-tab--active {\n  background: var(--primary-action) !important;\n  border-color: var(--primary-action) !important;\n  color: #fff !important;\n}\n[data-theme=dark] .profile-tabs {\n  border-bottom-color: var(--border-color) !important;\n}\n[data-theme=dark] .profile-tabs__tab {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .profile-tabs__tab--active {\n  color: var(--primary-action) !important;\n  border-bottom-color: var(--primary-action) !important;\n}\n[data-theme=dark] .feed-modal-overlay {\n  background: rgba(0, 0, 0, 0.7) !important;\n}\n[data-theme=dark] .profile-stats-card,\n[data-theme=dark] .leaderboard-card-modern,\n[data-theme=dark] .badge-card-modern,\n[data-theme=dark] .contest-banner {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-create-modal__audience-btn,\n[data-theme=dark] .feed-create-modal__add-row {\n  background: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] ::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n[data-theme=dark] ::-webkit-scrollbar-track {\n  background: var(--bg-page);\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb {\n  background: var(--border-color);\n  border-radius: 10px;\n}\n[data-theme=dark] ::-webkit-scrollbar-thumb:hover {\n  background: var(--text-muted);\n}\n[data-theme=dark] .dropdown-menu,\n[data-theme=dark] .popover,\n[data-theme=dark] .tooltip {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-stories-container,\n[data-theme=dark] .feed-card,\n[data-theme=dark] .sidebar-card,\n[data-theme=dark] .post-card,\n[data-theme=dark] .admin-card {\n  background-color: var(--bg-card) !important;\n  border-color: var(--border-color) !important;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;\n}\n[data-theme=dark] .feed-story__img-box {\n  border-color: var(--bg-card) !important;\n  background-color: var(--bg-page) !important;\n}\n[data-theme=dark] .feed-story__label {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__header .user .meta .meta-top .name {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__body .post-text {\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .feed-post-v2__footer {\n  border-color: var(--border-color) !important;\n}\n[data-theme=dark] .feed-post-v2__footer .action-btn:hover {\n  background-color: var(--bg-page) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input, [data-theme=dark] textarea, [data-theme=dark] select {\n  background-color: var(--input-bg) !important;\n  border-color: var(--border-color) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] input::-moz-placeholder, [data-theme=dark] textarea::-moz-placeholder, [data-theme=dark] select::-moz-placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] input::placeholder, [data-theme=dark] textarea::placeholder, [data-theme=dark] select::placeholder {\n  color: var(--text-muted) !important;\n}\n[data-theme=dark] .post-modal-content,\n[data-theme=dark] .settings-content {\n  background-color: var(--bg-card) !important;\n  color: var(--text-main) !important;\n}\n[data-theme=dark] .post-modal-header,\n[data-theme=dark] .post-modal-footer {\n  border-color: var(--border-color) !important;\n}\n\n:root[data-text-size=small] {\n  font-size: 14px;\n}\n\n:root[data-text-size=medium] {\n  font-size: 16px;\n}\n\n:root[data-text-size=large] {\n  font-size: 18px;\n}\n\nbody {\n  font-size: 1rem;\n  line-height: 1.5;\n}\n\n.profile-page {\n  display: flex;\n  min-height: 100vh;\n  background-color: var(--bg-page);\n  font-family: \"Inter\", sans-serif;\n  color: var(--text-main);\n}\n\n.pet-info-list, .badges-list {\n  scrollbar-width: none;\n}\n.pet-info-list::-webkit-scrollbar, .badges-list::-webkit-scrollbar {\n  display: none;\n}\n\n.profile-main {\n  flex: 1;\n  margin-left: 260px;\n  max-width: calc(100vw - 260px);\n  overflow-x: hidden;\n  padding-bottom: 40px;\n}\n@media (max-width: 1024px) {\n  .profile-main {\n    margin-left: 0;\n    max-width: 100vw;\n    padding-bottom: 80px;\n  }\n}\n\n.profile-cover {\n  position: relative;\n  height: 350px;\n  width: 100%;\n  max-width: 1040px;\n  margin: 0 auto;\n  background: var(--bg-page);\n  border-radius: 0 0 12px 12px;\n  overflow: hidden;\n}\n@media (max-width: 768px) {\n  .profile-cover {\n    height: 250px;\n  }\n}\n.profile-cover__img {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border-radius: 0 0 12px 12px;\n}\n.profile-cover__edit-btn {\n  position: absolute;\n  bottom: 20px;\n  right: 24px;\n  background: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  padding: 8px 16px;\n  border-radius: 8px;\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 0.9rem;\n  font-weight: 600;\n  border: 1px solid rgba(255, 255, 255, 0.2);\n  cursor: pointer;\n  backdrop-filter: blur(4px);\n  transition: background 0.2s;\n  z-index: 10;\n}\n.profile-cover__edit-btn:hover {\n  background: rgba(0, 0, 0, 0.75);\n}\n\n.profile-header {\n  display: flex;\n  align-items: flex-start;\n  gap: 24px;\n  max-width: 1040px;\n  margin: 24px auto 40px;\n  padding: 0 24px;\n  position: relative;\n}\n@media (max-width: 768px) {\n  .profile-header {\n    margin: 20px auto 32px;\n    padding: 0 16px;\n    gap: 16px;\n  }\n}\n\n.profile-avatar {\n  flex-shrink: 0;\n  margin-top: -64px;\n  z-index: 5;\n}\n.profile-avatar img {\n  width: 128px;\n  height: 128px;\n  border-radius: 50%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  border: 4px solid var(--bg-card);\n  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);\n  display: block;\n}\n@media (max-width: 768px) {\n  .profile-avatar img {\n    width: 96px;\n    height: 96px;\n    margin-top: -48px;\n  }\n}\n\n.profile-header {\n  padding-top: 0;\n  align-items: flex-start;\n}\n\n.profile-name {\n  font-size: 1.5rem;\n  font-weight: 700;\n  margin: 0;\n  color: var(--text-main);\n  line-height: 1.2;\n}\n@media (max-width: 768px) {\n  .profile-name {\n    font-size: 1.25rem;\n  }\n}\n\n.profile-username {\n  font-size: 0.9rem;\n  color: var(--text-muted);\n  margin: 0 0 6px 0;\n  font-weight: 500;\n}\n\n.profile-stats {\n  display: flex;\n  align-items: center;\n  gap: 16px;\n  margin: 2px 0 8px 0;\n  font-size: 0.85rem;\n  color: var(--text-muted);\n}\n.profile-stats span {\n  display: flex;\n  align-items: center;\n}\n.profile-stats .dot {\n  font-size: 0.5rem;\n  color: var(--text-muted);\n  opacity: 0.6;\n}\n\n.profile-bio {\n  font-size: 0.9rem;\n  color: var(--text-main);\n  line-height: 1.5;\n  margin: 4px 0 0 0;\n  max-width: 500px;\n}\n\n.btn-edit-profile {\n  margin-left: auto;\n  align-self: center;\n  margin-top: 8px;\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  padding: 8px 16px;\n  border-radius: 8px;\n  font-weight: 600;\n  font-size: 0.85rem;\n  cursor: pointer;\n  background: var(--input-bg);\n  color: var(--text-main);\n  border: 1px solid var(--border-color);\n  transition: all 0.2s;\n  white-space: nowrap;\n}\n.btn-edit-profile:hover {\n  background: var(--bg-page);\n  border-color: var(--text-muted);\n}\n@media (max-width: 768px) {\n  .btn-edit-profile {\n    padding: 6px 12px;\n    font-size: 0.75rem;\n    gap: 4px;\n  }\n}\n\n.profile-content-wrapper {\n  max-width: 1040px;\n  margin: 60px auto 0;\n  padding: 0 24px;\n  display: grid;\n  grid-template-columns: 260px 1fr;\n  gap: 20px;\n}\n@media (max-width: 900px) {\n  .profile-content-wrapper {\n    grid-template-columns: 1fr;\n    padding: 0 16px;\n    margin-top: 32px;\n  }\n}\n\n.profile-sidebar {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n\n.sidebar-card {\n  background: var(--bg-card);\n  border: 1px solid var(--border-color);\n  border-radius: 10px;\n  padding: 14px 16px;\n}\n.sidebar-card h3 {\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-main);\n  margin: 0 0 10px 0;\n}\n\n.sidebar-card-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-bottom: 12px;\n}\n.sidebar-card-header h3 {\n  margin: 0;\n}\n.sidebar-card-header .view-all-link {\n  font-size: 0.75rem;\n  color: var(--text-muted);\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 0;\n  font-weight: 500;\n}\n.sidebar-card-header .view-all-link:hover {\n  color: var(--text-main);\n  text-decoration: underline;\n}\n\n.highlight-circle {\n  width: 72px;\n  height: 72px;\n  border-radius: 50%;\n  border: 3px solid transparent;\n  background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box, linear-gradient(135deg, #f7a821, #e91e8c) border-box;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n}\n\n.pet-info-list {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n\n.pet-info-item {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  color: var(--text-muted);\n  font-size: 0.9rem;\n}\n.pet-info-item svg {\n  color: var(--text-muted);\n}\n\n.badges-list {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n\n.badge-list-item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n\n.badge-icon {\n  width: 36px;\n  height: 36px;\n  border-radius: 8px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  flex-shrink: 0;\n}\n\n.badge-text h4 {\n  font-size: 0.9rem;\n  font-weight: 600;\n  margin: 0 0 2px 0;\n  color: var(--text-main);\n}\n.badge-text p {\n  font-size: 0.8rem;\n  color: var(--text-muted);\n  margin: 0;\n}\n\n.profile-content {\n  display: flex;\n  flex-direction: column;\n  gap: 0;\n}\n\n.profile-tabs {\n  display: flex;\n  border-bottom: 1px solid var(--border-color);\n  background: var(--bg-card);\n  border-radius: 10px 10px 0 0;\n}\n.profile-tabs .tab-btn {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  padding: 14px 24px;\n  font-size: 0.9rem;\n  font-weight: 600;\n  color: var(--text-muted);\n  background: none;\n  border: none;\n  border-bottom: 2px solid transparent;\n  cursor: pointer;\n  transition: all 0.2s;\n  flex: 1;\n}\n.profile-tabs .tab-btn:hover {\n  color: var(--text-main);\n}\n.profile-tabs .tab-btn.active {\n  color: var(--text-main);\n  border-bottom-color: var(--primary-action);\n}\n\n.profile-gallery {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 20px;\n  margin-top: 20px;\n  margin-bottom: 40px;\n}\n@media (max-width: 1100px) {\n  .profile-gallery {\n    grid-template-columns: repeat(3, 1fr);\n  }\n}\n@media (max-width: 768px) {\n  .profile-gallery {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n\n.gallery-empty-message {\n  grid-column: 1/-1;\n  text-align: center;\n  padding: 60px 20px;\n  color: var(--text-muted);\n  font-size: 0.95rem;\n}\n.gallery-empty-message p {\n  margin: 0;\n}\n\n.gallery-item {\n  position: relative;\n  aspect-ratio: 1;\n  border-radius: 8px;\n  overflow: hidden;\n  background: var(--bg-card);\n  cursor: pointer;\n}\n.gallery-item img, .gallery-item video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.gallery-item .gallery-overlay {\n  position: absolute;\n  inset: 0;\n  background: rgba(0, 0, 0, 0.4);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  opacity: 0;\n  transition: opacity 0.2s;\n}\n.gallery-item .gallery-overlay span {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  font-weight: 600;\n}\n.gallery-item:hover .gallery-overlay {\n  opacity: 1;\n}\n.gallery-item .video-icon {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  background: rgba(0, 0, 0, 0.5);\n  color: white;\n  border-radius: 50%;\n  padding: 4px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.profile-loading {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  gap: 16px;\n}\n.profile-loading .spinner {\n  width: 40px;\n  height: 40px;\n  border: 3px solid var(--border-color);\n  border-top-color: var(--primary-action);\n  border-radius: 50%;\n  animation: spin 1s linear infinite;\n}\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.profile-loading p {\n  color: var(--text-muted);\n  font-weight: 500;\n}\n\n.profile-error {\n  display: flex;\n  min-height: 100vh;\n}\n.profile-error__content {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  color: var(--text-muted);\n}\n.profile-error__back-btn {\n  background: var(--primary-action);\n  color: white;\n  border: none;\n  border-radius: 8px;\n  font-weight: 600;\n  cursor: pointer;\n}\n.profile-error__back-btn:hover {\n  filter: brightness(1.1);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -64090,6 +66240,32 @@ const n = o;
 
 /***/ },
 
+/***/ "./node_modules/@phosphor-icons/react/dist/csr/File.es.js"
+/*!****************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/csr/File.es.js ***!
+  \****************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   File: () => (/* binding */ s),
+/* harmony export */   FileIcon: () => (/* binding */ o)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/IconBase.es.js */ "./node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js");
+/* harmony import */ var _defs_File_es_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defs/File.es.js */ "./node_modules/@phosphor-icons/react/dist/defs/File.es.js");
+
+
+
+const o = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((r, t) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(_lib_IconBase_es_js__WEBPACK_IMPORTED_MODULE_1__["default"], { ref: t, ...r, weights: _defs_File_es_js__WEBPACK_IMPORTED_MODULE_2__["default"] }));
+o.displayName = "FileIcon";
+const s = o;
+
+
+
+/***/ },
+
 /***/ "./node_modules/@phosphor-icons/react/dist/csr/Fire.es.js"
 /*!****************************************************************!*\
   !*** ./node_modules/@phosphor-icons/react/dist/csr/Fire.es.js ***!
@@ -66349,6 +68525,50 @@ const e = /* @__PURE__ */ new Map([
   [
     "thin",
     /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M51,37.31A4,4,0,0,0,45,42.69L67.59,67.5C29.34,89,13,124.81,12.34,126.38a4.08,4.08,0,0,0,0,3.25c.34.77,8.52,18.89,26.83,37.2,17,17,46.14,37.17,88.83,37.17a122.59,122.59,0,0,0,53.06-11.69l24,26.38a4,4,0,1,0,5.92-5.38ZM149.1,157.16A36,36,0,0,1,101,104.22ZM128,196c-32,0-59.89-11.65-83-34.62A135.81,135.81,0,0,1,20.44,128c3.65-7.23,20.09-36.81,52.68-54.43l22.45,24.7a44,44,0,0,0,59,64.83l20.89,23A114.94,114.94,0,0,1,128,196Zm6.78-103.36a4,4,0,0,1,1.49-7.86,44.15,44.15,0,0,1,35.54,39.09,4,4,0,0,1-3.61,4.35l-.38,0a4,4,0,0,1-4-3.63A36.1,36.1,0,0,0,134.78,92.64Zm108.88,37c-.41.91-10.2,22.58-32.38,42.45a4,4,0,0,1-2.67,1,4,4,0,0,1-2.67-7A136.71,136.71,0,0,0,235.56,128,136.07,136.07,0,0,0,211,94.62C187.89,71.65,160,60,128,60a122,122,0,0,0-20,1.63,4,4,0,0,1-1.32-7.89A129.3,129.3,0,0,1,128,52c42.7,0,71.87,20.22,88.83,37.18,18.31,18.31,26.49,36.44,26.83,37.2A4.08,4.08,0,0,1,243.66,129.63Z" }))
+  ]
+]);
+
+
+
+/***/ },
+
+/***/ "./node_modules/@phosphor-icons/react/dist/defs/File.es.js"
+/*!*****************************************************************!*\
+  !*** ./node_modules/@phosphor-icons/react/dist/defs/File.es.js ***!
+  \*****************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ a)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const a = /* @__PURE__ */ new Map([
+  [
+    "bold",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M216.49,79.52l-56-56A12,12,0,0,0,152,20H56A20,20,0,0,0,36,40V216a20,20,0,0,0,20,20H200a20,20,0,0,0,20-20V88A12,12,0,0,0,216.49,79.52ZM160,57l23,23H160ZM60,212V44h76V92a12,12,0,0,0,12,12h48V212Z" }))
+  ],
+  [
+    "duotone",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M208,88H152V32Z", opacity: "0.2" }), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z" }))
+  ],
+  [
+    "fill",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM152,88V44l44,44Z" }))
+  ],
+  [
+    "light",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M212.24,83.76l-56-56A6,6,0,0,0,152,26H56A14,14,0,0,0,42,40V216a14,14,0,0,0,14,14H200a14,14,0,0,0,14-14V88A6,6,0,0,0,212.24,83.76ZM158,46.48,193.52,82H158ZM200,218H56a2,2,0,0,1-2-2V40a2,2,0,0,1,2-2h90V88a6,6,0,0,0,6,6h50V216A2,2,0,0,1,200,218Z" }))
+  ],
+  [
+    "regular",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z" }))
+  ],
+  [
+    "thin",
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", { d: "M210.83,85.17l-56-56A4,4,0,0,0,152,28H56A12,12,0,0,0,44,40V216a12,12,0,0,0,12,12H200a12,12,0,0,0,12-12V88A4,4,0,0,0,210.83,85.17ZM156,41.65,198.34,84H156ZM200,220H56a4,4,0,0,1-4-4V40a4,4,0,0,1,4-4h92V88a4,4,0,0,0,4,4h52V216A4,4,0,0,1,200,220Z" }))
   ]
 ]);
 

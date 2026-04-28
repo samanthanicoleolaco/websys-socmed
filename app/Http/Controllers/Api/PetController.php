@@ -91,9 +91,6 @@ class PetController extends Controller
         return response()->json($pet);
     }
 
-    /**
-     * Update the specified pet
-     */
     public function update(Request $request, Pet $pet)
     {
         if ($pet->user_id !== Auth::id()) {
@@ -104,13 +101,56 @@ class PetController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'age' => 'sometimes|required|integer|min:0|max:50',
             'breed' => 'sometimes|required|string|max:255',
-            'photo' => 'sometimes|nullable|string',
+            'photo' => 'sometimes|nullable|image|max:5120',
+            'cover_photo' => 'sometimes|nullable|image|max:10240',
             'bio' => 'sometimes|nullable|string|max:1000',
         ]);
+
+        if ($request->hasFile('photo')) {
+            if ($pet->photo) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $pet->photo);
+            }
+            $validated['photo'] = $request->file('photo')->store('pets', 'public');
+        } elseif ($request->has('photo') && $request->photo === null) {
+            $validated['photo'] = null;
+        }
+
+        if ($request->hasFile('cover_photo')) {
+            if ($pet->cover_photo) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $pet->cover_photo);
+            }
+            $validated['cover_photo'] = $request->file('cover_photo')->store('pets/covers', 'public');
+        } elseif ($request->has('cover_photo') && $request->cover_photo === null) {
+            $validated['cover_photo'] = null;
+        }
 
         $pet->update($validated);
 
         return response()->json($pet->load('user'));
+    }
+
+    public function updateCover(Request $request, Pet $pet)
+    {
+        if ($pet->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'cover_photo' => 'required|image|max:10240',
+        ]);
+
+        if ($request->hasFile('cover_photo')) {
+            if ($pet->cover_photo) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $pet->cover_photo);
+            }
+            $pet->cover_photo = $request->file('cover_photo')->store('pets/covers', 'public');
+            $pet->save();
+        }
+
+        return response()->json([
+            'message' => 'Cover photo updated successfully',
+            'cover_photo_url' => $pet->cover_photo_url
+        ]);
     }
 
     /**
@@ -125,5 +165,39 @@ class PetController extends Controller
         $pet->delete();
 
         return response()->json(['message' => 'Pet deleted successfully']);
+    }
+
+    /**
+     * Get posts where this pet is tagged
+     */
+    public function taggedPosts(Pet $pet)
+    {
+        $posts = \App\Models\Post::whereJsonContains('tagged_pets', (int)$pet->id)
+            ->orWhereJsonContains('tagged_pets', (string)$pet->id)
+            ->with(['pet.user', 'likes', 'comments'])
+            ->latest()
+            ->get();
+
+        $user = Auth::user();
+        $userPetIds = $user ? $user->pets->pluck('id') : collect();
+        $savedPostIds = $user ? $user->savedPosts->pluck('post_id')->toArray() : [];
+
+        $posts->transform(function ($post) use ($userPetIds, $savedPostIds) {
+            $post->liked_by_me = $userPetIds->isNotEmpty()
+                ? $post->likes->pluck('pet_id')->intersect($userPetIds)->isNotEmpty()
+                : false;
+            $post->is_saved = in_array($post->id, $savedPostIds);
+            $post->likes_count = $post->likes->count();
+            $post->comments_count = $post->comments->count();
+            
+            // Normalize tagged_pets
+            if ($post->tagged_pets && is_array($post->tagged_pets)) {
+                $post->tagged_pets = \App\Models\Pet::whereIn('id', $post->tagged_pets)->get();
+            }
+            
+            return $post;
+        });
+
+        return response()->json($posts);
     }
 }

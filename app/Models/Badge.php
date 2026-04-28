@@ -14,6 +14,8 @@ class Badge extends Model
         'icon',
         'description',
         'category',
+        'rarity',
+        'gradient',
     ];
 
     public function pets()

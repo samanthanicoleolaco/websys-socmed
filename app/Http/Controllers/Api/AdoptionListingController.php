@@ -37,10 +37,9 @@ class AdoptionListingController extends Controller
 
     public function available()
     {
-        $listings = AdoptionListing::with('user')
+        $listings = AdoptionListing::with(['user', 'pet'])
             ->where('is_available', true)
             ->latest()
-            ->take(12)
             ->get();
 
         return response()->json($listings);
@@ -49,34 +48,35 @@ class AdoptionListingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'pet_id' => 'required|exists:pets,id',
-            'description' => 'required|string|max:2000',
-            'location' => 'required|string|max:255',
-            'image' => 'nullable|image|max:10240',
-            'requirements' => 'nullable|string|max:1000',
+            'pet_id'       => 'nullable|exists:pets,id',
+            'pet_name'     => 'required|string|max:100',
+            'breed'        => 'required|string|max:100',
+            'age'          => 'required|string|max:50',
+            'description'  => 'required|string|max:2000',
+            'location'     => 'required|string|max:255',
+            'image'        => 'required|image|max:10240',
             'contact_info' => 'required|string|max:500',
+            'requirements' => 'nullable|string|max:1000',
         ]);
-
-        $pet = Pet::findOrFail($request->pet_id);
-        if ($pet->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
 
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('adoptions', 'public');
         }
 
+        $contactInfo = $request->input('contact_info');
+
         $listing = AdoptionListing::create([
-            'user_id' => Auth::id(),
-            'pet_name' => $request->pet_name ?? 'Pet',
-            'breed' => $request->breed ?? '',
-            'age' => $request->age ?? 0,
-            'description' => $request->description,
-            'location' => $request->location,
-            'image' => $imagePath,
-            'contact_email' => $request->contact_email ?? '',
-            'contact_phone' => $request->contact_phone ?? '',
+            'user_id'      => Auth::id(),
+            'pet_id'       => $request->input('pet_id'),
+            'pet_name'     => $request->input('pet_name'),
+            'breed'        => $request->input('breed'),
+            'age'          => $request->input('age'),
+            'description'  => $request->description,
+            'location'     => $request->location,
+            'image'        => $imagePath,
+            'contact_email'=> filter_var($contactInfo, FILTER_VALIDATE_EMAIL) ? $contactInfo : Auth::user()->email,
+            'contact_phone'=> !filter_var($contactInfo, FILTER_VALIDATE_EMAIL) ? $contactInfo : '',
             'is_available' => true,
         ]);
 

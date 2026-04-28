@@ -16,9 +16,10 @@ import {
     Gear,
     X,
     Phone,
+    File,
+    PencilSimple,
     Paperclip,
-    Calendar,
-    Check,
+    UserPlus,
 } from "@phosphor-icons/react";
 import Sidebar from "./Sidebar";
 import "../../../sass/pages/messages.scss";
@@ -39,14 +40,6 @@ const Avatar = ({ src, fallback, size = "md", online = false, color = null }) =>
     </div>
 );
 
-const groupMembers = [
-    { id: 1, name: "Sarah", initial: "S", color: "#898AA6" },
-    { id: 2, name: "Luna's Mom", initial: "L", color: "#7b9ea6" },
-    { id: 3, name: "Buddy's Dad", initial: "B", color: "#a6897b" },
-    { id: 4, name: "Max's Owner", initial: "M", color: "#7ba688" },
-    { id: 5, name: "Whiskers Fan", initial: "W", color: "#a67bb0" },
-];
-
 // ── Component ──────────────────────────────────────────────────────────
 
 const Messages = () => {
@@ -56,8 +49,10 @@ const Messages = () => {
     const [showSettings, setShowSettings] = useState(false);
     const [showGroupModal, setShowGroupModal] = useState(false);
     const [showBlockPanel, setShowBlockPanel] = useState(false);
-    const [groupName, setGroupName] = useState("");
     const [selectedMembers, setSelectedMembers] = useState([]);
+    const [isRenaming, setIsRenaming] = useState(false);
+    const [showChatActions, setShowChatActions] = useState(false);
+    const [newChatName, setNewChatName] = useState("");
 
     const [settingsConfig, setSettingsConfig] = useState({
         messageRequests: true,
@@ -69,11 +64,24 @@ const Messages = () => {
         setSettingsConfig(prev => ({ ...prev, [key]: !prev[key] }));
     };
     const [searchQuery, setSearchQuery] = useState("");
+    const [buddySearch, setBuddySearch] = useState("");
     const [chats, setChats] = useState([]);
     const [requestChats, setRequestChats] = useState([]);
+    const [buddies, setBuddies] = useState([]);
     const [blockedUsers, setBlockedUsers] = useState([]);
     const [messages, setMessages] = useState({});
     const messagesEndRef = useRef(null);
+    const fileInputRef = useRef(null);
+
+    const formatPHTime = (value) => {
+        const date = value ? new Date(value) : new Date();
+        return new Intl.DateTimeFormat('en-PH', {
+            timeZone: 'Asia/Manila',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+        }).format(date);
+    };
 
     const displayChats = activeTab === "All"
         ? chats.filter((chat) => !chat.archived_at)
@@ -100,40 +108,212 @@ const Messages = () => {
         }
     };
 
-    useEffect(() => {
-        fetchConversations();
-    }, []);
-
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages, selectedChat]);
-
-    const handleSend = async () => {
-        if (!messageText.trim() || !selectedChat) return;
+    const fetchBuddies = async () => {
         try {
-            const res = await window.axios.post('/api/my-messages', {
-                receiver_id: selectedChat.user_id,
-                content: messageText,
-            });
-            setMessages((prev) => ({
-                ...prev,
-                [selectedChat.id]: [...(prev[selectedChat.id] || []), res.data],
-            }));
-            setMessageText("");
-            setChats((prev) => prev.map((chat) => chat.id === selectedChat.id
-                ? { ...chat, preview: res.data.text, time: "just now", last_message_at: new Date().toISOString() }
-                : chat));
+            const res = await window.axios.get('/api/my-conversations/buddies');
+            setBuddies(res.data || []);
         } catch (err) {
             console.error(err);
         }
     };
 
-    const handleSelectChat = async (chat) => {
-        setSelectedChat(chat);
-        setShowSettings(false);
+    useEffect(() => {
+        fetchConversations();
+        fetchBuddies();
+    }, []);
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            fetchConversations();
+        }, 5000);
+        return () => clearInterval(id);
+    }, []);
+
+    useEffect(() => {
+        if (!selectedChat?.id) return;
+        const id = setInterval(() => {
+            handleSelectChat(selectedChat, { silent: true });
+        }, 3000);
+        return () => clearInterval(id);
+    }, [selectedChat?.id]);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages, selectedChat]);
+
+    const handleDeleteChat = async () => {
+        if (!selectedChat) return;
+        if (!window.confirm(`Are you sure you want to delete your conversation with ${selectedChat.name}? This action cannot be undone.`)) return;
+
+        try {
+            await window.axios.delete(`/api/my-conversations/${selectedChat.id}`);
+            setChats(prev => prev.filter(c => c.id !== selectedChat.id));
+            setSelectedChat(null);
+            setShowChatActions(false);
+        } catch (err) {
+            console.error(err);
+            alert("Failed to delete conversation.");
+        }
+    };
+
+    const handleRename = async () => {
+        if (!newChatName.trim() || !selectedChat) return;
+        try {
+            const convId = selectedChat.id.toString().startsWith('gc_') 
+                ? selectedChat.id.toString().replace('gc_', '') 
+                : selectedChat.id;
+            
+            await window.axios.patch(`/api/my-conversations/${convId}`, {
+                name: newChatName.trim()
+            });
+
+            setChats(prev => prev.map(c => 
+                c.id === selectedChat.id ? { ...c, name: newChatName.trim() } : c
+            ));
+            setSelectedChat(prev => ({ ...prev, name: newChatName.trim() }));
+            setIsRenaming(false);
+        } catch (err) {
+            console.error(err);
+            alert("Failed to rename group chat.");
+        }
+    };
+
+    const handleFileSend = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file || !selectedChat) return;
+        e.target.value = '';
+
+        const isImage = file.type.startsWith('image/');
+        const isVideo = file.type.startsWith('video/');
+        const previewUrl = URL.createObjectURL(file);
+        const pendingId = `pending-${Date.now()}`;
+        const pendingMessage = {
+            id: pendingId,
+            text: null,
+            media_url: previewUrl,
+            media_type: isVideo ? 'video' : 'image',
+            isSelf: true,
+            is_read: false,
+            pending: true,
+            created_at: new Date().toISOString(),
+            time: formatPHTime(new Date().toISOString()),
+        };
+        setMessages((prev) => ({
+            ...prev,
+            [selectedChat.id]: [...(prev[selectedChat.id] || []), pendingMessage],
+        }));
+
+        const fd = new FormData();
+        fd.append('receiver_id', selectedChat.id);
+        fd.append('media', file);
+        try {
+            const res = await window.axios.post('/api/my-messages', fd, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            // Update the pending message with real data
+            setMessages((prev) => ({
+                ...prev,
+                [selectedChat.id]: (prev[selectedChat.id] || []).map((msg) =>
+                    msg.id === pendingId
+                        ? { 
+                            ...res.data, 
+                            pending: false, 
+                            time: formatPHTime(res.data.created_at),
+                            isSelf: true // Ensure isSelf is preserved
+                          }
+                        : msg
+                ),
+            }));
+        } catch (err) {
+            console.error(err);
+            setMessages((prev) => ({
+                ...prev,
+                [selectedChat.id]: (prev[selectedChat.id] || []).filter((m) => m.id !== pendingId),
+            }));
+        }
+    };
+
+    const handleSend = async () => {
+        if (!messageText.trim() || !selectedChat) return;
+        const pendingId = `pending-${Date.now()}`;
+        const pendingMessage = {
+            id: pendingId,
+            text: messageText,
+            isSelf: true,
+            is_read: false,
+            pending: true,
+            created_at: new Date().toISOString(),
+            time: formatPHTime(new Date().toISOString()),
+        };
+
+        setMessages((prev) => ({
+            ...prev,
+            [selectedChat.id]: [...(prev[selectedChat.id] || []), pendingMessage],
+        }));
+        setMessageText("");
+
+        try {
+            const res = await window.axios.post('/api/my-messages', {
+                receiver_id: selectedChat.id,
+                content: pendingMessage.text,
+            });
+            setMessages((prev) => ({
+                ...prev,
+                [selectedChat.id]: (prev[selectedChat.id] || []).map((msg) =>
+                    msg.id === pendingId
+                        ? {
+                            ...res.data,
+                            pending: false,
+                            time: formatPHTime(res.data.created_at),
+                        }
+                        : msg
+                ),
+            }));
+            setChats((prev) => {
+                const next = prev.map((chat) => chat.id === selectedChat.id
+                    ? {
+                        ...chat,
+                        preview: res.data.text,
+                        time: formatPHTime(res.data.created_at),
+                        last_message_at: res.data.created_at || new Date().toISOString(),
+                    }
+                    : chat
+                );
+
+                if (next.find((chat) => chat.id === selectedChat.id)) {
+                    return next;
+                }
+
+                return [{
+                    ...selectedChat,
+                    preview: res.data.text,
+                    time: formatPHTime(res.data.created_at),
+                    unread: 0,
+                    last_message_at: res.data.created_at || new Date().toISOString(),
+                    archived_at: null,
+                }, ...next];
+            });
+        } catch (err) {
+            console.error(err);
+            setMessages((prev) => ({
+                ...prev,
+                [selectedChat.id]: (prev[selectedChat.id] || []).filter((msg) => msg.id !== pendingId),
+            }));
+        }
+    };
+
+    const handleSelectChat = async (chat, options = {}) => {
+        const { silent = false } = options;
+        if (!silent) {
+            setSelectedChat(chat);
+            setShowSettings(false);
+        }
         try {
             const res = await window.axios.get(`/api/my-conversations/${chat.id}/messages`);
-            const data = res.data || [];
+            const data = (res.data || []).map((msg) => ({
+                ...msg,
+                time: formatPHTime(msg.created_at),
+            }));
             setMessages((prev) => ({ ...prev, [chat.id]: data }));
 
             const unread = data.filter((msg) => !msg.isSelf && !msg.is_read);
@@ -184,10 +364,81 @@ const Messages = () => {
     };
 
     const toggleMember = (id) => {
-        setSelectedMembers((prev) =>
-            prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]
+        setSelectedMembers((prev) => 
+            prev.includes(id) ? prev.filter(mid => mid !== id) : [...prev, id]
         );
     };
+
+    const startChatFromModal = async () => {
+        if (selectedMembers.length === 0) return;
+
+        if (!selectedChat && selectedMembers.length === 1) {
+            const selectedId = selectedMembers[0];
+            const buddy = buddies.find((b) => b.id === selectedId);
+            if (!buddy) return;
+
+            const chat = {
+                id: buddy.id,
+                user_id: buddy.id,
+                isGroup: false,
+                name: buddy.name,
+                avatar: buddy.avatar || null,
+                unread: 0,
+            };
+            setShowGroupModal(false);
+            setSelectedMembers([]);
+            setBuddySearch('');
+            await handleSelectChat(chat);
+        } else {
+            // Group Chat or Adding to existing
+            try {
+                if (selectedChat?.isGroup) {
+                    // Add members to existing GC
+                    for (const memberId of selectedMembers) {
+                        await window.axios.post(`/api/conversations/${selectedChat.conversation_id}/members`, {
+                            pet_id: memberId
+                        });
+                    }
+                    setShowGroupModal(false);
+                    setSelectedMembers([]);
+                    setBuddySearch('');
+                    handleSelectChat(selectedChat);
+                } else {
+                    // Create new GC
+                    const memberIds = [...selectedMembers];
+                    if (selectedChat && !selectedChat.isGroup) {
+                        memberIds.push(selectedChat.id);
+                    }
+
+                    const res = await window.axios.post('/api/conversations', {
+                        member_ids: memberIds,
+                        name: `Group Chat (${memberIds.length + 1})`
+                    });
+                    const newChat = {
+                        ...res.data,
+                        id: 'gc_' + res.data.id,
+                        conversation_id: res.data.id,
+                        isGroup: true,
+                        unread: 0,
+                    };
+                    setChats(prev => [newChat, ...prev]);
+                    setShowGroupModal(false);
+                    setSelectedMembers([]);
+                    setBuddySearch('');
+                    await handleSelectChat(newChat);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Failed to update conversation');
+            }
+        }
+    };
+
+    const filteredSuggestedMembers = buddies.filter((member) => {
+        const q = buddySearch.trim().toLowerCase();
+        if (!q) return true;
+        return member.name?.toLowerCase().includes(q);
+    });
 
     const chatMessages = selectedChat ? messages[selectedChat.id] || [] : [];
 
@@ -345,33 +596,117 @@ const Messages = () => {
                                 </button>
                                 <Avatar src={selectedChat.avatar} fallback={selectedChat.name[0]} size="md" online={selectedChat.online} color={selectedChat.color} />
                                 <div>
-                                    <p className="msg-chat-header__name">{selectedChat.name}</p>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <p className="msg-chat-header__name">{selectedChat.name}</p>
+                                        {selectedChat.isGroup && (
+                                            <button 
+                                                className="msg-rename-btn" 
+                                                onClick={() => {
+                                                    setNewChatName(selectedChat.name);
+                                                    setIsRenaming(true);
+                                                }}
+                                                title="Rename Group"
+                                            >
+                                                <PencilSimple size={14} />
+                                            </button>
+                                        )}
+                                    </div>
                                     <p className="msg-chat-header__status">{selectedChat.online ? "Online" : "Offline"}</p>
                                 </div>
                             </div>
                             <div className="msg-chat-header__right">
+                                <button className="msg-icon-btn" onClick={() => setShowGroupModal(true)} title="Add member"><Plus size={18} /></button>
                                 <button className="msg-icon-btn"><Phone size={18} /></button>
                                 <button className="msg-icon-btn"><VideoCamera size={18} /></button>
-                                <button className="msg-icon-btn"><DotsThree size={20} /></button>
+                                <div style={{ position: 'relative' }}>
+                                    <button 
+                                        className={`msg-icon-btn ${showChatActions ? 'msg-icon-btn--active' : ''}`} 
+                                        onClick={() => setShowChatActions(!showChatActions)}
+                                    >
+                                        <DotsThree size={20} />
+                                    </button>
+                                    <AnimatePresence>
+                                        {showChatActions && (
+                                            <motion.div 
+                                                className="msg-settings-popup"
+                                                style={{ right: 0, top: '100%', marginTop: '8px', minWidth: '180px' }}
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                            >
+                                                <button className="msg-settings-popup__link" onClick={() => { setIsRenaming(true); setShowChatActions(false); }}>
+                                                    <PencilSimple size={16} /> Rename Chat
+                                                </button>
+                                                <div className="msg-settings-popup__divider" />
+                                                <button 
+                                                    className="msg-settings-popup__link" 
+                                                    style={{ color: '#ef4444' }} 
+                                                    onClick={handleDeleteChat}
+                                                >
+                                                    <Trash size={16} /> Delete Conversation
+                                                </button>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
                             </div>
                         </header>
 
                         {/* Messages Viewport */}
                         <div className="msg-viewport">
                             <AnimatePresence>
-                                {chatMessages.map((msg, i) => (
-                                    <motion.div
-                                        key={msg.id || i}
-                                        className={`msg-bubble-row ${msg.isSelf ? "msg-bubble-row--self" : "msg-bubble-row--other"}`}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                    >
-                                        <div className="msg-bubble">
-                                            <p>{msg.text}</p>
-                                            <span className="msg-bubble__time">{msg.time}</span>
-                                        </div>
-                                    </motion.div>
-                                ))}
+                                {chatMessages.map((msg, i) => {
+                                    // Determine delivery status: sent (pending), delivered (on server, not viewed), seen (viewed by recipient)
+                                    let statusIcon = '✓ Sent';
+                                    let statusClass = 'sent';
+                                    if (!msg.pending) {
+                                        if (msg.is_read) {
+                                            statusIcon = '✓✓ Seen';
+                                            statusClass = 'seen';
+                                        } else {
+                                            statusIcon = '✓✓ Delivered';
+                                            statusClass = 'delivered';
+                                        }
+                                    }
+                                    return (
+                                        <motion.div
+                                            key={msg.id || i}
+                                            className={`msg-bubble-row ${msg.isSelf ? "msg-bubble-row--self" : "msg-bubble-row--other"}`}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                        >
+                                            <div className="msg-bubble">
+                                                {msg.media_url && (
+                                                    <div className="msg-media-container">
+                                                        {msg.media_type === 'video' ? (
+                                                            <video src={msg.media_url} controls className="msg-media" />
+                                                        ) : msg.media_type === 'image' ? (
+                                                            <img src={msg.media_url} alt="attachment" className="msg-media" />
+                                                        ) : (
+                                                            <a href={msg.media_url} target="_blank" rel="noopener noreferrer" className="msg-file-link">
+                                                                <File size={24} weight="fill" />
+                                                                <div className="msg-file-link__info">
+                                                                    <span>Attachment</span>
+                                                                    <small>Click to download</small>
+                                                                </div>
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                {/* Only show text if it's not a generic placeholder for the media */}
+                                                {msg.text && !['📹 Video', '📷 Photo', '📎 File'].includes(msg.text) && (
+                                                    <p>{msg.text}</p>
+                                                )}
+                                                <span className="msg-bubble__time">{msg.time}</span>
+                                                {msg.isSelf && (
+                                                    <span className={`msg-bubble__status ${statusClass}`}>
+                                                        {statusIcon}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </motion.div>
+                                    );
+                                })}
                             </AnimatePresence>
                             <div ref={messagesEndRef} />
                         </div>
@@ -390,7 +725,16 @@ const Messages = () => {
                             </footer>
                         ) : (
                             <footer className="msg-input-bar">
-                                <button className="msg-icon-btn"><Paperclip size={18} /></button>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    accept="image/*,video/*,.pdf,.doc,.docx"
+                                    onChange={handleFileSend}
+                                />
+                                <button className="msg-icon-btn" onClick={() => fileInputRef.current?.click()} title="Attach file">
+                                    <Paperclip size={18} />
+                                </button>
                                 <input
                                     className="msg-input"
                                     placeholder="Type a message..."
@@ -449,8 +793,8 @@ const Messages = () => {
                                 <input
                                     className="pv-msg-modal__search-input"
                                     placeholder="Search..."
-                                    value={groupName}
-                                    onChange={(e) => setGroupName(e.target.value)}
+                                    value={buddySearch}
+                                    onChange={(e) => setBuddySearch(e.target.value)}
                                     style={{ flex: 1, width: '100%' }}
                                 />
                             </div>
@@ -458,18 +802,19 @@ const Messages = () => {
                             <div className="pv-msg-modal__body" style={{ display: 'flex', flexDirection: 'column' }}>
                                 <p className="pv-msg-modal__section-label">Suggested</p>
                                 <div className="pv-msg-modal__member-list" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    {groupMembers.map((m) => {
+                                    {filteredSuggestedMembers.map((m) => {
                                         const isSelected = selectedMembers.includes(m.id);
                                         return (
                                             <button
                                                 key={m.id}
                                                 className={`pv-msg-modal__member ${isSelected ? "pv-msg-modal__member--selected" : ""}`}
+                                                type="button"
                                                 onClick={() => toggleMember(m.id)}
                                             >
-                                                <Avatar fallback={m.initial} size="md" color={m.color} />
+                                                <Avatar src={m.avatar} fallback={m.initial || (m.name?.[0] || '?')} size="md" color={m.bg || m.color} />
                                                 <div className="pv-msg-modal__member-info">
                                                     <span className="member-name">{m.name}</span>
-                                                    <span className="member-username">{m.name.toLowerCase().replace(/\s+/g, '')}</span>
+                                                    <span className="member-username">{(m.preview || m.name || '').toLowerCase().replace(/\s+/g, '')}</span>
                                                 </div>
                                                 <div className={`pv-msg-modal__member-radio ${isSelected ? 'selected' : ''}`}>
                                                     {isSelected && <div className="radio-inner" />}
@@ -477,12 +822,16 @@ const Messages = () => {
                                             </button>
                                         );
                                     })}
+                                    {filteredSuggestedMembers.length === 0 && (
+                                        <div className="pv-msg-modal__empty">No accounts found</div>
+                                    )}
                                 </div>
                             </div>
                             <div className="pv-msg-modal__footer">
                                 <button
                                     className={`pv-msg-modal__create-btn ${selectedMembers.length > 0 ? "pv-msg-modal__create-btn--enabled" : ""}`}
                                     disabled={!selectedMembers.length}
+                                    onClick={startChatFromModal}
                                 >
                                     Chat
                                 </button>
@@ -523,6 +872,63 @@ const Messages = () => {
                                         <button className="msg-unblock-btn" onClick={() => handleUnblock(block.id)}>Unblock</button>
                                     </div>
                                 ))}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {isRenaming && (
+                    <motion.div
+                        className="msg-modal-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsRenaming(false)}
+                    >
+                        <motion.div
+                            className="msg-rename-modal"
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="msg-rename-modal__header">
+                                <h3>Rename Group Chat</h3>
+                                <button className="msg-icon-btn" onClick={() => setIsRenaming(false)}>
+                                    <X size={20} />
+                                </button>
+                            </div>
+                            <div className="msg-rename-modal__body">
+                                <input 
+                                    className="msg-rename-input"
+                                    value={newChatName}
+                                    onChange={(e) => setNewChatName(e.target.value)}
+                                    placeholder="Enter new group name"
+                                    autoFocus
+                                />
+                            </div>
+                            <div className="msg-rename-modal__footer">
+                                <button className="msg-cancel-btn" onClick={() => setIsRenaming(false)}>Cancel</button>
+                                <button 
+                                    className="msg-save-btn" 
+                                    disabled={!newChatName.trim() || newChatName === selectedChat.name}
+                                    onClick={async () => {
+                                        try {
+                                            await window.axios.patch(`/api/conversations/${selectedChat.conversation_id}`, {
+                                                name: newChatName
+                                            });
+                                            setSelectedChat(prev => ({ ...prev, name: newChatName }));
+                                            setChats(prev => prev.map(c => c.id === selectedChat.id ? { ...c, name: newChatName } : c));
+                                            setIsRenaming(false);
+                                        } catch (err) {
+                                            console.error(err);
+                                            alert("Failed to rename conversation");
+                                        }
+                                    }}
+                                >
+                                    Save
+                                </button>
                             </div>
                         </motion.div>
                     </motion.div>

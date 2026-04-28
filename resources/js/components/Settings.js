@@ -35,6 +35,7 @@ import {
 import Sidebar from './pages/Sidebar';
 import { jsonRequestHeaders } from '../httpHelpers';
 import { useUser } from '../context/UserContext';
+import { useTheme } from '../hooks/useTheme';
 
 // ── UI Components ───────────
 
@@ -71,7 +72,8 @@ const Label = ({ children }) => <label className="settings-label">{children}</la
 const Settings = () => {
     const { user: authUser, setUser: setAuthUser, refreshUser } = useUser();
     const [activeTab, setActiveTab] = useState('account');
-    const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark');
+    const [theme, setTheme] = useTheme();
+    const isDark = theme === 'dark';
     const [textSize, setTextSize] = useState(() => localStorage.getItem('text-size') || 'medium');
     const [language, setLanguage] = useState('english');
     const fileInputRef = useRef(null);
@@ -172,16 +174,6 @@ const Settings = () => {
     useEffect(() => {
         fetchUser();
     }, []);
-
-    useEffect(() => {
-        if (isDark) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-        }
-    }, [isDark]);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-text-size', textSize);
@@ -647,7 +639,7 @@ const Settings = () => {
                     <div className="theme-cards">
                         <button 
                             className={`theme-card ${!isDark ? 'active' : ''}`}
-                            onClick={() => setIsDark(false)}
+                            onClick={() => setTheme('light')}
                         >
                             <div className="theme-icon light">
                                 <Sun size={24} weight="fill" />
@@ -657,7 +649,7 @@ const Settings = () => {
                         </button>
                         <button 
                             className={`theme-card ${isDark ? 'active' : ''}`}
-                            onClick={() => setIsDark(true)}
+                            onClick={() => setTheme('dark')}
                         >
                             <div className="theme-icon dark">
                                 <Moon size={24} weight="fill" />

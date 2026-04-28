@@ -25,6 +25,7 @@
     --warning-rgb:        245, 158, 11;
     --bg-card-rgb:        255, 255, 255;
     --text-main-rgb:      47, 47, 47;
+    --text-muted-rgb:     122, 122, 122;
 }
 
 // ── Smooth global transitions when toggling theme ──────────────────────────────
@@ -86,6 +87,7 @@ body,
     --warning-rgb:        251, 191, 36;
     --bg-card-rgb:        28, 32, 40;
     --text-main-rgb:      232, 234, 240;
+    --text-muted-rgb:     138, 143, 168;
 
     // Body & page wrappers — all use var(--bg-page) already,
     // but explicit body override ensures html bg matches

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, MapPin, PawPrint, Plus, X } from "@phosphor-icons/react";
+import { Heart, MapPin, PawPrint, Plus, X, Image as ImageIcon } from "@phosphor-icons/react";
 import Sidebar from "./pages/Sidebar";
 import "../../sass/pages/adoption.scss";
 
@@ -113,23 +113,43 @@ const AdoptionBoard = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [putForAdoptionOpen, setPutForAdoptionOpen] = useState(false);
     const [putFormSubmitted, setPutFormSubmitted] = useState(false);
+    const [userPets, setUserPets] = useState([]);
+
+    useEffect(() => {
+        fetchListings();
+        fetchUserPets();
+    }, []);
+
+    const fetchUserPets = async () => {
+        try {
+            const res = await window.axios.get('/api/pets');
+            // Assuming /api/pets returns { data: [...] } or just [...]
+            const data = res.data?.data || res.data || [];
+            setUserPets(data);
+        } catch (err) {
+            console.error('Failed to fetch user pets:', err);
+        }
+    };
 
     const fetchListings = async () => {
         try {
             const res = await window.axios.get('/api/adoption-listings/available');
             const data = res.data || [];
-            const formattedPets = data.map(listing => ({
-                id: listing.id,
-                name: listing.pet?.name || 'Unknown',
-                breed: listing.pet?.breed || 'Unknown',
-                age: listing.pet?.age_label || listing.pet?.age || 'Unknown',
-                description: listing.description || listing.pet?.bio || '',
-                location: listing.location || listing.pet?.location || 'Unknown',
-                image: listing.image ? `storage/${listing.image}` : (listing.pet?.photo ? `storage/${listing.pet.photo}` : null),
-                imageAlt: `${listing.pet?.name || 'Pet'} for adoption`,
-                tags: [],
-                saved: false,
-            }));
+            const formattedPets = data.map(listing => {
+                const petData = listing.pet || {};
+                return {
+                    id: listing.id,
+                    name: listing.pet_name || petData.name || 'Unknown Pet',
+                    breed: listing.breed || petData.breed || 'Unknown Breed',
+                    age: listing.age || petData.age_label || petData.age || 'N/A',
+                    description: listing.description || petData.bio || 'No description provided.',
+                    location: listing.location || petData.location || 'Unknown Location',
+                    image: listing.image ? `/storage/${listing.image}` : (petData.photo ? `/storage/${petData.photo}` : null),
+                    imageAlt: `${listing.pet_name || petData.name || 'Pet'} for adoption`,
+                    tags: [],
+                    saved: false,
+                };
+            });
             setPets(formattedPets);
         } catch (err) {
             console.error('Failed to fetch adoption listings:', err);
@@ -418,37 +438,94 @@ const AdoptionBoard = () => {
                                     <form onSubmit={handlePutSubmit} className="adopt-form">
                                         <p className="adopt-form__desc">Fill out the details below to list your pet for adoption. Make sure to provide accurate information.</p>
                                         
+                                        <div className="adopt-form__group">
+                                            <label>Select Your Pet (Optional)</label>
+                                            <select 
+                                                className="adopt-form__select"
+                                                onChange={(e) => {
+                                                    const selectedId = e.target.value;
+                                                    if (!selectedId) return;
+                                                    const p = userPets.find(up => up.id.toString() === selectedId);
+                                                    if (p) {
+                                                        const form = e.target.form;
+                                                        form.pet_id.value = p.id;
+                                                        form.pet_name.value = p.name || '';
+                                                        form.breed.value = p.breed || '';
+                                                        form.age.value = p.age_label || p.age || '';
+                                                        form.location.value = p.location || '';
+                                                        form.description.value = p.bio || '';
+                                                    }
+                                                }}
+                                            >
+                                                <option value="">-- Choose one of your pets --</option>
+                                                {userPets.map(up => (
+                                                    <option key={up.id} value={up.id}>{up.name}</option>
+                                                ))}
+                                            </select>
+                                            <input type="hidden" name="pet_id" />
+                                        </div>
+
                                         <div className="adopt-form__row">
                                             <div className="adopt-form__group">
                                                 <label>Pet Name</label>
-                                                <input type="text" required placeholder="e.g. Buddy" />
+                                                <input type="text" name="pet_name" required placeholder="e.g. Buddy" />
                                             </div>
                                             <div className="adopt-form__group">
                                                 <label>Pet Type/Breed</label>
-                                                <input type="text" required placeholder="e.g. Golden Retriever" />
+                                                <input type="text" name="breed" required placeholder="e.g. Golden Retriever" />
                                             </div>
                                         </div>
 
                                         <div className="adopt-form__row">
                                             <div className="adopt-form__group">
                                                 <label>Age</label>
-                                                <input type="text" required placeholder="e.g. 2 years" />
+                                                <input type="text" name="age" required placeholder="e.g. 2 years" />
                                             </div>
                                             <div className="adopt-form__group">
                                                 <label>Location</label>
-                                                <input type="text" required placeholder="e.g. San Francisco, CA" />
+                                                <input type="text" name="location" required placeholder="e.g. Manila, Philippines" />
                                             </div>
                                         </div>
 
                                         <div className="adopt-form__group">
                                             <label>Description</label>
-                                            <textarea required placeholder="Tell potential adopters about your pet's personality, habits, and needs..." rows={4}></textarea>
+                                            <textarea name="description" required placeholder="Tell potential adopters about your pet's personality, habits, and needs..." rows={4}></textarea>
                                         </div>
 
                                         <div className="adopt-form__group">
-                                            <label>Pet Image URL</label>
-                                            <input type="url" placeholder="https://example.com/pet-image.jpg" />
-                                            <span className="adopt-form__hint">For now, please provide a direct link to an image.</span>
+                                            <label>Pet Photo</label>
+                                            <div className="file-upload-wrapper">
+                                                <input 
+                                                    type="file" 
+                                                    id="pet-photo-upload"
+                                                    name="image"
+                                                    accept="image/*"
+                                                    className="adopt-form__file-input"
+                                                    onChange={(e) => {
+                                                        const file = e.target.files[0];
+                                                        if (file) {
+                                                            const reader = new FileReader();
+                                                            reader.onload = (ev) => {
+                                                                document.getElementById('photo-preview-box').src = ev.target.result;
+                                                                document.getElementById('photo-preview-box').style.display = 'block';
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                    }}
+                                                />
+                                                <label htmlFor="pet-photo-upload" className="file-upload-btn">
+                                                    <ImageIcon size={20} />
+                                                    <span>Upload Photo</span>
+                                                </label>
+                                                <img id="photo-preview-box" src="" alt="Preview" style={{ display: 'none', marginTop: '10px', borderRadius: '8px', maxWidth: '100%', height: 'auto' }} />
+                                            </div>
+                                            <span className="adopt-form__hint">Upload a clear photo of your pet (JPG, PNG, WebP — max 5MB).</span>
+                                        </div>
+
+                                        <div className="adopt-form__group">
+                                            <label>Contact Info <span style={{color:'var(--danger)', fontSize:'0.8em'}}>*</span></label>
+                                            <input type="text" name="contact_info" required placeholder="Your email or phone number" />
+                                            <span className="adopt-form__hint">Potential adopters will reach you through this.</span>
                                         </div>
                                         
                                         <div className="adopt-form__actions">

@@ -131,7 +131,8 @@ class AdminController extends Controller
      */
     public function recentLogins()
     {
-        $logins = Login::with('user:id,name,email')
+        $logins = LoginAudit::with('user:id,name,email')
+            ->where('successful', true)
             ->orderBy('login_at', 'desc')
             ->take(20)
             ->get();
@@ -254,5 +255,30 @@ class AdminController extends Controller
         $enabled = (bool) $request->boolean('enabled');
         \App\Models\SystemSetting::set('registration_enabled', $enabled);
         return response()->json(['enabled' => $enabled]);
+    }
+
+    /**
+     * GET /api/admin/settings
+     */
+    public function getSettings()
+    {
+        return response()->json([
+            'registration_enabled' => \App\Models\SystemSetting::get('registration_enabled', true),
+            'email_verification' => \App\Models\SystemSetting::get('email_verification', false),
+        ]);
+    }
+
+    /**
+     * POST /api/admin/settings
+     */
+    public function updateSettings(Request $request)
+    {
+        if ($request->has('registration_enabled')) {
+            \App\Models\SystemSetting::set('registration_enabled', $request->boolean('registration_enabled'));
+        }
+        if ($request->has('email_verification')) {
+            \App\Models\SystemSetting::set('email_verification', $request->boolean('email_verification'));
+        }
+        return response()->json(['message' => 'Settings updated successfully']);
     }
 }

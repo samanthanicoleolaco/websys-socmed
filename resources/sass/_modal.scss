@@ -2,12 +2,22 @@
 
 %app-modal {
     width: min(560px, 92vw);
-    max-height: 90vh;
+    max-height: min(640px, 88vh);
     overflow-y: auto;
     border-radius: 16px;
     padding: 20px 24px;
     background: var(--bg-card);
     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+}
+
+%app-modal--wide {
+    @extend %app-modal;
+    width: min(720px, 94vw);
+}
+
+%app-modal--tall {
+    @extend %app-modal;
+    max-height: min(720px, 92vh);
 }
 
 %app-modal-overlay {

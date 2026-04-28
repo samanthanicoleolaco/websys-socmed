@@ -68,6 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('pets', PetController::class);
     Route::get('/pets/{pet}/followers', [FollowerController::class, 'followers']);
     Route::get('/pets/{pet}/following', [FollowerController::class, 'following']);
+    Route::post('/pets/{pet}/cover', [PetController::class, 'updateCover']);
     
     // Post routes
     Route::apiResource('posts', PostController::class);
@@ -136,12 +137,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('stories', StoryController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('/stories/{story}/archive', [StoryController::class, 'archive']);
     Route::post('/stories/{story}/view', [StoryController::class, 'markAsViewed']);
-    
+    Route::get('/pets/{pet}/highlights', [StoryController::class, 'highlights']);
+    Route::post('/conversations/{conversation}/members', [MessageController::class, 'addMember']);
+    Route::patch('/conversations/{conversation}', [MessageController::class, 'updateConversation']);
 });
 
 // Public read-only routes
 Route::get('/pets', [PetController::class, 'index']);
 Route::get('/pets/{pet}', [PetController::class, 'show']);
+Route::get('/pets/{pet}/tagged-posts', [PetController::class, 'taggedPosts']);
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::get('/trending-tags', [PostController::class, 'trendingTags']);
@@ -180,6 +184,8 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/adoption-listings', [AdminController::class, 'adoptionListings']);
 
     // System settings
+    Route::get('/settings', [AdminController::class, 'getSettings']);
+    Route::post('/settings', [AdminController::class, 'updateSettings']);
     Route::post('/maintenance', [AdminController::class, 'toggleMaintenance']);
     Route::post('/cache/purge', [AdminController::class, 'purgeCache']);
     Route::post('/toggle-registration', [AdminController::class, 'toggleRegistration']);
@@ -188,13 +194,14 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
 // Custom Message Endpoints
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/my-conversations', [\App\Http\Controllers\MessageController::class, 'getConversations']);
-    Route::get('/my-conversations/buddies', [\App\Http\Controllers\MessageController::class, 'getBuddies']);
-    Route::get('/my-conversations/{buddy_id}/messages', [\App\Http\Controllers\MessageController::class, 'getMessages']);
-    Route::post('/my-conversations/{buddy_id}/archive', [\App\Http\Controllers\MessageController::class, 'archive']);
-    Route::post('/my-conversations/{buddy_id}/unarchive', [\App\Http\Controllers\MessageController::class, 'unarchive']);
-    Route::post('/my-messages', [\App\Http\Controllers\MessageController::class, 'store']);
-    Route::post('/messages/{message}/read', [\App\Http\Controllers\MessageController::class, 'markAsRead']);
-    Route::delete('/my-conversations/{buddy_id}', [\App\Http\Controllers\MessageController::class, 'clearChat']);
-    Route::delete('/my-messages/{message_id}', [\App\Http\Controllers\MessageController::class, 'unsend']);
+    Route::get('/my-conversations', [MessageController::class, 'getConversations']);
+    Route::post('/my-conversations', [MessageController::class, 'createConversation']);
+    Route::get('/my-conversations/buddies', [MessageController::class, 'getBuddies']);
+    Route::get('/my-conversations/{buddy_id}/messages', [MessageController::class, 'getMessages']);
+    Route::post('/my-conversations/{buddy_id}/archive', [MessageController::class, 'archive']);
+    Route::post('/my-conversations/{buddy_id}/unarchive', [MessageController::class, 'unarchive']);
+    Route::post('/my-messages', [MessageController::class, 'store']);
+    Route::post('/messages/{message}/read', [MessageController::class, 'markAsRead']);
+    Route::delete('/my-conversations/{buddy_id}', [MessageController::class, 'clearChat']);
+    Route::delete('/my-messages/{message_id}', [MessageController::class, 'unsend']);
 });

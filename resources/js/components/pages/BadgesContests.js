@@ -123,6 +123,12 @@ const ContestEntryModal = ({ isOpen, onClose }) => {
                             />
                         </div>
 
+                        <div className="upload-actions">
+                            <button type="button" className="choose-image-btn" onClick={() => document.getElementById('contest-photo').click()}>
+                                {selectedImage ? 'Change Image' : 'Choose Image'}
+                            </button>
+                        </div>
+
                         <div className="caption-area">
                             <label>Tell us about this photo</label>
                             <textarea 
@@ -139,7 +145,7 @@ const ContestEntryModal = ({ isOpen, onClose }) => {
                                 disabled={!selectedImage || isSubmitting}
                                 onClick={handleSubmit}
                             >
-                                {isSubmitting ? "Submitting..." : "Submit Entry"}
+                                {isSubmitting ? "Submitting..." : "Enter Contest"}
                             </button>
                         </div>
                     </div>
@@ -238,7 +244,11 @@ const BadgesContests = () => {
 
                     <div className="badges-grid">
                         <AnimatePresence>
-                            {filteredBadges.map(badge => (
+                            {filteredBadges.map(badge => {
+                                const rarityLabel = badge.rarity || 'Common';
+                                const rarity = rarityLabel.toLowerCase();
+
+                                return (
                                 <motion.div 
                                     key={badge.id}
                                     layout
@@ -246,7 +256,7 @@ const BadgesContests = () => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     transition={{ duration: 0.2 }}
-                                    className={`badge-card ${badge.status} border-${badge.rarity.toLowerCase()}`}
+                                    className={`badge-card ${badge.status} border-${rarity}`}
                                 >
                                     <div className="badge-card__top-icon">
                                         {badge.status === "earned" && <CheckCircle className="status-icon earned-icon" weight="fill" />}
@@ -262,7 +272,7 @@ const BadgesContests = () => {
                                         <div className="badge-progress">
                                             <div className="progress-bar">
                                                 <div 
-                                                    className={`progress-fill fill-${badge.rarity.toLowerCase()}`} 
+                                                    className={`progress-fill fill-${rarity}`} 
                                                     style={{ width: `${(badge.progress / badge.total) * 100}%` }} 
                                                 />
                                             </div>
@@ -272,9 +282,10 @@ const BadgesContests = () => {
                                         <div className="badge-spacer"></div>
                                     )}
 
-                                    <span className={`badge-rarity rarity-${badge.rarity.toLowerCase()}`}>{badge.rarity}</span>
+                                    <span className={`badge-rarity rarity-${rarity}`}>{rarityLabel}</span>
                                 </motion.div>
-                            ))}
+                                );
+                            })}
                         </AnimatePresence>
                     </div>
                 </section>

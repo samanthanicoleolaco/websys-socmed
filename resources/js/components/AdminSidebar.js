@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import {
     Layout, Article, ChartBar, Gear, SignOut,
     MagnifyingGlass, Moon, Sun
 } from "@phosphor-icons/react";
+import { useTheme } from "../hooks/useTheme";
 
 const AdminSidebar = ({ activeTab, onTabChange }) => {
-    const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem("petverse_theme") === "dark");
-    useEffect(() => {
-        const theme = isDarkMode ? "dark" : "light";
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("petverse_theme", theme);
-    }, [isDarkMode]);
+    const [theme, setTheme] = useTheme();
+    const isDarkMode = theme === "dark";
 
     const items = [
         { id: "dashboard", icon: <Layout size={22} />,    label: "Dashboard" },
@@ -77,7 +74,7 @@ const AdminSidebar = ({ activeTab, onTabChange }) => {
                 </button>
                 <button
                     className="admin-sidebar__theme"
-                    onClick={() => setIsDarkMode((p) => !p)}
+                    onClick={() => setTheme(isDarkMode ? "light" : "dark")}
                     title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                 >
                     {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}

@@ -15,6 +15,7 @@ class Story extends Model
         'media_type',
         'caption',
         'expires_at',
+        'is_archived',
     ];
 
     protected $casts = [

@@ -75,8 +75,16 @@ class Pet extends Model
 
     public function getImageUrlAttribute()
     {
-        if (!$this->photo) return null;
-        return url('storage/' . $this->photo);
+        if ($this->photo) {
+            return url('storage/' . $this->photo);
+        }
+
+        $owner = $this->relationLoaded('user') ? $this->user : $this->user()->first();
+        if ($owner && $owner->profile_photo) {
+            return url('storage/' . $owner->profile_photo);
+        }
+
+        return null;
     }
 
     public function getAgeLabelAttribute(): string

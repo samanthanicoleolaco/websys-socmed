@@ -1,5 +1,10 @@
 require('./bootstrap');
 
+const savedTheme = localStorage.getItem('petverse_theme');
+if (savedTheme === 'dark' || savedTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+}
+
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Login from './components/login';

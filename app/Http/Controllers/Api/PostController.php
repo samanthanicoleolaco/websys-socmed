@@ -36,16 +36,19 @@ class PostController extends Controller
 
         $posts = $query->latest()->paginate(20);
 
-        $petIds = Auth::check() ? Auth::user()->pets->pluck('id') : collect();
+        $user = Auth::user();
+        $petIds = $user ? $user->pets->pluck('id') : collect();
+        $savedPostIds = $user ? $user->savedPosts->pluck('post_id')->toArray() : [];
 
         // Transform tagged_pets IDs into Pet objects
-        $posts->getCollection()->transform(function ($post) use ($petIds) {
+        $posts->getCollection()->transform(function ($post) use ($petIds, $savedPostIds) {
             if ($post->tagged_pets && is_array($post->tagged_pets)) {
                 $post->tagged_pets = Pet::whereIn('id', $post->tagged_pets)->get();
             }
             $post->liked_by_me = $petIds->isNotEmpty()
                 ? $post->likes->pluck('pet_id')->intersect($petIds)->isNotEmpty()
                 : false;
+            $post->is_saved = in_array($post->id, $savedPostIds);
             $post->likes_count = $post->likes->count();
             $post->comments_count = $post->comments->count();
             return $post;

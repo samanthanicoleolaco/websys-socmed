@@ -42,6 +42,10 @@ const Notifications = () => {
 
     useEffect(() => {
         fetchNotifications();
+        const id = setInterval(() => {
+            fetchNotifications();
+        }, 8000);
+        return () => clearInterval(id);
     }, []);
 
     const markAsRead = async (id) => {

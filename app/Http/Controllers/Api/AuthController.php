@@ -67,6 +67,7 @@ class AuthController extends Controller
         $user = Auth::user();   // <-- use the web-guard user, not $request->user()
 
         if (!$user->hasVerifiedEmail()) {
+            \App\Models\LoginAudit::create(['user_id' => $user->id, 'ip_address' => $request->ip(), 'user_agent' => $request->userAgent(), 'successful' => false, 'failure_reason' => 'unverified_email', 'login_at' => now()]);
             Auth::logout();
             throw ValidationException::withMessages([
                 'email' => ['Please verify your email before logging in to Petverse.'],
@@ -74,6 +75,7 @@ class AuthController extends Controller
         }
 
         if (!empty($user->is_banned)) {
+            \App\Models\LoginAudit::create(['user_id' => $user->id, 'ip_address' => $request->ip(), 'user_agent' => $request->userAgent(), 'successful' => false, 'failure_reason' => 'banned', 'login_at' => now()]);
             Auth::logout();
             throw ValidationException::withMessages([
                 'email' => ['This account has been suspended. Contact support.'],
@@ -83,6 +85,8 @@ class AuthController extends Controller
         // Token for SPA Bearer flow + session for cookie flow (works either way).
         $user->tokens()->where('name', 'pawtastic-token')->delete();
         $token = $user->createToken('pawtastic-token')->plainTextToken;
+
+        \App\Models\LoginAudit::create(['user_id' => $user->id, 'ip_address' => $request->ip(), 'user_agent' => $request->userAgent(), 'successful' => true, 'login_at' => now()]);
 
         return response()->json([
             'user'  => $user->loadMissing('pet'),

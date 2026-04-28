@@ -51,13 +51,15 @@ class StoryController extends Controller
         $type = $is_video ? 'video' : 'image';
 
         $path = $file->store('stories', 'public');
+        $is_highlight = $request->input('is_highlight') === '1' || $request->boolean('is_highlight');
 
         $story = Story::create([
             'user_id' => $request->user()->id,
             'media_path' => $path,
             'media_type' => $type,
             'caption' => $request->caption,
-            'expires_at' => Carbon::now()->addHours(24),
+            'expires_at' => $is_highlight ? Carbon::now()->addYears(10) : Carbon::now()->addHours(24),
+            'is_archived' => $is_highlight,
         ]);
 
         $story->load('user.pet');
@@ -113,5 +115,19 @@ class StoryController extends Controller
         ]);
 
         return response()->json(['message' => 'Marked as viewed']);
+    }
+
+    public function highlights(\App\Models\Pet $pet)
+    {
+        $stories = Story::where('user_id', $pet->user_id)
+            ->where('is_archived', true)
+            ->orderBy('created_at', 'asc')
+            ->get();
+            
+        $stories->each(function($story) {
+            $story->media_url = asset('storage/' . $story->media_path);
+        });
+            
+        return response()->json($stories);
     }
 }
