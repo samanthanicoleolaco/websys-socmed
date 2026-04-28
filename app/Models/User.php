@@ -23,6 +23,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'is_admin',
+        'is_banned',
+        'is_deactivated',
         'profile_photo',
         'user_settings',
         'email_verified_at',
@@ -50,6 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verification_expires_at' => 'datetime',
         'user_settings' => 'array',
         'is_admin' => 'boolean',
+        'is_banned' => 'boolean',
+        'is_deactivated' => 'boolean',
     ];
 
     public function pets()

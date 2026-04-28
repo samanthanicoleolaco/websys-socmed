@@ -108,9 +108,13 @@ class MessageController extends Controller
     {
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
-            'content' => 'required|string|max:5000',
+            'content' => 'nullable|string|max:5000',
             'media' => 'nullable|file|mimetypes:image/jpeg,image/png,image/gif,image/webp,video/mp4,video/quicktime,video/webm|max:51200',
         ]);
+
+        if (trim((string) $request->input('content', '')) === '' && !$request->hasFile('media')) {
+            return response()->json(['message' => 'Message content or media is required'], 422);
+        }
 
         $mediaPath = null;
         $mediaType = null;

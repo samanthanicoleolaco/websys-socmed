@@ -51,7 +51,7 @@ class BadgeController extends Controller
      */
     public function leaderboard(Request $request)
     {
-        $period = $request->get('period', 'week');
+        $period = mb_strtolower($request->get('period', 'week'));
         $since = match ($period) {
             'week' => now()->subWeek(),
             'month' => now()->subMonth(),

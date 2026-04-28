@@ -111,7 +111,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Contest routes
     Route::get('/contests', [ContestController::class, 'index']);
-    Route::get('/contests/{contest}', [ContestController::class, 'show']);
+    Route::get('/contests/{contest}', [ContestController::class, 'show'])->whereNumber('contest');
     Route::get('/contests/{contest}/entries', [ContestController::class, 'entries']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/contests', [ContestController::class, 'store'])->middleware('admin');
@@ -122,10 +122,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     
     // Adoption listing routes
-    // IMPORTANT: '/available' MUST come before apiResource, otherwise
-    // /{adoptionListing} binds 'available' as an id and 404s.
-    Route::get('/adoption-listings/available', [AdoptionListingController::class, 'available']);
-    Route::apiResource('adoption-listings', AdoptionListingController::class);
+    Route::post('/adoption-listings', [AdoptionListingController::class, 'store']);
+    Route::match(['put', 'patch'], '/adoption-listings/{adoptionListing}', [AdoptionListingController::class, 'update']);
+    Route::delete('/adoption-listings/{adoptionListing}', [AdoptionListingController::class, 'destroy']);
     Route::post('/adoption-listings/{adoptionListing}/apply', [AdoptionListingController::class, 'apply']);
     
     // Notification routes
