@@ -3,7 +3,6 @@ import "../../sass/login.scss";
 import { jsonRequestHeaders, messageFromAxiosError } from "../httpHelpers";
 
 const Register = () => {
-    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -16,7 +15,6 @@ const Register = () => {
         setError("");
         try {
             const payload = {
-                name: name.trim(),
                 email: email.trim(),
                 password,
                 password_confirmation: passwordConfirmation,
@@ -28,7 +26,7 @@ const Register = () => {
             });
 
             if (data?.success) {
-                window.location.href = data.redirect || "/dashboard";
+                window.location.href = data.redirect || "/email/verify";
             } else {
                 setError(data?.message || "Registration failed");
             }
@@ -64,16 +62,6 @@ const Register = () => {
                     
                     <form onSubmit={handleSubmit} className="actual-form">
                         {error && <div className="error-msg">{error}</div>}
-                        
-                        <div className="input-group">
-                            <label>Full Name</label>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                        </div>
 
                         <div className="input-group">
                             <label>Email Address</label>

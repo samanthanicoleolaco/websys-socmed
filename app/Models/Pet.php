@@ -13,12 +13,19 @@ class Pet extends Model
         'user_id',
         'name',
         'age',
+        'gender',
+        'birthday',
+        'species',
         'breed',
         'photo',
         'bio',
         'location',
         'cover_photo',
         'is_verified',
+    ];
+
+    protected $casts = [
+        'birthday' => 'date',
     ];
 
     public function user()

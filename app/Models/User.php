@@ -19,10 +19,12 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'is_admin',
         'profile_photo',
+        'user_settings',
         'email_verified_at',
         'email_verification_code_hash',
         'email_verification_expires_at',
@@ -46,7 +48,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'email_verification_expires_at' => 'datetime',
-        'is_admin'          => 'boolean',
+        'user_settings' => 'array',
+        'is_admin' => 'boolean',
     ];
 
     public function pets()

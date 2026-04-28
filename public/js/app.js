@@ -2069,15 +2069,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/Feed */ "./resources/js/components/pages/Feed.js");
 /* harmony import */ var _components_AdminDashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/AdminDashboard */ "./resources/js/components/AdminDashboard.js");
 /* harmony import */ var _components_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Register */ "./resources/js/components/Register.js");
-/* harmony import */ var _components_pages_Messages__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/Messages */ "./resources/js/components/pages/Messages.js");
-/* harmony import */ var _components_pages_BadgesContests__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/BadgesContests */ "./resources/js/components/pages/BadgesContests.js");
-/* harmony import */ var _components_AdoptionBoard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/AdoptionBoard */ "./resources/js/components/AdoptionBoard.js");
-/* harmony import */ var _components_Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Settings */ "./resources/js/components/Settings.js");
-/* harmony import */ var _components_pages_Profile__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/Profile */ "./resources/js/components/pages/Profile.js");
-/* harmony import */ var _components_pages_Notifications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/pages/Notifications */ "./resources/js/components/pages/Notifications.js");
-/* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./context/UserContext */ "./resources/js/context/UserContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_EmailVerify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/EmailVerify */ "./resources/js/components/EmailVerify.js");
+/* harmony import */ var _components_PetInfo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/PetInfo */ "./resources/js/components/PetInfo.js");
+/* harmony import */ var _components_ResetPassword__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/ResetPassword */ "./resources/js/components/ResetPassword.js");
+/* harmony import */ var _components_pages_Messages__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/Messages */ "./resources/js/components/pages/Messages.js");
+/* harmony import */ var _components_pages_BadgesContests__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/BadgesContests */ "./resources/js/components/pages/BadgesContests.js");
+/* harmony import */ var _components_AdoptionBoard__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/AdoptionBoard */ "./resources/js/components/AdoptionBoard.js");
+/* harmony import */ var _components_Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/Settings */ "./resources/js/components/Settings.js");
+/* harmony import */ var _components_pages_Profile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/pages/Profile */ "./resources/js/components/pages/Profile.js");
+/* harmony import */ var _components_pages_Notifications__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/pages/Notifications */ "./resources/js/components/pages/Notifications.js");
+/* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./context/UserContext */ "./resources/js/context/UserContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+
+
 
 
 
@@ -2098,12 +2104,12 @@ var container = document.getElementById('sam-virtudazo');
 if (container) {
   var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(container);
   var AppContent = function AppContent() {
-    var _useUser = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_12__.useUser)(),
+    var _useUser = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_15__.useUser)(),
       user = _useUser.user,
       loading = _useUser.loading;
     var path = window.location.pathname;
     if (loading) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
         style: {
           display: 'flex',
           justifyContent: 'center',
@@ -2111,37 +2117,64 @@ if (container) {
           height: '100vh',
           background: '#f8f9fa'
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
           className: "pawtastic-loader"
         })
       });
     }
-    if (path === '/login') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_login__WEBPACK_IMPORTED_MODULE_2__["default"], {});
-    if (path === '/register') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_Register__WEBPACK_IMPORTED_MODULE_5__["default"], {});
+    if (path === '/login') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_login__WEBPACK_IMPORTED_MODULE_2__["default"], {});
+    if (path === '/register') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_Register__WEBPACK_IMPORTED_MODULE_5__["default"], {});
+    if (path === '/password/reset') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_ResetPassword__WEBPACK_IMPORTED_MODULE_8__["default"], {});
+    if (path === '/email/verify') {
+      if (user !== null && user !== void 0 && user.email_verified_at) {
+        if (!user.pet) {
+          window.location.href = '/pet-info';
+          return null;
+        }
+        window.location.href = '/homefeed';
+        return null;
+      }
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_EmailVerify__WEBPACK_IMPORTED_MODULE_6__["default"], {});
+    }
+    if (path === '/pet-info') {
+      if (user !== null && user !== void 0 && user.email_verified_at && user !== null && user !== void 0 && user.pet) {
+        window.location.href = '/homefeed';
+        return null;
+      }
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_PetInfo__WEBPACK_IMPORTED_MODULE_7__["default"], {});
+    }
     if (!user) {
       window.location.href = '/login';
       return null;
     }
-    if (path.startsWith('/admin')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_AdminDashboard__WEBPACK_IMPORTED_MODULE_4__["default"], {});
-    if (path === '/messages') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Messages__WEBPACK_IMPORTED_MODULE_6__["default"], {});
-    if (path === '/badges') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_BadgesContests__WEBPACK_IMPORTED_MODULE_7__["default"], {});
-    if (path === '/adoption' || path.startsWith('/adoption/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_AdoptionBoard__WEBPACK_IMPORTED_MODULE_8__["default"], {});
-    if (path === '/settings') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_Settings__WEBPACK_IMPORTED_MODULE_9__["default"], {});
-    if (path === '/profile' || path.startsWith('/profile/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Profile__WEBPACK_IMPORTED_MODULE_10__["default"], {});
-    if (path === '/notifications') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Notifications__WEBPACK_IMPORTED_MODULE_11__["default"], {});
-    if (path === '/homefeed') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
+    if (!user.email_verified_at) {
+      window.location.href = '/email/verify';
+      return null;
+    }
+    if (!user.pet) {
+      window.location.href = '/pet-info';
+      return null;
+    }
+    if (path.startsWith('/admin')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_AdminDashboard__WEBPACK_IMPORTED_MODULE_4__["default"], {});
+    if (path === '/messages') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Messages__WEBPACK_IMPORTED_MODULE_9__["default"], {});
+    if (path === '/badges') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_BadgesContests__WEBPACK_IMPORTED_MODULE_10__["default"], {});
+    if (path === '/adoption' || path.startsWith('/adoption/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_AdoptionBoard__WEBPACK_IMPORTED_MODULE_11__["default"], {});
+    if (path === '/settings') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_Settings__WEBPACK_IMPORTED_MODULE_12__["default"], {});
+    if (path === '/profile' || path.startsWith('/profile/')) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Profile__WEBPACK_IMPORTED_MODULE_13__["default"], {});
+    if (path === '/notifications') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Notifications__WEBPACK_IMPORTED_MODULE_14__["default"], {});
+    if (path === '/homefeed') return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
 
     // If at root, redirect to /homefeed
     if (path === '/') {
       window.history.replaceState(null, '', '/homefeed');
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
     }
 
     // Catch-all for other protected paths
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_components_pages_Feed__WEBPACK_IMPORTED_MODULE_3__["default"], {});
   };
-  root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_context_UserContext__WEBPACK_IMPORTED_MODULE_12__.UserProvider, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(AppContent, {})
+  root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_context_UserContext__WEBPACK_IMPORTED_MODULE_15__.UserProvider, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(AppContent, {})
   }));
 }
 
@@ -4228,6 +4261,542 @@ var BottomNav = function BottomNav() {
 
 /***/ },
 
+/***/ "./resources/js/components/EmailVerify.js"
+/*!************************************************!*\
+  !*** ./resources/js/components/EmailVerify.js ***!
+  \************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sass_login_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sass/login.scss */ "./resources/sass/login.scss");
+/* harmony import */ var _httpHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../httpHelpers */ "./resources/js/httpHelpers.js");
+/* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../context/UserContext */ "./resources/js/context/UserContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+var EmailVerify = function EmailVerify() {
+  var _window$__PETVERSE__;
+  var _useUser = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_3__.useUser)(),
+    user = _useUser.user;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    code = _useState2[0],
+    setCode = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    loading = _useState4[0],
+    setLoading = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    resendLoading = _useState6[0],
+    setResendLoading = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState8 = _slicedToArray(_useState7, 2),
+    error = _useState8[0],
+    setError = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState0 = _slicedToArray(_useState9, 2),
+    successMsg = _useState0[0],
+    setSuccessMsg = _useState0[1];
+  var fallbackEmail = ((_window$__PETVERSE__ = window.__PETVERSE__) === null || _window$__PETVERSE__ === void 0 ? void 0 : _window$__PETVERSE__.pendingVerificationEmail) || '';
+  var email = (user === null || user === void 0 ? void 0 : user.email) || fallbackEmail;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (error) {
+      setSuccessMsg('');
+    }
+  }, [error]);
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
+      var _yield$window$axios$p, data, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            e.preventDefault();
+            setLoading(true);
+            setError('');
+            _context.p = 1;
+            _context.n = 2;
+            return window.axios.post('/email/verify', {
+              verification_code: code.trim()
+            }, {
+              headers: (0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.jsonRequestHeaders)(),
+              withCredentials: true
+            });
+          case 2:
+            _yield$window$axios$p = _context.v;
+            data = _yield$window$axios$p.data;
+            if (!(data !== null && data !== void 0 && data.success)) {
+              _context.n = 3;
+              break;
+            }
+            window.location.href = data.redirect || '/pet-info';
+            return _context.a(2);
+          case 3:
+            setError((data === null || data === void 0 ? void 0 : data.message) || 'Verification failed.');
+            _context.n = 5;
+            break;
+          case 4:
+            _context.p = 4;
+            _t = _context.v;
+            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t));
+          case 5:
+            _context.p = 5;
+            setLoading(false);
+            return _context.f(5);
+          case 6:
+            return _context.a(2);
+        }
+      }, _callee, null, [[1, 4, 5, 6]]);
+    }));
+    return function handleSubmit(_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+  var handleResend = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      var _yield$window$axios$p2, data, _t2;
+      return _regenerator().w(function (_context2) {
+        while (1) switch (_context2.p = _context2.n) {
+          case 0:
+            setResendLoading(true);
+            setError('');
+            setSuccessMsg('');
+            _context2.p = 1;
+            _context2.n = 2;
+            return window.axios.post('/email/resend', {}, {
+              headers: (0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.jsonRequestHeaders)(),
+              withCredentials: true
+            });
+          case 2:
+            _yield$window$axios$p2 = _context2.v;
+            data = _yield$window$axios$p2.data;
+            setSuccessMsg((data === null || data === void 0 ? void 0 : data.message) || 'A new verification email was sent.');
+            _context2.n = 4;
+            break;
+          case 3:
+            _context2.p = 3;
+            _t2 = _context2.v;
+            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t2));
+          case 4:
+            _context2.p = 4;
+            setResendLoading(false);
+            return _context2.f(4);
+          case 5:
+            return _context2.a(2);
+        }
+      }, _callee2, null, [[1, 3, 4, 5]]);
+    }));
+    return function handleResend() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    className: "pawtastic-login",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "login-sidebar",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "sidebar-image"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "sidebar-content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "brand",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+            src: "/petlogo.png",
+            alt: "Petverse Logo",
+            className: "brand-icon"
+          }), " Petverse"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+          className: "quote",
+          children: "\"Every Paw Has a Story\""
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
+          className: "description",
+          children: ["We sent a 6-digit verification code to your email.", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Enter it here to finish setup."]
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "login-form-container",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "form-box",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+          className: "welcome-text",
+          children: "Verify Your Email"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
+          style: {
+            marginBottom: '20px',
+            color: '#666'
+          },
+          children: ["Code sent to ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+            children: email || 'your email address'
+          })]
+        }), successMsg && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "success-msg",
+          style: {
+            color: '#28a745',
+            background: '#d4edda',
+            padding: '10px',
+            borderRadius: '4px',
+            marginBottom: '15px'
+          },
+          children: successMsg
+        }), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "error-msg",
+          children: error
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
+          onSubmit: handleSubmit,
+          className: "actual-form",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Verification Code"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+              type: "text",
+              inputMode: "numeric",
+              autoComplete: "one-time-code",
+              maxLength: "6",
+              value: code,
+              onChange: function onChange(e) {
+                return setCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6));
+              },
+              required: true,
+              autoFocus: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "submit",
+            className: "login-btn",
+            disabled: loading,
+            children: loading ? 'Verifying...' : 'Verify Account'
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            className: "login-btn",
+            style: {
+              background: 'transparent',
+              border: '1px solid #ccc',
+              color: '#555',
+              marginTop: '10px'
+            },
+            onClick: handleResend,
+            disabled: resendLoading,
+            children: resendLoading ? 'Resending...' : 'Resend Code'
+          })]
+        })]
+      })
+    })]
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailVerify);
+
+/***/ },
+
+/***/ "./resources/js/components/PetInfo.js"
+/*!********************************************!*\
+  !*** ./resources/js/components/PetInfo.js ***!
+  \********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sass_login_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sass/login.scss */ "./resources/sass/login.scss");
+/* harmony import */ var _httpHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../httpHelpers */ "./resources/js/httpHelpers.js");
+/* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../context/UserContext */ "./resources/js/context/UserContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+var PetInfo = function PetInfo() {
+  var _useUser = (0,_context_UserContext__WEBPACK_IMPORTED_MODULE_3__.useUser)(),
+    user = _useUser.user;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      petName: '',
+      username: '',
+      age: '',
+      gender: 'male',
+      birthday: '',
+      species: '',
+      breed: ''
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    form = _useState2[0],
+    setForm = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    loading = _useState4[0],
+    setLoading = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState6 = _slicedToArray(_useState5, 2),
+    error = _useState6[0],
+    setError = _useState6[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var baseName = user !== null && user !== void 0 && user.email ? user.email.split('@')[0] : '';
+    setForm(function (prev) {
+      return _objectSpread(_objectSpread({}, prev), {}, {
+        username: prev.username || baseName
+      });
+    });
+  }, [user]);
+  var handleChange = function handleChange(field, value) {
+    setForm(function (prev) {
+      return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, field, value));
+    });
+  };
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
+      var _yield$window$axios$p, data, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            e.preventDefault();
+            setLoading(true);
+            setError('');
+            _context.p = 1;
+            _context.n = 2;
+            return window.axios.post('/api/pet-info', _objectSpread(_objectSpread({}, form), {}, {
+              age: Number(form.age),
+              birthday: form.birthday || null
+            }), {
+              headers: (0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.jsonRequestHeaders)(),
+              withCredentials: true
+            });
+          case 2:
+            _yield$window$axios$p = _context.v;
+            data = _yield$window$axios$p.data;
+            if (!(data !== null && data !== void 0 && data.user)) {
+              _context.n = 3;
+              break;
+            }
+            window.location.href = '/homefeed';
+            return _context.a(2);
+          case 3:
+            setError((data === null || data === void 0 ? void 0 : data.message) || 'Unable to save pet info.');
+            _context.n = 5;
+            break;
+          case 4:
+            _context.p = 4;
+            _t = _context.v;
+            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t));
+          case 5:
+            _context.p = 5;
+            setLoading(false);
+            return _context.f(5);
+          case 6:
+            return _context.a(2);
+        }
+      }, _callee, null, [[1, 4, 5, 6]]);
+    }));
+    return function handleSubmit(_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    className: "pawtastic-login",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "login-sidebar",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "sidebar-image"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "sidebar-content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "brand",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+            src: "/petlogo.png",
+            alt: "Petverse Logo",
+            className: "brand-icon"
+          }), " Petverse"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+          className: "quote",
+          children: "\"Tell us about your pet\""
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          className: "description",
+          children: "Add your pet details and claim a unique username before exploring the home feed."
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "login-form-container",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "form-box",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+          className: "welcome-text",
+          children: "Pet Info"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          style: {
+            marginBottom: '20px',
+            color: '#666'
+          },
+          children: "Fill out your pet profile to continue."
+        }), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "error-msg",
+          children: error
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
+          onSubmit: handleSubmit,
+          className: "actual-form",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Pet Name"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+              value: form.petName,
+              onChange: function onChange(e) {
+                return handleChange('petName', e.target.value);
+              },
+              required: true,
+              maxLength: 255
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Username"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+              value: form.username,
+              onChange: function onChange(e) {
+                return handleChange('username', e.target.value);
+              },
+              required: true,
+              maxLength: 32,
+              pattern: "[A-Za-z0-9_]+"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Age"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+              type: "number",
+              min: "0",
+              max: "50",
+              value: form.age,
+              onChange: function onChange(e) {
+                return handleChange('age', e.target.value);
+              },
+              required: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Gender"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              style: {
+                display: 'flex',
+                gap: '12px',
+                flexWrap: 'wrap'
+              },
+              children: [{
+                value: 'male',
+                label: 'Male'
+              }, {
+                value: 'female',
+                label: 'Female'
+              }, {
+                value: 'other',
+                label: 'Other'
+              }].map(function (option) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                    type: "radio",
+                    name: "gender",
+                    value: option.value,
+                    checked: form.gender === option.value,
+                    onChange: function onChange() {
+                      return handleChange('gender', option.value);
+                    }
+                  }), option.label]
+                }, option.value);
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Birthday"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+              type: "date",
+              value: form.birthday,
+              onChange: function onChange(e) {
+                return handleChange('birthday', e.target.value);
+              }
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Species"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+              value: form.species,
+              onChange: function onChange(e) {
+                return handleChange('species', e.target.value);
+              },
+              required: true,
+              maxLength: 64
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              children: "Breed"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+              value: form.breed,
+              onChange: function onChange(e) {
+                return handleChange('breed', e.target.value);
+              },
+              required: true,
+              maxLength: 255
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "submit",
+            className: "login-btn",
+            disabled: loading,
+            children: loading ? 'Saving...' : 'Continue'
+          })]
+        })]
+      })
+    })]
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PetInfo);
+
+/***/ },
+
 /***/ "./resources/js/components/Register.js"
 /*!*********************************************!*\
   !*** ./resources/js/components/Register.js ***!
@@ -4261,28 +4830,24 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 var Register = function Register() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
-    name = _useState2[0],
-    setName = _useState2[1];
+    email = _useState2[0],
+    setEmail = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState4 = _slicedToArray(_useState3, 2),
-    email = _useState4[0],
-    setEmail = _useState4[1];
+    password = _useState4[0],
+    setPassword = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState6 = _slicedToArray(_useState5, 2),
-    password = _useState6[0],
-    setPassword = _useState6[1];
+    passwordConfirmation = _useState6[0],
+    setPasswordConfirmation = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState8 = _slicedToArray(_useState7, 2),
-    passwordConfirmation = _useState8[0],
-    setPasswordConfirmation = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    error = _useState8[0],
+    setError = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState0 = _slicedToArray(_useState9, 2),
-    error = _useState0[0],
-    setError = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState10 = _slicedToArray(_useState1, 2),
-    loading = _useState10[0],
-    setLoading = _useState10[1];
+    loading = _useState0[0],
+    setLoading = _useState0[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
       var payload, _yield$window$axios$p, data, _t;
@@ -4294,7 +4859,6 @@ var Register = function Register() {
             setError("");
             _context.p = 1;
             payload = {
-              name: name.trim(),
               email: email.trim(),
               password: password,
               password_confirmation: passwordConfirmation
@@ -4308,7 +4872,7 @@ var Register = function Register() {
             _yield$window$axios$p = _context.v;
             data = _yield$window$axios$p.data;
             if (data !== null && data !== void 0 && data.success) {
-              window.location.href = data.redirect || "/dashboard";
+              window.location.href = data.redirect || "/email/verify";
             } else {
               setError((data === null || data === void 0 ? void 0 : data.message) || "Registration failed");
             }
@@ -4383,18 +4947,6 @@ var Register = function Register() {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "input-group",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              children: "Full Name"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              type: "text",
-              value: name,
-              onChange: function onChange(e) {
-                return setName(e.target.value);
-              },
-              required: true
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "input-group",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
               children: "Email Address"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
               type: "email",
@@ -4452,6 +5004,236 @@ var Register = function Register() {
 
 /***/ },
 
+/***/ "./resources/js/components/ResetPassword.js"
+/*!**************************************************!*\
+  !*** ./resources/js/components/ResetPassword.js ***!
+  \**************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sass_login_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sass/login.scss */ "./resources/sass/login.scss");
+/* harmony import */ var _httpHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../httpHelpers */ "./resources/js/httpHelpers.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+var ResetPassword = function ResetPassword() {
+  var params = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return new URLSearchParams(window.location.search);
+  }, []);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(params.get('email') || ''),
+    _useState2 = _slicedToArray(_useState, 2),
+    email = _useState2[0],
+    setEmail = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(params.get('token') || ''),
+    _useState4 = _slicedToArray(_useState3, 2),
+    token = _useState4[0],
+    setToken = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState6 = _slicedToArray(_useState5, 2),
+    password = _useState6[0],
+    setPassword = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState8 = _slicedToArray(_useState7, 2),
+    passwordConfirmation = _useState8[0],
+    setPasswordConfirmation = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    loading = _useState0[0],
+    setLoading = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState10 = _slicedToArray(_useState1, 2),
+    error = _useState10[0],
+    setError = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState12 = _slicedToArray(_useState11, 2),
+    successMsg = _useState12[0],
+    setSuccessMsg = _useState12[1];
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
+      var _yield$window$axios$p, data, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            e.preventDefault();
+            setLoading(true);
+            setError('');
+            setSuccessMsg('');
+            _context.p = 1;
+            _context.n = 2;
+            return window.axios.post('/password/reset', {
+              token: token,
+              email: email.trim(),
+              password: password,
+              password_confirmation: passwordConfirmation
+            }, {
+              headers: (0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.jsonRequestHeaders)(),
+              withCredentials: true
+            });
+          case 2:
+            _yield$window$axios$p = _context.v;
+            data = _yield$window$axios$p.data;
+            if (!(data !== null && data !== void 0 && data.success)) {
+              _context.n = 3;
+              break;
+            }
+            setSuccessMsg('Password updated successfully. You can log in now.');
+            window.location.href = '/login';
+            return _context.a(2);
+          case 3:
+            setError((data === null || data === void 0 ? void 0 : data.message) || 'Unable to reset password.');
+            _context.n = 5;
+            break;
+          case 4:
+            _context.p = 4;
+            _t = _context.v;
+            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t));
+          case 5:
+            _context.p = 5;
+            setLoading(false);
+            return _context.f(5);
+          case 6:
+            return _context.a(2);
+        }
+      }, _callee, null, [[1, 4, 5, 6]]);
+    }));
+    return function handleSubmit(_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    className: "pawtastic-login",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      className: "login-sidebar",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "sidebar-image"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "sidebar-content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "brand",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+            src: "/petlogo.png",
+            alt: "Petverse Logo",
+            className: "brand-icon"
+          }), " Petverse"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
+          className: "quote",
+          children: "\"Choose a new password\""
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          className: "description",
+          children: "Use the secure link from your email to set a fresh password for your account."
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      className: "login-form-container",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "form-box",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+          className: "welcome-text",
+          children: "Reset Password"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          style: {
+            marginBottom: '20px',
+            color: '#666'
+          },
+          children: "Enter your new password below."
+        }), successMsg && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "success-msg",
+          style: {
+            color: '#28a745',
+            background: '#d4edda',
+            padding: '10px',
+            borderRadius: '4px',
+            marginBottom: '15px'
+          },
+          children: successMsg
+        }), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "error-msg",
+          children: error
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+          onSubmit: handleSubmit,
+          className: "actual-form",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Email Address"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              value: email,
+              onChange: function onChange(e) {
+                return setEmail(e.target.value);
+              },
+              type: "email",
+              required: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Reset Token"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              value: token,
+              onChange: function onChange(e) {
+                return setToken(e.target.value);
+              },
+              required: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "New Password"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "password",
+              value: password,
+              onChange: function onChange(e) {
+                return setPassword(e.target.value);
+              },
+              required: true,
+              minLength: 8
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              children: "Confirm Password"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "password",
+              value: passwordConfirmation,
+              onChange: function onChange(e) {
+                return setPasswordConfirmation(e.target.value);
+              },
+              required: true,
+              minLength: 8
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            type: "submit",
+            className: "login-btn",
+            disabled: loading,
+            children: loading ? 'Updating...' : 'Update Password'
+          })]
+        })]
+      })
+    })]
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ResetPassword);
+
+/***/ },
+
 /***/ "./resources/js/components/Settings.js"
 /*!*********************************************!*\
   !*** ./resources/js/components/Settings.js ***!
@@ -4485,8 +5267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/User.es.js");
 /* harmony import */ var _phosphor_icons_react__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @phosphor-icons/react */ "./node_modules/@phosphor-icons/react/dist/csr/Warning.es.js");
 /* harmony import */ var _pages_Sidebar__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./pages/Sidebar */ "./resources/js/components/pages/Sidebar.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _httpHelpers__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../httpHelpers */ "./resources/js/httpHelpers.js");
 /* harmony import */ var _context_UserContext__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../context/UserContext */ "./resources/js/context/UserContext.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -4608,6 +5389,9 @@ var Settings = function Settings() {
       petName: '',
       breed: '',
       age: '',
+      petGender: 'unknown',
+      petSpecies: '',
+      petBirthday: '',
       petBio: '',
       avatar_url: null
     }),
@@ -4645,10 +5429,11 @@ var Settings = function Settings() {
     setIsUploading = _useState14[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (authUser) {
-      var _authUser$pet, _authUser$pet2, _authUser$pet3, _authUser$pet4;
+      var _authUser$pet, _authUser$pet2, _authUser$pet3, _authUser$pet4, _authUser$pet5, _authUser$pet6, _authUser$pet7;
+      var userSettings = authUser.user_settings || {};
       setUser({
         displayName: authUser.name || '',
-        username: authUser.email ? '@' + authUser.email.split('@')[0] : '',
+        username: authUser.username ? '@' + authUser.username : authUser.email ? '@' + authUser.email.split('@')[0] : '',
         email: authUser.email || '',
         location: authUser.location || '',
         website: authUser.website || '',
@@ -4656,9 +5441,14 @@ var Settings = function Settings() {
         petName: ((_authUser$pet = authUser.pet) === null || _authUser$pet === void 0 ? void 0 : _authUser$pet.name) || '',
         breed: ((_authUser$pet2 = authUser.pet) === null || _authUser$pet2 === void 0 ? void 0 : _authUser$pet2.breed) || '',
         age: ((_authUser$pet3 = authUser.pet) === null || _authUser$pet3 === void 0 ? void 0 : _authUser$pet3.age) || '',
-        petBio: ((_authUser$pet4 = authUser.pet) === null || _authUser$pet4 === void 0 ? void 0 : _authUser$pet4.bio) || '',
+        petGender: ((_authUser$pet4 = authUser.pet) === null || _authUser$pet4 === void 0 ? void 0 : _authUser$pet4.gender) || 'unknown',
+        petSpecies: ((_authUser$pet5 = authUser.pet) === null || _authUser$pet5 === void 0 ? void 0 : _authUser$pet5.species) || '',
+        petBirthday: (_authUser$pet6 = authUser.pet) !== null && _authUser$pet6 !== void 0 && _authUser$pet6.birthday ? String(authUser.pet.birthday).slice(0, 10) : '',
+        petBio: ((_authUser$pet7 = authUser.pet) === null || _authUser$pet7 === void 0 ? void 0 : _authUser$pet7.bio) || '',
         avatar_url: authUser.avatar_url || null
       });
+      setNotifications(_objectSpread(_objectSpread({}, notifications), userSettings.notifications || {}));
+      setPrivacy(_objectSpread(_objectSpread({}, privacy), userSettings.privacy || {}));
     }
   }, [authUser]);
   var fetchUser = /*#__PURE__*/function () {
@@ -4720,10 +5510,11 @@ var Settings = function Settings() {
             setIsUploading(true);
             _context2.p = 2;
             _context2.n = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_21___default().post('/api/user/profile-photo', formData, {
+            return window.axios.post('/api/user/profile-photo', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
-              }
+              },
+              withCredentials: true
             });
           case 3:
             response = _context2.v;
@@ -4769,14 +5560,23 @@ var Settings = function Settings() {
           case 0:
             _context3.p = 0;
             _context3.n = 1;
-            return axios__WEBPACK_IMPORTED_MODULE_21___default().post('/api/user/update', {
+            return window.axios.post('/api/user/update', {
               name: user.displayName,
+              username: user.username.replace(/^@/, ''),
               location: user.location,
               bio: user.bio,
               petName: user.petName,
               breed: user.breed,
               age: user.age,
-              petBio: user.petBio
+              petGender: user.petGender,
+              petSpecies: user.petSpecies,
+              petBirthday: user.petBirthday,
+              petBio: user.petBio,
+              notifications: notifications,
+              privacy: privacy
+            }, {
+              headers: (0,_httpHelpers__WEBPACK_IMPORTED_MODULE_21__.jsonRequestHeaders)(),
+              withCredentials: true
             });
           case 1:
             alert('Account settings updated successfully!');
@@ -5090,6 +5890,67 @@ var Settings = function Settings() {
                   placeholder: "The goodest boy..."
                 })]
               })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
+              className: "form-row two-col",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
+                className: "form-group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("label", {
+                  className: "form-label",
+                  children: "Species"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("input", {
+                  type: "text",
+                  className: "form-input",
+                  value: user.petSpecies,
+                  onChange: function onChange(e) {
+                    return setUser(_objectSpread(_objectSpread({}, user), {}, {
+                      petSpecies: e.target.value
+                    }));
+                  },
+                  placeholder: "Dog"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
+                className: "form-group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("label", {
+                  className: "form-label",
+                  children: "Birthday"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("input", {
+                  type: "date",
+                  className: "form-input",
+                  value: user.petBirthday || '',
+                  onChange: function onChange(e) {
+                    return setUser(_objectSpread(_objectSpread({}, user), {}, {
+                      petBirthday: e.target.value
+                    }));
+                  }
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("div", {
+              className: "form-row",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
+                className: "form-group full-width",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("label", {
+                  className: "form-label",
+                  children: "Gender"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("select", {
+                  className: "form-input",
+                  value: user.petGender,
+                  onChange: function onChange(e) {
+                    return setUser(_objectSpread(_objectSpread({}, user), {}, {
+                      petGender: e.target.value
+                    }));
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("option", {
+                    value: "male",
+                    children: "Male"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("option", {
+                    value: "female",
+                    children: "Female"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsx)("option", {
+                    value: "unknown",
+                    children: "Other"
+                  })]
+                })]
+              })
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_23__.jsxs)("div", {
@@ -5793,36 +6654,32 @@ var Login = function Login() {
     _useState4 = _slicedToArray(_useState3, 2),
     password = _useState4[0],
     setPassword = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
-    error = _useState6[0],
-    setError = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    remember = _useState6[0],
+    setRemember = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState8 = _slicedToArray(_useState7, 2),
-    loading = _useState8[0],
-    setLoading = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    error = _useState8[0],
+    setError = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState0 = _slicedToArray(_useState9, 2),
-    successMsg = _useState0[0],
-    setSuccessMsg = _useState0[1];
-
-  // Forgot Password states
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("login"),
+    loading = _useState0[0],
+    setLoading = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState10 = _slicedToArray(_useState1, 2),
-    viewMode = _useState10[0],
-    setViewMode = _useState10[1]; // login, forgot, reset
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    successMsg = _useState10[0],
+    setSuccessMsg = _useState10[1];
+
+  // Forgot Password state
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("login"),
     _useState12 = _slicedToArray(_useState11, 2),
-    resetEmail = _useState12[0],
-    setResetEmail = _useState12[1];
+    viewMode = _useState12[0],
+    setViewMode = _useState12[1]; // login, forgot
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState14 = _slicedToArray(_useState13, 2),
-    newPassword = _useState14[0],
-    setNewPassword = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState16 = _slicedToArray(_useState15, 2),
-    confirmPassword = _useState16[0],
-    setConfirmPassword = _useState16[1];
+    resetEmail = _useState14[0],
+    setResetEmail = _useState14[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
       var payload, _yield$window$axios$p, data, _t;
@@ -5835,7 +6692,8 @@ var Login = function Login() {
             _context.p = 1;
             payload = {
               email: email.trim(),
-              password: password
+              password: password,
+              remember: remember
             };
             _context.n = 2;
             return window.axios.post("/login", payload, {
@@ -5853,7 +6711,7 @@ var Login = function Login() {
             return _context.a(2);
           case 3:
             if (data.success) {
-              window.location.href = data.redirect || "/dashboard";
+              window.location.href = data.redirect || "/";
             } else {
               setError(data.message || "Login failed");
             }
@@ -5887,25 +6745,27 @@ var Login = function Login() {
             setError("");
             _context2.p = 1;
             _context2.n = 2;
-            return window.axios.post("/api/password/check-email", {
+            return window.axios.post("/password/email", {
               email: resetEmail.trim()
             }, {
-              headers: {
-                Accept: "application/json"
-              }
+              headers: (0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.jsonRequestHeaders)(),
+              withCredentials: true
             });
           case 2:
             _yield$window$axios$p2 = _context2.v;
             data = _yield$window$axios$p2.data;
             if (data !== null && data !== void 0 && data.success) {
-              setViewMode("reset");
+              setSuccessMsg(data.message || "Password reset email sent.");
+              setViewMode("login");
+              setEmail(resetEmail.trim());
+              setPassword("");
             }
             _context2.n = 4;
             break;
           case 3:
             _context2.p = 3;
             _t2 = _context2.v;
-            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t2) || "Email not found.");
+            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t2) || "Unable to send reset email.");
           case 4:
             _context2.p = 4;
             setLoading(false);
@@ -5917,60 +6777,6 @@ var Login = function Login() {
     }));
     return function handleCheckEmail(_x2) {
       return _ref2.apply(this, arguments);
-    };
-  }();
-  var handleResetPassword = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(e) {
-      var _yield$window$axios$p3, data, _t3;
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.p = _context3.n) {
-          case 0:
-            e.preventDefault();
-            if (!(newPassword !== confirmPassword)) {
-              _context3.n = 1;
-              break;
-            }
-            setError("Passwords do not match!");
-            return _context3.a(2);
-          case 1:
-            setLoading(true);
-            setError("");
-            _context3.p = 2;
-            _context3.n = 3;
-            return window.axios.post("/api/password/reset", {
-              email: resetEmail.trim(),
-              password: newPassword
-            }, {
-              headers: {
-                Accept: "application/json"
-              }
-            });
-          case 3:
-            _yield$window$axios$p3 = _context3.v;
-            data = _yield$window$axios$p3.data;
-            if (data !== null && data !== void 0 && data.success) {
-              setSuccessMsg("Password successfully reset! You may now log in.");
-              setViewMode("login");
-              setEmail(resetEmail);
-              setPassword("");
-            }
-            _context3.n = 5;
-            break;
-          case 4:
-            _context3.p = 4;
-            _t3 = _context3.v;
-            setError((0,_httpHelpers__WEBPACK_IMPORTED_MODULE_2__.messageFromAxiosError)(_t3) || "Reset failed.");
-          case 5:
-            _context3.p = 5;
-            setLoading(false);
-            return _context3.f(5);
-          case 6:
-            return _context3.a(2);
-        }
-      }, _callee3, null, [[2, 4, 5, 6]]);
-    }));
-    return function handleResetPassword(_x3) {
-      return _ref3.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -6043,6 +6849,31 @@ var Login = function Login() {
                   return setPassword(e.target.value);
                 },
                 required: true
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              style: {
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '16px',
+                margin: '0 0 16px 0',
+                flexWrap: 'wrap'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                style: {
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  color: '#666',
+                  fontSize: '14px'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                  type: "checkbox",
+                  checked: remember,
+                  onChange: function onChange(e) {
+                    return setRemember(e.target.checked);
+                  }
+                }), "Remember Me"]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                 href: "#",
                 className: "forgot-link",
@@ -6083,6 +6914,16 @@ var Login = function Login() {
             children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "error-msg",
               children: error
+            }), successMsg && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "success-msg",
+              style: {
+                color: '#28a745',
+                background: '#d4edda',
+                padding: '10px',
+                borderRadius: '4px',
+                marginBottom: '15px'
+              },
+              children: successMsg
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: "input-group",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
@@ -6116,56 +6957,6 @@ var Login = function Login() {
               },
               disabled: loading,
               children: "Cancel"
-            })]
-          })]
-        }), viewMode === "reset" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
-            className: "welcome-text",
-            children: "Reset Password"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-            style: {
-              marginBottom: '20px',
-              color: '#666'
-            },
-            children: ["Create a new password for ", resetEmail, "."]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
-            onSubmit: handleResetPassword,
-            className: "actual-form",
-            children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-              className: "error-msg",
-              children: error
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                children: "New Password"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "password",
-                value: newPassword,
-                onChange: function onChange(e) {
-                  return setNewPassword(e.target.value);
-                },
-                required: true,
-                minLength: "8",
-                autoFocus: true
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                children: "Confirm Password"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "password",
-                value: confirmPassword,
-                onChange: function onChange(e) {
-                  return setConfirmPassword(e.target.value);
-                },
-                required: true,
-                minLength: "8"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-              type: "submit",
-              className: "login-btn",
-              disabled: loading,
-              children: loading ? "Updating..." : "Update Password"
             })]
           })]
         })]
@@ -11675,7 +12466,7 @@ var UserProvider = function UserProvider(_ref) {
     setLoading = _useState4[1];
   var fetchUser = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var response, _t;
+      var _response$data, response, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -11688,6 +12479,7 @@ var UserProvider = function UserProvider(_ref) {
             console.log("UserProvider: User fetched successfully", response.data);
             setUser(response.data);
             window.authUser = response.data;
+            window.userSettings = ((_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.user_settings) || {};
             _context.n = 3;
             break;
           case 2:

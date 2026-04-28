@@ -17,9 +17,6 @@ class StoryController extends Controller
         $stories = Story::with(['user.pet'])
             ->where('expires_at', '>', Carbon::now())
             ->where('is_archived', false)
-            ->whereDoesntHave('user.pet', function ($query) {
-                $query->where('name', 'Max');
-            })
             ->orderBy('created_at', 'desc')
             ->get()
             ->groupBy('user_id')

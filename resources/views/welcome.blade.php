@@ -10,6 +10,11 @@
 </head>
 <body>
     <div id="sam-virtudazo"></div>
+    <script>
+        window.__PETVERSE__ = @json([
+            'pendingVerificationEmail' => $pendingVerificationEmail ?? null,
+        ]);
+    </script>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

@@ -6,6 +6,9 @@ import Login from './components/login';
 import Feed from './components/pages/Feed';
 import AdminDashboard from './components/AdminDashboard';
 import Register from './components/Register';
+import EmailVerify from './components/EmailVerify';
+import PetInfo from './components/PetInfo';
+import ResetPassword from './components/ResetPassword';
 import Messages from './components/pages/Messages';
 import BadgesContests from './components/pages/BadgesContests';
 import AdoptionBoard from './components/AdoptionBoard';
@@ -35,9 +38,43 @@ if (container) {
 
         if (path === '/login') return <Login />;
         if (path === '/register') return <Register />;
+        if (path === '/password/reset') return <ResetPassword />;
+
+        if (path === '/email/verify') {
+            if (user?.email_verified_at) {
+                if (!user.pet) {
+                    window.location.href = '/pet-info';
+                    return null;
+                }
+
+                window.location.href = '/homefeed';
+                return null;
+            }
+
+            return <EmailVerify />;
+        }
+
+        if (path === '/pet-info') {
+            if (user?.email_verified_at && user?.pet) {
+                window.location.href = '/homefeed';
+                return null;
+            }
+
+            return <PetInfo />;
+        }
 
         if (!user) {
             window.location.href = '/login';
+            return null;
+        }
+
+        if (!user.email_verified_at) {
+            window.location.href = '/email/verify';
+            return null;
+        }
+
+        if (!user.pet) {
+            window.location.href = '/pet-info';
             return null;
         }
 

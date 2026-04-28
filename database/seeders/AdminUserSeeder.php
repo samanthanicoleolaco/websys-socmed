@@ -12,6 +12,7 @@ class AdminUserSeeder extends Seeder
     {
         $admin = User::firstOrNew(['email' => 'admin@pawtastic.com']);
         $admin->name = 'Admin Owner';
+        $admin->username = 'admin_owner';
         $admin->password = Hash::make('password');
         $admin->is_admin = true;
         $admin->save();

@@ -33,7 +33,7 @@ import {
     SignIn
 } from "@phosphor-icons/react";
 import Sidebar from './pages/Sidebar';
-import axios from 'axios';
+import { jsonRequestHeaders } from '../httpHelpers';
 import { useUser } from '../context/UserContext';
 
 // ── UI Components ───────────
@@ -85,6 +85,9 @@ const Settings = () => {
         petName: '',
         breed: '',
         age: '',
+        petGender: 'unknown',
+        petSpecies: '',
+        petBirthday: '',
         petBio: '',
         avatar_url: null
     });
@@ -113,9 +116,10 @@ const Settings = () => {
 
     useEffect(() => {
         if (authUser) {
+            const userSettings = authUser.user_settings || {};
             setUser({
                 displayName: authUser.name || '',
-                username: authUser.email ? '@' + authUser.email.split('@')[0] : '',
+                username: authUser.username ? '@' + authUser.username : (authUser.email ? '@' + authUser.email.split('@')[0] : ''),
                 email: authUser.email || '',
                 location: authUser.location || '',
                 website: authUser.website || '',
@@ -123,8 +127,19 @@ const Settings = () => {
                 petName: authUser.pet?.name || '',
                 breed: authUser.pet?.breed || '',
                 age: authUser.pet?.age || '',
+                petGender: authUser.pet?.gender || 'unknown',
+                petSpecies: authUser.pet?.species || '',
+                petBirthday: authUser.pet?.birthday ? String(authUser.pet.birthday).slice(0, 10) : '',
                 petBio: authUser.pet?.bio || '',
                 avatar_url: authUser.avatar_url || null
+            });
+            setNotifications({
+                ...notifications,
+                ...(userSettings.notifications || {}),
+            });
+            setPrivacy({
+                ...privacy,
+                ...(userSettings.privacy || {}),
             });
         }
     }, [authUser]);
@@ -166,10 +181,11 @@ const Settings = () => {
         setIsUploading(true);
 
         try {
-            const response = await axios.post('/api/user/profile-photo', formData, {
+            const response = await window.axios.post('/api/user/profile-photo', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
-                }
+                },
+                withCredentials: true,
             });
             const timestamp = new Date().getTime();
             setUser(prev => ({ 
@@ -195,14 +211,23 @@ const Settings = () => {
 
     const handleSaveChanges = async () => {
         try {
-            await axios.post('/api/user/update', {
+            await window.axios.post('/api/user/update', {
                 name: user.displayName,
+                username: user.username.replace(/^@/, ''),
                 location: user.location,
                 bio: user.bio,
                 petName: user.petName,
                 breed: user.breed,
                 age: user.age,
-                petBio: user.petBio
+                petGender: user.petGender,
+                petSpecies: user.petSpecies,
+                petBirthday: user.petBirthday,
+                petBio: user.petBio,
+                notifications,
+                privacy,
+            }, {
+                headers: jsonRequestHeaders(),
+                withCredentials: true,
             });
             alert('Account settings updated successfully!');
             refreshUser();
@@ -398,6 +423,43 @@ const Settings = () => {
                                     onChange={(e) => setUser({...user, petBio: e.target.value})}
                                     placeholder="The goodest boy..."
                                 />
+                            </div>
+                        </div>
+
+                        <div className="form-row two-col">
+                            <div className="form-group">
+                                <label className="form-label">Species</label>
+                                <input
+                                    type="text"
+                                    className="form-input"
+                                    value={user.petSpecies}
+                                    onChange={(e) => setUser({...user, petSpecies: e.target.value})}
+                                    placeholder="Dog"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Birthday</label>
+                                <input
+                                    type="date"
+                                    className="form-input"
+                                    value={user.petBirthday || ''}
+                                    onChange={(e) => setUser({...user, petBirthday: e.target.value})}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group full-width">
+                                <label className="form-label">Gender</label>
+                                <select
+                                    className="form-input"
+                                    value={user.petGender}
+                                    onChange={(e) => setUser({...user, petGender: e.target.value})}
+                                >
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="unknown">Other</option>
+                                </select>
                             </div>
                         </div>
                     </div>

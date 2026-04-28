@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Pet;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -101,6 +102,23 @@ class PostController extends Controller
 
         if ($post->tagged_pets && is_array($post->tagged_pets)) {
             $post->tagged_pets = Pet::whereIn('id', $post->tagged_pets)->get();
+        }
+
+        if ($post->tagged_pets && is_array($post->tagged_pets)) {
+            foreach ($post->tagged_pets as $taggedPet) {
+                if ((int) $taggedPet->user_id === (int) $user->id) {
+                    continue;
+                }
+
+                Notification::createNotification(
+                    $taggedPet->user_id,
+                    'tag',
+                    'You were tagged in a post',
+                    $user->name . ' tagged your pet in a post.',
+                    $post,
+                    ['post_id' => $post->id, 'pet_id' => $taggedPet->id]
+                );
+            }
         }
 
         return response()->json($post->load(['pet.user', 'likes', 'comments']), 201);

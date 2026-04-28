@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Pet;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -43,6 +44,18 @@ class CommentController extends Controller
         }
 
         $comment = Comment::create($validated);
+
+        $postOwner = $comment->post->pet->user ?? null;
+        if ($postOwner && $postOwner->id !== Auth::id()) {
+            Notification::createNotification(
+                $postOwner->id,
+                'comment',
+                'New comment on your post',
+                $pet->name . ' commented on your post.',
+                $comment,
+                ['post_id' => $comment->post_id, 'comment_id' => $comment->id]
+            );
+        }
 
         return response()->json($comment->load('pet.user'), 201);
     }

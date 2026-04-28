@@ -31,6 +31,8 @@ use App\Http\Controllers\Api\AdoptionReportController;
 // Public routes
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/password/email', [App\Http\Controllers\LoginController::class, 'sendResetLinkEmail'])->middleware('throttle:5,1');
+Route::post('/password/reset', [App\Http\Controllers\LoginController::class, 'resetPassword']);
 
 Route::middleware('throttle:12,1')->group(function () {
     Route::post('/shelter-registration', [ShelterRegistrationController::class, 'store']);
@@ -44,6 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/user/profile-photo', [AuthController::class, 'updateProfilePhoto']);
     Route::post('/user/update', [AuthController::class, 'updateProfile']);
+    Route::post('/pet-info', [AuthController::class, 'savePetInfo']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     
     // Pet routes
@@ -74,10 +77,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/messages/{message}/read', [MessageController::class, 'markAsRead']);
     
     // Contest routes
-    Route::apiResource('contests', ContestController::class);
+    Route::get('/contests', [ContestController::class, 'index']);
+    Route::get('/contests/{contest}', [ContestController::class, 'show']);
     Route::get('/contests/{contest}/entries', [ContestController::class, 'entries']);
-    Route::post('/contests/{contest}/entries', [ContestController::class, 'enterContest']);
-    Route::post('/contest-entries/{entry}/vote', [ContestController::class, 'vote']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/contests', [ContestController::class, 'store'])->middleware('admin');
+        Route::match(['put', 'patch'], '/contests/{contest}', [ContestController::class, 'update']);
+        Route::delete('/contests/{contest}', [ContestController::class, 'destroy']);
+        Route::post('/contests/{contest}/entries', [ContestController::class, 'enterContest']);
+        Route::post('/contest-entries/{entry}/vote', [ContestController::class, 'vote']);
+    });
     
     // Adoption listing routes
     Route::apiResource('adoption-listings', AdoptionListingController::class);
@@ -127,13 +136,11 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
 
 // Custom Message Endpoints
-Route::get('/my-conversations', [\App\Http\Controllers\MessageController::class, 'getConversations']);
-Route::get('/my-conversations/buddies', [\App\Http\Controllers\MessageController::class, 'getBuddies']);
-Route::get('/my-conversations/{buddy_id}/messages', [\App\Http\Controllers\MessageController::class, 'getMessages']);
-Route::post('/my-messages', [\App\Http\Controllers\MessageController::class, 'store']);
-Route::delete('/my-conversations/{buddy_id}', [\App\Http\Controllers\MessageController::class, 'clearChat']);
-Route::delete('/my-messages/{message_id}', [\App\Http\Controllers\MessageController::class, 'unsend']);
-
-// Password Reset endpoints (API Mode)
-Route::post('/password/check-email', [\App\Http\Controllers\LoginController::class, 'checkEmail']);
-Route::post('/password/reset', [\App\Http\Controllers\LoginController::class, 'resetPassword']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/my-conversations', [\App\Http\Controllers\MessageController::class, 'getConversations']);
+    Route::get('/my-conversations/buddies', [\App\Http\Controllers\MessageController::class, 'getBuddies']);
+    Route::get('/my-conversations/{buddy_id}/messages', [\App\Http\Controllers\MessageController::class, 'getMessages']);
+    Route::post('/my-messages', [\App\Http\Controllers\MessageController::class, 'store']);
+    Route::delete('/my-conversations/{buddy_id}', [\App\Http\Controllers\MessageController::class, 'clearChat']);
+    Route::delete('/my-messages/{message_id}', [\App\Http\Controllers\MessageController::class, 'unsend']);
+});

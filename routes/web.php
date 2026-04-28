@@ -25,12 +25,17 @@ Route::get('/email/verify', [App\Http\Controllers\VerificationController::class,
 Route::post('/email/verify', [App\Http\Controllers\VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('/email/resend', [App\Http\Controllers\VerificationController::class, 'resend'])->name('verification.resend');
 
+Route::get('/pet-info', function () {
+    return view('welcome');
+});
+
 // Password Reset endpoints
-Route::post('/password/check-email', [App\Http\Controllers\LoginController::class, 'checkEmail']);
+Route::post('/password/email', [App\Http\Controllers\LoginController::class, 'sendResetLinkEmail'])->middleware('throttle:5,1');
+Route::get('/password/reset', [App\Http\Controllers\LoginController::class, 'showResetForm']);
 Route::post('/password/reset', [App\Http\Controllers\LoginController::class, 'resetPassword']);
 
 // Protected routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
     });

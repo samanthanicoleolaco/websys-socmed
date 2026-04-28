@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Follower;
 use App\Models\Pet;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class FollowerController extends Controller
@@ -48,6 +49,18 @@ class FollowerController extends Controller
 
         $follower = Follower::create($validated);
 
+        $followingOwner = $followingPet->user;
+        if ($followingOwner && $followingOwner->id !== Auth::id()) {
+            Notification::createNotification(
+                $followingOwner->id,
+                'follow',
+                'New follower',
+                $followerPet->name . ' started following your pet.',
+                $follower,
+                ['following_pet_id' => $followingPet->id, 'follower_pet_id' => $followerPet->id]
+            );
+        }
+
         return response()->json(['message' => 'Pet followed successfully', 'follower' => $follower->load(['followerPet.user', 'followingPet.user'])], 201);
     }
 
@@ -58,10 +71,9 @@ class FollowerController extends Controller
     {
         $followerPetIds = Auth::user()->pets()->pluck('id');
 
-        $follower = Follower::where([
-            'follower_pet_id' => $followerPetIds,
-            'following_pet_id' => $followingPet->id,
-        ])->first();
+        $follower = Follower::whereIn('follower_pet_id', $followerPetIds)
+            ->where('following_pet_id', $followingPet->id)
+            ->first();
 
         if (!$follower) {
             return response()->json(['message' => 'Not following this pet'], 404);

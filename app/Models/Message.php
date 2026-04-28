@@ -13,6 +13,11 @@ class Message extends Model
         'sender_pet_id',
         'receiver_pet_id',
         'content',
+        'image',
+        'video',
+        'location',
+        'location_lat',
+        'location_lon',
         'is_read',
     ];
 

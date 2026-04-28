@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Pet;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -137,34 +139,88 @@ class AuthController extends Controller
         
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
+            'username' => ['sometimes', 'nullable', 'string', 'max:32', Rule::unique('users', 'username')->ignore($user->id)],
             'location' => 'nullable|string|max:255',
             'bio' => 'nullable|string|max:500',
+            'notifications' => 'sometimes|array',
+            'privacy' => 'sometimes|array',
+            'petName' => 'sometimes|nullable|string|max:255',
+            'breed' => 'sometimes|nullable|string|max:255',
+            'age' => 'sometimes|nullable|integer|min:0|max:50',
+            'petBio' => 'sometimes|nullable|string|max:500',
+            'petGender' => 'sometimes|nullable|in:male,female,unknown,other',
+            'petSpecies' => 'sometimes|nullable|string|max:64',
+            'petBirthday' => 'sometimes|nullable|date',
         ]);
 
         $user->update($validated);
+
+        if ($request->hasAny(['notifications', 'privacy'])) {
+            $user->forceFill([
+                'user_settings' => array_filter([
+                    'notifications' => $request->input('notifications', $user->user_settings['notifications'] ?? null),
+                    'privacy' => $request->input('privacy', $user->user_settings['privacy'] ?? null),
+                ], function ($value) {
+                    return !is_null($value);
+                }),
+            ])->save();
+        }
         
-        // Handle pet details
-        $petData = [
+        $petData = array_filter([
             'name' => $request->input('petName'),
             'breed' => $request->input('breed'),
             'age' => $request->input('age'),
             'bio' => $request->input('petBio'),
-            'location' => $request->input('location'),
-        ];
-
-        // Clean up nulls
-        $petData = array_filter($petData, function($v) { return !is_null($v); });
+            'gender' => $request->input('petGender') === 'other' ? 'unknown' : $request->input('petGender'),
+            'species' => $request->input('petSpecies'),
+            'birthday' => $request->input('petBirthday'),
+        ], function ($value) {
+            return !is_null($value);
+        });
 
         if ($user->pet) {
             $user->pet->update($petData);
         } else if ($request->input('petName')) {
-            // Create a pet if none exists but name is provided
             $user->pet()->create($petData);
         }
 
         return response()->json([
             'message' => 'Profile updated successfully',
             'user' => $user->load('pet'),
+        ]);
+    }
+
+    public function savePetInfo(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'petName' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:32', 'regex:/^[a-z0-9_]+$/i', Rule::unique('users', 'username')->ignore($user->id)],
+            'age' => ['required', 'integer', 'min:0', 'max:50'],
+            'gender' => ['required', 'in:male,female,unknown,other'],
+            'birthday' => ['nullable', 'date'],
+            'species' => ['required', 'string', 'max:64'],
+            'breed' => ['required', 'string', 'max:255'],
+        ]);
+
+        $user->forceFill([
+            'username' => $validated['username'],
+        ])->save();
+
+        $pet = $user->pets()->create([
+            'name' => $validated['petName'],
+            'age' => $validated['age'],
+            'gender' => $validated['gender'] === 'other' ? 'unknown' : $validated['gender'],
+            'birthday' => $validated['birthday'] ?? null,
+            'species' => $validated['species'],
+            'breed' => $validated['breed'],
+        ]);
+
+        return response()->json([
+            'message' => 'Pet profile saved successfully',
+            'user' => $user->load('pet'),
+            'pet' => $pet,
         ]);
     }
 }

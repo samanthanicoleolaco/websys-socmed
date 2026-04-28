@@ -13,6 +13,7 @@ export const UserProvider = ({ children }) => {
             console.log("UserProvider: User fetched successfully", response.data);
             setUser(response.data);
             window.authUser = response.data;
+            window.userSettings = response.data?.user_settings || {};
         } catch (error) {
             console.error("UserProvider: Error fetching user:", error);
             setUser(null);

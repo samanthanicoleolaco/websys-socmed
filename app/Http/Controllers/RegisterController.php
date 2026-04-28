@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\EmailJsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -21,50 +21,61 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+        $request->merge([
+            'email' => trim((string) $request->input('email', '')),
+        ]);
+
+        $validated = $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $localPart = strstr($validated['email'], '@', true) ?: 'user';
+
+        $user = User::create([
+            'name' => $localPart,
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'email_verified_at' => null,
+            'is_admin' => false,
+        ]);
+
+        $verificationCode = (string) random_int(100000, 999999);
+
+        $user->forceFill([
+            'email_verification_code_hash' => Hash::make($verificationCode),
+            'email_verification_expires_at' => now()->addMinutes(15),
+        ])->save();
+
+        $request->session()->put([
+            'pending_verification_user_id' => $user->id,
+            'pending_verification_email' => $user->email,
+        ]);
+
         try {
-            $request->merge([
-                'email' => trim((string) $request->input('email', '')),
-            ]);
+            app(EmailJsService::class)->sendVerificationEmail($user->name ?: $localPart, $user->email, $verificationCode);
+        } catch (\Throwable $e) {
+            report($e);
 
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-            ]);
-
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'is_admin' => false,
-            ]);
-
-            Auth::login($user);
-
-            try {
-                \App\Models\Login::create([
-                    'user_id' => $user->id,
-                    'ip_address' => $request->ip(),
-                    'user_agent' => $request->userAgent(),
-                    'login_at' => now(),
-                ]);
-            } catch (\Throwable $e) {
-                report($e);
-            }
-
-            if ($request->expectsJson()) {
-                return response()->json(['success' => true, 'redirect' => '/']);
-            }
-
-            return redirect('/');
-        } catch (\Illuminate\Validation\ValidationException $e) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => collect($e->errors())->flatten()->first() ?? 'Validation failed.',
-                ], 422);
+                    'message' => 'Unable to send verification email. Please try again shortly.',
+                ], 500);
             }
-            throw $e;
+
+            return back()->withErrors([
+                'email' => 'Unable to send verification email. Please try again shortly.',
+            ]);
         }
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'redirect' => '/email/verify',
+            ]);
+        }
+
+        return redirect('/email/verify');
     }
 }

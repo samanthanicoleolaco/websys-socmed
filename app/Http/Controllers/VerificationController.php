@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Services\EmailJsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -24,12 +25,11 @@ class VerificationController extends Controller
         }
 
         if ($user->hasVerifiedEmail()) {
-            return redirect()->route('login')->with('status', 'Your account is already verified. Please login.');
+            return redirect('/pet-info');
         }
 
-        return view('auth.verify', [
-            'email' => $user->email,
-            'expiresAt' => optional($user->email_verification_expires_at)?->toDateTimeString(),
+        return view('welcome', [
+            'pendingVerificationEmail' => $user->email,
         ]);
     }
 
@@ -64,9 +64,17 @@ class VerificationController extends Controller
         ])->save();
 
         $request->session()->forget(['pending_verification_user_id', 'pending_verification_email']);
+        Auth::login($user);
+        $request->session()->regenerate();
 
-        return redirect()->route('login')
-            ->with('status', 'Your Petverse account is verified. You can now login and start exploring.');
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'redirect' => '/pet-info',
+            ]);
+        }
+
+        return redirect('/pet-info');
     }
 
     public function resend(Request $request, EmailJsService $emailJsService)
@@ -78,7 +86,7 @@ class VerificationController extends Controller
         }
 
         if ($user->hasVerifiedEmail()) {
-            return redirect()->route('login')->with('status', 'Your account is already verified.');
+            return redirect('/pet-info')->with('status', 'Your account is already verified.');
         }
 
         $verificationCode = (string) random_int(100000, 999999);

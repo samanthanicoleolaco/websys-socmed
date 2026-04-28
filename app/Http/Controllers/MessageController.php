@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\Pet;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -13,8 +12,7 @@ class MessageController extends Controller
     public function getConversations(Request $request)
     {
         $user = Auth::user();
-        if (!$user) $user = User::first();
-        if (!$user) return response()->json([]);
+        if (!$user) return response()->json(['message' => 'Unauthenticated'], 401);
 
         $pet = Pet::where('user_id', $user->id)->first();
         if (!$pet) return response()->json([]);
@@ -53,28 +51,7 @@ class MessageController extends Controller
     {
         // For the "Start New Conversation" modal to fetch real users
         $user = Auth::user();
-        if (!$user) $user = User::first();
-        
-        // Ensure there are some dummy pets to chat with if DB is empty
-        if (Pet::count() < 3) {
-            $dummyUsers = [
-                ['name' => 'David', 'email' => 'david@fake.com'],
-                ['name' => 'Emily', 'email' => 'emily@fake.com'],
-                ['name' => 'Jake', 'email' => 'jake@fake.com']
-            ];
-            foreach ($dummyUsers as $du) {
-                $u = User::firstOrCreate(['email' => $du['email']], [
-                    'name' => $du['name'],
-                    'password' => bcrypt('password')
-                ]);
-                Pet::firstOrCreate(['user_id' => $u->id], [
-                    'name' => $u->name . "'s Pet",
-                    'age' => 2,
-                    'breed' => 'Mixed dog',
-                    'bio' => 'A very playful friend.'
-                ]);
-            }
-        }
+        if (!$user) return response()->json(['message' => 'Unauthenticated'], 401);
 
         $myPetIds = $user ? $user->pets()->pluck('id')->toArray() : [];
         $buddies = Pet::whereNotIn('id', $myPetIds)->take(10)->get()->map(function($pet) {
@@ -94,8 +71,7 @@ class MessageController extends Controller
     public function getMessages(Request $request, $buddy_id)
     {
         $user = Auth::user();
-        if (!$user) $user = User::first();
-        if (!$user) return response()->json([]);
+        if (!$user) return response()->json(['message' => 'Unauthenticated'], 401);
         
         $myPet = $user->pets()->first();
         if (!$myPet) return response()->json([]);
@@ -119,29 +95,32 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        if (!$user) $user = User::first();
         if (!$user) return response()->json(['error' => 'Unauthorized'], 401);
 
         $myPet = $user->pets()->first();
         if (!$myPet) {
-            // Auto-create a pet for this user so they can send messages!
-            $myPet = Pet::create([
-                'user_id' => $user->id,
-                'name' => 'My First Pet',
-                'age' => 1,
-                'breed' => 'Unknown'
-            ]);
+            return response()->json(['error' => 'No pet selected'], 422);
         }
 
         $request->validate([
             'receiver_id' => 'required|exists:pets,id',
-            'content' => 'required|string'
+            'content' => 'required|string',
+            'image' => 'nullable|url',
+            'video' => 'nullable|url',
+            'location' => 'nullable|string|max:255',
+            'location_lat' => 'nullable|numeric',
+            'location_lon' => 'nullable|numeric',
         ]);
 
         $msg = Message::create([
             'sender_pet_id' => $myPet->id,
             'receiver_pet_id' => $request->receiver_id,
             'content' => $request->input('content'),
+            'image' => $request->input('image'),
+            'video' => $request->input('video'),
+            'location' => $request->input('location'),
+            'location_lat' => $request->input('location_lat'),
+            'location_lon' => $request->input('location_lon'),
             'is_read' => false
         ]);
 
@@ -156,7 +135,6 @@ class MessageController extends Controller
     public function clearChat(Request $request, $buddy_id)
     {
         $user = Auth::user();
-        if (!$user) $user = User::first();
         if (!$user) return response()->json(['error' => 'Unauthorized'], 401);
         
         $myPet = $user->pets()->first();
@@ -174,7 +152,10 @@ class MessageController extends Controller
 
     public function unsend(Request $request, $message_id) 
     {
-        Message::where('id', $message_id)->delete();
+        $msg = Message::findOrFail($message_id);
+        $myPetIds = Auth::user()->pets()->pluck('id');
+        abort_unless($myPetIds->contains($msg->sender_pet_id), 403);
+        $msg->delete();
         return response()->json(['success' => true]);
     }
 }

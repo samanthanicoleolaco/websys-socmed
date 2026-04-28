@@ -5,22 +5,21 @@ import { jsonRequestHeaders, messageFromAxiosError } from "../httpHelpers";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [remember, setRemember] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [successMsg, setSuccessMsg] = useState("");
 
-    // Forgot Password states
-    const [viewMode, setViewMode] = useState("login"); // login, forgot, reset
+    // Forgot Password state
+    const [viewMode, setViewMode] = useState("login"); // login, forgot
     const [resetEmail, setResetEmail] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
         try {
-            const payload = { email: email.trim(), password };
+            const payload = { email: email.trim(), password, remember };
             const { data } = await window.axios.post("/login", payload, {
                 headers: jsonRequestHeaders(),
                 withCredentials: true,
@@ -34,7 +33,7 @@ const Login = () => {
             }
 
             if (data.success) {
-                window.location.href = data.redirect || "/dashboard";
+                window.location.href = data.redirect || "/";
             } else {
                 setError(data.message || "Login failed");
             }
@@ -50,42 +49,18 @@ const Login = () => {
         setLoading(true);
         setError("");
         try {
-            const { data } = await window.axios.post("/api/password/check-email", { email: resetEmail.trim() }, {
-                headers: { Accept: "application/json" },
+            const { data } = await window.axios.post("/password/email", { email: resetEmail.trim() }, {
+                headers: jsonRequestHeaders(),
+                withCredentials: true,
             });
             if (data?.success) {
-                setViewMode("reset");
-            }
-        } catch (err) {
-            setError(messageFromAxiosError(err) || "Email not found.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleResetPassword = async (e) => {
-        e.preventDefault();
-        if (newPassword !== confirmPassword) {
-            setError("Passwords do not match!");
-            return;
-        }
-        setLoading(true);
-        setError("");
-        try {
-            const { data } = await window.axios.post("/api/password/reset", {
-                email: resetEmail.trim(),
-                password: newPassword,
-            }, {
-                headers: { Accept: "application/json" },
-            });
-            if (data?.success) {
-                setSuccessMsg("Password successfully reset! You may now log in.");
+                setSuccessMsg(data.message || "Password reset email sent.");
                 setViewMode("login");
-                setEmail(resetEmail);
+                setEmail(resetEmail.trim());
                 setPassword("");
             }
         } catch (err) {
-            setError(messageFromAxiosError(err) || "Reset failed.");
+            setError(messageFromAxiosError(err) || "Unable to send reset email.");
         } finally {
             setLoading(false);
         }
@@ -127,6 +102,13 @@ const Login = () => {
                                 <div className="input-group">
                                     <label>Password</label>
                                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                                </div>
+
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px', margin: '0 0 16px 0', flexWrap: 'wrap' }}>
+                                    <label style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#666', fontSize: '14px' }}>
+                                        <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+                                        Remember Me
+                                    </label>
                                     <a href="#" className="forgot-link" onClick={(e) => { e.preventDefault(); setViewMode("forgot"); setError(""); setSuccessMsg(""); }}>Forgot Password?</a>
                                 </div>
 
@@ -146,6 +128,7 @@ const Login = () => {
                             <p style={{marginBottom: '20px', color: '#666'}}>Enter the email address associated with your account to reset your password.</p>
                             <form onSubmit={handleCheckEmail} className="actual-form">
                                 {error && <div className="error-msg">{error}</div>}
+                                {successMsg && <div className="success-msg" style={{color: '#28a745', background: '#d4edda', padding: '10px', borderRadius: '4px', marginBottom: '15px'}}>{successMsg}</div>}
                                 
                                 <div className="input-group">
                                     <label>Email Address</label>
@@ -157,30 +140,6 @@ const Login = () => {
                                 </button>
                                 <button type="button" className="login-btn" style={{background: 'transparent', border: '1px solid #ccc', color: '#555', marginTop: '10px'}} onClick={() => { setViewMode("login"); setError(""); }} disabled={loading}>
                                     Cancel
-                                </button>
-                            </form>
-                        </>
-                    )}
-
-                    {viewMode === "reset" && (
-                        <>
-                            <h2 className="welcome-text">Reset Password</h2>
-                            <p style={{marginBottom: '20px', color: '#666'}}>Create a new password for {resetEmail}.</p>
-                            <form onSubmit={handleResetPassword} className="actual-form">
-                                {error && <div className="error-msg">{error}</div>}
-                                
-                                <div className="input-group">
-                                    <label>New Password</label>
-                                    <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required minLength="8" autoFocus />
-                                </div>
-
-                                <div className="input-group">
-                                    <label>Confirm Password</label>
-                                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required minLength="8" />
-                                </div>
-
-                                <button type="submit" className="login-btn" disabled={loading}>
-                                    {loading ? "Updating..." : "Update Password"}
                                 </button>
                             </form>
                         </>

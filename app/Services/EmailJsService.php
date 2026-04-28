@@ -65,4 +65,57 @@ class EmailJsService
             ->post('https://api.emailjs.com/api/v1.0/email/send', $payload)
             ->throw();
     }
+
+    public function sendPasswordResetEmail(string $toName, string $toEmail, string $resetUrl): void
+    {
+        $serviceId = config('services.emailjs.service_id');
+        $templateId = config('services.emailjs.template_id');
+        $publicKey = config('services.emailjs.public_key');
+        $privateKey = config('services.emailjs.private_key');
+
+        if (!$serviceId || !$templateId || !$publicKey) {
+            throw new RuntimeException('EmailJS configuration is missing.');
+        }
+
+        $payload = [
+            'service_id' => $serviceId,
+            'template_id' => $templateId,
+            'user_id' => $publicKey,
+            'template_params' => [
+                'to_name' => $toName,
+                'to_email' => $toEmail,
+                'email' => $toEmail,
+                'user_email' => $toEmail,
+                'recipient' => $toEmail,
+                'subject' => 'Reset your Petverse password',
+                'from_name' => 'Petverse',
+                'app_name' => config('app.name', 'Petverse'),
+                'reset_url' => $resetUrl,
+                'message_html' => '
+<div style="background-color: #f6f9fc; padding: 40px 0; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif;">
+    <div style="background-color: #ffffff; max-width: 520px; margin: 0 auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: 1px solid #e6ebf1; overflow: hidden;">
+        <div style="padding: 40px; text-align: center;">
+            <h1 style="color: #1a1f36; font-size: 24px; font-weight: 700; margin: 0 0 20px 0; letter-spacing: -0.5px;">Reset your Petverse password</h1>
+            <p style="color: #4f566b; font-size: 16px; line-height: 24px; margin-bottom: 30px;">Use the button below to open the secure password reset page for your account.</p>
+            <a href="' . e($resetUrl) . '" style="display:inline-block;background:#898AA6;color:#fff;text-decoration:none;padding:14px 24px;border-radius:999px;font-weight:700;">Reset Password</a>
+            <p style="color:#4f566b;font-size:14px;line-height:20px;margin:24px 0 0 0;word-break:break-all;">If the button does not work, copy and paste this link:<br><span style="color:#1a1f36;">' . e($resetUrl) . '</span></p>
+            <div style="border-top: 1px solid #e6ebf1; padding-top: 32px; margin-top: 32px;">
+                <p style="color: #a3acb9; font-size: 12px; line-height: 18px; margin: 0;">If you did not request a reset, you can safely ignore this email.</p>
+                <p style="color: #898AA6; font-size: 14px; font-weight: 600; margin: 12px 0 0 0;">— The Petverse Team</p>
+            </div>
+        </div>
+    </div>
+</div>'
+            ],
+        ];
+
+        if ($privateKey) {
+            $payload['accessToken'] = $privateKey;
+        }
+
+        Http::asJson()
+            ->timeout(10)
+            ->post('https://api.emailjs.com/api/v1.0/email/send', $payload)
+            ->throw();
+    }
 }

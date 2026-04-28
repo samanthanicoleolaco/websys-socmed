@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Pet;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
@@ -54,6 +55,18 @@ class LikeController extends Controller
             'pet_id' => $validated['pet_id'],
             'emoji' => $validated['emoji'] ?? '❤️',
         ]);
+
+        $postOwner = $like->post->pet->user ?? null;
+        if ($postOwner && $postOwner->id !== Auth::id()) {
+            Notification::createNotification(
+                $postOwner->id,
+                'like',
+                'New like on your post',
+                $pet->name . ' liked your post.',
+                $like,
+                ['post_id' => $like->post_id, 'pet_id' => $pet->id]
+            );
+        }
 
         return response()->json(['message' => 'Post liked', 'like' => $like->load('pet.user')], 201);
     }
