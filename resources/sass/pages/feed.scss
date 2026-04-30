@@ -1181,6 +1181,30 @@
     }
 }
 
+.location-picker--suggested-pets {
+    max-width: 1200px;
+    width: min(1200px, 96vw);
+
+    @media (min-width: 768px) {
+        max-height: 70vh;
+    }
+
+    .location-picker__content {
+        padding: 12px 0 8px;
+    }
+
+    .suggested-pet-row {
+        gap: 16px;
+        padding-right: 32px;
+        box-sizing: border-box;
+
+        .follow-btn {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+    }
+}
+
 // ── Likers Modal ─────────────────────────────────────────────────────
 .likers-modal-overlay {
     @extend %app-modal-overlay;
@@ -1594,7 +1618,7 @@
 .location-picker {
     background: var(--bg-card);
     width: 100%;
-    max-width: 540px;
+    max-width: 600px;
     max-height: 85vh;
     border-radius: 20px 20px 0 0;
     overflow: hidden;

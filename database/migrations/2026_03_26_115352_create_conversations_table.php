@@ -13,9 +13,9 @@ class CreateConversationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('conversations', function (Blueprint $table) {
-            $table->string('name')->nullable();
-            $table->foreignId('creator_pet_id')->nullable()->constrained('pets')->onDelete('set null');
+        Schema::create('conversations', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 

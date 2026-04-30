@@ -1585,7 +1585,7 @@ const Feed = () => {
                         exit={{ opacity: 0 }}
                     >
                         <motion.div
-                            className="location-picker"
+                            className="location-picker location-picker--suggested-pets"
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
                             exit={{ y: "100%" }}
@@ -1737,7 +1737,7 @@ const Feed = () => {
                             <div className="location-picker__content">
                                 <div className="locations-list">
                                     {suggestedPets.map((pet) => (
-                                        <div key={pet.id} className="location-item pet-item" style={{ cursor: 'default', display: 'flex', alignItems: 'center' }}>
+                                        <div key={pet.id} className="location-item pet-item suggested-pet-row" style={{ cursor: 'default', display: 'flex', alignItems: 'center' }}>
                                             <Avatar src={pet.image_url} size="sm" />
                                             <div className="location-info">
                                                 <span className="location-name">{pet.name}</span>
@@ -1745,7 +1745,7 @@ const Feed = () => {
                                             </div>
                                             <button 
                                                 className={`follow-btn ${pet.is_following ? 'following' : ''}`}
-                                                style={{ marginLeft: 'auto', background: pet.is_following ? 'var(--bg-card)' : 'var(--primary-action)', color: pet.is_following ? 'var(--text-main)' : 'white', border: pet.is_following ? '1px solid var(--border-color)' : 'none', padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}
+                                                style={{ marginLeft: 'auto', background: pet.is_following ? 'var(--bg-card)' : 'var(--primary-action)', color: pet.is_following ? 'var(--text-main)' : 'white', border: pet.is_following ? '1px solid var(--border-color)' : 'none', padding: '6px 18px', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}
                                                 onClick={() => handleFollow(pet.id)}
                                             >
                                                 {pet.is_following ? 'Following' : 'Follow'}

@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminUserSeeder::class,
-            UserSeeder::class,
-            PetSeeder::class,
+//            UserSeeder::class,
+//            PetSeeder::class,
             BadgeSeeder::class,
         ]);
         

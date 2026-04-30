@@ -163,7 +163,7 @@ class MessageController extends Controller
         }
 
         $request->validate([
-            'receiver_id' => 'required|string', 
+            'receiver_id' => 'required', 
             'content'     => 'nullable|string',
             'media'       => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,mp4,mov,avi,webm,pdf,doc,docx,zip|max:51200',
         ]);
@@ -194,7 +194,7 @@ class MessageController extends Controller
             return response()->json(['error' => 'Message must have content or media.'], 422);
         }
 
-        $receiverId = $request->receiver_id;
+        $receiverId = (string) $request->receiver_id;
         $convId = null;
         if (str_starts_with($receiverId, 'gc_')) {
             $convId = str_replace('gc_', '', $receiverId);

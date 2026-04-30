@@ -60,6 +60,10 @@ if (container) {
         }
 
         if (path === '/pet-info') {
+            if (user?.is_admin) {
+                window.location.href = '/admin';
+                return null;
+            }
             if (user?.email_verified_at && user?.pet) {
                 window.location.href = '/homefeed';
                 return null;
@@ -78,7 +82,7 @@ if (container) {
             return null;
         }
 
-        if (!user.pet) {
+        if (!user.pet && !user.is_admin) {
             window.location.href = '/pet-info';
             return null;
         }
